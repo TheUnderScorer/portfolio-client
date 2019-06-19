@@ -9,7 +9,7 @@ cache:
       - node_modules
 
 before_install:
-  - npm_update
+  - npm update
 
 install:
   - npm install
