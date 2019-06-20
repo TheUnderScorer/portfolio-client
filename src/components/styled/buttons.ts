@@ -13,9 +13,16 @@ export const Button = styled.button`
     box-shadow: 2px 2px 5px 0 rgba(0,0,0,0.75);
     outline: none;
     position: relative;
+    transition: all .3s;
     
     &.flat {
         box-shadow: none;
+    }
+    
+    &.with-icon{
+        svg, i {
+            margin-right: 15px;
+        }
     }
     
    &.ripple {
@@ -46,6 +53,20 @@ export const Button = styled.button`
           transition: 0s;
         }
    }
+`;
+
+export const CtaButton = styled( Button )`
+    background: ${ colors.buttons.cta };
+    color: ${ colors.white };
+    font-size: 1.5em;
+    border-radius: 30px;
+    padding: 20px 40px;
+    
+    &.ripple {
+          &.hidden{
+            transform: translate3d(0, 0, 0) scale(0);
+          }
+    }
 `;
 
 export const DarkButton = styled( Button )`

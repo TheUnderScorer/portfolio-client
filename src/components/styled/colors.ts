@@ -1,7 +1,7 @@
 export default {
     buttons:      {
         mainBg: '#364366',
-        cta:    '#FD5637',
+        cta:    '#FD523A',
     },
     white:        '#ffffff',
     black:        '#000000',
@@ -9,5 +9,6 @@ export default {
     darkBlue:     '#00354D',
     orange:       '#FD5A36',
     lightBorder:  '#ebebeb',
-    darkerBorder: '#BDBDBD'
+    darkerBorder: '#BDBDBD',
+    pink:         '#FD523A'
 }

@@ -5,4 +5,4 @@ export interface SetThemeMode extends Action<'SetThemeMode'> {
     payload: ThemeMode;
 }
 
-export type ThemeActions = SetThemeMode | null;
+export type ThemeActions = SetThemeMode | any;

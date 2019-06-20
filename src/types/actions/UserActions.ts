@@ -5,4 +5,4 @@ export interface SetCurrentUser extends Action<'SetCurrentUser'> {
     payload: User;
 }
 
-export type UserActions = SetCurrentUser | null;
+export type UserActions = SetCurrentUser | any;
