@@ -1,12 +1,17 @@
 import * as React from 'react';
 import Props from './types/HeroImageProps';
 import styled from 'styled-components';
+import breakpoints from '../styled/breakpoints';
 
 const HeroContainer = styled.section`
     width: 100%;
     height: 100vh;
     position: relative;
     border: 40px solid #28283E;
+    
+    @media(max-width: ${ breakpoints.tabletSmall }){
+        border: none;
+    }
     
     img {
         width: 100%;
@@ -20,6 +25,10 @@ const HeroChildren = styled.div`
     position: absolute;
     top: 30%;
     left: 20%;
+    
+    @media(max-width: ${ breakpoints.tabletSmall }){
+        left: 10%;
+    }
 `;
 
 const HeroImage = ( { src, children }: Props ) => {
