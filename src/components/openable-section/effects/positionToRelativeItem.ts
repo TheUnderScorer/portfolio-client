@@ -1,7 +1,6 @@
-export default ( wrapper: HTMLDivElement, relativeItem: HTMLElement ) => {
+export default ( wrapper: HTMLDivElement, placeholder: HTMLElement, relativeItem: HTMLElement ) => {
 
     const position = relativeItem.getBoundingClientRect();
-    const placeholder = wrapper.querySelector( '.placeholder' ) as HTMLElement;
 
     const styles = getComputedStyle( relativeItem );
 

@@ -85,7 +85,7 @@ export const CtaButton = styled( Button )`
     }
     
     @media(min-width: ${ breakpoints.tabletSmall }){
-        font-size: 1.20em;
+        font-size: 1.10em;
     }
     
     &.ripple {

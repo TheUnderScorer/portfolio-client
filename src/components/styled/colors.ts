@@ -10,5 +10,6 @@ export default {
     orange:       '#FD5A36',
     lightBorder:  '#ebebeb',
     darkerBorder: '#BDBDBD',
-    pink:         '#FD523A'
+    pink:         '#FD523A',
+    lightBg:      '#fafbfc',
 }
