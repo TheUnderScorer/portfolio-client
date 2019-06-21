@@ -1,9 +1,8 @@
-import UserReducer from '../reducers/UserReducer';
-import ThemeReducer from '../reducers/ThemeReducer';
+import BaseStore from './BaseStore';
+import HomeReducer from '../reducers/HomeReducer';
 
-export default interface HomeStore {
-    user: UserReducer;
-    theme: ThemeReducer;
+export default interface HomeStore extends BaseStore {
+    home: HomeReducer;
 }
 
 export type GetAppStore = () => HomeStore;

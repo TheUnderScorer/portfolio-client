@@ -1,10 +1,15 @@
 import * as React from 'react';
 import { useCallback, useEffect, useState } from 'react';
 import { Cta, CtaWrapper, NameHighlight, NameWrapper, TextWrapper } from './styled';
-import { H1, Text } from '../styled/typography';
+import { H1 } from '../styled/typography';
 import Typist from 'react-typist';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Props from './types/HeroTextProps';
+import { connect, useDispatch, useSelector } from 'react-redux';
+import HomeStore from '../../types/stores/HomeStore';
+import { SetHeroWrote } from '../../types/actions/HomeActions';
+import styled from 'styled-components';
+import colors from '../styled/colors';
 
 const texts = [
     'Front-end ',
@@ -12,18 +17,31 @@ const texts = [
     'Full-stack developer.'
 ];
 
+const Headline = styled( H1 )`
+    color: ${ colors.white }
+`;
+
 const HeroText = ( { onCtaClick, ctaRef }: Props ) => {
-    const [ typed, setTyped ] = useState( false );
+
+    const dispatch = useDispatch();
+
     const [ ctaVisible, setCtaVisible ] = useState( false );
     const [ ctaRotated, setCtaRotated ] = useState( true );
 
+    const didWrote = useSelector( ( store: HomeStore ) => store.home.didHeroWrote );
+
     const onTypingDone = useCallback( () => {
-        setTyped( true );
+        const action: SetHeroWrote = {
+            type:    'SetHeroWrote',
+            payload: true
+        };
+
+        dispatch( action );
     }, [] );
 
     useEffect( () => {
 
-        if ( !typed ) {
+        if ( !didWrote ) {
             return;
         }
 
@@ -40,36 +58,32 @@ const HeroText = ( { onCtaClick, ctaRef }: Props ) => {
             clearTimeout( rotateTimeout );
         }
 
-    }, [ typed ] );
+    }, [ didWrote ] );
 
     return (
         <TextWrapper>
             <NameWrapper>
-                <H1>
+                <Headline>
                     Hello, I'm <NameHighlight>Przemysław Żydek</NameHighlight>.
-                </H1>
+                </Headline>
             </NameWrapper>
             <Typist onTypingDone={ onTypingDone } avgTypingDelay={ 55 } startDelay={ 1350 } cursor={ { blink: true } }>
-                <H1>
+                <Headline>
                     { texts[ 0 ] }
                     <Typist.Backspace delay={ 200 } count={ texts[ 0 ].length }/>
                     { texts[ 1 ] }
                     <Typist.Backspace delay={ 200 } count={ texts[ 1 ].length }/>
                     { texts[ 2 ] }
-                </H1>
+                </Headline>
             </Typist>
             <CtaWrapper>
                 <Cta ref={ ctaRef } onClick={ onCtaClick } className={ `${ ctaVisible ? '' : 'hidden' } ${ ctaRotated ? 'rotated' : '' } ripple with-icon flat` }>
                     <FontAwesomeIcon icon="arrow-down"/>
-                    <Text>
-                        About me
-                    </Text>
+                    About me
                 </Cta>
             </CtaWrapper>
-            <H1>
-            </H1>
         </TextWrapper>
     )
 };
 
-export default HeroText;
+export default connect()( HeroText );

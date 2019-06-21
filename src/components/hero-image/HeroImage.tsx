@@ -2,12 +2,13 @@ import * as React from 'react';
 import Props from './types/HeroImageProps';
 import styled from 'styled-components';
 import breakpoints from '../styled/breakpoints';
+import { connect } from 'react-redux';
 
 const HeroContainer = styled.section`
     width: 100%;
     height: 100vh;
     position: relative;
-    border: 40px solid #28283E;
+    border: 20px solid #28283E;
     
     @media(max-width: ${ breakpoints.tabletSmall }){
         border: none;
@@ -42,4 +43,4 @@ const HeroImage = ( { src, children }: Props ) => {
     )
 };
 
-export default HeroImage;
+export default connect()( HeroImage );
