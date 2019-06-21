@@ -4,6 +4,7 @@ import { Cta, CtaWrapper, NameHighlight, NameWrapper, TextWrapper } from './styl
 import { H1, Text } from '../styled/typography';
 import Typist from 'react-typist';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Props from './types/HeroTextProps';
 
 const texts = [
     'Front-end ',
@@ -11,7 +12,7 @@ const texts = [
     'Full-stack developer.'
 ];
 
-const HeroText = () => {
+const HeroText = ( { onCtaClick, ctaRef }: Props ) => {
     const [ typed, setTyped ] = useState( false );
     const [ ctaVisible, setCtaVisible ] = useState( false );
     const [ ctaRotated, setCtaRotated ] = useState( true );
@@ -58,7 +59,7 @@ const HeroText = () => {
                 </H1>
             </Typist>
             <CtaWrapper>
-                <Cta className={ `${ ctaVisible ? '' : 'hidden' } ${ ctaRotated ? 'rotated' : '' } ripple with-icon flat` }>
+                <Cta ref={ ctaRef } onClick={ onCtaClick } className={ `${ ctaVisible ? '' : 'hidden' } ${ ctaRotated ? 'rotated' : '' } ripple with-icon flat` }>
                     <FontAwesomeIcon icon="arrow-down"/>
                     <Text>
                         About me

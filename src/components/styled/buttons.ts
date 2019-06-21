@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import colors from './colors';
+import breakpoints from './breakpoints';
 
 export const Button = styled.button`
     display: inline-block;
@@ -58,9 +59,18 @@ export const Button = styled.button`
 export const CtaButton = styled( Button )`
     background: ${ colors.buttons.cta };
     color: ${ colors.white };
-    font-size: 1.5em;
     border-radius: 30px;
     padding: 20px 40px;
+    text-transform: uppercase;
+    font-size: 1.45em;
+    
+    @media(min-width: ${ breakpoints.tabletSmall }){
+        font-size: 1.70em;
+    }
+    
+    @media(min-width: ${ breakpoints.tabletSmall }){
+        font-size: 1.20em;
+    }
     
     &.ripple {
           &.hidden{

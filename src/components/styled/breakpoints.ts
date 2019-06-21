@@ -3,6 +3,6 @@ export default {
     laptopSmall: '1220px',
     tabletBig:   '1024px',
     tabletSmall: '768px',
-    phoneBig:    '525px',
+    phoneBig:    '550px',
     phoneSmall:  '420px'
 }
