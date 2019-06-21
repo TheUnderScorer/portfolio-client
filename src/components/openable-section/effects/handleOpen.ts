@@ -13,6 +13,6 @@ export default ( wrapper: HTMLDivElement ) => {
 
     setTimeout( () => {
         wrapper.classList.add( 'with-bg' );
-    }, 1000 );
+    }, 600 );
 
 }

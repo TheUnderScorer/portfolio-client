@@ -56,7 +56,7 @@ const OpenableSection = ( { children, isOpen = false, relativeTo }: Props ) => {
 
         if ( isOpen ) {
             positionToRelativeItem( wrapperRef.current, relativeTo );
-            setTimeout( () => handleOpen( wrapperRef.current ), 300 );
+            setTimeout( () => handleOpen( wrapperRef.current ), 100 );
         }
 
     }, [ isOpen, relativeTo, wrapperRef ] );
