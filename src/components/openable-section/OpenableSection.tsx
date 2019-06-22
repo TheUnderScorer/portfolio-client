@@ -1,12 +1,11 @@
 import * as React from 'react';
 import { MutableRefObject, useEffect, useRef } from 'react';
 import Props from './types/OpenableSectionProps';
-import * as ReactDOM from 'react-dom';
 import handleOpen from './effects/handleOpen';
 import positionToRelativeItem from './effects/positionToRelativeItem';
 import { Openable } from './styled';
 
-const OpenableSection = ( { children, isOpen = false, relativeTo, onOpen }: Props ) => {
+const OpenableSection = ( { children, isOpen = false, relativeTo, onOpen, className }: Props ) => {
 
     const wrapperRef: MutableRefObject<HTMLDivElement | any> = useRef();
     const placeholderRef: MutableRefObject<HTMLDivElement | any> = useRef();
@@ -28,16 +27,13 @@ const OpenableSection = ( { children, isOpen = false, relativeTo, onOpen }: Prop
 
     }, [ isOpen, relativeTo, wrapperRef, placeholderRef, onOpen ] );
 
-    return ReactDOM.createPortal(
-        (
-            <Openable ref={ wrapperRef }>
-                <div ref={ placeholderRef } className="placeholder"/>
-                <div className="content">
-                    { children }
-                </div>
-            </Openable>
-        ),
-        document.querySelector( '#root' ) as HTMLElement
+    return (
+        <Openable className={ className } ref={ wrapperRef }>
+            <div ref={ placeholderRef } className="placeholder"/>
+            <div className="content">
+                { children }
+            </div>
+        </Openable>
     )
 };
 

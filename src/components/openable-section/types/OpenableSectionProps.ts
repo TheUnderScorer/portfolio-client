@@ -5,4 +5,5 @@ export default interface OpenableSectionProps extends ReactProps {
     relativeTo?: HTMLElement;
     onOpen?: () => any;
     onClose?: () => any;
+    className?: string;
 }

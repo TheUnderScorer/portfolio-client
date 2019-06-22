@@ -37,7 +37,7 @@ const HeroText = ( { onCtaClick, ctaRef }: Props ) => {
         };
 
         dispatch( action );
-    }, [] );
+    }, [ dispatch ] );
 
     useEffect( () => {
 

@@ -3,15 +3,29 @@ import HomeReducer, { HomeReducerHandler } from '../types/reducers/HomeReducer';
 import { HomeActions } from '../types/actions/HomeActions';
 
 const initialState: HomeReducer = {
-    didHeroWrote: false,
+    didHeroWrote:   false,
+    currentSection: '',
+    innerActive:    false,
 };
 
 const handlers: HomeReducerHandler = {
-    SetHeroWrote: ( state, didHeroWrote: boolean ) => {
+    SetHeroWrote:      ( state, didHeroWrote: boolean ) => {
         return {
             ...state,
             didHeroWrote
         }
+    },
+    SetCurrentSection: ( state, currentSection: string ) => {
+        return {
+            ...state,
+            currentSection
+        }
+    },
+    SetInnerActive:    ( state, innerActive: boolean ) => {
+        return {
+            ...state,
+            innerActive
+        };
     }
 };
 

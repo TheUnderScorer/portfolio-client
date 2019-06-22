@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { MutableRefObject, useCallback, useRef, useState } from 'react';
-import { connect, useSelector } from 'react-redux';
+import { lazy, MutableRefObject, Suspense, useCallback, useRef } from 'react';
+import { connect, useDispatch, useSelector } from 'react-redux';
 import HomeStore from '../types/stores/HomeStore';
 import styled, { ThemeProvider } from 'styled-components';
 import HeroImage from '../components/hero-image/HeroImage';
@@ -8,9 +8,18 @@ import Landscape from '../assets/landscape.jpg';
 import 'react-typist/dist/Typist.css';
 import HeroText from '../components/hero-text/HeroText';
 import OpenableSection from '../components/openable-section/OpenableSection';
-import AboutMe from '../components/about-me/AboutMe';
+import Header from '../components/header/Header';
+import { SetInnerActive } from '../types/actions/HomeActions';
+
+const AboutMe = lazy( () => import('../components/about-me/AboutMe') );
 
 const HomeWrapper = styled.div`
+`;
+
+const InnerSection = styled( OpenableSection )`
+    &.active{
+        padding-top: 180px;
+    }
 `;
 
 const Home = () => {
@@ -18,21 +27,34 @@ const Home = () => {
     const theme = useSelector( ( store: HomeStore ) => store.theme );
     const heroCtaRef: MutableRefObject<HTMLButtonElement | undefined> = useRef();
 
-    const [ isOpenSection, setOpenSection ] = useState( false );
+    const innerActive = useSelector( ( store: HomeStore ) => store.home.innerActive );
+
+    const dispatch = useDispatch();
 
     const toggleSection = useCallback( () => {
-        setOpenSection( !isOpenSection );
-    }, [ isOpenSection ] );
+
+        const action: SetInnerActive = {
+            type:    'SetInnerActive',
+            payload: !innerActive
+        };
+        dispatch( action );
+
+    }, [ innerActive ] );
 
     return (
-        <ThemeProvider theme={ theme }>
+        <ThemeProvider theme={ { mode: theme.mode } }>
             <HomeWrapper className="home">
+                <Header/>
                 <HeroImage src={ Landscape }>
                     <HeroText ctaRef={ heroCtaRef } onCtaClick={ toggleSection }/>
-                    <OpenableSection relativeTo={ heroCtaRef.current } isOpen={ isOpenSection }>
-                        <AboutMe/>
-                    </OpenableSection>
                 </HeroImage>
+                <InnerSection relativeTo={ heroCtaRef.current } isOpen={ innerActive }>
+                    <Suspense fallback={ <div/> }>
+                        { innerActive &&
+                          <AboutMe/>
+                        }
+                    </Suspense>
+                </InnerSection>
             </HomeWrapper>
         </ThemeProvider>
     )
