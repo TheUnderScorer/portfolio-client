@@ -9,7 +9,7 @@ const AboutMeWrapper = styled( HomeSection )`
 
 const AboutMe = () => {
     return (
-        <AboutMeWrapper>
+        <AboutMeWrapper centered={ true }>
             <div>
                 <SectionTitle>
                     About

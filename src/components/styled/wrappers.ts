@@ -1,4 +1,6 @@
 import styled from 'styled-components';
+import { HomeSectionProps } from './types';
+import colors from './colors';
 
 export const Main = styled.main`
    
@@ -8,7 +10,9 @@ export const FullWidth = styled.div`
     width: 100%;
 `;
 
-export const HomeSection = styled.section`
+export const HomeSection = styled.section<HomeSectionProps>`
     padding: 20px;
     width: 100%;
+    text-align: ${ props => props.centered ? 'center' : 'left' }
+    background-color : ${ props => props.theme.mode === 'black' ? colors.dark : colors.lightBg }
 `;

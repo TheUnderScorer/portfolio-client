@@ -26,5 +26,6 @@ export const SectionTitle = styled( H2 )`
     border-bottom: 6px solid ${ colors.lightBlue };
     color: ${ props => props.theme.mode === 'black' ? colors.white : colors.dark }
     padding-bottom: 5px;
-    text-transform: uppercase;
+    margin-bottom: 40px;
+    font-weight: 600;
 `;
