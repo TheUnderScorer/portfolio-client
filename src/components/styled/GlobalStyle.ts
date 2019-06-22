@@ -2,6 +2,11 @@ import { createGlobalStyle } from 'styled-components';
 import breakpoints from './breakpoints';
 
 const GlobalStyle = createGlobalStyle`
+    html, body {
+        max-height: 100%;
+        overflow: auto;
+    }
+
     #root {
          font-family: "Open Sans", serif;
          font-size: 16px;

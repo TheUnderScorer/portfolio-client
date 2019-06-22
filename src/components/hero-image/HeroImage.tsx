@@ -1,10 +1,8 @@
 import * as React from 'react';
-import { useEffect, useState } from 'react';
 import Props from './types/HeroImageProps';
 import styled from 'styled-components';
 import breakpoints from '../styled/breakpoints';
 import { connect } from 'react-redux';
-import usePrevious from '../../hooks/usePrevious';
 import colors from '../styled/colors';
 
 const HeroContainer = styled.section`
@@ -24,9 +22,11 @@ const HeroContainer = styled.section`
         object-fit: cover;
         filter: brightness(0.7);
         transition: opacity .3s linear;
+        position: absolute;
         
         &.faded {
             opacity: 0;
+            visibility: hidden;
         }
     }
 `;
@@ -41,47 +41,13 @@ const HeroChildren = styled.div`
     }
 `;
 
-const HeroImage = ( { src, children }: Props ) => {
-
-    const [ faded, setFaded ] = useState( false );
-
-    const prevSrc = usePrevious( src );
-
-    const [ actualSrc, setActualSrc ] = useState( src );
-
-    useEffect( () => {
-
-        if ( !prevSrc || prevSrc === src ) {
-            return;
-        }
-
-        setFaded( true );
-    }, [ src, prevSrc ] );
-
-    useEffect( () => {
-
-        if ( !faded ) {
-            return;
-        }
-
-        const srcTimeout = setTimeout( () => {
-            setActualSrc( src );
-        }, 200 );
-
-        const fadeTimeout = setTimeout( () => {
-            setFaded( false );
-        }, 400 );
-
-        return () => {
-            clearTimeout( srcTimeout );
-            clearTimeout( fadeTimeout );
-        }
-
-    }, [ faded ] );
+const HeroImage = ( { srcs, activeSrc, children }: Props ) => {
 
     return (
         <HeroContainer className="hero">
-            <img className={ faded ? 'faded' : '' } src={ actualSrc } alt=""/>
+            { srcs.map( ( src, index ) =>
+                <img key={ index } className={ index !== activeSrc ? 'faded' : '' } src={ src } alt=""/>
+            ) }
             <HeroChildren>
                 { children }
             </HeroChildren>

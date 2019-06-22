@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { lazy, MutableRefObject, Suspense, useCallback, useRef } from 'react';
+import { lazy, MutableRefObject, Suspense, useCallback, useEffect, useRef } from 'react';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import HomeStore from '../types/stores/HomeStore';
 import styled, { ThemeProvider } from 'styled-components';
@@ -42,11 +42,21 @@ const Home = () => {
 
     }, [ innerActive ] );
 
+    useEffect( () => {
+
+        const html = document.querySelector( 'html' ) as HTMLElement;
+
+        innerActive ?
+            html.style.overflow = 'auto' :
+            html.style.overflow = 'hidden'
+
+    }, [ innerActive ] );
+
     return (
         <ThemeProvider theme={ { mode: theme.mode } }>
             <HomeWrapper className="home">
                 <Header/>
-                <HeroImage src={ theme.mode === 'white' ? Landscape : LandscapeNight }>
+                <HeroImage srcs={ [ Landscape, LandscapeNight ] } activeSrc={ theme.mode === 'black' ? 1 : 0 }>
                     <HeroText ctaRef={ heroCtaRef } onCtaClick={ toggleSection }/>
                 </HeroImage>
                 <InnerSection relativeTo={ heroCtaRef.current } isOpen={ innerActive }>
