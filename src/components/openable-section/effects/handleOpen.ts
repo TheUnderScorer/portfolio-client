@@ -12,17 +12,17 @@ export default ( wrapper: HTMLDivElement, placeholder: HTMLElement, onOpen?: () 
     wrapper.style.margin = '0';
     wrapper.style.borderRadius = '0';
 
-    setTimeout( () => {
-        wrapper.classList.add( 'with-bg' );
+    return [
+        setTimeout( () => {
+            wrapper.classList.add( 'with-bg' );
+        }, 600 ),
+        setTimeout( () => {
+            wrapper.classList.add( 'active' );
 
-    }, 600 );
-
-    setTimeout( () => {
-        wrapper.classList.add( 'active' );
-
-        if ( onOpen ) {
-            onOpen();
-        }
-    }, 1000 );
+            if ( onOpen ) {
+                onOpen();
+            }
+        }, 1000 )
+    ]
 
 }
