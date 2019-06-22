@@ -5,6 +5,7 @@ import HomeStore from '../types/stores/HomeStore';
 import styled, { ThemeProvider } from 'styled-components';
 import HeroImage from '../components/hero-image/HeroImage';
 import Landscape from '../assets/landscape.jpg';
+import LandscapeNight from '../assets/landscape-night.jpg';
 import 'react-typist/dist/Typist.css';
 import HeroText from '../components/hero-text/HeroText';
 import OpenableSection from '../components/openable-section/OpenableSection';
@@ -45,7 +46,7 @@ const Home = () => {
         <ThemeProvider theme={ { mode: theme.mode } }>
             <HomeWrapper className="home">
                 <Header/>
-                <HeroImage src={ Landscape }>
+                <HeroImage src={ theme.mode === 'white' ? Landscape : LandscapeNight }>
                     <HeroText ctaRef={ heroCtaRef } onCtaClick={ toggleSection }/>
                 </HeroImage>
                 <InnerSection relativeTo={ heroCtaRef.current } isOpen={ innerActive }>
