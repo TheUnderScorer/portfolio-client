@@ -77,7 +77,7 @@ const HeroText = ( { onCtaClick, ctaRef }: Props ) => {
                 </Headline>
             </Typist>
             <CtaWrapper>
-                <Cta ref={ ctaRef } onClick={ onCtaClick } className={ `${ ctaVisible ? '' : 'hidden' } ${ ctaRotated ? 'rotated' : '' } ripple with-icon flat` }>
+                <Cta withIcon={ true } ripple={ true } flat={ true } ref={ ctaRef } onClick={ onCtaClick } className={ `${ ctaVisible ? '' : 'hidden' } ${ ctaRotated ? 'rotated' : '' }` }>
                     <FontAwesomeIcon icon="arrow-down"/>
                     About me
                 </Cta>

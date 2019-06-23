@@ -1,8 +1,9 @@
 import styled from 'styled-components';
 import colors from './colors';
 import breakpoints from './breakpoints';
+import { ButtonProps } from './types';
 
-export const Button = styled.button`
+export const Button = styled.button<ButtonProps>`
     display: inline-block;
     border: none;
     color: ${ colors.white };
@@ -16,15 +17,17 @@ export const Button = styled.button`
     position: relative;
     transition: all .3s;
     
-    &.flat {
-        box-shadow: none;
-    }
+    ${ props => props.flat && `
+         box-shadow: none;
+         background-color: transparent;
+    ` }
     
-    &.with-icon{
+    
+    ${ props => props.withIcon && `
         svg, i {
-            margin-right: 15px;
+            margin-right: 10px;
         }
-    }
+    ` }
     
      &::before {
           content: "";
@@ -42,7 +45,7 @@ export const Button = styled.button`
           opacity: 1;
      }
     
-   &.ripple {
+   ${ props => props.ripple && `
       position: relative;
       overflow: hidden;
       transform: translate3d(0, 0, 0);
@@ -69,11 +72,11 @@ export const Button = styled.button`
           opacity: .3;
           transition: 0s;
         }
-   }
+   ` }
 `;
 
 export const CtaButton = styled( Button )`
-    background: ${ colors.buttons.cta };
+    background-color: ${ colors.buttons.cta };
     color: ${ colors.white };
     border-radius: 30px;
     padding: 20px 40px;

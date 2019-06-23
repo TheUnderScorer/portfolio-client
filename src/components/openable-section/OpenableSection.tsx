@@ -49,6 +49,10 @@ const OpenableSection = ( { children, isOpen = false, relativeTo, onOpen, classN
                             classList.push( 'active' );
 
                             setClassList( classList );
+
+                            if ( onOpen ) {
+                                onOpen();
+                            }
                         }, 1000 )
                     );
 
@@ -61,8 +65,6 @@ const OpenableSection = ( { children, isOpen = false, relativeTo, onOpen, classN
         }
 
     }, [ isOpen, relativeTo, wrapperRef, placeholderRef, onOpen, wasOpen, classList ] );
-
-    console.log( { classList } );
 
     return (
         <Openable className={ classList.join( ' ' ) } ref={ wrapperRef }>

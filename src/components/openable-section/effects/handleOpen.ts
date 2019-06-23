@@ -18,6 +18,7 @@ export default ( wrapper: HTMLDivElement, placeholder: HTMLElement, onOpen?: () 
         }, 600 ),
         setTimeout( () => {
             wrapper.classList.add( 'active' );
+            wrapper.removeAttribute( 'style' );
 
             if ( onOpen ) {
                 onOpen();
