@@ -7,6 +7,11 @@ export const Text = styled.span`
     color: ${ props => props.theme.mode === 'black' ? colors.white : colors.lightDark };
 `;
 
+export const SmallText = styled.small`
+    font-size: 0.8em;  
+    color: ${ props => props.theme.mode === 'black' ? colors.white : colors.lightDark };
+`;
+
 export const H1 = styled.h1`
     font-size: 3.5em;
     font-weight: 500;

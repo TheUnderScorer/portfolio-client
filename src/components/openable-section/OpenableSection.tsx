@@ -5,6 +5,8 @@ import handleOpen from './effects/handleOpen';
 import positionToRelativeItem from './effects/positionToRelativeItem';
 import { Openable } from './styled';
 import usePrevious from '../../hooks/usePrevious';
+import handleClose from './effects/handleClose';
+import { removeItems } from '../../utils/array';
 
 const OpenableSection = ( { children, isOpen = false, relativeTo, onOpen, className = '' }: Props ) => {
 
@@ -59,9 +61,29 @@ const OpenableSection = ( { children, isOpen = false, relativeTo, onOpen, classN
                 }, 100 )
             );
 
-            return () => {
-                timeouts.forEach( timeout => clearTimeout( timeout ) );
-            }
+        } else if ( !isOpen && wasOpen ) {
+
+            timeouts.push(
+                setTimeout( () => {
+
+                    const closeTimeouts = handleClose( wrapperRef.current, placeholderRef.current );
+                    positionToRelativeItem( wrapperRef.current, placeholderRef.current, relativeTo );
+
+                    timeouts.concat( closeTimeouts );
+
+                    timeouts.push( setTimeout( () => {
+                        setClassList(
+                            removeItems( classList, [ 'active', 'with-bg', 'placeholder-hidden', 'animated' ] )
+                        );
+                    }, 1000 ) );
+
+                }, 300 )
+            );
+
+        }
+
+        return () => {
+            timeouts.forEach( timeout => clearTimeout( timeout ) );
         }
 
     }, [ isOpen, relativeTo, wrapperRef, placeholderRef, onOpen, wasOpen, classList ] );

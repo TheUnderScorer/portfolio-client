@@ -2,6 +2,8 @@ import * as React from 'react';
 import { ChangeEventHandler, useCallback, useEffect, useState } from 'react';
 import {
     HeaderWrapper,
+    InnerCaption,
+    LogoWrapper,
     Navigation,
     NavigationLink,
     NavigationList,
@@ -10,11 +12,13 @@ import {
 } from './styled';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import HomeStore from '../../types/stores/HomeStore';
-import { SetCurrentSection } from '../../types/actions/HomeActions';
+import { SetCurrentSection, SetDidInnerOpen, SetInnerActive } from '../../types/actions/HomeActions';
 import Switch from '@material/react-switch';
 import '@material/react-switch/dist/switch.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { SetThemeMode } from '../../types/actions/ThemeActions';
+import Me from '../../assets/me.jpg';
+import { SmallText, Text } from '../styled/typography';
 
 const Header = () => {
 
@@ -58,8 +62,40 @@ const Header = () => {
 
     }, [ innerActive ] );
 
+    const handleLogoClick = useCallback( () => {
+
+        if ( !innerActive ) {
+            return;
+        }
+
+        const innerAction: SetInnerActive = {
+            type:    'SetInnerActive',
+            payload: false
+        };
+
+        const didOpenAction: SetDidInnerOpen = {
+            type:    'SetDidInnerOpen',
+            payload: false
+        };
+
+        dispatch( innerAction );
+        dispatch( didOpenAction );
+
+    }, [ innerActive ] );
+
     return (
         <HeaderWrapper transparent={ transparent }>
+            <LogoWrapper onClick={ handleLogoClick }>
+                <img src={ Me } alt=""/>
+                <InnerCaption>
+                    <Text>
+                        Przemysław Żydek
+                    </Text>
+                    <SmallText>
+                        Full-stack developer
+                    </SmallText>
+                </InnerCaption>
+            </LogoWrapper>
             <Navigation>
                 <NavigationList>
                     <NavigationListItem>

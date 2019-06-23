@@ -6,14 +6,39 @@ export const HeaderWrapper = styled.header<HeaderProps>`
     position: absolute;
     width: 100%;
     z-index: 3;
-    color: ${ props => props.transparent ? colors.white : ( props.theme.mode === 'black' ? colors.white : colors.dark ) };
     background-color: ${ props => props.transparent ? 'transparent' : ( props.theme.mode === 'black' ? colors.dark : colors.lightBg ) };
     transition: all .3s;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 10em;
+    
+    &, span, small {
+        color: ${ props => props.transparent ? colors.white : ( props.theme.mode === 'black' ? colors.white : colors.dark ) };
+    }
 `;
 
 export const Navigation = styled.nav`
-    margin-right: 80px;
     padding: 20px 0;
+`;
+
+export const LogoWrapper = styled.a`
+    padding: 25px 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+
+    img {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+    }
+
+`;
+
+export const InnerCaption = styled.div`
+    display: flex;
+    flex-direction: column;
+    margin-left: 10px;
 `;
 
 export const NavigationList = styled.ul`
