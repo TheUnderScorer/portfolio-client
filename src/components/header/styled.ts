@@ -10,7 +10,7 @@ export const HeaderWrapper = styled.header<HeaderProps>`
     transition: all .3s;
     display: flex;
     justify-content: space-between;
-    padding: 0 10em;
+    padding: 0 6em;
     
     &, span, small {
         color: ${ props => props.transparent ? colors.white : ( props.theme.mode === 'black' ? colors.white : colors.dark ) };

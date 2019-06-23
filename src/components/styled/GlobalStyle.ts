@@ -4,7 +4,7 @@ import breakpoints from './breakpoints';
 const GlobalStyle = createGlobalStyle`
     html, body {
         max-height: 100%;
-        overflow: auto;
+        overflow: hidden auto;
     }
 
     #root {
@@ -12,11 +12,11 @@ const GlobalStyle = createGlobalStyle`
          font-size: 16px;
     
          @media(max-width: ${ breakpoints.tabletBig }){
-             font-size: 12px;
+             font-size: 14px;
          }
     
          @media(max-width: ${ breakpoints.phoneBig }){
-             font-size: 10px;
+             font-size: 12px;
          }
     }
 `;

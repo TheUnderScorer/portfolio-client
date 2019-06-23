@@ -52,6 +52,11 @@ const Home = () => {
 
     }, [ innerActive, dispatch ] );
 
+    // Fix for page staying at bottom after being reloaded in inner section sometimes
+    useEffect( () => {
+        window.scrollTo( 0, 0 );
+    }, [] );
+
     useEffect( () => {
 
         const html = document.querySelector( 'html' ) as HTMLElement;

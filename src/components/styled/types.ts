@@ -14,3 +14,9 @@ export interface ButtonProps {
     withIcon?: boolean;
     ripple?: boolean;
 }
+
+export interface RoundImageProps {
+    width: string | number;
+    height: string | number;
+    maxWidth?: string | number;
+}

@@ -3,6 +3,9 @@ import colors from '../styled/colors';
 import { SideSectionDetailsProps, SideSectionProps } from './types';
 import { H3 } from '../styled/typography';
 import { Button } from '../styled/buttons';
+import breakpoints from '../styled/breakpoints';
+
+const breakpoint = parseInt( breakpoints.tabletSmall, 10 ) - 1 + 'px';
 
 const mainColor = ( _props: any = null ) => {
     return colors.primary;
@@ -11,6 +14,10 @@ const mainColor = ( _props: any = null ) => {
 export const HelpingListWrapper = styled.div`
     display: flex;
     justify-content: center;
+    
+    @media(max-width: ${ breakpoint }){
+        flex-wrap: wrap;  
+    }
 `;
 
 export const Line = styled.div`
@@ -20,6 +27,10 @@ export const Line = styled.div`
     background-repeat: repeat-y;
     width: 5px;
     position: relative;
+    
+    @media(max-width: ${ breakpoint }){
+        display: none;
+    }
     
     &::before {
            width: 10px;
@@ -38,6 +49,15 @@ export const Line = styled.div`
 
 const Side = styled.div`
     width: 35%;
+    
+    @media(max-width: ${ breakpoint }){
+        width: 100%;
+        text-align: center !important;
+        
+        .side-section {
+            flex-wrap: wrap;
+        }
+    }
     
     .side-section {
         display: flex;
@@ -71,38 +91,44 @@ export const SideSection = styled.div<SideSectionProps>`
         position: relative;
         background: ${ props => props.theme.mode === 'black' ? colors.black : colors.white };
         z-index: 2;
+        
+        @media(max-width: ${ breakpoint }){
+            width: 100%;
+        }
     }
     
     .icon-container {
         transition: all .3s;
     }
     
-    &::after{
-        display: block;
-        content: '';
-        height: 5px;
-        width: 100%;
-        position: absolute;
-        top: 50px;
-        z-index: 1; 
-        background-image: linear-gradient(-90deg, ${ props => mainColor( props ) } 65%, transparent 0%);
-        background-position: top;
-        background-size: 20px 4px;
-        background-repeat: repeat-x;
-    }
-    
-    &::before{
-        width: 15px;
-        height: 15px;
-        display: ${ props => props.theme.mode === 'black' ? colors.dark : colors.white };;
-        content: '';
-        position: absolute;
-        background: ${ props => mainColor( props ) };
-        z-index: 3;
-        right: -14px;
-        border-radius: 50%;
-        top: 41px;
-        border: 4px solid ${ props => props.theme.mode === 'black' ? colors.black : colors.white };
+    @media(min-width: ${ breakpoint }){
+        &::after{
+            display: block;
+            content: '';
+            height: 5px;
+            width: 100%;
+            position: absolute;
+            top: 50px;
+            z-index: 1; 
+            background-image: linear-gradient(-90deg, ${ props => mainColor( props ) } 65%, transparent 0%);
+            background-position: top;
+            background-size: 20px 4px;
+            background-repeat: repeat-x;
+        }
+        
+        &::before{
+            width: 15px;
+            height: 15px;
+            display: ${ props => props.theme.mode === 'black' ? colors.dark : colors.white };;
+            content: '';
+            position: absolute;
+            background: ${ props => mainColor( props ) };
+            z-index: 3;
+            right: -14px;
+            border-radius: 50%;
+            top: 41px;
+            border: 4px solid ${ props => props.theme.mode === 'black' ? colors.black : colors.white };
+        }
     }
     
     ${ props => !props.loaded && `

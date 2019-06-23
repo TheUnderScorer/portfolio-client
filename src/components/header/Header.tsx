@@ -64,6 +64,13 @@ const Header = () => {
 
     const handleLogoClick = useCallback( () => {
 
+        const sectionAction: SetCurrentSection = {
+            type:    'SetCurrentSection',
+            payload: ''
+        };
+
+        dispatch( sectionAction );
+
         if ( !innerActive ) {
             return;
         }
