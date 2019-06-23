@@ -5,7 +5,7 @@ import { ButtonProps } from './types';
 
 export const Button = styled.button<ButtonProps>`
     display: inline-block;
-    border: none;
+
     background: ${ props => props.theme.mode === 'black' ? colors.darkBlue : colors.primary };
     background-position: center;
     font-size: 0.9em;
@@ -15,10 +15,20 @@ export const Button = styled.button<ButtonProps>`
     outline: none;
     position: relative;
     transition: all .3s;
+    border: 2px solid transparent;
     
-    &, *{
+    &, * {
         color: ${ colors.white };
     }
+    
+    ${ props => props.transparent && `
+        background: transparent;
+        border: 2px solid ${ props.theme.mode === 'black' ? colors.darkBlue : colors.primary };
+        
+        &, * {
+          
+        }
+    ` }
     
     ${ props => props.flat && `
          box-shadow: none;

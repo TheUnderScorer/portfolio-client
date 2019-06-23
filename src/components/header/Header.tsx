@@ -19,6 +19,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { SetThemeMode } from '../../types/actions/ThemeActions';
 import Me from '../../assets/me.jpg';
 import { SmallText, Text } from '../styled/typography';
+import { RoundButton } from '../styled/buttons';
 
 const Header = () => {
 
@@ -116,9 +117,9 @@ const Header = () => {
                         </NavigationLink>
                     </NavigationListItem>
                     <NavigationListItem>
-                        <NavigationLink onClick={ setSection( 'contact' ) } active={ currentSection === 'contact' }>
-                            Contact
-                        </NavigationLink>
+                        <RoundButton flat={ true } ripple={ true } onClick={ setSection( 'contact' ) }>
+                            Hire me!
+                        </RoundButton>
                     </NavigationListItem>
                     <NavigationListItem>
                         <SwitchContainer>

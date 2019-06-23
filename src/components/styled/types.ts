@@ -13,6 +13,7 @@ export interface ButtonProps {
     flat?: boolean;
     withIcon?: boolean;
     ripple?: boolean;
+    transparent?: boolean;
 }
 
 export interface RoundImageProps {
