@@ -6,7 +6,7 @@ import { ButtonProps } from './types';
 export const Button = styled.button<ButtonProps>`
     display: inline-block;
 
-    background: ${ props => props.theme.mode === 'black' ? colors.darkBlue : colors.primary };
+    background: ${ colors.primary };
     background-position: center;
     font-size: 0.9em;
     padding: 10px 20px;

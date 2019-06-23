@@ -125,6 +125,7 @@ const Header = () => {
                         <SwitchContainer>
                             <FontAwesomeIcon icon="sun"/>
                             <Switch
+                                className="theme-mode-switch"
                                 onChange={ handleToggle }
                                 checked={ mode === 'black' }
                             />

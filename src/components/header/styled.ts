@@ -85,4 +85,11 @@ export const SwitchContainer = styled.div`
     align-items: center;
     width: 88px;
     justify-content: space-between;
+    
+    
+    .theme-mode-switch {
+        .mdc-switch:not(.mdc-switch--checked) .mdc-switch__track, .mdc-switch__thumb-underlay::before, .mdc-switch__thumb-underlay::after, .mdc-switch__thumb {
+            background-color: ${ colors.primary } !important;
+        }
+    }
 `;
