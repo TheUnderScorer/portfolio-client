@@ -4,13 +4,17 @@ import { SideSectionDetailsProps, SideSectionProps } from './types';
 import { H3 } from '../styled/typography';
 import { Button } from '../styled/buttons';
 
+const mainColor = ( _props: any = null ) => {
+    return colors.primary;
+};
+
 export const HelpingListWrapper = styled.div`
     display: flex;
     justify-content: center;
 `;
 
 export const Line = styled.div`
-    background-image: linear-gradient(0deg, ${ colors.lightBlue } 65%, transparent 0%);
+    background-image: linear-gradient(0deg, ${ props => mainColor( props ) }, 65%, transparent 0%);
     background-position: top;
     background-size: 4px 20px;
     background-repeat: repeat-y;
@@ -28,7 +32,7 @@ export const Line = styled.div`
            border-radius: 50%;
            top: 2px;
            right: -7px;
-           border: 4px solid ${ colors.lightBlue };
+           border: 4px solid ${ props => mainColor( props ) };
     }
 `;
 
@@ -81,7 +85,7 @@ export const SideSection = styled.div<SideSectionProps>`
         position: absolute;
         top: 50px;
         z-index: 1; 
-        background-image: linear-gradient(-90deg, ${ colors.lightBlue } 65%, transparent 0%);
+        background-image: linear-gradient(-90deg, ${ props => mainColor( props ) } 65%, transparent 0%);
         background-position: top;
         background-size: 20px 4px;
         background-repeat: repeat-x;
@@ -93,7 +97,7 @@ export const SideSection = styled.div<SideSectionProps>`
         display: ${ props => props.theme.mode === 'black' ? colors.dark : colors.white };;
         content: '';
         position: absolute;
-        background: ${ colors.lightBlue };
+        background: ${ props => mainColor( props ) };
         z-index: 3;
         right: -14px;
         border-radius: 50%;
@@ -101,35 +105,40 @@ export const SideSection = styled.div<SideSectionProps>`
         border: 4px solid ${ props => props.theme.mode === 'black' ? colors.black : colors.white };
     }
     
+    ${ props => !props.loaded && `
+        .icon-container {
+            transform: scale(0);
+        }
+    ` }
+    
     ${ props => {
-
     if ( props.open ) {
         return `
-                .icon-container {
-                    background-color: ${ colors.lightBlue }
-                    color: ${ colors.white }
-                }
-                
-                button svg {
-                    transform: rotate(45deg);
-                }
-            `;
+                    .icon-container {
+                        background-color: ${ mainColor( props ) }
+                        color: ${ colors.white }
+                    }
+                    
+                    button svg {
+                        transform: rotate(45deg);
+                    }
+                `;
     }
 
     return `
-        .section-details {
-            height: 0;
-        }
-        
-        button {
-            margin-top: 0;
-        }
-    `;
+            .section-details {
+                height: 0;
+            }
+            
+            button {
+                margin-top: 0;
+            }
+        `;
 
 } }
 `;
 
-export const SideSectionIconContainer = styled.div`
+export const SideSectionIconContainer = styled.a`
     height: 2.5em;
     width: 2.5em;
     display: inline-flex;
@@ -139,19 +148,20 @@ export const SideSectionIconContainer = styled.div`
     justify-content: center;
     color: ${ props => props.theme.mode === 'black' ? colors.white : colors.dark };
     font-size: 3em;
+    cursor: pointer;
 `;
 
 export const SideSectionTitle = styled( H3 )`
-    font-size: 2em;
+    font-size: 1.80em;
     display: block;
     margin-bottom: 20px;
     margin-top: 20px;
+    color: ${ props => props.theme.mode === 'black' ? colors.white : colors.black }
 `;
 
 export const ReadMoreButton = styled( Button )`
     margin-top: 20px;
-    color: ${ props => props.theme.mode === 'black' ? colors.white : colors.dark };
-    font-size: 1em;
+    background-color: ${ props => mainColor( props ) };
     
     svg {
         transition: all 0.75s cubic-bezier(0.175, 0.885, 0.32, 1.275);

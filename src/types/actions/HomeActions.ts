@@ -12,4 +12,8 @@ export interface SetInnerActive extends Action<'SetInnerActive'> {
     payload: boolean;
 }
 
-export type HomeActions = SetHeroWrote | SetCurrentSection | any;
+export interface SetDidInnerOpen extends Action<'SetDidInnerOpen'> {
+    payload: boolean;
+}
+
+export type HomeActions = SetHeroWrote | SetCurrentSection | SetDidInnerOpen | SetInnerActive;

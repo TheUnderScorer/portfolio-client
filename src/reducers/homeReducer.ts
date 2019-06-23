@@ -6,6 +6,7 @@ const initialState: HomeReducer = {
     didHeroWrote:   false,
     currentSection: '',
     innerActive:    false,
+    didInnerOpen:   false,
 };
 
 const handlers: HomeReducerHandler = {
@@ -26,16 +27,22 @@ const handlers: HomeReducerHandler = {
             ...state,
             innerActive
         };
+    },
+    SetDidInnerOpen:   ( state, didInnerOpen: boolean ) => {
+        return {
+            ...state,
+            didInnerOpen
+        }
     }
 };
 
-const homeReducer: Reducer<HomeReducer, HomeActions> = ( state: HomeReducer = initialState, action ) => {
+const homeReducer: Reducer<HomeReducer, HomeActions> = ( state: HomeReducer = initialState, action: any = {} ) => {
 
     if ( !action ) {
         return state;
     }
 
-    const { type } = action;
+    const { type } = action as HomeActions;
 
     if ( !type || !handlers[ type ] ) {
         return state;

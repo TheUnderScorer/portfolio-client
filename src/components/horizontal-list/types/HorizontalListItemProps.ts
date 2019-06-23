@@ -8,4 +8,5 @@ export default interface HorizontalListItemProps extends ReactProps {
     onButtonClick: MouseEventHandler;
     detailsHeight: string | number;
     marginTop?: number | string;
+    loaded?: boolean;
 }

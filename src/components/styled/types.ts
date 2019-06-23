@@ -5,6 +5,8 @@ export interface HomeSectionProps {
 
 export interface SectionTitleProps {
     underlined?: boolean;
+    hasSubtitle?: boolean;
+    uplined?: boolean;
 }
 
 export interface ButtonProps {

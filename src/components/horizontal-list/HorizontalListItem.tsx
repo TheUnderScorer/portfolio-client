@@ -4,11 +4,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Text } from '../styled/typography';
 import Props from './types/HorizontalListItemProps';
 
-const HorizontalListItem = ( { isActive, title, icon, children, onButtonClick, detailsHeight, marginTop }: Props ) => {
+const HorizontalListItem = ( { isActive, title, icon, children, onButtonClick, detailsHeight, marginTop, loaded = true }: Props ) => {
     return (
-        <SideSection className="side-section" open={ isActive } marginTop={ marginTop }>
+        <SideSection className="side-section" loaded={ loaded } open={ isActive } marginTop={ marginTop }>
             <div>
-                <SideSectionIconContainer className="icon-container">
+                <SideSectionIconContainer onClick={ onButtonClick } className="icon-container">
                     { icon }
                 </SideSectionIconContainer>
                 <SideSectionTitle>

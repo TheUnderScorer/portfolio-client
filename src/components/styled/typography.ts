@@ -31,10 +31,56 @@ export const H3 = styled.h3`
     color: ${ props => props.theme.mode === 'black' ? colors.white : colors.lightDark };
 `;
 
-export const SectionTitle = styled( H3 )<SectionTitleProps>`
-    border-bottom: ${ props => props.underlined ? ` 6px solid ${ colors.lightBlue }` : 'none' };
+export const H4 = styled.h4`
+    margin: 0;
+    font-size: 2em;
+    font-weight: 500;
+    display: inline-block;
+    color: ${ props => props.theme.mode === 'black' ? colors.white : colors.lightDark };
+`;
+
+export const SectionTitle = styled( H4 )<SectionTitleProps>`
     color: ${ props => props.theme.mode === 'black' ? colors.white : colors.dark }
     padding-bottom: 5px;
+    margin-bottom: ${ props => props.hasSubtitle ? '0' : '40px' };
+    font-weight: 500;
+    
+    ${ props => props.uplined && `
+        &::before{
+            content: '';
+            display: block;
+            width: 70%;
+            height: 3px;
+            background: ${ colors.primary };
+            position: relative;
+            margin: 0 auto;
+            bottom: 20px;
+            max-width: 40px;
+        }
+    ` }
+    
+    ${ props => props.underlined && `
+        position: relative;
+        margin-bottom: 60px;
+    
+        &::after{
+            display: inline-block;
+            content: '';
+            width: 70%;
+            height: 3px;
+            background: ${ colors.primary };
+            position: absolute;
+            left: 0;
+            right: 0;
+            margin: 0 auto;
+            bottom: -20px;
+            max-width: 40px
+        }
+    ` }
+`;
+
+export const SectionSubtitle = styled( Text )`
+    display: block;
     margin-bottom: 40px;
-    font-weight: 600;
+    font-size: 0.9em;
 `;

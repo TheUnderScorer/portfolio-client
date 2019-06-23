@@ -5,6 +5,7 @@ export default interface HomeReducer {
     didHeroWrote: boolean;
     currentSection: string;
     innerActive: boolean;
+    didInnerOpen: boolean;
 }
 
 export type HomeReducerHandler = {

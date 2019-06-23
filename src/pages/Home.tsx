@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { lazy, MutableRefObject, Suspense, useCallback, useEffect, useRef, useState } from 'react';
+import { lazy, MutableRefObject, Suspense, useCallback, useEffect, useRef } from 'react';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import HomeStore from '../types/stores/HomeStore';
 import styled, { ThemeProvider } from 'styled-components';
@@ -10,7 +10,7 @@ import 'react-typist/dist/Typist.css';
 import HeroText from '../components/hero-text/HeroText';
 import OpenableSection from '../components/openable-section/OpenableSection';
 import Header from '../components/header/Header';
-import { SetInnerActive } from '../types/actions/HomeActions';
+import { SetDidInnerOpen, SetInnerActive } from '../types/actions/HomeActions';
 import HomeWrapperProps from './types/HomeWrapperProps';
 
 const AboutMe = lazy( () => import('../components/about-me/AboutMe') );
@@ -38,10 +38,9 @@ const Home = () => {
     const heroCtaRef: MutableRefObject<HTMLButtonElement | undefined> = useRef();
 
     const innerActive = useSelector( ( store: HomeStore ) => store.home.innerActive );
+    const didOpen = useSelector( ( store: HomeStore ) => store.home.didInnerOpen );
 
     const dispatch = useDispatch();
-
-    const [ didOpen, setDidOpen ] = useState( false );
 
     const toggleSection = useCallback( () => {
 
@@ -64,9 +63,14 @@ const Home = () => {
     }, [ innerActive ] );
 
     const onOpen = useCallback( () => {
-        console.log( 'open' );
-        setDidOpen( true );
-    }, [] );
+
+        const action: SetDidInnerOpen = {
+            type:    'SetDidInnerOpen',
+            payload: true
+        };
+        dispatch( action );
+
+    }, [ dispatch ] );
 
     return (
         <ThemeProvider theme={ { mode: theme.mode } }>

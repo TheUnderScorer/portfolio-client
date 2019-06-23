@@ -5,7 +5,7 @@ import HorizontalListItem from './HorizontalListItem';
 import HorizontalListProps from './types/HorizontalListProps';
 import HorizontalListItemData from './types/HorizontalListItemData';
 
-const HorizontalList = ( { items }: HorizontalListProps ) => {
+const HorizontalList = ( { items, loaded = true }: HorizontalListProps ) => {
 
     const [ activeSection, setActiveSection ] = useState( '' );
 
@@ -38,6 +38,7 @@ const HorizontalList = ( { items }: HorizontalListProps ) => {
                 { leftItems.map( ( item, index ) =>
                     (
                         <HorizontalListItem
+                            loaded={ loaded }
                             key={ index }
                             title={ item.title }
                             icon={ item.icon }
@@ -55,6 +56,7 @@ const HorizontalList = ( { items }: HorizontalListProps ) => {
                 { rightItems.map( ( item, index ) =>
                     (
                         <HorizontalListItem
+                            loaded={ loaded }
                             key={ index }
                             marginTop={ index === 0 ? '40px' : '0' }
                             title={ item.title }

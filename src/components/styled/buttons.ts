@@ -6,8 +6,7 @@ import { ButtonProps } from './types';
 export const Button = styled.button<ButtonProps>`
     display: inline-block;
     border: none;
-    color: ${ colors.white };
-    background: ${ props => props.theme.mode === 'black' ? colors.darkBlue : colors.lightBlue };
+    background: ${ props => props.theme.mode === 'black' ? colors.darkBlue : colors.primary };
     background-position: center;
     font-size: 0.9em;
     padding: 10px 20px;
@@ -17,9 +16,12 @@ export const Button = styled.button<ButtonProps>`
     position: relative;
     transition: all .3s;
     
+    &, *{
+        color: ${ colors.white };
+    }
+    
     ${ props => props.flat && `
          box-shadow: none;
-         background-color: transparent;
     ` }
     
     
@@ -100,7 +102,7 @@ export const CtaButton = styled( Button )`
 
 export const DarkButton = styled( Button )`
     background: ${ colors.darkBlue };
-    color: ${ colors.lightBlue };
+    color: ${ colors.primary };
     font-weight: 600;
 `;
 

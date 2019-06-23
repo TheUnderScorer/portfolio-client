@@ -20,7 +20,7 @@ export const NameWrapper = styled.div`
 `;
 
 export const NameHighlight = styled.span`
-    color: ${ props => props.theme.mode === 'white' ? colors.pink : colors.lightBlue }
+    color: ${ props => props.theme.mode === 'white' ? colors.pink : colors.primary }
 `;
 
 export const CtaWrapper = styled( FullWidth )`
@@ -32,7 +32,7 @@ export const CtaWrapper = styled( FullWidth )`
 export const Cta = styled( CtaButton )`
     
     ${ props => props.theme.mode === 'black' &&
-                `background-color: ${ colors.lightBlue }`
+                `background-color: ${ colors.primary }`
     };
 
     svg{

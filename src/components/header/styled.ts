@@ -7,7 +7,7 @@ export const HeaderWrapper = styled.header<HeaderProps>`
     width: 100%;
     z-index: 3;
     color: ${ props => props.transparent ? colors.white : ( props.theme.mode === 'black' ? colors.white : colors.dark ) };
-    background-color: ${ props => props.transparent ? 'transparent' : ( props.theme.mode === 'black' ? colors.dark : colors.white ) };
+    background-color: ${ props => props.transparent ? 'transparent' : ( props.theme.mode === 'black' ? colors.dark : colors.lightBg ) };
     transition: all .3s;
 `;
 
@@ -40,7 +40,7 @@ export const NavigationLink = styled.a<NavigationLinkProps>`
         width: 100%;
         height: 4px;
         position: absolute;
-        background: ${ colors.lightBlue };
+        background: ${ colors.primary };
         transition: all .3s;
         transform: scale( ${ props => props.active ? '1' : '0' } );
         bottom: -15px;
