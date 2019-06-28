@@ -1,13 +1,12 @@
 import styled from 'styled-components';
 import { HeaderProps, NavigationLinkProps } from './types/styled';
-import colors from '../styled/colors';
+import colors, { getPrimary } from '../styled/colors';
 
 export const HeaderWrapper = styled.header<HeaderProps>`
     position: absolute;
     width: 100%;
     z-index: 3;
     background-color: ${ props => props.transparent ? 'transparent' : ( props.theme.mode === 'black' ? colors.dark : colors.lightBg ) };
-    transition: all .3s;
     display: flex;
     justify-content: space-between;
     padding: 0 6em;
@@ -65,7 +64,7 @@ export const NavigationLink = styled.a<NavigationLinkProps>`
         width: 100%;
         height: 4px;
         position: absolute;
-        background: ${ colors.primary };
+        background: ${ props => getPrimary( props.theme.mode ) };
         transition: all .3s;
         transform: scale( ${ props => props.active ? '1' : '0' } );
         bottom: -15px;
@@ -89,7 +88,7 @@ export const SwitchContainer = styled.div`
     
     .theme-mode-switch {
         .mdc-switch:not(.mdc-switch--checked) .mdc-switch__track, .mdc-switch__thumb-underlay::before, .mdc-switch__thumb-underlay::after, .mdc-switch__thumb {
-            background-color: ${ colors.primary } !important;
+            background-color: ${ props => getPrimary( props.theme.mode ) } !important;
         }
     }
 `;

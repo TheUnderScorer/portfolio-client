@@ -1,12 +1,12 @@
 import styled from 'styled-components';
-import colors from './colors';
+import colors, { getPrimary } from './colors';
 import breakpoints from './breakpoints';
 import { ButtonProps } from './types';
 
 export const Button = styled.button<ButtonProps>`
     display: inline-block;
 
-    background: ${ colors.primary };
+    background: ${ props => getPrimary( props.theme.mode ) };
     background-position: center;
     font-size: 0.9em;
     padding: 10px 20px;

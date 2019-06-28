@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import colors from '../styled/colors';
+import colors, { getPrimary } from '../styled/colors';
 import { SideSectionDetailsProps, SideSectionProps } from './types';
 import { H3 } from '../styled/typography';
 import { Button } from '../styled/buttons';
@@ -7,8 +7,8 @@ import breakpoints from '../styled/breakpoints';
 
 const breakpoint = parseInt( breakpoints.tabletSmall, 10 ) - 1 + 'px';
 
-const mainColor = ( _props: any = null ) => {
-    return colors.primary;
+const mainColor = ( props: any ) => {
+    return getPrimary( props.theme.mode );
 };
 
 export const HelpingListWrapper = styled.div`

@@ -12,6 +12,7 @@ import OpenableSection from '../components/openable-section/OpenableSection';
 import Header from '../components/header/Header';
 import { SetDidInnerOpen, SetInnerActive } from '../types/actions/HomeActions';
 import HomeWrapperProps from './types/HomeWrapperProps';
+import GlobalStyle from '../components/styled/GlobalStyle';
 
 const AboutMe = lazy( () => import('../components/about-me/AboutMe') );
 const HowCanIHelp = lazy( () => import('../components/how-can-i-help/HowCanIHelp') );
@@ -80,6 +81,7 @@ const Home = () => {
     return (
         <ThemeProvider theme={ { mode: theme.mode } }>
             <HomeWrapper innerActive={ didOpen } className="home">
+                <GlobalStyle/>
                 <Header/>
                 <HeroImage srcs={ [ Landscape, LandscapeNight ] } activeSrc={ theme.mode === 'black' ? 1 : 0 }>
                     <HeroText ctaRef={ heroCtaRef } onCtaClick={ toggleSection }/>

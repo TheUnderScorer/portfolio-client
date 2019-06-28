@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import colors from './colors';
+import colors, { getPrimary } from './colors';
 import { SectionTitleProps } from './types';
 
 export const Text = styled.span`
@@ -56,7 +56,7 @@ export const SectionTitle = styled( H4 )<SectionTitleProps>`
             display: block;
             width: 70%;
             height: 3px;
-            background: ${ colors.primary };
+            background: ${ getPrimary( props.theme.mode ) };
             position: relative;
             margin: 0 auto;
             bottom: 20px;
@@ -73,7 +73,7 @@ export const SectionTitle = styled( H4 )<SectionTitleProps>`
             content: '';
             width: 70%;
             height: 3px;
-            background: ${ colors.primary };
+            background: ${ getPrimary( props.theme.mode ) };
             position: absolute;
             left: 0;
             right: 0;

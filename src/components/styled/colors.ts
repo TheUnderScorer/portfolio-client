@@ -1,3 +1,5 @@
+import { ThemeMode } from '../../types/reducers/ThemeReducer';
+
 const colors = {
     buttons:      {
         mainBg: '#364366',
@@ -18,5 +20,9 @@ const colors = {
     lightDark:    '#797979'
 };
 colors.primary = colors.lightBlue;
+
+export const getPrimary = ( mode: ThemeMode ): string => {
+    return mode === 'black' ? colors.lightBlue : colors.pink;
+};
 
 export default colors;

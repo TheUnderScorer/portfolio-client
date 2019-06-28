@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import colors from '../styled/colors';
+import colors, { getPrimary } from '../styled/colors';
 import { FullWidth } from '../styled/wrappers';
 import { CtaButton } from '../styled/buttons';
 import breakpoints from '../styled/breakpoints';
@@ -20,7 +20,7 @@ export const NameWrapper = styled.div`
 `;
 
 export const NameHighlight = styled.span`
-    color: ${ props => props.theme.mode === 'white' ? colors.pink : colors.primary }
+    color: ${ props => getPrimary( props.theme.mode ) }
 `;
 
 export const CtaWrapper = styled( FullWidth )`
@@ -32,7 +32,7 @@ export const CtaWrapper = styled( FullWidth )`
 export const Cta = styled( CtaButton )`
     
     ${ props => props.theme.mode === 'black' &&
-                `background-color: ${ colors.primary }`
+                `background-color: ${ getPrimary( props.theme.mode ) }`
     };
 
     svg{
