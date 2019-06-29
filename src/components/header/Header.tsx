@@ -4,6 +4,7 @@ import {
     HeaderWrapper,
     InnerCaption,
     LogoWrapper,
+    MenuActivator,
     Navigation,
     NavigationLink,
     NavigationList,
@@ -20,6 +21,7 @@ import { SetThemeMode } from '../../types/actions/ThemeActions';
 import Me from '../../assets/me.jpg';
 import { SmallText, Text } from '../styled/typography';
 import { RoundButton } from '../styled/buttons';
+
 
 const Header = () => {
 
@@ -134,6 +136,9 @@ const Header = () => {
                     </NavigationListItem>
                 </NavigationList>
             </Navigation>
+            <MenuActivator flat={ true } transparent={ true }>
+                <FontAwesomeIcon icon="bars"/>
+            </MenuActivator>
         </HeaderWrapper>
     )
 };

@@ -17,7 +17,7 @@ const GlobalStyle = createGlobalStyle<any>`
          }
     
          @media(max-width: ${ breakpoints.phoneBig }){
-             font-size: 12px;
+             font-size: 14px;
          }
     }
     

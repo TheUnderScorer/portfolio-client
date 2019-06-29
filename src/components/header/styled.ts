@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 import { HeaderProps, NavigationLinkProps } from './types/styled';
 import colors, { getPrimary } from '../styled/colors';
+import breakpoints from '../styled/breakpoints';
+import { RoundButton } from '../styled/buttons';
 
 export const HeaderWrapper = styled.header<HeaderProps>`
     position: absolute;
@@ -11,6 +13,11 @@ export const HeaderWrapper = styled.header<HeaderProps>`
     justify-content: space-between;
     padding: 0 6em;
     
+    @media(max-width: ${ breakpoints.tabletSmall }){
+        padding: 0 2em;
+        align-items: center;
+    }
+    
     &, span, small {
         color: ${ props => props.transparent ? colors.white : ( props.theme.mode === 'black' ? colors.white : colors.dark ) };
     }
@@ -18,6 +25,12 @@ export const HeaderWrapper = styled.header<HeaderProps>`
 
 export const Navigation = styled.nav`
     padding: 20px 0;
+    
+    @media(max-width: ${ breakpoints.tabletSmall }){
+        opacity: 0;
+        visibility: hidden;
+        width: 0;
+    }
 `;
 
 export const LogoWrapper = styled.a`
@@ -90,5 +103,16 @@ export const SwitchContainer = styled.div`
         .mdc-switch:not(.mdc-switch--checked) .mdc-switch__track, .mdc-switch__thumb-underlay::before, .mdc-switch__thumb-underlay::after, .mdc-switch__thumb {
             background-color: ${ props => getPrimary( props.theme.mode ) } !important;
         }
+    }
+`;
+
+export const MenuActivator = styled( RoundButton )`
+    height: 40px;
+    padding: 5px 10px;
+    border: none;
+    font-size: 2em;
+
+    @media(min-width: ${ parseInt( breakpoints.tabletSmall ) + 1 }px){
+        display: none;
     }
 `;
