@@ -5,6 +5,7 @@ import { SectionSubtitle, SectionTitle, Text } from '../styled/typography';
 import Me from '../../assets/me2.jpg';
 import { RoundImage } from '../styled/images';
 import breakpoints from '../styled/breakpoints';
+import { getPrimary } from '../styled/colors';
 
 const AboutMeWrapper = styled( HomeSection )`
     display: flex;
@@ -27,6 +28,8 @@ const AboutMeWrapper = styled( HomeSection )`
     }
     
     img {
+        border: 3px solid ${ props => getPrimary( props.theme.mode ) };
+        padding: 3px;
         @media(min-width: ${ breakpoints.tabletBig }){
             margin-right: 20px;
         }

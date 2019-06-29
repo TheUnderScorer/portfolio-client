@@ -58,7 +58,10 @@ const GlobalStyle = createGlobalStyle<any>`
     ::-webkit-scrollbar-corner {
       background: transparent;
     }
-
+    
+    .ReactModal__Overlay{
+        z-index: 4;
+    }
 `;
 
 export default GlobalStyle;

@@ -22,11 +22,11 @@ const colors = {
 };
 
 export const getPrimary = ( mode: ThemeMode ): string => {
-    return mode === 'black' ? colors.lightBlue : colors.green;
+    return mode === 'black' ? colors.lightBlue : colors.pink;
 };
 
 export const getPrimaryVariation = ( mode: ThemeMode ): string => {
-    return mode === 'black' ? colors.lightBlue : colors.lightGreen;
+    return mode === 'black' ? colors.lightBlue : colors.orange;
 };
 
 export default colors;

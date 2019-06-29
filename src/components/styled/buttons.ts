@@ -25,8 +25,8 @@ export const Button = styled.button<ButtonProps>`
         background: transparent;
         border: 2px solid ${ getPrimary( props.theme.mode ) };
         
-        &, * {
-          
+        &: hover{
+            background-color: ${ getPrimary( props.theme.mode ) }
         }
     ` }
     
@@ -117,10 +117,12 @@ export const DarkButton = styled( Button )`
 export const RoundDarkButton = styled( DarkButton )`
     border-radius: 20px;
     padding: 10px 25px;
+    overflow: hidden;
 `;
 
 export const RoundButton = styled( Button )`
     border-radius: 20px;
     padding: 10px 25px;
+    overflow: hidden;
 `;
 

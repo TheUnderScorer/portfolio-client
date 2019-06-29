@@ -4,6 +4,7 @@ import { SideSectionDetailsProps, SideSectionProps } from './types';
 import { H3 } from '../styled/typography';
 import { Button } from '../styled/buttons';
 import breakpoints from '../styled/breakpoints';
+import LineProps from './types/LineProps';
 
 const breakpoint = parseInt( breakpoints.tabletSmall, 10 ) - 1 + 'px';
 
@@ -20,13 +21,14 @@ export const HelpingListWrapper = styled.div`
     }
 `;
 
-export const Line = styled.div`
+export const Line = styled.div<LineProps>`
     background-image: linear-gradient(0deg, ${ props => mainColor( props ) }, 65%, transparent 0%);
     background-position: top;
     background-size: 4px 20px;
     background-repeat: repeat-y;
     width: 5px;
     position: relative;
+    height: ${ props => props.height };
     
     @media(max-width: ${ breakpoint }){
         display: none;

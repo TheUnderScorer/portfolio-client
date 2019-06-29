@@ -14,6 +14,7 @@ import { SetDidInnerOpen, SetInnerActive } from '../types/actions/HomeActions';
 import HomeWrapperProps from './types/HomeWrapperProps';
 import GlobalStyle from '../components/styled/GlobalStyle';
 import Projects from '../components/projects/Projects';
+import projects from './data/projects';
 
 const AboutMe = lazy( () => import('../components/about-me/AboutMe') );
 const HowCanIHelp = lazy( () => import('../components/how-can-i-help/HowCanIHelp') );
@@ -93,7 +94,7 @@ const Home = () => {
                           <>
                               <AboutMe/>
                               <HowCanIHelp/>
-                              <Projects/>
+                              <Projects projects={ projects }/>
                           </>
                         }
                     </Suspense>

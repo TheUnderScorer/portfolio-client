@@ -6,6 +6,14 @@ import HorizontalList from '../horizontal-list/HorizontalList';
 import helpItems from '../../pages/data/helpItems';
 import { useSelector } from 'react-redux';
 import HomeStore from '../../types/stores/HomeStore';
+import styled from 'styled-components';
+import breakpoints from '../styled/breakpoints';
+
+const Section = styled( HomeSection )`
+    @media(min-width: ${ breakpoints.tabletSmall }){
+        padding-bottom: 0;
+    }
+`;
 
 const HowCanIHelp = () => {
 
@@ -26,15 +34,15 @@ const HowCanIHelp = () => {
     }, [ didInnerOpen ] );
 
     return (
-        <HomeSection centered={ true }>
+        <Section centered={ true }>
             <div>
                 <SectionTitle underlined={ true }>
                     How can I help?
                 </SectionTitle>
-                <HorizontalList loaded={ loaded } items={ helpItems }/>
+                <HorizontalList lineHeight="700px" loaded={ loaded } items={ helpItems }/>
             </div>
 
-        </HomeSection>
+        </Section>
     )
 };
 
