@@ -9,6 +9,10 @@ export interface SectionTitleProps {
     uplined?: boolean;
 }
 
+export interface SectionSubtitleProps {
+    underlined?: boolean;
+}
+
 export interface ButtonProps {
     flat?: boolean;
     withIcon?: boolean;

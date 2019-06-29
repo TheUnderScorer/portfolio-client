@@ -1,6 +1,6 @@
 import { createGlobalStyle } from 'styled-components';
 import breakpoints from './breakpoints';
-import colors from './colors';
+import colors, { getPrimary } from './colors';
 
 const GlobalStyle = createGlobalStyle<any>`
     html, body {
@@ -22,8 +22,8 @@ const GlobalStyle = createGlobalStyle<any>`
     }
     
     ::-webkit-scrollbar {
-      width: 3px;
-      height: 3px;
+      width: 6px;
+      height: 6px;
     }
     
     ::-webkit-scrollbar-button {
@@ -39,25 +39,20 @@ const GlobalStyle = createGlobalStyle<any>`
     }
     
     ::-webkit-scrollbar-thumb:hover {
-      background: ${ colors.lightBlue };
+      background: ${ props => getPrimary( props.theme.mode ) };
+      opacity: 0.7;
     }
     
     ::-webkit-scrollbar-thumb:active {
-      background: ${ colors.darkBlue };
+      background: ${ props => getPrimary( props.theme.mode ) };
     }
     
     ::-webkit-scrollbar-track {
-      background: #666666;
-      border: none;
-      border-radius: 50px;
-    }
-    
-    ::-webkit-scrollbar-track:hover {
-      background: #666666;
-    }
-    
-    ::-webkit-scrollbar-track:active {
-      background: #333333;
+      &, &:active, &:hover{
+          background: ${ props => props.theme.mode === 'black' ? colors.dark : colors.white };
+          border: none;
+          border-radius: 50px;
+      }
     }
     
     ::-webkit-scrollbar-corner {

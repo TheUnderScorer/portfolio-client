@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import colors, { getPrimary } from './colors';
-import { SectionTitleProps } from './types';
+import { SectionSubtitleProps, SectionTitleProps } from './types';
 
 export const Text = styled.span`
     font-size: 1em;  
@@ -84,8 +84,27 @@ export const SectionTitle = styled( H4 )<SectionTitleProps>`
     ` }
 `;
 
-export const SectionSubtitle = styled( Text )`
+export const SectionSubtitle = styled( Text )<SectionSubtitleProps>`
     display: block;
     margin-bottom: 40px;
-    font-size: 0.9em;
+    font-size: 1em;
+    
+    ${ props => props.underlined && `
+        position: relative;
+        margin-bottom: 60px;
+    
+        &::after{
+            display: inline-block;
+            content: '';
+            width: 70%;
+            height: 3px;
+            background: ${ getPrimary( props.theme.mode ) };
+            position: absolute;
+            left: 0;
+            right: 0;
+            margin: 0 auto;
+            bottom: -20px;
+            max-width: 30px
+        }
+    ` }
 `;

@@ -4,7 +4,7 @@ import { connect, useDispatch, useSelector } from 'react-redux';
 import HomeStore from '../types/stores/HomeStore';
 import styled, { ThemeProvider } from 'styled-components';
 import HeroImage from '../components/hero-image/HeroImage';
-import Landscape from '../assets/landscape.jpg';
+import Forest from '../assets/forest.png';
 import LandscapeNight from '../assets/landscape-night.jpg';
 import 'react-typist/dist/Typist.css';
 import HeroText from '../components/hero-text/HeroText';
@@ -13,6 +13,7 @@ import Header from '../components/header/Header';
 import { SetDidInnerOpen, SetInnerActive } from '../types/actions/HomeActions';
 import HomeWrapperProps from './types/HomeWrapperProps';
 import GlobalStyle from '../components/styled/GlobalStyle';
+import Projects from '../components/projects/Projects';
 
 const AboutMe = lazy( () => import('../components/about-me/AboutMe') );
 const HowCanIHelp = lazy( () => import('../components/how-can-i-help/HowCanIHelp') );
@@ -83,7 +84,7 @@ const Home = () => {
             <HomeWrapper innerActive={ didOpen } className="home">
                 <GlobalStyle/>
                 <Header/>
-                <HeroImage srcs={ [ Landscape, LandscapeNight ] } activeSrc={ theme.mode === 'black' ? 1 : 0 }>
+                <HeroImage srcs={ [ Forest, LandscapeNight ] } activeSrc={ theme.mode === 'black' ? 1 : 0 }>
                     <HeroText ctaRef={ heroCtaRef } onCtaClick={ toggleSection }/>
                 </HeroImage>
                 <InnerSection onOpen={ onOpen } className="inner-section" relativeTo={ heroCtaRef.current } isOpen={ innerActive }>
@@ -92,6 +93,7 @@ const Home = () => {
                           <>
                               <AboutMe/>
                               <HowCanIHelp/>
+                              <Projects/>
                           </>
                         }
                     </Suspense>

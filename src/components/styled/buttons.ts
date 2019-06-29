@@ -23,7 +23,7 @@ export const Button = styled.button<ButtonProps>`
     
     ${ props => props.transparent && `
         background: transparent;
-        border: 2px solid ${ props.theme.mode === 'black' ? colors.darkBlue : colors.primary };
+        border: 2px solid ${ getPrimary( props.theme.mode ) };
         
         &, * {
           
@@ -88,8 +88,6 @@ export const Button = styled.button<ButtonProps>`
 `;
 
 export const CtaButton = styled( Button )`
-    background-color: ${ colors.buttons.cta };
-    color: ${ colors.white };
     border-radius: 30px;
     padding: 20px 40px;
     text-transform: uppercase;
@@ -112,7 +110,7 @@ export const CtaButton = styled( Button )`
 
 export const DarkButton = styled( Button )`
     background: ${ colors.darkBlue };
-    color: ${ colors.primary };
+    color: ${ props => getPrimary( props.theme.mode ) };
     font-weight: 600;
 `;
 
