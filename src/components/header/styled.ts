@@ -117,6 +117,16 @@ export const MenuActivator = styled( IconButton )`
 export const GoBackButton = styled( IconButton )<GoBackButtonProps>`
     height: 40px;
     transition: all .3s;
+    
+    &, *{
+        color: ${ props => props.theme.mode === 'black' ? colors.white : colors.dark }
+    }
+    
+    &:hover{
+        &, * {
+            color: ${ props => props.theme.mode === 'white' ? colors.white : 'inherit' }
+        }
+    }
 
     ${ props => !props.isActive ?
     `
