@@ -1,12 +1,17 @@
-export default ( wrapper: HTMLDivElement, placeholder: HTMLElement, onOpen?: () => any ) => {
+import { PositionAfter } from '../types/OpenableSectionProps';
+
+export default ( wrapper: HTMLDivElement, placeholder: HTMLElement, positionAfter: PositionAfter = {
+    top:  '0px',
+    left: '0px'
+} ) => {
 
     placeholder.style.display = 'none';
 
     wrapper.classList.add( 'animated' );
     wrapper.classList.add( 'placeholder-hidden' );
 
-    wrapper.style.top = '0px';
-    wrapper.style.left = '0px';
+    wrapper.style.top = positionAfter.top.toString();
+    wrapper.style.left = positionAfter.left.toString();
     wrapper.style.height = '100%';
     wrapper.style.width = '100%';
     wrapper.style.margin = '0';
@@ -20,9 +25,6 @@ export default ( wrapper: HTMLDivElement, placeholder: HTMLElement, onOpen?: () 
             wrapper.classList.add( 'active' );
             wrapper.removeAttribute( 'style' );
 
-            if ( onOpen ) {
-                onOpen();
-            }
         }, 1000 )
     ]
 

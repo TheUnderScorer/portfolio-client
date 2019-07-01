@@ -8,88 +8,80 @@ import usePrevious from '../../hooks/usePrevious';
 import handleClose from './effects/handleClose';
 import { removeItems } from '../../utils/array';
 
-const OpenableSection = ( { children, isOpen = false, relativeTo, onOpen, className = '' }: Props ) => {
+const body = document.body;
 
-    const wrapperRef: MutableRefObject<HTMLDivElement | any> = useRef();
-    const placeholderRef: MutableRefObject<HTMLDivElement | any> = useRef();
+const OpenableSection = ( { children, isOpen = false, relativeTo, onOpen, className = '', positionAfter, zIndex = 2 }: Props ) => {
+
+    const wrapperRef = useRef() as MutableRefObject<HTMLDivElement>;
+    const placeholderRef = useRef() as MutableRefObject<HTMLDivElement>;
 
     const [ classList, setClassList ] = useState( className.split( ' ' ) );
+    const [ isOpening, setIsOpening ] = useState( false );
 
     const wasOpen = usePrevious( isOpen );
 
     useEffect( () => {
 
-        let timeouts: number[] = [];
+        if ( isOpening ) {
+            body.style.overflow = 'hidden';
+        } else {
+            body.style.overflow = 'auto';
+        }
+
+    }, [ isOpening ] );
+
+    useEffect( () => {
 
         if ( !wrapperRef.current || !relativeTo || !placeholderRef.current ) {
             return;
         }
 
         if ( isOpen && !wasOpen ) {
+            setIsOpening( true );
             positionToRelativeItem( wrapperRef.current, placeholderRef.current, relativeTo );
 
             classList.push( 'animated' );
             setClassList( classList );
 
-            timeouts.push(
+            setTimeout( () => {
+                handleOpen( wrapperRef.current, placeholderRef.current, positionAfter );
+
                 setTimeout( () => {
-                    const openTimeouts = handleOpen( wrapperRef.current, placeholderRef.current );
+                    setClassList( [ ...classList, 'with-bg', 'placeholder-hidden' ] );
+                }, 600 );
 
-                    timeouts.concat( openTimeouts );
+                setTimeout( () => {
+                    classList.push( 'active' );
+                    setIsOpening( false );
 
-                    timeouts.push(
-                        setTimeout( () => {
-                            classList.push( 'with-bg' );
-                            classList.push( 'placeholder-hidden' );
+                    setClassList( classList );
 
-                            setClassList( classList );
-                        }, 600 )
-                    );
+                    if ( onOpen ) {
+                        onOpen();
+                    }
+                }, 1000 )
 
-                    timeouts.push(
-                        setTimeout( () => {
-                            classList.push( 'active' );
-
-                            setClassList( classList );
-
-                            if ( onOpen ) {
-                                onOpen();
-                            }
-                        }, 1000 )
-                    );
-
-                }, 100 )
-            );
+            }, 100 )
 
         } else if ( !isOpen && wasOpen ) {
 
-            timeouts.push(
-                setTimeout( () => {
+            setTimeout( () => {
+                handleClose( wrapperRef.current, placeholderRef.current, relativeTo );
+                positionToRelativeItem( wrapperRef.current, placeholderRef.current, relativeTo );
+            }, 300 );
 
-                    const closeTimeouts = handleClose( wrapperRef.current, placeholderRef.current );
-                    positionToRelativeItem( wrapperRef.current, placeholderRef.current, relativeTo );
-
-                    timeouts.concat( closeTimeouts );
-
-                    timeouts.push( setTimeout( () => {
-                        setClassList(
-                            removeItems( classList, [ 'active', 'with-bg', 'placeholder-hidden', 'animated' ] )
-                        );
-                    }, 1000 ) );
-
-                }, 300 )
-            );
+            setTimeout( () => {
+                setClassList(
+                    removeItems( classList, [ 'active', 'with-bg', 'placeholder-hidden', 'animated' ] )
+                );
+            }, 1000 );
 
         }
 
-        return () => {
-            timeouts.forEach( timeout => clearTimeout( timeout ) );
-        }
-
-    }, [ isOpen, relativeTo, wrapperRef, placeholderRef, onOpen, wasOpen, classList ] );
+    }, [ isOpen, relativeTo, wrapperRef, placeholderRef, onOpen, wasOpen, positionAfter ] );
 
     return (
-        <Openable className={ classList.join( ' ' ) } ref={ wrapperRef }>
+        <Openable zIndex={ zIndex } className={ classList.join( ' ' ) } ref={ wrapperRef }>
             <div ref={ placeholderRef } className="placeholder"/>
             <div className="content">
                 { children }

@@ -1,19 +1,15 @@
 import * as React from 'react';
-import { useCallback, useState } from 'react';
-import {
-    ProjectContainer,
-    ProjectImageCaption,
-    ProjectImageFigure,
-    ProjectModal,
-    ProjectThumbnail,
-    ReadMore
-} from './styled';
+import { MutableRefObject, useCallback, useRef, useState } from 'react';
+import { ProjectContainer, ProjectImageCaption, ProjectImageFigure, ProjectThumbnail, ReadMore } from './styled';
 import ProjectInterface from './types/ProjectInterface';
 import { Text } from '../styled/typography';
+import OpenableSection from '../openable-section/OpenableSection';
 
 const Project = ( { images, thumbnailUrl, shortDetails }: ProjectInterface ) => {
 
     const [ isActive, setActive ] = useState( false );
+
+    const thumbRef = useRef() as MutableRefObject<HTMLImageElement>;
 
     const toggleActive = useCallback( () => {
         setActive( !isActive );
@@ -22,7 +18,7 @@ const Project = ( { images, thumbnailUrl, shortDetails }: ProjectInterface ) => 
     return (
         <ProjectContainer className="project">
             <ProjectImageFigure>
-                <ProjectThumbnail src={ thumbnailUrl ? thumbnailUrl : ( images ? images[ 0 ] : '' ) } alt=""/>
+                <ProjectThumbnail ref={ thumbRef } src={ thumbnailUrl ? thumbnailUrl : ( images ? images[ 0 ] : '' ) } alt=""/>
                 <ProjectImageCaption>
                     <div>
                         <Text>
@@ -34,13 +30,11 @@ const Project = ( { images, thumbnailUrl, shortDetails }: ProjectInterface ) => 
                     </ReadMore>
                 </ProjectImageCaption>
             </ProjectImageFigure>
-            { isActive &&
-              <ProjectModal onRequestClose={ toggleActive } isOpen={ isActive }>
-                  <div>
-                      Project modal
-                  </div>
-              </ProjectModal>
-            }
+            <OpenableSection isOpen={ isActive } relativeTo={ thumbRef.current }>
+                <div>
+                    Project modal!
+                </div>
+            </OpenableSection>
         </ProjectContainer>
     )
 };

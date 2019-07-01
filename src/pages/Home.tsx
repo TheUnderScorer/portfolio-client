@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { lazy, MutableRefObject, Suspense, useCallback, useEffect, useRef } from 'react';
+import { lazy, MutableRefObject, Suspense, useCallback, useRef } from 'react';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import HomeStore from '../types/stores/HomeStore';
 import styled, { ThemeProvider } from 'styled-components';
@@ -32,7 +32,6 @@ const HomeWrapper = styled.div<HomeWrapperProps>`
 `;
 
 const InnerSection = styled( OpenableSection )`
-    
 `;
 
 const Home = () => {
@@ -55,21 +54,6 @@ const Home = () => {
 
     }, [ innerActive, dispatch ] );
 
-    // Fix for page staying at bottom after being reloaded in inner section sometimes
-    useEffect( () => {
-        window.scrollTo( 0, 0 );
-    }, [] );
-
-    useEffect( () => {
-
-        const html = document.querySelector( 'html' ) as HTMLElement;
-
-        innerActive ?
-            html.style.overflow = 'auto' :
-            html.style.overflow = 'hidden'
-
-    }, [ innerActive ] );
-
     const onOpen = useCallback( () => {
 
         const action: SetDidInnerOpen = {
@@ -88,7 +72,7 @@ const Home = () => {
                 <HeroImage srcs={ [ Forest, LandscapeNight ] } activeSrc={ theme.mode === 'black' ? 1 : 0 }>
                     <HeroText ctaRef={ heroCtaRef } onCtaClick={ toggleSection }/>
                 </HeroImage>
-                <InnerSection onOpen={ onOpen } className="inner-section" relativeTo={ heroCtaRef.current } isOpen={ innerActive }>
+                <InnerSection zIndex={ 2 } onOpen={ onOpen } className="inner-section" relativeTo={ heroCtaRef.current } isOpen={ innerActive }>
                     <Suspense fallback={ <div/> }>
                         { innerActive &&
                           <>

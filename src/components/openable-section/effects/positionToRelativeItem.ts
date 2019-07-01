@@ -20,7 +20,6 @@ export default ( wrapper: HTMLDivElement, placeholder: HTMLElement, relativeItem
 
     placeholder.style.display = styles.display;
 
-    wrapper.style.display = 'none';
     wrapper.style.borderRadius = styles.borderRadius;
     wrapper.style.backgroundColor = styles.backgroundColor;
     wrapper.style.position = 'absolute';

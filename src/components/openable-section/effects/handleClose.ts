@@ -1,10 +1,15 @@
-export default ( wrapper: HTMLDivElement, placeholder: HTMLElement ) => {
+export default ( wrapper: HTMLDivElement, placeholder: HTMLElement, relativeTo: HTMLElement ) => {
+
+    const styles = getComputedStyle( relativeTo );
 
     placeholder.style.display = 'block';
 
     wrapper.classList.add( 'animated' );
     wrapper.classList.remove( 'with-bg' );
     wrapper.classList.remove( 'placeholder-hidden' );
+
+    wrapper.style.borderRadius = styles.borderRadius;
+    wrapper.style.backgroundColor = styles.backgroundColor;
 
     return [
         setTimeout( () => {

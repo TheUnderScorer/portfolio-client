@@ -1,13 +1,14 @@
 import styled from 'styled-components';
 import colors from '../styled/colors';
+import OpenableStyledProps from './types/OpenableStyledProps';
 
-export const Openable = styled.div`
+export const Openable = styled.div<OpenableStyledProps>`
     position: absolute;
     width: 100%;
     height: 100%;
     visibility: hidden;
     opacity: 0;
-    z-index: 2;
+    z-index: ${ props => props.zIndex };
     
     .content{
         opacity: 0;
@@ -17,6 +18,10 @@ export const Openable = styled.div`
     
     &.animated{
         transition: all .4s;
+    }
+    
+    &:not(.active){
+        display: none;
     }
 
     &.active{

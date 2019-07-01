@@ -6,4 +6,11 @@ export default interface OpenableSectionProps extends ReactProps {
     onOpen?: () => any;
     onClose?: () => any;
     className?: string;
+    positionAfter?: PositionAfter;
+    zIndex?: number;
+}
+
+export interface PositionAfter {
+    top: number | string;
+    left: number | string;
 }
