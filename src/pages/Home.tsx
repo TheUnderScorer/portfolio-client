@@ -28,6 +28,10 @@ const HomeWrapper = styled.div<HomeWrapperProps>`
         .hero{
             display: none;
         }
+        
+        .content{
+            margin-top: 80px;
+        }
     ` }
 `;
 
@@ -37,7 +41,7 @@ const InnerSection = styled( OpenableSection )`
 const Home = () => {
 
     const theme = useSelector( ( store: HomeStore ) => store.theme );
-    const heroCtaRef: MutableRefObject<HTMLButtonElement | undefined> = useRef();
+    const heroCtaRef = useRef() as MutableRefObject<HTMLButtonElement>;
 
     const innerActive = useSelector( ( store: HomeStore ) => store.home.innerActive );
     const didOpen = useSelector( ( store: HomeStore ) => store.home.didInnerOpen );

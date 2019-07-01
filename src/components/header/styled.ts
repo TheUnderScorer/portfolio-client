@@ -1,8 +1,8 @@
 import styled from 'styled-components';
-import { HeaderProps, NavigationLinkProps } from './types/styled';
+import { GoBackButtonProps, HeaderProps, NavigationLinkProps } from './types/styled';
 import colors, { getPrimary } from '../styled/colors';
 import breakpoints from '../styled/breakpoints';
-import { RoundButton } from '../styled/buttons';
+import { IconButton } from '../styled/buttons';
 
 export const HeaderWrapper = styled.header<HeaderProps>`
     position: absolute;
@@ -106,13 +106,35 @@ export const SwitchContainer = styled.div`
     }
 `;
 
-export const MenuActivator = styled( RoundButton )`
-    height: 40px;
-    padding: 5px 10px;
-    border: none;
+export const MenuActivator = styled( IconButton )`
     font-size: 2em;
 
     @media(min-width: ${ parseInt( breakpoints.tabletSmall ) + 1 }px){
         display: none;
     }
+`;
+
+export const GoBackButton = styled( IconButton )<GoBackButtonProps>`
+    height: 40px;
+    transition: all .3s;
+
+    ${ props => !props.isActive ?
+    `
+        width: 0;
+        opacity: 0;
+        visibility: hidden;
+        
+        & {
+            background: none;
+        }
+        
+        &::before{
+            display: none;
+        }
+    ` :
+    `
+        width: 40px;
+        opacity: 1;
+        visibility: visible;
+    ` }
 `;

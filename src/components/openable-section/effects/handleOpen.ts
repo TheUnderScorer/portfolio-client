@@ -1,31 +1,46 @@
 import { PositionAfter } from '../types/OpenableSectionProps';
+import { SetCssProperties } from '../../../types/common/SetCssProperties';
+import { CSSProperties } from 'react';
 
-export default ( wrapper: HTMLDivElement, placeholder: HTMLElement, positionAfter: PositionAfter = {
-    top:  '0px',
-    left: '0px'
-} ) => {
+export default (
+    setWrapperStyles: SetCssProperties,
+    wrapperStyles: CSSProperties,
+    setPlaceholderStyles: SetCssProperties,
+    setPlaceholder: ( placeholder: string ) => any,
+    positionAfter: PositionAfter = { top: 0, left: 0 },
+    setIsActive: ( active: boolean ) => any,
+    setHasBg: ( hasBg: boolean ) => any,
+) => {
 
-    placeholder.style.display = 'none';
+    return new Promise( ( resolve ) => {
 
-    wrapper.classList.add( 'animated' );
-    wrapper.classList.add( 'placeholder-hidden' );
+        // Hide placeholder
+        setPlaceholderStyles( {
+            display: 'none'
+        } );
 
-    wrapper.style.top = positionAfter.top.toString();
-    wrapper.style.left = positionAfter.left.toString();
-    wrapper.style.height = '100%';
-    wrapper.style.width = '100%';
-    wrapper.style.margin = '0';
-    wrapper.style.borderRadius = '0';
+        // Position wrapper
+        setWrapperStyles( {
+            ...wrapperStyles,
+            top:          positionAfter.top.toString(),
+            left:         positionAfter.left.toString(),
+            height:       '100%',
+            width:        '100%',
+            margin:       '0',
+            borderRadius: '0',
+        } );
 
-    return [
+
         setTimeout( () => {
-            wrapper.classList.add( 'with-bg' );
-        }, 600 ),
+            setHasBg( true );
+            setPlaceholder( '' );
+        }, 600 );
         setTimeout( () => {
-            wrapper.classList.add( 'active' );
-            wrapper.removeAttribute( 'style' );
+            setIsActive( true );
 
-        }, 1000 )
-    ]
+            resolve();
+        }, 900 );
+
+    } )
 
 }

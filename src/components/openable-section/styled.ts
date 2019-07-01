@@ -9,22 +9,19 @@ export const Openable = styled.div<OpenableStyledProps>`
     visibility: hidden;
     opacity: 0;
     z-index: ${ props => props.zIndex };
+    top: 0;
+   
+    ${ props => props.animated && `
+        transition: all .3s;
+    ` }
     
     .content{
         opacity: 0;
         visibility: hidden;
         transition: all .3s;
     }
-    
-    &.animated{
-        transition: all .4s;
-    }
-    
-    &:not(.active){
-        display: none;
-    }
 
-    &.active{
+    ${ props => props.isActive && `
         opacity: 1;
         visibility: visible;
         height: 100%;
@@ -41,9 +38,9 @@ export const Openable = styled.div<OpenableStyledProps>`
             opacity: 0;
             visibility: hidden;
         }
-    }
+    ` };
     
-    &.with-bg {
-        background: ${ ( props ) => props.theme.mode === 'black' ? colors.black : colors.lightBg } !important;
-    }
+    ${ props => props.hasBg && `
+         background: ${ props.theme.mode === 'black' ? colors.black : colors.lightBg } !important;
+    ` }
 `;

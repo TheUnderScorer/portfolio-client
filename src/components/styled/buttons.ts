@@ -126,3 +126,7 @@ export const RoundButton = styled( Button )`
     overflow: hidden;
 `;
 
+export const IconButton = styled( RoundButton )`
+    padding: 5px 10px;
+    border: none;
+`;

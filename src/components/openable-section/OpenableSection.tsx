@@ -1,88 +1,116 @@
 import * as React from 'react';
-import { MutableRefObject, useEffect, useRef, useState } from 'react';
+import { CSSProperties, useEffect, useState } from 'react';
 import Props from './types/OpenableSectionProps';
-import handleOpen from './effects/handleOpen';
 import positionToRelativeItem from './effects/positionToRelativeItem';
 import { Openable } from './styled';
 import usePrevious from '../../hooks/usePrevious';
+import handleOpen from './effects/handleOpen';
+import { Actions } from './types/Actions';
 import handleClose from './effects/handleClose';
-import { removeItems } from '../../utils/array';
 
 const body = document.body;
 
-const OpenableSection = ( { children, isOpen = false, relativeTo, onOpen, className = '', positionAfter, zIndex = 2 }: Props ) => {
+const positionToRelativeBeforeOpen = positionToRelativeItem( 50 );
+const positionToRelativeOnClose = positionToRelativeItem( 300 );
 
-    const wrapperRef = useRef() as MutableRefObject<HTMLDivElement>;
-    const placeholderRef = useRef() as MutableRefObject<HTMLDivElement>;
+const OpenableSection = ( { children, isOpen = false, relativeTo, className = '', zIndex = 2, positionAfter, onOpen }: Props ) => {
 
-    const [ classList, setClassList ] = useState( className.split( ' ' ) );
-    const [ isOpening, setIsOpening ] = useState( false );
+    const [ isChangingState, setIsChangingState ] = useState( false );
+    const [ isActive, setActive ] = useState( false );
+    const [ hasBg, setHasBg ] = useState( false );
+    const [ wrapperStyle, setWrapperStyle ] = useState( {} as CSSProperties );
+    const [ placeholderStyles, setPlaceholderStyle ] = useState( {} as CSSProperties );
+    const [ placeholder, setPlaceholder ] = useState( '' );
+    const [ currentAction, setCurrentAction ] = useState( '' );
+    const [ animated, setAnimated ] = useState( false );
 
     const wasOpen = usePrevious( isOpen );
 
     useEffect( () => {
 
-        if ( isOpening ) {
+        if ( isChangingState ) {
             body.style.overflow = 'hidden';
         } else {
             body.style.overflow = 'auto';
         }
 
-    }, [ isOpening ] );
+    }, [ isChangingState ] );
 
     useEffect( () => {
 
-        if ( !wrapperRef.current || !relativeTo || !placeholderRef.current ) {
-            return;
+        if ( currentAction === Actions.open ) {
+            handleOpen(
+                setWrapperStyle,
+                wrapperStyle,
+                setPlaceholderStyle,
+                setPlaceholder,
+                positionAfter,
+                setActive,
+                setHasBg
+            ).then( () => {
+
+                setIsChangingState( false );
+
+                if ( onOpen ) {
+                    onOpen();
+                }
+
+            } );
+        } else if ( currentAction === Actions.close ) {
+            positionToRelativeOnClose(
+                setWrapperStyle,
+                setPlaceholderStyle,
+                setPlaceholder,
+                relativeTo
+            ).then( () => {
+                setAnimated( false );
+                setWrapperStyle( {} );
+                setActive( false );
+            } );
         }
+
+    }, [ currentAction ] );
+
+    useEffect( () => {
 
         if ( isOpen && !wasOpen ) {
-            setIsOpening( true );
-            positionToRelativeItem( wrapperRef.current, placeholderRef.current, relativeTo );
 
-            classList.push( 'animated' );
-            setClassList( classList );
+            // Let component know that we are about to open it
+            setIsChangingState( true );
 
-            setTimeout( () => {
-                handleOpen( wrapperRef.current, placeholderRef.current, positionAfter );
+            // Disable animations before positioning
+            setAnimated( false );
 
-                setTimeout( () => {
-                    setClassList( [ ...classList, 'with-bg', 'placeholder-hidden' ] );
-                }, 600 );
-
-                setTimeout( () => {
-                    classList.push( 'active' );
-                    setIsOpening( false );
-
-                    setClassList( classList );
-
-                    if ( onOpen ) {
-                        onOpen();
-                    }
-                }, 1000 )
-
-            }, 100 )
+            positionToRelativeBeforeOpen(
+                setWrapperStyle,
+                setPlaceholderStyle,
+                setPlaceholder,
+                relativeTo
+            ).then( () => {
+                setAnimated( true );
+                setCurrentAction( Actions.open )
+            } )
 
         } else if ( !isOpen && wasOpen ) {
+            handleClose(
+                setWrapperStyle,
+                setPlaceholderStyle,
+                setHasBg,
+                relativeTo
+            ).then( () => {
+                setPlaceholderStyle( {
+                    display: 'none'
+                } );
 
-            setTimeout( () => {
-                handleClose( wrapperRef.current, placeholderRef.current, relativeTo );
-                positionToRelativeItem( wrapperRef.current, placeholderRef.current, relativeTo );
-            }, 300 );
-
-            setTimeout( () => {
-                setClassList(
-                    removeItems( classList, [ 'active', 'with-bg', 'placeholder-hidden', 'animated' ] )
-                );
-            }, 1000 );
-
+                setCurrentAction( Actions.close );
+            } )
         }
 
-    }, [ isOpen, relativeTo, wrapperRef, placeholderRef, onOpen, wasOpen, positionAfter ] );
+    }, [ isOpen, wasOpen ] );
 
     return (
-        <Openable zIndex={ zIndex } className={ classList.join( ' ' ) } ref={ wrapperRef }>
-            <div ref={ placeholderRef } className="placeholder"/>
+        <Openable animated={ animated } isActive={ isActive } hasBg={ hasBg } className={ className } style={ wrapperStyle } zIndex={ zIndex }>
+            <div style={ placeholderStyles } className="placeholder" dangerouslySetInnerHTML={ { __html: placeholder } }/>
             <div className="content">
                 { children }
             </div>

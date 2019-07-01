@@ -1,34 +1,47 @@
-export default ( wrapper: HTMLDivElement, placeholder: HTMLElement, relativeItem: HTMLElement ) => {
+import { SetCssProperties } from '../../../types/common/SetCssProperties';
 
-    const position = relativeItem.getBoundingClientRect();
+export default ( animationTimeout: number ) => ( setWrapperStyles: SetCssProperties, setPlaceholderStyles: SetCssProperties, setPlaceholder: ( placeholder: string ) => any, relativeItem: HTMLElement ) => {
 
-    const styles = getComputedStyle( relativeItem );
+    return new Promise( ( resolve ) => {
 
-    const size = {
-        width:  window.getComputedStyle( relativeItem ).width,
-        height: window.getComputedStyle( relativeItem ).height
-    };
+        const position = relativeItem.getBoundingClientRect();
 
-    placeholder.style.display = 'none';
-    placeholder.style.transform = 'none';
-    placeholder.innerHTML = relativeItem.outerHTML;
+        const styles = getComputedStyle( relativeItem );
 
-    const children = placeholder.children[ 0 ] as HTMLElement;
-    children.style.transition = 'none';
-    children.style.fontSize = styles.fontSize;
-    children.style.transition = styles.transition;
+        const size = {
+            width:  window.getComputedStyle( relativeItem ).width,
+            height: window.getComputedStyle( relativeItem ).height
+        };
 
-    placeholder.style.display = styles.display;
+        // Initially hide placeholder
+        setPlaceholderStyles( {
+            display: 'none',
+        } );
 
-    wrapper.style.borderRadius = styles.borderRadius;
-    wrapper.style.backgroundColor = styles.backgroundColor;
-    wrapper.style.position = 'absolute';
-    wrapper.style.top = position.top + 'px';
-    wrapper.style.left = position.left + 'px';
-    wrapper.style.height = size.height;
-    wrapper.style.width = size.width;
-    wrapper.style.visibility = 'visible';
-    wrapper.style.opacity = '1';
-    wrapper.style.display = 'block';
+        // Set placeholder content basing on relative item
+        setPlaceholder( relativeItem.outerHTML );
+
+        // Show placeholder
+        setPlaceholderStyles( {
+            display: styles.display as string,
+        } );
+
+        // Position and mimic wrapper basing on relative item
+        setWrapperStyles( {
+            borderRadius:    styles.borderRadius as string,
+            backgroundColor: styles.backgroundColor as string,
+            position:        'absolute',
+            top:             position.top + 'px',
+            left:            position.left + 'px',
+            height:          size.height as string,
+            width:           size.width as string,
+            visibility:      'visible',
+            opacity:         1,
+            display:         'block',
+        } );
+
+        setTimeout( () => resolve(), animationTimeout );
+
+    } )
 
 }

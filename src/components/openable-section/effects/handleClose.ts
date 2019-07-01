@@ -1,25 +1,30 @@
-export default ( wrapper: HTMLDivElement, placeholder: HTMLElement, relativeTo: HTMLElement ) => {
+import { SetCssProperties } from '../../../types/common/SetCssProperties';
 
-    const styles = getComputedStyle( relativeTo );
+export default (
+    setWrapperStyles: SetCssProperties,
+    setPlaceholderStyles: SetCssProperties,
+    setHasBg: ( hasBg: boolean ) => any,
+    relativeTo: HTMLElement,
+) => {
 
-    placeholder.style.display = 'block';
+    return new Promise( resolve => {
 
-    wrapper.classList.add( 'animated' );
-    wrapper.classList.remove( 'with-bg' );
-    wrapper.classList.remove( 'placeholder-hidden' );
+        const styles = getComputedStyle( relativeTo );
 
-    wrapper.style.borderRadius = styles.borderRadius;
-    wrapper.style.backgroundColor = styles.backgroundColor;
+        setPlaceholderStyles( {
+            display: 'block'
+        } );
 
-    return [
+        setHasBg( false );
+
+        setWrapperStyles( {
+            borderRadius:    styles.borderRadius as string,
+            backgroundColor: styles.backgroundColor as string
+        } );
+
         setTimeout( () => {
-            wrapper.classList.remove( 'active' );
-        }, 300 ),
-        setTimeout( () => {
-            wrapper.classList.remove( 'animated' );
-            wrapper.removeAttribute( 'style' );
-            placeholder.style.display = 'none';
-        }, 1000 )
-    ]
+            resolve();
+        }, 300 );
+    } )
 
 }

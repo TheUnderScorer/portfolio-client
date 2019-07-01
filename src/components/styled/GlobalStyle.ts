@@ -11,7 +11,7 @@ const GlobalStyle = createGlobalStyle<any>`
          font-family: "Open Sans", serif;
          font-size: 16px;
     
-         @media(max-width: ${ breakpoints.tabletBig }){
+         @media(max-width: ${ breakpoints.tabletSmall }){
              font-size: 14px;
          }
     

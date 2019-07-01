@@ -1,6 +1,7 @@
 import { library } from '@fortawesome/fontawesome-svg-core'
 import {
     faArrowDown,
+    faArrowLeft,
     faBars,
     faDesktop,
     faMobile,
@@ -11,4 +12,4 @@ import {
     faTools
 } from '@fortawesome/free-solid-svg-icons'
 
-library.add( faArrowDown, faSun, faMoon, faPaintBrush, faPlus, faTools, faMobile, faDesktop, faBars );
+library.add( faArrowDown, faSun, faMoon, faPaintBrush, faPlus, faTools, faMobile, faDesktop, faBars, faArrowLeft );

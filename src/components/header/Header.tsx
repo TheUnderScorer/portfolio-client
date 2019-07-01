@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { ChangeEventHandler, useCallback, useEffect, useState } from 'react';
 import {
+    GoBackButton,
     HeaderWrapper,
     InnerCaption,
     LogoWrapper,
@@ -38,6 +39,7 @@ const Header = () => {
     }, [ dispatch ] );
 
     const currentSection = useSelector( ( store: HomeStore ) => store.home.currentSection );
+    const didInnerOpen = useSelector( ( store: HomeStore ) => store.home.didInnerOpen );
     const innerActive = useSelector( ( store: HomeStore ) => store.home.innerActive );
     const mode = useSelector( ( store: HomeStore ) => store.theme.mode );
 
@@ -51,17 +53,20 @@ const Header = () => {
 
     }, [ dispatch ] );
 
-    const [ transparent, setTransparent ] = useState( !innerActive );
+    const [ transparent, setTransparent ] = useState( !didInnerOpen );
+    const [ isBackVisible, setBackVisible ] = useState( false );
+
+    useEffect( () => {
+        setTransparent( !didInnerOpen );
+    }, [ didInnerOpen ] );
 
     useEffect( () => {
 
         const timeout = setTimeout( () => {
-            setTransparent( !innerActive );
-        }, 700 );
+            setBackVisible( innerActive );
+        }, 100 );
 
-        return () => {
-            clearTimeout( timeout );
-        }
+        return () => clearTimeout( timeout );
 
     }, [ innerActive ] );
 
@@ -96,6 +101,9 @@ const Header = () => {
     return (
         <HeaderWrapper transparent={ transparent }>
             <LogoWrapper onClick={ handleLogoClick }>
+                <GoBackButton isActive={ isBackVisible } flat={ true } transparent={ true }>
+                    <FontAwesomeIcon icon="arrow-left"/>
+                </GoBackButton>
                 <img src={ Me } alt=""/>
                 <InnerCaption>
                     <Text>
