@@ -100,8 +100,8 @@ const Header = () => {
 
     return (
         <HeaderWrapper transparent={ transparent }>
-            <LogoWrapper onClick={ handleLogoClick }>
-                <GoBackButton isActive={ isBackVisible } flat={ true } transparent={ true }>
+            <LogoWrapper>
+                <GoBackButton onClick={ handleLogoClick } isActive={ isBackVisible } flat={ true } transparent={ true }>
                     <FontAwesomeIcon icon="arrow-left"/>
                 </GoBackButton>
                 <img src={ Me } alt=""/>
