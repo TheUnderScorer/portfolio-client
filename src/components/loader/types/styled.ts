@@ -4,3 +4,8 @@ export interface LoaderContainerProps {
     height: string | number;
     active?: boolean;
 }
+
+export interface SvgLoaderProps {
+    width: string | number;
+    height: string | number;
+}

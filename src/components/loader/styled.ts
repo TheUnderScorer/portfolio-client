@@ -1,13 +1,16 @@
 import styled from 'styled-components';
-import { LoaderContainerProps } from './types/styled';
+import { LoaderContainerProps, SvgLoaderProps } from './types/styled';
 import colors from '../styled/colors';
 
 export const LoaderContainer = styled.div<LoaderContainerProps>`
     width: ${ props => props.width };
     height: ${ props => props.height };
-    transition: opacity .3s;
+    transition: all .3s;
     opacity: 0;
     visibility: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     
     ${ props => props.asOverlay && `
         position: absolute;
@@ -23,7 +26,7 @@ export const LoaderContainer = styled.div<LoaderContainerProps>`
     ` }
 `;
 
-export const LoaderSvg = styled.svg`
-    height: 100%;
-    width: 100%;
+export const LoaderSvg = styled.svg<SvgLoaderProps>`
+    height: ${ props => props.height };
+    width: ${ props => props.width };
 `;

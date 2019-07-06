@@ -9,7 +9,7 @@ const ProjectDetails = ( { project }: ProjectDetailsProps ) => {
 
     const { details, images = [] } = project;
 
-    const [ showImageLoader, setImageLoader ] = useState( true );
+    const [ imageLoader, setImageLoader ] = useState( true );
     const [ scheduleHideLoader, setScheduleHideLoader ] = useState( false );
 
     useEffect( () => {
@@ -42,8 +42,10 @@ const ProjectDetails = ( { project }: ProjectDetailsProps ) => {
     return (
         <DetailsContainer>
             <SliderContainer>
-                { showImageLoader &&
-                  <Loader width="100%" height="100%" asOverlay={ true } active={ showImageLoader }/> }
+                <Loader width="100%" height="100%" svgProps={ {
+                    width:  '50%',
+                    height: '50%'
+                } } asOverlay={ true } active={ imageLoader }/>
                 <Slider dots={ true } lazyLoad="progressive">
                     { images && images.map( ( imageSrc, index ) =>
                         <ProjectImage onLoad={ handleImageLoad( index ) } key={ index } src={ imageSrc } alt=""/>
