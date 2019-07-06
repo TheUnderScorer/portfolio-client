@@ -4,7 +4,7 @@ import { connect, useDispatch, useSelector } from 'react-redux';
 import HomeStore from '../types/stores/HomeStore';
 import styled, { ThemeProvider } from 'styled-components';
 import HeroImage from '../components/hero-image/HeroImage';
-import Forest from '../assets/forest.png';
+import Mountains from '../assets/mountains.jpg';
 import LandscapeNight from '../assets/landscape-night.jpg';
 import 'react-typist/dist/Typist.css';
 import HeroText from '../components/hero-text/HeroText';
@@ -73,7 +73,7 @@ const Home = () => {
             <HomeWrapper innerActive={ didOpen } className="home">
                 <GlobalStyle/>
                 <Header/>
-                <HeroImage srcs={ [ Forest, LandscapeNight ] } activeSrc={ theme.mode === 'black' ? 1 : 0 }>
+                <HeroImage srcs={ [ Mountains, LandscapeNight ] } activeSrc={ theme.mode === 'black' ? 1 : 0 }>
                     <HeroText ctaRef={ heroCtaRef } onCtaClick={ toggleSection }/>
                 </HeroImage>
                 <InnerSection zIndex={ 2 } onOpen={ onOpen } className="inner-section" relativeTo={ heroCtaRef.current } isOpen={ innerActive }>
