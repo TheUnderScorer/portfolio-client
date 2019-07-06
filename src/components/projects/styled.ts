@@ -1,9 +1,10 @@
 import styled from 'styled-components';
 import ReactModal from 'react-modal';
-import colors from '../styled/colors';
+import colors, { getPrimary, getPrimaryVariation } from '../styled/colors';
 import { RoundButton } from '../styled/buttons';
-import { ProjectDetailsContainerProps, ProjectImageFigProps } from './types/styled';
+import { ProjectDetailsContainerProps, ProjectImageFigProps, SliderArrowsProps } from './types/styled';
 import Loader from '../loader/Loader';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export const ProjectsContainer = styled.div`
     display: flex;
@@ -113,11 +114,28 @@ export const SliderContainer = styled.div`
     .slick-slider, .slick-track, .slick-list, .slick-slide > div {
         height: 100%;
     }
+    
+    .slick-dots{
+    
+        li{
+            button::before{
+                color: ${ props => props.theme.mode === 'black' ? colors.white : colors.black };
+                font-size: 12px;
+                opacity: 1;
+            }
+            
+            &.slick-active, &:hover{
+                button::before{
+                    color: ${ props => getPrimary( props.theme.mode ) };
+                }
+            }
+        }
+    }
 `;
 
 export const TextContainer = styled.div`
     width: 50%;
-    padding: 0 20px;
+    padding: 0 2em;
     
     .title{
         text-align: center;
@@ -128,4 +146,22 @@ export const ProjectImage = styled.img`
     width: 100%;
     height: 100%;
     object-fit: cover;
+`;
+
+export const SliderArrow = styled( FontAwesomeIcon )<SliderArrowsProps>`
+    opacity: ${ props => props.visible ? '1' : '0' };
+    width: 60px !important;
+    height: 60px;
+    color: ${ colors.white };
+    border-radius: 100%;
+    display: inline-block;
+    background-color: ${ props => getPrimary( props.theme.mode ) };
+    padding: 15px;
+    z-index: 4;
+    transition: all .3s;
+    
+    &:hover{
+        color: ${ colors.white };
+        background-color: ${ props => getPrimaryVariation( props.theme.mode ) };
+    }
 `;

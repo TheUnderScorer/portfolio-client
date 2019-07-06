@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useEffect, useState } from 'react';
-import { DetailsContainer, ProjectImage, SliderContainer, TextContainer } from './styled';
+import { DetailsContainer, ProjectImage, SliderArrow, SliderContainer, TextContainer } from './styled';
 import Slider from 'react-slick';
 import ProjectDetailsProps from './types/ProjectDetailsProps';
 import Loader from '../loader/Loader';
@@ -47,7 +47,11 @@ const ProjectDetails = ( { project }: ProjectDetailsProps ) => {
                     width:  '50%',
                     height: '50%'
                 } } asOverlay={ true } active={ imageLoader }/>
-                <Slider dots={ true } lazyLoad="progressive">
+                <Slider
+                    prevArrow={ <SliderArrow visible={ !imageLoader } icon="chevron-left"/> }
+                    nextArrow={ <SliderArrow visible={ !imageLoader } icon="chevron-right"/> }
+                    dots={ true }
+                    lazyLoad="progressive">
                     { images && images.map( ( imageSrc, index ) =>
                         <ProjectImage onLoad={ handleImageLoad( index ) } key={ index } src={ imageSrc } alt=""/>
                     ) }

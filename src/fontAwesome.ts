@@ -3,6 +3,8 @@ import {
     faArrowDown,
     faArrowLeft,
     faBars,
+    faChevronLeft,
+    faChevronRight,
     faDesktop,
     faMobile,
     faMoon,
@@ -12,4 +14,4 @@ import {
     faTools
 } from '@fortawesome/free-solid-svg-icons'
 
-library.add( faArrowDown, faSun, faMoon, faPaintBrush, faPlus, faTools, faMobile, faDesktop, faBars, faArrowLeft );
+library.add( faArrowDown, faSun, faMoon, faPaintBrush, faPlus, faTools, faMobile, faDesktop, faBars, faArrowLeft, faChevronLeft, faChevronRight );
