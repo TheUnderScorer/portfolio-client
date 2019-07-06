@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useCallback, useEffect, useState } from 'react';
-import { Cta, CtaWrapper, NameHighlight, NameWrapper, TextWrapper } from './styled';
+import { Cta, CtaWrapper, NameWrapper, TextWrapper } from './styled';
 import { H1 } from '../styled/typography';
 import Typist from 'react-typist';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -10,8 +10,9 @@ import HomeStore from '../../types/stores/HomeStore';
 import { SetHeroWrote } from '../../types/actions/HomeActions';
 import styled from 'styled-components';
 import colors from '../styled/colors';
+import texts from '../../pages/data/texts';
 
-const texts = [
+const roleTexts = [
     'Front-end ',
     'Back-end ',
     'Full-stack developer.'
@@ -64,22 +65,22 @@ const HeroText = ( { onCtaClick, ctaRef }: Props ) => {
         <TextWrapper>
             <NameWrapper>
                 <Headline>
-                    Hello, I'm <NameHighlight>Przemysław Żydek</NameHighlight>.
+                    { texts.hero.title }
                 </Headline>
             </NameWrapper>
             <Typist onTypingDone={ onTypingDone } avgTypingDelay={ 55 } startDelay={ 1350 } cursor={ { blink: true } }>
                 <Headline>
-                    { texts[ 0 ] }
-                    <Typist.Backspace delay={ 200 } count={ texts[ 0 ].length }/>
-                    { texts[ 1 ] }
-                    <Typist.Backspace delay={ 200 } count={ texts[ 1 ].length }/>
-                    { texts[ 2 ] }
+                    { roleTexts[ 0 ] }
+                    <Typist.Backspace delay={ 200 } count={ roleTexts[ 0 ].length }/>
+                    { roleTexts[ 1 ] }
+                    <Typist.Backspace delay={ 200 } count={ roleTexts[ 1 ].length }/>
+                    { roleTexts[ 2 ] }
                 </Headline>
             </Typist>
             <CtaWrapper>
                 <Cta withIcon={ true } ripple={ true } flat={ true } ref={ ctaRef } onClick={ onCtaClick } className={ `${ ctaVisible ? '' : 'hidden' } ${ ctaRotated ? 'rotated' : '' }` }>
                     <FontAwesomeIcon icon="arrow-down"/>
-                    About me
+                    { texts.aboutMe.label }
                 </Cta>
             </CtaWrapper>
         </TextWrapper>

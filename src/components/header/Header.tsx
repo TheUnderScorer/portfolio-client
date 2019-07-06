@@ -22,6 +22,7 @@ import { SetThemeMode } from '../../types/actions/ThemeActions';
 import Me from '../../assets/me.jpg';
 import { SmallText, Text } from '../styled/typography';
 import { RoundButton } from '../styled/buttons';
+import texts from '../../pages/data/texts';
 
 
 const Header = () => {
@@ -107,10 +108,10 @@ const Header = () => {
                 <img src={ Me } alt=""/>
                 <InnerCaption>
                     <Text>
-                        Przemysław Żydek
+                        { texts.me.name }
                     </Text>
                     <SmallText>
-                        Full-stack developer
+                        { texts.me.position }
                     </SmallText>
                 </InnerCaption>
             </LogoWrapper>
@@ -118,17 +119,17 @@ const Header = () => {
                 <NavigationList>
                     <NavigationListItem>
                         <NavigationLink onClick={ setSection( 'about' ) } active={ currentSection === 'about' }>
-                            About
+                            { texts.aboutMe.sectionTitle }
                         </NavigationLink>
                     </NavigationListItem>
                     <NavigationListItem>
                         <NavigationLink onClick={ setSection( 'projects' ) } active={ currentSection === 'projects' }>
-                            Projects
+                            { texts.projects.sectionTitle }
                         </NavigationLink>
                     </NavigationListItem>
                     <NavigationListItem>
                         <RoundButton flat={ true } ripple={ true } onClick={ setSection( 'contact' ) }>
-                            Hire me!
+                            { texts.hire.sectionTitle }
                         </RoundButton>
                     </NavigationListItem>
                     <NavigationListItem>
