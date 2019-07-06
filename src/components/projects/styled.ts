@@ -118,6 +118,10 @@ export const SliderContainer = styled.div`
 export const TextContainer = styled.div`
     width: 50%;
     padding: 0 20px;
+    
+    .title{
+        text-align: center;
+    }
 `;
 
 export const ProjectImage = styled.img`

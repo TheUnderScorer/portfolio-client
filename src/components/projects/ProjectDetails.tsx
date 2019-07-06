@@ -4,10 +4,11 @@ import { DetailsContainer, ProjectImage, SliderContainer, TextContainer } from '
 import Slider from 'react-slick';
 import ProjectDetailsProps from './types/ProjectDetailsProps';
 import Loader from '../loader/Loader';
+import { SectionTitle, Text } from '../styled/typography';
 
 const ProjectDetails = ( { project }: ProjectDetailsProps ) => {
 
-    const { details, images = [] } = project;
+    const { details, images = [], name } = project;
 
     const [ imageLoader, setImageLoader ] = useState( true );
     const [ scheduleHideLoader, setScheduleHideLoader ] = useState( false );
@@ -53,7 +54,16 @@ const ProjectDetails = ( { project }: ProjectDetailsProps ) => {
                 </Slider>
             </SliderContainer>
             <TextContainer>
-                { details }
+                <div className="title">
+                    <SectionTitle uplined={ true }>
+                        { name }
+                    </SectionTitle>
+                </div>
+                <div>
+                    <Text>
+                        { details }
+                    </Text>
+                </div>
             </TextContainer>
         </DetailsContainer>
     )

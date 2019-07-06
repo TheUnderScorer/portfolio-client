@@ -7,13 +7,16 @@ const GlobalStyle = createGlobalStyle<any>`
         max-height: 100%;
     }
     
+    body {
+        font-family: "Open Sans", serif;
+        font-size: 16px;
+    }
+    
     html.has-overlay{
         overflow: hidden;
     }
 
     #root {
-         font-family: "Open Sans", serif;
-         font-size: 16px;
     
          @media(max-width: ${ breakpoints.tabletSmall }){
              font-size: 14px;

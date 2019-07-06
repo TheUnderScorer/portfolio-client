@@ -40,7 +40,7 @@ const Project = ( { project }: ProjectProps ) => {
                 } }/>
                 <LazyLoad
                     once={ true }
-                    throttle={ 1000 }
+                    throttle={ 500 }
                     height="100%">
                     <ProjectThumbnail onLoad={ handleLoad } ref={ thumbRef } src={ thumbnailUrl ? thumbnailUrl : ( images ? images[ 0 ] : '' ) } alt=""/>
                 </LazyLoad>
