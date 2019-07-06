@@ -6,6 +6,10 @@ const GlobalStyle = createGlobalStyle<any>`
     html, body {
         max-height: 100%;
     }
+    
+    html.has-overlay{
+        overflow: hidden;
+    }
 
     #root {
          font-family: "Open Sans", serif;

@@ -2,7 +2,8 @@ import styled from 'styled-components';
 import ReactModal from 'react-modal';
 import colors from '../styled/colors';
 import { RoundButton } from '../styled/buttons';
-import { ProjectDetailsContainerProps } from './types/styled';
+import { ProjectDetailsContainerProps, ProjectImageFigProps } from './types/styled';
+import Loader from '../loader/Loader';
 
 export const ProjectsContainer = styled.div`
     display: flex;
@@ -20,7 +21,7 @@ export const ProjectContainer = styled.article`
     width: 100%;
 `;
 
-export const ProjectImageFigure = styled.figure`
+export const ProjectImageFigure = styled.figure<ProjectImageFigProps>`
     height: 100%;
     border-radius: 20px;
     overflow: hidden;
@@ -30,16 +31,18 @@ export const ProjectImageFigure = styled.figure`
     align-items: center;
     justify-content: center;
     
-    &:hover{
-       img {
-           transform: scale(1.3);
-       }
-       
-       figcaption {
-           opacity: 1;
-           visibility: visible;
-       }
-   }
+    ${ props => props.loaded && `
+        &:hover{
+           img {
+               transform: scale(1.3);
+           }
+           
+           figcaption {
+               opacity: 1;
+               visibility: visible;
+           }
+        }
+    ` }
 `;
 export const ProjectImageCaption = styled.figcaption`
    transition: all .3s;
@@ -70,12 +73,24 @@ export const ProjectThumbnail = styled.img`
     transition: all .3s;
 `;
 
+export const ThumbnailLoader = styled( Loader )`
+    background: transparent;
+`;
+
 export const ProjectModal = styled( ReactModal )`
     width: 80%;
     height: 80%;
     display: flex;
     align-items: center;
     justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: all .3s;
+    
+    &.active {
+        opacity: 1;
+        visibility: visible;
+    }
 `;
 
 export const ReadMore = styled( RoundButton )`

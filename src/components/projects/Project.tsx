@@ -6,11 +6,11 @@ import {
     ProjectImageFigure,
     ProjectModal,
     ProjectThumbnail,
-    ReadMore
+    ReadMore,
+    ThumbnailLoader
 } from './styled';
 import { Text } from '../styled/typography';
 import LazyLoad from 'react-lazyload';
-import Loader from '../loader/Loader';
 import ProjectProps from './types/ProjectProps';
 import ProjectDetails from './ProjectDetails';
 
@@ -18,6 +18,7 @@ const Project = ( { project }: ProjectProps ) => {
 
     const { thumbnailUrl, shortDetails, images } = project;
 
+    const [ thumbLoaded, setThumbLoaded ] = useState( false );
     const [ isActive, setActive ] = useState( false );
 
     const thumbRef = useRef() as MutableRefObject<HTMLImageElement>;
@@ -26,16 +27,22 @@ const Project = ( { project }: ProjectProps ) => {
         setActive( !isActive );
     }, [ isActive ] );
 
+    const handleLoad = () => {
+        setThumbLoaded( true );
+    };
+
     return (
         <ProjectContainer className="project">
-            <ProjectImageFigure>
+            <ProjectImageFigure loaded={ thumbLoaded }>
+                <ThumbnailLoader active={ !thumbLoaded } asOverlay={ true } svgProps={ {
+                    width:  '50%',
+                    height: '50%'
+                } }/>
                 <LazyLoad
                     once={ true }
-                    throttle={ 250 }
-                    placeholder={
-                        <Loader active={ true } width="50%" height="50%"/> }
+                    throttle={ 1000 }
                     height="100%">
-                    <ProjectThumbnail ref={ thumbRef } src={ thumbnailUrl ? thumbnailUrl : ( images ? images[ 0 ] : '' ) } alt=""/>
+                    <ProjectThumbnail onLoad={ handleLoad } ref={ thumbRef } src={ thumbnailUrl ? thumbnailUrl : ( images ? images[ 0 ] : '' ) } alt=""/>
                 </LazyLoad>
                 <ProjectImageCaption>
                     <div>
@@ -48,7 +55,7 @@ const Project = ( { project }: ProjectProps ) => {
                     </ReadMore>
                 </ProjectImageCaption>
             </ProjectImageFigure>
-            <ProjectModal overlayClassName="middle center" isOpen={ isActive } onRequestClose={ toggleActive }>
+            <ProjectModal shouldFocusAfterRender={ false } htmlOpenClassName="has-overlay" closeTimeoutMS={ 500 } className={ `${ isActive ? 'active' : '' }` } overlayClassName="middle center" isOpen={ isActive } onRequestClose={ toggleActive }>
                 <ProjectDetails project={ project }/>
             </ProjectModal>
         </ProjectContainer>

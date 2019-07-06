@@ -6,4 +6,6 @@ export default interface LoaderProps {
     svgProps?: SvgLoaderProps;
     active?: boolean;
     asOverlay?: boolean;
+    background?: string;
+    className?: string;
 }
