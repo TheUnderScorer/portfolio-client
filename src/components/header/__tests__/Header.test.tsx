@@ -18,7 +18,9 @@ describe( 'Header component', () => {
     };
 
     it( 'Renders without crashing', () => {
-        mountWithStore( <Header/>, initialState );
+        const { component } = mountWithStore( <Header/>, initialState );
+
+        expect( component.html() ).toMatchSnapshot()
     } );
 
     it( 'Clicking toggle should switch theme mode', () => {

@@ -1,26 +1,11 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import * as React from 'react';
 import App from './App';
+import { mount } from 'enzyme';
 
 describe( 'App component', () => {
 
-    let root: HTMLDivElement;
-
-    beforeEach( () => {
-        root = document.createElement( 'div' );
-        root.id = 'root';
-
-        document.body.appendChild( root );
-    } );
-
-    afterEach( () => {
-        root.remove();
-    } );
-
     it( 'renders without crashing', () => {
-        ReactDOM.render( <App/>, root );
-        ReactDOM.unmountComponentAtNode( root );
+        mount( <App/> );
     } );
-
 
 } );
