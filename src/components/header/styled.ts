@@ -115,8 +115,12 @@ export const MenuActivator = styled( IconButton )`
 `;
 
 export const GoBackButton = styled( IconButton )<GoBackButtonProps>`
-    height: 40px;
     transition: all .3s;
+    margin-right: 10px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     
     &, *{
         color: ${ props => props.theme.mode === 'black' ? colors.white : colors.dark }
@@ -143,7 +147,7 @@ export const GoBackButton = styled( IconButton )<GoBackButtonProps>`
         }
     ` :
     `
-        width: 40px;
+        width: 30px;
         opacity: 1;
         visibility: visible;
     ` }

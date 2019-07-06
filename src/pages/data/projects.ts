@@ -5,6 +5,7 @@ import { ProjectTypes } from '../../types/ProjectTypes';
 const projects: ProjectInterface[] = [
     {
         thumbnailUrl: Test,
+        images:       [ Test, Test, Test ],
         name:         'Test Project',
         details:      'Lorem ipsum',
         shortDetails: 'Lorem ipsum',

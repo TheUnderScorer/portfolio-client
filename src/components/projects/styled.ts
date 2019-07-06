@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import ReactModal from 'react-modal';
 import colors from '../styled/colors';
 import { RoundButton } from '../styled/buttons';
+import { ProjectDetailsContainerProps } from './types/styled';
 
 export const ProjectsContainer = styled.div`
     display: flex;
@@ -71,24 +72,41 @@ export const ProjectThumbnail = styled.img`
 
 export const ProjectModal = styled( ReactModal )`
     width: 80%;
-    height: auto;
+    height: 80%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 `;
 
 export const ReadMore = styled( RoundButton )`
     margin-top: 40px;
 `;
 
-export const ProjectDetailsContainer = styled.div`
+export const DetailsContainer = styled.div<ProjectDetailsContainerProps>`
     background-color: ${ props => props.theme.mode === 'black' ? colors.dark : colors.white };
-    padding: 5em;
+    padding: 2em;
+    height: 100%;
+    width: 100%;
+    display: flex;
 `;
 
-export const SliderContainer = styled.div``;
+export const SliderContainer = styled.div`
+    width: 50%;
+    height: 100%;
+    position: relative;
+    
+    .slick-slider, .slick-track, .slick-list, .slick-slide > div {
+        height: 100%;
+    }
+`;
 
-export const ProjectDetailsTextContainer = styled.div``;
+export const TextContainer = styled.div`
+    width: 50%;
+    padding: 0 20px;
+`;
 
 export const ProjectImage = styled.img`
     width: 100%;
-    height: auto;
+    height: 100%;
     object-fit: cover;
 `;
