@@ -11,6 +11,7 @@ export const FullWidth = styled.div`
 `;
 
 export const HomeSection = styled.section<HomeSectionProps>`
+    position: relative;
     padding: 60px 20px;
     width: 100%;
     text-align: ${ props => props.centered ? 'center' : 'left' }

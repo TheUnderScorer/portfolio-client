@@ -1,4 +1,5 @@
 import ReactProps from '../../../types/ReactProps';
+import { PositionProperty } from 'csstype';
 
 export default interface OpenableSectionProps extends ReactProps {
     isOpen?: boolean;
@@ -7,7 +8,9 @@ export default interface OpenableSectionProps extends ReactProps {
     onClose?: () => any;
     className?: string;
     positionAfter?: PositionAfter;
+    positionTypeAfter?: PositionProperty;
     zIndex?: number;
+    portalTarget?: HTMLElement;
 }
 
 export interface PositionAfter {

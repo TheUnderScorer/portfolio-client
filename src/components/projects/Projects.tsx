@@ -14,7 +14,7 @@ const Projects = ( { projects }: ProjectsProps ) => {
                 </SectionTitle>
                 <ProjectsContainer>
                     { projects.map( ( project, index ) =>
-                        <Project key={ index } { ...project } />
+                        <Project key={ index } project={ project }/>
                     ) }
                 </ProjectsContainer>
             </div>

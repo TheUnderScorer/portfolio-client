@@ -7,13 +7,14 @@ import usePrevious from '../../hooks/usePrevious';
 import handleOpen from './effects/handleOpen';
 import { Actions } from './types/Actions';
 import handleClose from './effects/handleClose';
+import * as ReactDOM from 'react-dom';
 
 const body = document.body;
 
 const positionToRelativeBeforeOpen = positionToRelativeItem( 50 );
 const positionToRelativeOnClose = positionToRelativeItem( 300 );
 
-const OpenableSection = ( { children, isOpen = false, relativeTo, className = '', zIndex = 2, positionAfter, onOpen }: Props ) => {
+const OpenableSection = ( { children, isOpen = false, relativeTo, className = '', zIndex = 2, positionAfter, onOpen, positionTypeAfter = 'absolute', portalTarget }: Props ) => {
 
     const [ isChangingState, setIsChangingState ] = useState( false );
     const [ isActive, setActive ] = useState( false );
@@ -45,8 +46,9 @@ const OpenableSection = ( { children, isOpen = false, relativeTo, className = ''
                 setPlaceholderStyle,
                 setPlaceholder,
                 positionAfter,
+                positionTypeAfter,
                 setActive,
-                setHasBg
+                setHasBg,
             ).then( () => {
 
                 setIsChangingState( false );
@@ -108,14 +110,20 @@ const OpenableSection = ( { children, isOpen = false, relativeTo, className = ''
 
     }, [ isOpen, wasOpen ] );
 
-    return (
+    const component = (
         <Openable animated={ animated } isActive={ isActive } hasBg={ hasBg } className={ className } style={ wrapperStyle } zIndex={ zIndex }>
             <div style={ placeholderStyles } className="placeholder" dangerouslySetInnerHTML={ { __html: placeholder } }/>
             <div className="content">
                 { children }
             </div>
         </Openable>
-    )
+    );
+
+    if ( portalTarget ) {
+        return ReactDOM.createPortal( component, portalTarget );
+    }
+
+    return component;
 };
 
 export default OpenableSection;

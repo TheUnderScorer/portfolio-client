@@ -18,12 +18,16 @@ export const ProjectsContainer = styled.div`
 export const ProjectContainer = styled.article`
     width: 100%;
 `;
+
 export const ProjectImageFigure = styled.figure`
     height: 100%;
     border-radius: 20px;
     overflow: hidden;
     position: relative;
     margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     
     &:hover{
        img {
@@ -55,6 +59,7 @@ export const ProjectImageCaption = styled.figcaption`
         color: ${ colors.white };
    }
 `;
+
 export const ProjectThumbnail = styled.img`
     width: 100%;
     height: auto;
