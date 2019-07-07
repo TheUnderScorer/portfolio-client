@@ -1,19 +1,17 @@
 import HomeReducer from '../../types/reducers/HomeReducer';
 import { SetHeroWrote } from '../../types/actions/HomeActions';
-import homeReducer from '../homeReducer';
+import homeReducer, { initialState } from '../homeReducer';
 
 describe( 'themeReducer', () => {
 
     let state: HomeReducer;
 
     beforeEach( () => {
-        state = {
-            didHeroWrote: false,
-        }
+        state = initialState;
     } );
 
     it( 'Should return state if action is empty', () => {
-        const newState = homeReducer( state, null );
+        const newState = homeReducer( state, {} as any );
 
         expect( newState ).toEqual( state );
     } );

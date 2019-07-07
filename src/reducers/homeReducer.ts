@@ -1,8 +1,7 @@
-import { Reducer } from 'redux';
 import HomeReducer, { HomeReducerHandler } from '../types/reducers/HomeReducer';
-import { HomeActions } from '../types/actions/HomeActions';
+import reducer from './reducer';
 
-const initialState: HomeReducer = {
+export const initialState: HomeReducer = {
     didHeroWrote:   false,
     currentSection: '',
     innerActive:    false,
@@ -36,20 +35,5 @@ const handlers: HomeReducerHandler = {
     }
 };
 
-const homeReducer: Reducer<HomeReducer, HomeActions> = ( state: HomeReducer = initialState, action: any = {} ) => {
+export default reducer( handlers, initialState );
 
-    if ( !action ) {
-        return state;
-    }
-
-    const { type } = action as HomeActions;
-
-    if ( !type || !handlers[ type ] ) {
-        return state;
-    }
-
-    return handlers[ type ]( state, action.payload );
-
-};
-
-export default homeReducer;

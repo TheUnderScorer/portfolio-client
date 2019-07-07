@@ -1,5 +1,5 @@
 import User from '../models/User';
-import ReducerHandler from './ReducerHandler';
+import { ReducerHandler } from './ReducerHandler';
 import { UserActions } from '../actions/UserActions';
 
 export default interface UserReducer {

@@ -1,5 +1,5 @@
 import { ThemeActions } from '../actions/ThemeActions';
-import ReducerHandler from './ReducerHandler';
+import { ReducerHandler } from './ReducerHandler';
 
 export default interface ThemeReducer {
     mode: ThemeMode

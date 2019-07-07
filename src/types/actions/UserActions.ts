@@ -1,5 +1,5 @@
-import { Action } from 'redux';
 import User from '../../types/models/User';
+import Action from './Action';
 
 export interface SetCurrentUser extends Action<'SetCurrentUser'> {
     payload: User;

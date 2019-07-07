@@ -1,4 +1,4 @@
-import ReducerHandler from './ReducerHandler';
+import { ReducerHandler } from './ReducerHandler';
 import { HomeActions } from '../actions/HomeActions';
 
 export default interface HomeReducer {

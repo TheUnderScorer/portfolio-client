@@ -1,4 +1,4 @@
-import { Action } from 'redux';
+import Action from './Action';
 
 export interface SetHeroWrote extends Action<'SetHeroWrote'> {
     payload: boolean;
