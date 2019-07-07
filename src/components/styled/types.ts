@@ -25,3 +25,8 @@ export interface RoundImageProps {
     height: string | number;
     maxWidth?: string | number;
 }
+
+export interface LinkProps {
+    highlight?: boolean;
+    underlined?: boolean;
+}

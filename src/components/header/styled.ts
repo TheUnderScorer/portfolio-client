@@ -1,8 +1,9 @@
 import styled from 'styled-components';
-import { GoBackButtonProps, HeaderProps, NavigationLinkProps } from './types/styled';
+import { GoBackButtonProps, HeaderProps, NavigationLinkProps, ToggleLinkProps } from './types/styled';
 import colors, { getPrimary } from '../styled/colors';
 import breakpoints from '../styled/breakpoints';
 import { IconButton } from '../styled/buttons';
+import { A } from '../styled/typography';
 
 export const HeaderWrapper = styled.header<HeaderProps>`
     position: absolute;
@@ -151,4 +152,11 @@ export const GoBackButton = styled( IconButton )<GoBackButtonProps>`
         opacity: 1;
         visibility: visible;
     ` }
+`;
+
+export const ToggleLink = styled( A )<ToggleLinkProps>`
+    color: ${ props => props.transparent ?
+    colors.white :
+    props.theme.mode === 'black' ? colors.white : colors.dark
+    };
 `;

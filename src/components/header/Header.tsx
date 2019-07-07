@@ -10,7 +10,8 @@ import {
     NavigationLink,
     NavigationList,
     NavigationListItem,
-    SwitchContainer
+    SwitchContainer,
+    ToggleLink
 } from './styled';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import HomeStore from '../../types/stores/HomeStore';
@@ -23,7 +24,7 @@ import Me from '../../assets/me.jpg';
 import { SmallText, Text } from '../styled/typography';
 import { RoundButton } from '../styled/buttons';
 import texts from '../../pages/data/texts';
-
+import { ThemeMode } from '../../types/reducers/ThemeReducer';
 
 const Header = () => {
 
@@ -44,6 +45,15 @@ const Header = () => {
     const innerActive = useSelector( ( store: HomeStore ) => store.home.innerActive );
     const mode = useSelector( ( store: HomeStore ) => store.theme.mode );
 
+    const setThemeMode = ( mode: ThemeMode ) => () => {
+        const action: SetThemeMode = {
+            type:    'SetThemeMode',
+            payload: mode
+        };
+
+        dispatch( action );
+    };
+
     const handleToggle: ChangeEventHandler<HTMLInputElement> = useCallback( ( event ) => {
 
         const action: SetThemeMode = {
@@ -55,7 +65,7 @@ const Header = () => {
     }, [ dispatch ] );
 
     const [ transparent, setTransparent ] = useState( !didInnerOpen );
-    const [ isBackVisible, setBackVisible ] = useState( false );
+    const [ backgroundVisible, setBackVisible ] = useState( false );
 
     useEffect( () => {
         setTransparent( !didInnerOpen );
@@ -102,7 +112,7 @@ const Header = () => {
     return (
         <HeaderWrapper transparent={ transparent }>
             <LogoWrapper>
-                <GoBackButton onClick={ handleLogoClick } isActive={ isBackVisible } flat={ true } transparent={ true }>
+                <GoBackButton onClick={ handleLogoClick } isActive={ backgroundVisible } flat={ true } transparent={ true }>
                     <FontAwesomeIcon icon="arrow-left"/>
                 </GoBackButton>
                 <img src={ Me } alt=""/>
@@ -134,13 +144,17 @@ const Header = () => {
                     </NavigationListItem>
                     <NavigationListItem>
                         <SwitchContainer>
-                            <FontAwesomeIcon icon="sun"/>
+                            <ToggleLink transparent={ !didInnerOpen } href="#" onClick={ setThemeMode( 'white' ) }>
+                                <FontAwesomeIcon className="sun" icon="sun"/>
+                            </ToggleLink>
                             <Switch
                                 className="theme-mode-switch"
                                 onChange={ handleToggle }
                                 checked={ mode === 'black' }
                             />
-                            <FontAwesomeIcon icon="moon"/>
+                            <ToggleLink transparent={ !didInnerOpen } href="#" onClick={ setThemeMode( 'black' ) }>
+                                <FontAwesomeIcon className="moon" icon="moon"/>
+                            </ToggleLink>
                         </SwitchContainer>
                     </NavigationListItem>
                 </NavigationList>

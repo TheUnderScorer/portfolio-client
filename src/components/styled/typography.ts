@@ -1,10 +1,14 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import colors, { getPrimary } from './colors';
-import { SectionSubtitleProps, SectionTitleProps } from './types';
+import { LinkProps, SectionSubtitleProps, SectionTitleProps } from './types';
 
-export const Text = styled.span`
+const textStyles = css`
     font-size: 1em;  
     color: ${ props => props.theme.mode === 'black' ? colors.white : colors.lightDark };
+`;
+
+export const Text = styled.span`
+    ${ textStyles }
 `;
 
 export const SmallText = styled.small`
@@ -81,6 +85,19 @@ export const SectionTitle = styled( H4 )<SectionTitleProps>`
             bottom: -20px;
             max-width: 40px
         }
+    ` }
+`;
+
+export const A = styled.a<LinkProps>`
+    ${ textStyles }
+    
+    ${ props => props.highlight && `
+        color: ${ getPrimary( props.theme.mode ) };
+        font-weight: 600;
+    ` };
+    
+    ${ props => props.underlined && `
+        border-bottom: 1px solid ${ getPrimary( props.theme.mode ) };
     ` }
 `;
 

@@ -9,3 +9,7 @@ export interface HeaderProps {
 export interface GoBackButtonProps {
     isActive: boolean;
 }
+
+export interface ToggleLinkProps {
+    transparent?: boolean;
+}
