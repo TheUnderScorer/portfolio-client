@@ -5,7 +5,6 @@ import { ButtonProps } from './types';
 
 export const Button = styled.button<ButtonProps>`
     display: inline-block;
-
     background: ${ props => getPrimary( props.theme.mode ) };
     background-position: center;
     font-size: 0.9em;
@@ -15,7 +14,7 @@ export const Button = styled.button<ButtonProps>`
     outline: none;
     position: relative;
     transition: all .3s;
-    border: 2px solid transparent;
+    border: 2px solid ${ props => getPrimary( props.theme.mode ) };
     
     &, * {
         color: ${ colors.white };
