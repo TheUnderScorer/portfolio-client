@@ -39,7 +39,7 @@ const HowCanIHelp = () => {
                 <SectionTitle underlined={ true }>
                     How can I help?
                 </SectionTitle>
-                <HorizontalList lineHeight="700px" loaded={ loaded } items={ helpItems }/>
+                <HorizontalList lineHeight="735px" loaded={ loaded } items={ helpItems }/>
             </div>
 
         </Section>

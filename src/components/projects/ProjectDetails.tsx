@@ -5,6 +5,7 @@ import Slider from 'react-slick';
 import ProjectDetailsProps from './types/ProjectDetailsProps';
 import Loader from '../loader/Loader';
 import { SectionTitle, Text } from '../styled/typography';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const ProjectDetails = ( { project }: ProjectDetailsProps ) => {
 
@@ -48,8 +49,10 @@ const ProjectDetails = ( { project }: ProjectDetailsProps ) => {
                     height: '50%'
                 } } asOverlay={ true } active={ imageLoader }/>
                 <Slider
-                    prevArrow={ <SliderArrow visible={ !imageLoader } icon="chevron-left"/> }
-                    nextArrow={ <SliderArrow visible={ !imageLoader } icon="chevron-right"/> }
+                    prevArrow={
+                        <SliderArrow ripple={ true } visible={ !imageLoader }><FontAwesomeIcon icon="chevron-left"/></SliderArrow> }
+                    nextArrow={
+                        <SliderArrow ripple={ true } visible={ !imageLoader }><FontAwesomeIcon icon="chevron-right"/></SliderArrow> }
                     dots={ true }
                     lazyLoad="progressive">
                     { images && images.map( ( imageSrc, index ) =>

@@ -1,10 +1,9 @@
 import styled from 'styled-components';
 import ReactModal from 'react-modal';
-import colors, { getPrimary, getPrimaryVariation } from '../styled/colors';
-import { RoundButton } from '../styled/buttons';
+import colors, { getPrimary } from '../styled/colors';
+import { IconButton, RoundButton } from '../styled/buttons';
 import { ProjectDetailsContainerProps, ProjectImageFigProps, SliderArrowsProps } from './types/styled';
 import Loader from '../loader/Loader';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export const ProjectsContainer = styled.div`
     display: flex;
@@ -45,6 +44,7 @@ export const ProjectImageFigure = styled.figure<ProjectImageFigProps>`
         }
     ` }
 `;
+
 export const ProjectImageCaption = styled.figcaption`
    transition: all .3s;
    opacity: 0;
@@ -119,7 +119,7 @@ export const SliderContainer = styled.div`
     
         li{
             button::before{
-                color: ${ props => props.theme.mode === 'black' ? colors.white : colors.black };
+                color: ${ props => props.theme.mode === 'black' ? colors.white : colors.dark };
                 font-size: 12px;
                 opacity: 1;
             }
@@ -148,20 +148,18 @@ export const ProjectImage = styled.img`
     object-fit: cover;
 `;
 
-export const SliderArrow = styled( FontAwesomeIcon )<SliderArrowsProps>`
+export const SliderArrow = styled( IconButton )<SliderArrowsProps>`
     opacity: ${ props => props.visible ? '1' : '0' };
-    width: 60px !important;
-    height: 60px;
-    color: ${ colors.white };
-    border-radius: 100%;
-    display: inline-block;
-    background-color: ${ props => getPrimary( props.theme.mode ) };
-    padding: 15px;
+    position: absolute;
     z-index: 4;
     transition: all .3s;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     
-    &:hover{
-        color: ${ colors.white };
-        background-color: ${ props => getPrimaryVariation( props.theme.mode ) };
+    &, &:hover, &:focus{
+        background: ${ props => getPrimary( props.theme.mode ) };
     }
 `;
