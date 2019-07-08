@@ -25,7 +25,7 @@ export const HeaderWrapper = styled.header<HeaderProps>`
 `;
 
 export const Navigation = styled.nav`
-    padding: 20px 0;
+    padding: 1rem 0;
     
     @media(max-width: ${ breakpoints.tabletSmall }){
         opacity: 0;
@@ -35,7 +35,6 @@ export const Navigation = styled.nav`
 `;
 
 export const LogoWrapper = styled.a`
-    padding: 25px 0;
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -44,6 +43,10 @@ export const LogoWrapper = styled.a`
         width: 40px;
         height: 40px;
         border-radius: 50%;
+    }
+    
+    @media(max-width: ${ breakpoints.tabletSmall }){
+        margin-left: -1em;
     }
 
 `;
@@ -63,7 +66,7 @@ export const NavigationList = styled.ul`
 `;
 
 export const NavigationListItem = styled.li`
-    margin: 0 40px;
+    margin: 0 2.2rem;
     display: flex;
     align-items: center;
 `;
@@ -81,7 +84,7 @@ export const NavigationLink = styled.a<NavigationLinkProps>`
         background: ${ props => getPrimary( props.theme.mode ) };
         transition: all .3s;
         transform: scale( ${ props => props.active ? '1' : '0' } );
-        bottom: -15px;
+        bottom: -1em;
         left: 0;
     }
     

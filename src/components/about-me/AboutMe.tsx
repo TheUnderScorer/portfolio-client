@@ -48,7 +48,7 @@ const AboutMe = () => {
                     { texts.aboutMe.subTitle }
                 </SectionSubtitle>
             </div>
-            <RoundImage width="20%" maxWidth="250px" height="auto" src={ Me } alt=""/>
+            <RoundImage width="20em" maxWidth="250px" height="auto" src={ Me } alt=""/>
             <Text className="text">
                 { texts.aboutMe.text }
             </Text>

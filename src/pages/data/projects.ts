@@ -11,7 +11,61 @@ const projects: ProjectInterface[] = [
         shortDetails: 'Lorem ipsum',
         url:          '#',
         category:     ProjectTypes.backend
-    }
+    },
+    {
+        thumbnailUrl: Test,
+        images:       [ Test, Test, Test ],
+        name:         'Test Project',
+        details:      'Lorem ipsum',
+        shortDetails: 'Lorem ipsum',
+        url:          '#',
+        category:     ProjectTypes.backend
+    },
+    {
+        thumbnailUrl: Test,
+        images:       [ Test, Test, Test ],
+        name:         'Test Project',
+        details:      'Lorem ipsum',
+        shortDetails: 'Lorem ipsum',
+        url:          '#',
+        category:     ProjectTypes.backend
+    },
+    {
+        thumbnailUrl: Test,
+        images:       [ Test, Test, Test ],
+        name:         'Test Project',
+        details:      'Lorem ipsum',
+        shortDetails: 'Lorem ipsum',
+        url:          '#',
+        category:     ProjectTypes.backend
+    },
+    {
+        thumbnailUrl: Test,
+        images:       [ Test, Test, Test ],
+        name:         'Test Project',
+        details:      'Lorem ipsum',
+        shortDetails: 'Lorem ipsum',
+        url:          '#',
+        category:     ProjectTypes.backend
+    },
+    {
+        thumbnailUrl: Test,
+        images:       [ Test, Test, Test ],
+        name:         'Test Project',
+        details:      'Lorem ipsum',
+        shortDetails: 'Lorem ipsum',
+        url:          '#',
+        category:     ProjectTypes.backend
+    },
+    {
+        thumbnailUrl: Test,
+        images:       [ Test, Test, Test ],
+        name:         'Test Project',
+        details:      'Lorem ipsum',
+        shortDetails: 'Lorem ipsum',
+        url:          '#',
+        category:     ProjectTypes.backend
+    },
 ];
 
 export default projects;

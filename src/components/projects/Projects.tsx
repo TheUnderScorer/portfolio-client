@@ -14,7 +14,7 @@ const Projects = ( { projects }: ProjectsProps ) => {
                     { texts.projects.sectionTitle }
                 </SectionTitle>
             </div>
-            <ProjectsContainer className="section-inner">
+            <ProjectsContainer middle="xs" className="section-inner">
                 { projects.map( ( project, index ) =>
                     <Project key={ index } project={ project }/>
                 ) }

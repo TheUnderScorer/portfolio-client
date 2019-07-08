@@ -88,9 +88,9 @@ export const Button = styled.button<ButtonProps>`
 
 export const CtaButton = styled( Button )`
     border-radius: 30px;
-    padding: 20px 40px;
+    padding: 1.2rem 2rem;
     text-transform: uppercase;
-    font-size: 1.45em;
+    font-size: 1em;
     
     @media(min-width: ${ breakpoints.tabletSmall }){
         font-size: 1em;
@@ -117,7 +117,7 @@ export const RoundDarkButton = styled( DarkButton )`
 
 export const RoundButton = styled( Button )`
     border-radius: 20px;
-    padding: 10px 25px;
+    padding: 0.7rem 1.7rem;
     overflow: hidden;
 `;
 

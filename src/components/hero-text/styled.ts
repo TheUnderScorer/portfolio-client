@@ -2,7 +2,6 @@ import styled from 'styled-components';
 import colors, { getPrimaryVariation } from '../styled/colors';
 import { FullWidth } from '../styled/wrappers';
 import { CtaButton } from '../styled/buttons';
-import breakpoints from '../styled/breakpoints';
 
 export const TextWrapper = styled.div`
     display: inline-flex;
@@ -24,13 +23,10 @@ export const NameHighlight = styled.span`
 `;
 
 export const CtaWrapper = styled( FullWidth )`
-    @media(min-width: ${ breakpoints.phoneSmall }){
-        margin-top: 80px;
-    }
+    margin-top: 6rem;
 `;
 
 export const Cta = styled( CtaButton )`
-
     svg{
          transition: all .3s;
     }

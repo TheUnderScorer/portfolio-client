@@ -4,24 +4,22 @@ import colors, { getPrimary } from '../styled/colors';
 import { IconButton, RoundButton } from '../styled/buttons';
 import { ProjectDetailsContainerProps, ProjectImageFigProps, SliderArrowsProps } from './types/styled';
 import Loader from '../loader/Loader';
+import { Col, Row } from 'react-flexbox-grid';
 
 const borderRadius = '10px';
 
-export const ProjectsContainer = styled.div`
-    display: flex;
-    flex-wrap: wrap;
+export const ProjectsContainer = styled( Row )`
     max-width: 1500px;
-    margin: 0 auto;
+    margin: 0 auto !important;
     
     .project {
-        width: 33%;
-        height: 300px;   
+        height: 300px;  
+        margin-bottom: 1em; 
     }
 `;
 
-export const ProjectContainer = styled.article`
+export const ProjectContainer = styled( Col )`
     width: 100%;
-    background-color: ${ props => props.theme.mode === 'black' ? colors.dark : colors.white };
     border-radius: ${ borderRadius };
 `;
 
@@ -34,6 +32,7 @@ export const ProjectImageFigure = styled.figure<ProjectImageFigProps>`
     display: flex;
     align-items: center;
     justify-content: center;
+    background-color: ${ props => props.theme.mode === 'black' ? colors.dark : colors.white };
     
     ${ props => props.loaded && `
         &:hover{
