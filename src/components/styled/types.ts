@@ -1,6 +1,7 @@
 export interface HomeSectionProps {
     centered?: boolean;
     odd?: boolean;
+    colorBackground?: boolean;
 }
 
 export interface SectionTitleProps {

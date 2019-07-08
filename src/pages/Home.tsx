@@ -4,7 +4,7 @@ import { connect, useDispatch, useSelector } from 'react-redux';
 import HomeStore from '../types/stores/HomeStore';
 import styled, { ThemeProvider } from 'styled-components';
 import HeroImage from '../components/hero-image/HeroImage';
-import Mountains from '../assets/mountains.jpg';
+import Mountains from '../assets/landscape.jpg';
 import LandscapeNight from '../assets/landscape-night.jpg';
 import 'react-typist/dist/Typist.css';
 import HeroText from '../components/hero-text/HeroText';

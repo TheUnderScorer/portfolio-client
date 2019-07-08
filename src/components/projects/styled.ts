@@ -5,6 +5,8 @@ import { IconButton, RoundButton } from '../styled/buttons';
 import { ProjectDetailsContainerProps, ProjectImageFigProps, SliderArrowsProps } from './types/styled';
 import Loader from '../loader/Loader';
 
+const borderRadius = '10px';
+
 export const ProjectsContainer = styled.div`
     display: flex;
     flex-wrap: wrap;
@@ -19,11 +21,13 @@ export const ProjectsContainer = styled.div`
 
 export const ProjectContainer = styled.article`
     width: 100%;
+    background-color: ${ props => props.theme.mode === 'black' ? colors.dark : colors.white };
+    border-radius: ${ borderRadius };
 `;
 
 export const ProjectImageFigure = styled.figure<ProjectImageFigProps>`
     height: 100%;
-    border-radius: 20px;
+    border-radius: ${ borderRadius };
     overflow: hidden;
     position: relative;
     margin: 0;

@@ -4,20 +4,21 @@ import { SectionTitle } from '../styled/typography';
 import ProjectsProps from './types/ProjectsProps';
 import Project from './Project';
 import { ProjectsContainer } from './styled';
+import texts from '../../pages/data/texts';
 
 const Projects = ( { projects }: ProjectsProps ) => {
     return (
-        <HomeSection centered={ true } odd={ true }>
+        <HomeSection colorBackground={ true } centered={ true }>
             <div className="title-container">
-                <SectionTitle>
-                    My projects
+                <SectionTitle className="section-title">
+                    { texts.projects.sectionTitle }
                 </SectionTitle>
-                <ProjectsContainer>
-                    { projects.map( ( project, index ) =>
-                        <Project key={ index } project={ project }/>
-                    ) }
-                </ProjectsContainer>
             </div>
+            <ProjectsContainer className="section-inner">
+                { projects.map( ( project, index ) =>
+                    <Project key={ index } project={ project }/>
+                ) }
+            </ProjectsContainer>
         </HomeSection>
     )
 };

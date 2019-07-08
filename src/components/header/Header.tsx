@@ -129,12 +129,12 @@ const Header = () => {
                 <NavigationList>
                     <NavigationListItem>
                         <NavigationLink onClick={ setSection( 'about' ) } active={ currentSection === 'about' }>
-                            { texts.aboutMe.sectionTitle }
+                            { texts.aboutMe.label }
                         </NavigationLink>
                     </NavigationListItem>
                     <NavigationListItem>
                         <NavigationLink onClick={ setSection( 'projects' ) } active={ currentSection === 'projects' }>
-                            { texts.projects.sectionTitle }
+                            { texts.projects.label }
                         </NavigationLink>
                     </NavigationListItem>
                     <NavigationListItem>

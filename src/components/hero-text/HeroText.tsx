@@ -80,7 +80,7 @@ const HeroText = ( { onCtaClick, ctaRef }: Props ) => {
             <CtaWrapper>
                 <Cta withIcon={ true } ripple={ true } flat={ true } ref={ ctaRef } onClick={ onCtaClick } className={ `${ ctaVisible ? '' : 'hidden' } ${ ctaRotated ? 'rotated' : '' }` }>
                     <FontAwesomeIcon icon="arrow-down"/>
-                    { texts.aboutMe.label }
+                    { texts.aboutMe.sectionTitle }
                 </Cta>
             </CtaWrapper>
         </TextWrapper>
