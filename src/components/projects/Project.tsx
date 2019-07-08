@@ -55,7 +55,7 @@ const Project = ( { project }: ProjectProps ) => {
                     </ReadMore>
                 </ProjectImageCaption>
             </ProjectImageFigure>
-            <ProjectModal shouldFocusAfterRender={ false } htmlOpenClassName="has-overlay" closeTimeoutMS={ 500 } className={ `${ isActive ? 'active' : '' }` } overlayClassName="middle center" isOpen={ isActive } onRequestClose={ toggleActive }>
+            <ProjectModal shouldFocusAfterRender={ false } htmlOpenClassName="has-overlay" className={ `${ isActive ? 'active' : '' }` } overlayClassName="middle center" isOpen={ isActive } onRequestClose={ toggleActive }>
                 <ProjectDetails project={ project }/>
             </ProjectModal>
         </ProjectContainer>

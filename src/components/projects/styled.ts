@@ -89,7 +89,7 @@ export const ProjectModal = styled( ReactModal )`
     justify-content: center;
     opacity: 0;
     visibility: hidden;
-    transition: all .3s;
+    transition: opacity .3s;
     
     &.active {
         opacity: 1;
