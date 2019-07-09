@@ -181,6 +181,10 @@ export const SliderContainer = styled.div`
 export const TextContainer = styled.div`
     width: 50%;
     padding: 2em 2em 0.5em;
+    overflow: auto;
+    transition: all .3s;
+    position: relative;
+    background: inherit;
     
     .title{
         text-align: center;
@@ -191,7 +195,6 @@ export const TextContainer = styled.div`
         flex-direction: column;   
         
         .details {
-            overflow: auto;
             flex: 1;
             height: 100%;
         }
