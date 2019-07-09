@@ -167,6 +167,8 @@ const Header = () => {
 
     useEffect( () => {
 
+        const offset = 100;
+
         if ( !didInnerOpen || !currentSection ) {
             return;
         }
@@ -179,7 +181,7 @@ const Header = () => {
 
         setOpen( false );
 
-        smoothScroll( section.offsetTop, 300 ).then( () => {
+        smoothScroll( section.offsetTop - offset, 600 ).then( () => {
             const sectionAction: SetCurrentSection = {
                 type:    'SetCurrentSection',
                 payload: ''
@@ -195,6 +197,7 @@ const Header = () => {
         const callback = () => {
 
             const targetScroll = headerRef.current.offsetHeight * 2;
+            const scrollingUpOffset = 50;
 
             if ( !document.scrollingElement ) {
                 return;
@@ -202,7 +205,7 @@ const Header = () => {
 
             if ( document.scrollingElement.scrollTop > targetScroll ) {
                 setFixed( true );
-            } else if ( document.scrollingElement.scrollTop <= 50 ) {
+            } else if ( document.scrollingElement.scrollTop <= scrollingUpOffset ) {
                 setFixed( false );
             }
         };
@@ -215,8 +218,8 @@ const Header = () => {
 
     return (
         <HeaderWrapper ref={ headerRef } isFixed={ isFixed } isOpen={ isOpen } transparent={ transparent }>
-            <LogoWrapper>
-                <GoBackButton onClick={ handleLogoClick } isActive={ backgroundVisible } flat={ true } transparent={ true }>
+            <LogoWrapper onClick={ handleLogoClick }>
+                <GoBackButton isActive={ backgroundVisible } flat={ true } transparent={ true }>
                     <FontAwesomeIcon icon="arrow-left"/>
                 </GoBackButton>
                 <img src={ Me } alt=""/>
