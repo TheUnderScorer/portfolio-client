@@ -10,6 +10,7 @@ export const Openable = styled.div<OpenableStyledProps>`
     opacity: 0;
     z-index: ${ props => props.zIndex };
     top: 0;
+    left: 0;
    
     ${ props => props.animated && `
         transition: all .3s;
