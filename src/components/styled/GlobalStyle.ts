@@ -5,6 +5,7 @@ import colors, { getPrimary } from './colors';
 const GlobalStyle = createGlobalStyle<any>`
     html, body {
         max-height: 100%;
+        width: 100%;
     }
     
     body {
