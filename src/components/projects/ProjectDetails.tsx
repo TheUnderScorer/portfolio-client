@@ -43,7 +43,7 @@ const ProjectDetails = ( { project }: ProjectDetailsProps ) => {
 
     return (
         <DetailsContainer>
-            <SliderContainer>
+            <SliderContainer className="slider-container">
                 <Loader width="100%" height="100%" svgProps={ {
                     width:  '50%',
                     height: '50%'
@@ -66,7 +66,7 @@ const ProjectDetails = ( { project }: ProjectDetailsProps ) => {
                         { name }
                     </SectionTitle>
                 </div>
-                <div>
+                <div className="details">
                     <Text>
                         { details }
                     </Text>

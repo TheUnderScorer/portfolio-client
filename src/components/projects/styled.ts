@@ -11,7 +11,7 @@ import {
 import Loader from '../loader/Loader';
 import breakpoints from '../styled/breakpoints';
 
-const borderRadius = '10px';
+const borderRadius = '6px';
 
 export const ProjectsContainer = styled.div`
     max-width: 1500px;
@@ -90,6 +90,7 @@ export const ProjectImageCaption = styled.figcaption`
    flex-direction: column;
    align-items: center;
    justify-content: center;
+   box-shadow: 0 5px 5px 0 rgba(233,240,243,0.5), 0 0 0 1px #E6ECF8;
    
    span, h3{
         color: ${ colors.white };
@@ -130,10 +131,23 @@ export const ReadMore = styled( RoundButton )`
 
 export const DetailsContainer = styled.div<ProjectDetailsContainerProps>`
     background-color: ${ props => props.theme.mode === 'black' ? colors.dark : colors.white };
-    padding: 2em;
     height: 100%;
     width: 100%;
     display: flex;
+    overflow: visible;
+    
+    @media(max-width: ${ breakpoints.tabletBig }) {
+        flex-direction: column;
+        
+        > div {
+            width: 100%;
+        }
+        
+        .slider-container {
+            min-height: 200px;
+            max-height: 300px;
+        }
+    }
 `;
 
 export const SliderContainer = styled.div`
@@ -146,6 +160,7 @@ export const SliderContainer = styled.div`
     }
     
     .slick-dots{
+        bottom: 10px;
     
         li{
             button::before{
@@ -165,10 +180,25 @@ export const SliderContainer = styled.div`
 
 export const TextContainer = styled.div`
     width: 50%;
-    padding: 0 2em;
+    padding: 2em 2em 0.5em;
     
     .title{
         text-align: center;
+    }
+    
+    @media(max-width: ${ breakpoints.tabletBig }) {
+        display: flex;
+        flex-direction: column;   
+        
+        .details {
+            overflow: auto;
+            flex: 1;
+            height: 100%;
+        }
+        
+        .title h4{
+            margin-bottom: 1em;
+        }
     }
 `;
 
