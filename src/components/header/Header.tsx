@@ -67,23 +67,6 @@ const Header = () => {
     const [ transparent, setTransparent ] = useState( !didInnerOpen );
     const [ backgroundVisible, setBackVisible ] = useState( false );
     const [ isOpen, setOpen ] = useState( false );
-    const [ overflowHidden, setOverflowHidden ] = useState( false );
-
-    useEffect( () => {
-
-        const newOverflow = !isOpen;
-
-        if ( !newOverflow ) {
-            setOverflowHidden( newOverflow );
-
-            return;
-        }
-
-        const timeout = setTimeout( () => setOverflowHidden( newOverflow ), 301 );
-
-        return () => clearTimeout( timeout );
-
-    }, [ isOpen ] );
 
     const switchOpenState = useCallback( () => {
         setOpen( !isOpen );
@@ -132,7 +115,7 @@ const Header = () => {
     }, [ innerActive ] );
 
     return (
-        <HeaderWrapper overflowHidden={ overflowHidden } isOpen={ isOpen } transparent={ transparent }>
+        <HeaderWrapper isOpen={ isOpen } transparent={ transparent }>
             <LogoWrapper>
                 <GoBackButton onClick={ handleLogoClick } isActive={ backgroundVisible } flat={ true } transparent={ true }>
                     <FontAwesomeIcon icon="arrow-left"/>

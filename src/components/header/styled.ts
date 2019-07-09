@@ -26,10 +26,6 @@ export const HeaderWrapper = styled.header<HeaderProps>`
     
     @media(max-width: ${ breakpoints.tabletSmall }) {
         height: 100px;
-        
-        ${ props => props.overflowHidden && `
-            overflow-x: hidden;
-        ` }
     
         ${ props => props.isOpen && `
         
@@ -40,7 +36,6 @@ export const HeaderWrapper = styled.header<HeaderProps>`
             .navigation {
                 opacity: 1;
                 visibility: visible;
-                left: 0;
             }
         ` }
     }
@@ -62,7 +57,7 @@ export const Navigation = styled.nav`
         width: 100%;
         background: ${ props => props.theme.mode === 'black' ? colors.dark : colors.white };
         transition: all .3s;
-        left: 100%;
+        left: 0;
         z-index: 11;
         padding-top: 10em;
         
