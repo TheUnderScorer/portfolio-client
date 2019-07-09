@@ -68,24 +68,6 @@ const Header = () => {
     const [ backgroundVisible, setBackVisible ] = useState( false );
     const [ isOpen, setOpen ] = useState( false );
 
-    const switchOpenState = useCallback( () => {
-        setOpen( !isOpen );
-    }, [ isOpen ] );
-
-    useEffect( () => {
-        setTransparent( !didInnerOpen );
-    }, [ didInnerOpen ] );
-
-    useEffect( () => {
-
-        const timeout = setTimeout( () => {
-            setBackVisible( innerActive );
-        }, 100 );
-
-        return () => clearTimeout( timeout );
-
-    }, [ innerActive ] );
-
     const handleLogoClick = useCallback( () => {
 
         const sectionAction: SetCurrentSection = {
@@ -113,6 +95,28 @@ const Header = () => {
         dispatch( didOpenAction );
 
     }, [ innerActive ] );
+
+    const switchOpenState = useCallback( () => {
+        setOpen( !isOpen );
+    }, [ isOpen ] );
+
+    useEffect( () => {
+        setTransparent( !didInnerOpen );
+    }, [ didInnerOpen ] );
+
+    useEffect( () => {
+
+        const timeout = setTimeout( () => {
+            setBackVisible( innerActive );
+        }, 100 );
+
+        return () => clearTimeout( timeout );
+
+    }, [ innerActive ] );
+
+    useEffect( () => {
+
+    }, [] );
 
     return (
         <HeaderWrapper isOpen={ isOpen } transparent={ transparent }>

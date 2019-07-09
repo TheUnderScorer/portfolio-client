@@ -4,6 +4,7 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import 'react-flexbox-grid/dist/react-flexbox-grid.css';
 import Modal from 'react-modal';
+import './fontAwesome';
 
 const root = document.getElementById( 'root' ) as HTMLElement;
 

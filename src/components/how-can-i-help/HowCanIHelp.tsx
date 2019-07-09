@@ -4,7 +4,7 @@ import { HomeSection } from '../styled/wrappers';
 import { SectionTitle } from '../styled/typography';
 import HorizontalList from '../horizontal-list/HorizontalList';
 import helpItems from '../../pages/data/helpItems';
-import { useSelector } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import HomeStore from '../../types/stores/HomeStore';
 import styled from 'styled-components';
 import breakpoints from '../styled/breakpoints';
@@ -34,7 +34,7 @@ const HowCanIHelp = () => {
     }, [ didInnerOpen ] );
 
     return (
-        <Section centered={ true }>
+        <Section id="how_can_i_help" centered={ true }>
             <div>
                 <SectionTitle underlined={ true }>
                     How can I help?
@@ -46,4 +46,4 @@ const HowCanIHelp = () => {
     )
 };
 
-export default HowCanIHelp;
+export default connect()( HowCanIHelp );

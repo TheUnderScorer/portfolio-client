@@ -7,6 +7,7 @@ import { RoundImage } from '../styled/images';
 import breakpoints from '../styled/breakpoints';
 import { getPrimary } from '../styled/colors';
 import texts from '../../pages/data/texts';
+import { connect } from 'react-redux';
 
 const AboutMeWrapper = styled( HomeSection )`
     display: flex;
@@ -31,15 +32,15 @@ const AboutMeWrapper = styled( HomeSection )`
     img {
         border: 3px solid ${ props => getPrimary( props.theme.mode ) };
         padding: 3px;
-        @media(min-width: ${ breakpoints.tabletBig }){
-            margin-right: 20px;
-        }
+            @media(min-width: ${ breakpoints.tabletBig }){
+                margin-right: 20px;
+            }
     }
 `;
 
 const AboutMe = () => {
     return (
-        <AboutMeWrapper centered={ true } odd={ true }>
+        <AboutMeWrapper id="about_me" centered={ true } odd={ true }>
             <div className="title-container">
                 <SectionTitle hasSubtitle={ true } uplined={ true }>
                     { texts.aboutMe.title }
@@ -56,4 +57,4 @@ const AboutMe = () => {
     )
 };
 
-export default AboutMe;
+export default connect()( AboutMe );
