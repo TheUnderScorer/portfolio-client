@@ -36,8 +36,8 @@ const HeroChildren = styled.div`
     top: 30%;
     left: 20%;
     
-    @media(max-width: ${ breakpoints.tabletSmall }){
-        left: 10%;
+    @media(max-width: ${ breakpoints.tabletBig }){
+        left: 7%;
     }
 `;
 

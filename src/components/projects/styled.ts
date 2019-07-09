@@ -2,25 +2,53 @@ import styled from 'styled-components';
 import ReactModal from 'react-modal';
 import colors, { getPrimary } from '../styled/colors';
 import { IconButton, RoundButton } from '../styled/buttons';
-import { ProjectDetailsContainerProps, ProjectImageFigProps, SliderArrowsProps } from './types/styled';
+import {
+    ProjectContainerProps,
+    ProjectDetailsContainerProps,
+    ProjectImageFigProps,
+    SliderArrowsProps
+} from './types/styled';
 import Loader from '../loader/Loader';
-import { Col, Row } from 'react-flexbox-grid';
+import breakpoints from '../styled/breakpoints';
 
 const borderRadius = '10px';
 
-export const ProjectsContainer = styled( Row )`
+export const ProjectsContainer = styled.div`
     max-width: 1500px;
     margin: 0 auto !important;
+    display: grid;
+    grid-template-rows: 1fr;
+    grid-row-gap: 3em;
+    grid-column-gap: 3em;
+    grid-template-columns: repeat(3, 1fr);
+    
+    @media(max-width: ${ breakpoints.tabletBig }){
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    @media(max-width: ${ breakpoints.phoneBig }){
+        grid-template-columns: 1fr;
+    }
     
     .project {
-        height: 300px;  
         margin-bottom: 1em; 
+        height: 18rem;
+        max-height: 300px;
+        min-height: 100px;
+        
+        @media(max-width: ${ breakpoints.tabletBig }){
+            height: 15rem;
+        }
     }
 `;
 
-export const ProjectContainer = styled( Col )`
+export const ProjectContainer = styled.div<ProjectContainerProps>`
     width: 100%;
     border-radius: ${ borderRadius };
+    
+    ${ props => props.loading && `
+        height: 300px;
+    ` }
 `;
 
 export const ProjectImageFigure = styled.figure<ProjectImageFigProps>`
@@ -71,7 +99,6 @@ export const ProjectImageCaption = styled.figcaption`
 export const ProjectThumbnail = styled.img`
     width: 100%;
     height: auto;
-    max-height: 100%;
     object-fit: cover;
     display: block;
     transition: all .3s;

@@ -11,6 +11,7 @@ import { SetHeroWrote } from '../../types/actions/HomeActions';
 import styled from 'styled-components';
 import colors from '../styled/colors';
 import texts from '../../pages/data/texts';
+import breakpoints from '../styled/breakpoints';
 
 const roleTexts = [
     'Front-end ',
@@ -19,7 +20,11 @@ const roleTexts = [
 ];
 
 const Headline = styled( H1 )`
-    color: ${ colors.white }
+    color: ${ colors.white };
+    
+    @media(max-width: ${ breakpoints.phoneBig }){
+        font-size: 2.5em;
+    }
 `;
 
 const HeroText = ( { onCtaClick, ctaRef }: Props ) => {

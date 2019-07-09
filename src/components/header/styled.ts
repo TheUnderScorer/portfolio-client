@@ -14,13 +14,33 @@ export const HeaderWrapper = styled.header<HeaderProps>`
     justify-content: space-between;
     padding: 0 6em;
     
-    @media(max-width: ${ breakpoints.tabletSmall }){
-        padding: 0 2em;
-        align-items: center;
+    &, span, small, path {
+        color: ${ props => props.transparent ? colors.white : ( props.theme.mode === 'black' ? colors.white : colors.dark ) };
     }
     
-    &, span, small {
-        color: ${ props => props.transparent ? colors.white : ( props.theme.mode === 'black' ? colors.white : colors.dark ) };
+    @media(max-width: ${ breakpoints.tabletBig }) {
+        align-items: center;
+        padding: 0 2em;
+    }
+    
+    @media(max-width: ${ breakpoints.tabletSmall }) {
+        height: 100px;
+    
+        ${ props => props.isOpen && `
+            &, span, small, a, path {
+                color: ${ props.theme.mode === 'black' ? colors.white : colors.dark };
+            }
+        
+            .navigation {
+                opacity: 1;
+                visibility: visible;
+                left: 0;
+            }
+        ` }
+    }
+    
+    @media(max-width: ${ breakpoints.phoneBig }) {
+        padding: 0 1em;
     }
 `;
 
@@ -28,9 +48,31 @@ export const Navigation = styled.nav`
     padding: 1rem 0;
     
     @media(max-width: ${ breakpoints.tabletSmall }){
+        top: 0;
+        height: 100vh;
+        position: absolute;
         opacity: 0;
         visibility: hidden;
-        width: 0;
+        width: 100%;
+        background: ${ props => props.theme.mode === 'black' ? colors.dark : colors.white };
+        transition: all .3s;
+        left: 100%;
+        z-index: 11;
+        padding-top: 10em;
+        
+        ul {
+            justify-content: flex-start;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        li {
+            margin-bottom: 2em;
+        }
+        
+        span, svg, a {
+            color: ${ props => props.theme.mode === 'black' ? colors.white : colors.dark }
+        }
     }
 `;
 
@@ -38,6 +80,7 @@ export const LogoWrapper = styled.a`
     cursor: pointer;
     display: flex;
     align-items: center;
+    z-index: 12;
 
     img {
         width: 40px;
@@ -112,6 +155,7 @@ export const SwitchContainer = styled.div`
 
 export const MenuActivator = styled( IconButton )`
     font-size: 2em;
+    z-index: 12;
 
     @media(min-width: ${ parseInt( breakpoints.tabletSmall ) + 1 }px){
         display: none;

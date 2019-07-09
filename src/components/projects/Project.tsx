@@ -32,7 +32,7 @@ const Project = ( { project }: ProjectProps ) => {
     };
 
     return (
-        <ProjectContainer xs={ 12 } md={ 6 } lg={ 4 } className="project">
+        <ProjectContainer className="project">
             <ProjectImageFigure loaded={ thumbLoaded }>
                 <ThumbnailLoader active={ !thumbLoaded } asOverlay={ true } svgProps={ {
                     width:  '50%',

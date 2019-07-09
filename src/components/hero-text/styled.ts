@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import colors, { getPrimaryVariation } from '../styled/colors';
 import { FullWidth } from '../styled/wrappers';
 import { CtaButton } from '../styled/buttons';
+import breakpoints from '../styled/breakpoints';
 
 export const TextWrapper = styled.div`
     display: inline-flex;
@@ -24,6 +25,10 @@ export const NameHighlight = styled.span`
 
 export const CtaWrapper = styled( FullWidth )`
     margin-top: 6rem;
+    
+    @media(max-width: ${ breakpoints.phoneBig }){
+        margin-top: 2rem;
+    }
 `;
 
 export const Cta = styled( CtaButton )`

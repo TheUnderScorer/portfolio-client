@@ -20,6 +20,10 @@ export const HomeSection = styled.section<HomeSectionProps>`
     ( props.theme.mode === 'black' ? colors.black : colors.white )
     }
     
+    .section-inner{
+        padding: 0 2rem;
+    }
+    
     ${ props => props.colorBackground && `
         padding: 0;
     

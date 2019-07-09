@@ -66,6 +66,11 @@ const Header = () => {
 
     const [ transparent, setTransparent ] = useState( !didInnerOpen );
     const [ backgroundVisible, setBackVisible ] = useState( false );
+    const [ isOpen, setOpen ] = useState( false );
+
+    const switchOpenState = useCallback( () => {
+        setOpen( !isOpen );
+    }, [ isOpen ] );
 
     useEffect( () => {
         setTransparent( !didInnerOpen );
@@ -110,7 +115,7 @@ const Header = () => {
     }, [ innerActive ] );
 
     return (
-        <HeaderWrapper transparent={ transparent }>
+        <HeaderWrapper isOpen={ isOpen } transparent={ transparent }>
             <LogoWrapper>
                 <GoBackButton onClick={ handleLogoClick } isActive={ backgroundVisible } flat={ true } transparent={ true }>
                     <FontAwesomeIcon icon="arrow-left"/>
@@ -125,7 +130,7 @@ const Header = () => {
                     </SmallText>
                 </InnerCaption>
             </LogoWrapper>
-            <Navigation>
+            <Navigation className="navigation">
                 <NavigationList>
                     <NavigationListItem>
                         <NavigationLink onClick={ setSection( 'about' ) } active={ currentSection === 'about' }>
@@ -159,7 +164,7 @@ const Header = () => {
                     </NavigationListItem>
                 </NavigationList>
             </Navigation>
-            <MenuActivator flat={ true } transparent={ true }>
+            <MenuActivator onClick={ switchOpenState } flat={ true } transparent={ true }>
                 <FontAwesomeIcon icon="bars"/>
             </MenuActivator>
         </HeaderWrapper>

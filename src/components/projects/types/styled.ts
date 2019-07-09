@@ -9,3 +9,7 @@ export interface ProjectImageFigProps {
 export interface SliderArrowsProps {
     visible?: boolean;
 }
+
+export interface ProjectContainerProps {
+    loading?: boolean;
+}

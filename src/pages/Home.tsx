@@ -21,7 +21,7 @@ const HowCanIHelp = lazy( () => import('../components/how-can-i-help/HowCanIHelp
 
 const HomeWrapper = styled.div<HomeWrapperProps>`
     ${ props => props.innerActive && `
-        header, .inner-section {
+        .inner-section {
             position: relative;
         }
         

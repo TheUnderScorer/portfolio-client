@@ -4,6 +4,7 @@ export interface NavigationLinkProps {
 
 export interface HeaderProps {
     transparent?: boolean;
+    isOpen?: boolean;
 }
 
 export interface GoBackButtonProps {
@@ -12,4 +13,8 @@ export interface GoBackButtonProps {
 
 export interface ToggleLinkProps {
     transparent?: boolean;
+}
+
+export interface NavigationProps {
+    isOpen?: boolean;
 }
