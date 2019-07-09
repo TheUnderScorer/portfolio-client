@@ -40,7 +40,7 @@ const AboutMeWrapper = styled( HomeSection )`
 
 const AboutMe = () => {
     return (
-        <AboutMeWrapper id="about_me" centered={ true } odd={ true }>
+        <AboutMeWrapper id={ texts.aboutMe.id } centered={ true } odd={ true }>
             <div className="title-container">
                 <SectionTitle hasSubtitle={ true } uplined={ true }>
                     { texts.aboutMe.title }

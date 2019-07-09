@@ -1,12 +1,22 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { GoBackButtonProps, HeaderProps, NavigationLinkProps, ToggleLinkProps } from './types/styled';
 import colors, { getPrimary } from '../styled/colors';
 import breakpoints from '../styled/breakpoints';
 import { IconButton } from '../styled/buttons';
 import { A } from '../styled/typography';
 
+const slideAnimation = keyframes`
+    from {
+        top: -100%;
+    }
+    
+    to {
+        top: 0;
+    }
+`;
+
 export const HeaderWrapper = styled.header<HeaderProps>`
-    position: absolute;
+    position: ${ props => props.isFixed ? 'fixed' : 'absolute' };
     width: 100%;
     z-index: 3;
     background-color: ${ props => props.transparent ? 'transparent' : ( props.theme.mode === 'black' ? colors.dark : colors.lightBg ) };
@@ -14,6 +24,11 @@ export const HeaderWrapper = styled.header<HeaderProps>`
     justify-content: space-between;
     padding: 0 6em;
     overflow-x: visible;
+    animation: ${ slideAnimation } .3s ease-in-out forwards;
+    
+    ${ props => !props.isFixed && `
+        animation: none;
+    ` }
     
     &, span, small, path {
         color: ${ props => props.transparent ? colors.white : ( props.theme.mode === 'black' ? colors.white : colors.dark ) };

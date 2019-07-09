@@ -6,6 +6,7 @@ export default interface HomeReducer {
     currentSection: string;
     innerActive: boolean;
     didInnerOpen: boolean;
+    innerSectionRelativeItem?: HTMLElement;
 }
 
 export type HomeReducerHandler = {

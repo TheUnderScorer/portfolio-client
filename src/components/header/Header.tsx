@@ -1,5 +1,13 @@
 import * as React from 'react';
-import { ChangeEventHandler, useCallback, useEffect, useState } from 'react';
+import {
+    ChangeEventHandler,
+    MouseEventHandler,
+    MutableRefObject,
+    useCallback,
+    useEffect,
+    useRef,
+    useState
+} from 'react';
 import {
     GoBackButton,
     HeaderWrapper,
@@ -13,9 +21,14 @@ import {
     SwitchContainer,
     ToggleLink
 } from './styled';
-import { connect, useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import HomeStore from '../../types/stores/HomeStore';
-import { SetCurrentSection, SetDidInnerOpen, SetInnerActive } from '../../types/actions/HomeActions';
+import {
+    SetCurrentSection,
+    SetDidInnerOpen,
+    SetInnerActive,
+    SetInnerSectionRelativeItem
+} from '../../types/actions/HomeActions';
 import Switch from '@material/react-switch';
 import '@material/react-switch/dist/switch.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -25,11 +38,58 @@ import { SmallText, Text } from '../styled/typography';
 import { RoundButton } from '../styled/buttons';
 import texts from '../../pages/data/texts';
 import { ThemeMode } from '../../types/reducers/ThemeReducer';
+import { getPrimary } from '../styled/colors';
+import { smoothScroll } from '../../utils/scroll';
 
 const Header = () => {
 
     const dispatch = useDispatch();
-    const setSection = useCallback( ( section: string ) => () => {
+
+    const headerRef = useRef() as MutableRefObject<HTMLElement>;
+
+    const currentSection = useSelector( ( store: HomeStore ) => store.home.currentSection );
+    const didInnerOpen = useSelector( ( store: HomeStore ) => store.home.didInnerOpen );
+    const innerActive = useSelector( ( store: HomeStore ) => store.home.innerActive );
+    const mode = useSelector( ( store: HomeStore ) => store.theme.mode );
+
+    const [ transparent, setTransparent ] = useState( !didInnerOpen );
+    const [ backgroundVisible, setBackVisible ] = useState( false );
+    const [ isOpen, setOpen ] = useState( false );
+    const [ isFixed, setFixed ] = useState( false );
+
+    const setSection = useCallback( ( section: string ): MouseEventHandler => ( event ) => {
+
+        const target = event.target as HTMLElement;
+
+        if ( !innerActive ) {
+
+            const innerActivation: SetInnerActive = {
+                type:    'SetInnerActive',
+                payload: !innerActive
+            };
+
+            // isOpen has usage only on mobiles, and there we don't want to change relative item
+            if ( !isOpen ) {
+
+                if ( !target.classList.contains( 'header-cta' ) ) {
+                    target.style.backgroundColor = getPrimary( mode );
+                }
+
+                const relativeItemAction: SetInnerSectionRelativeItem = {
+                    type:    'SetInnerSectionRelativeItem',
+                    payload: event.target as HTMLElement
+                };
+
+                dispatch( relativeItemAction );
+
+                if ( !target.classList.contains( 'header-cta' ) ) {
+                    setTimeout( () => target.removeAttribute( 'style' ), 500 );
+                }
+            }
+
+            dispatch( innerActivation );
+
+        }
 
         const action: SetCurrentSection = {
             type:    'SetCurrentSection',
@@ -38,12 +98,7 @@ const Header = () => {
 
         dispatch( action );
 
-    }, [ dispatch ] );
-
-    const currentSection = useSelector( ( store: HomeStore ) => store.home.currentSection );
-    const didInnerOpen = useSelector( ( store: HomeStore ) => store.home.didInnerOpen );
-    const innerActive = useSelector( ( store: HomeStore ) => store.home.innerActive );
-    const mode = useSelector( ( store: HomeStore ) => store.theme.mode );
+    }, [ dispatch, innerActive, mode, isOpen ] );
 
     const setThemeMode = ( mode: ThemeMode ) => () => {
         const action: SetThemeMode = {
@@ -63,10 +118,6 @@ const Header = () => {
         dispatch( action );
 
     }, [ dispatch ] );
-
-    const [ transparent, setTransparent ] = useState( !didInnerOpen );
-    const [ backgroundVisible, setBackVisible ] = useState( false );
-    const [ isOpen, setOpen ] = useState( false );
 
     const handleLogoClick = useCallback( () => {
 
@@ -116,10 +167,54 @@ const Header = () => {
 
     useEffect( () => {
 
-    }, [] );
+        if ( !didInnerOpen || !currentSection ) {
+            return;
+        }
+
+        const section = document.getElementById( currentSection );
+
+        if ( !section ) {
+            return;
+        }
+
+        setOpen( false );
+
+        smoothScroll( section.offsetTop, 300 ).then( () => {
+            const sectionAction: SetCurrentSection = {
+                type:    'SetCurrentSection',
+                payload: ''
+            };
+
+            dispatch( sectionAction );
+        } )
+
+    }, [ didInnerOpen, currentSection ] );
+
+    useEffect( () => {
+
+        const callback = () => {
+
+            const targetScroll = headerRef.current.offsetHeight * 2;
+
+            if ( !document.scrollingElement ) {
+                return;
+            }
+
+            if ( document.scrollingElement.scrollTop > targetScroll ) {
+                setFixed( true );
+            } else if ( document.scrollingElement.scrollTop <= 50 ) {
+                setFixed( false );
+            }
+        };
+
+        document.addEventListener( 'scroll', callback );
+
+        return () => document.removeEventListener( 'scroll', callback );
+
+    }, [ headerRef ] );
 
     return (
-        <HeaderWrapper isOpen={ isOpen } transparent={ transparent }>
+        <HeaderWrapper ref={ headerRef } isFixed={ isFixed } isOpen={ isOpen } transparent={ transparent }>
             <LogoWrapper>
                 <GoBackButton onClick={ handleLogoClick } isActive={ backgroundVisible } flat={ true } transparent={ true }>
                     <FontAwesomeIcon icon="arrow-left"/>
@@ -137,17 +232,17 @@ const Header = () => {
             <Navigation className="navigation">
                 <NavigationList>
                     <NavigationListItem>
-                        <NavigationLink onClick={ setSection( 'about' ) } active={ currentSection === 'about' }>
+                        <NavigationLink onClick={ setSection( texts.aboutMe.id ) } active={ currentSection === texts.aboutMe.id }>
                             { texts.aboutMe.label }
                         </NavigationLink>
                     </NavigationListItem>
                     <NavigationListItem>
-                        <NavigationLink onClick={ setSection( 'projects' ) } active={ currentSection === 'projects' }>
+                        <NavigationLink onClick={ setSection( texts.projects.id ) } active={ currentSection === texts.projects.id }>
                             { texts.projects.label }
                         </NavigationLink>
                     </NavigationListItem>
                     <NavigationListItem>
-                        <RoundButton flat={ true } ripple={ true } onClick={ setSection( 'contact' ) }>
+                        <RoundButton className="header-cta" flat={ true } ripple={ innerActive } onClick={ setSection( texts.hire.id ) }>
                             { texts.hire.sectionTitle }
                         </RoundButton>
                     </NavigationListItem>
@@ -175,4 +270,4 @@ const Header = () => {
     )
 };
 
-export default connect()( Header );
+export default Header;

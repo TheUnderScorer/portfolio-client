@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { lazy, MutableRefObject, Suspense, useCallback, useRef } from 'react';
+import { lazy, MutableRefObject, Suspense, useCallback, useEffect, useRef } from 'react';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import HomeStore from '../types/stores/HomeStore';
 import styled, { ThemeProvider } from 'styled-components';
@@ -10,7 +10,7 @@ import 'react-typist/dist/Typist.css';
 import HeroText from '../components/hero-text/HeroText';
 import OpenableSection from '../components/openable-section/OpenableSection';
 import Header from '../components/header/Header';
-import { SetDidInnerOpen, SetInnerActive } from '../types/actions/HomeActions';
+import { SetDidInnerOpen, SetInnerActive, SetInnerSectionRelativeItem } from '../types/actions/HomeActions';
 import HomeWrapperProps from './types/HomeWrapperProps';
 import GlobalStyle from '../components/styled/GlobalStyle';
 import Projects from '../components/projects/Projects';
@@ -45,16 +45,24 @@ const Home = () => {
 
     const innerActive = useSelector( ( store: HomeStore ) => store.home.innerActive );
     const didOpen = useSelector( ( store: HomeStore ) => store.home.didInnerOpen );
+    const innerRelative = useSelector( ( store: HomeStore ) => store.home.innerSectionRelativeItem ) as HTMLElement;
 
     const dispatch = useDispatch();
 
     const toggleSection = useCallback( () => {
 
-        const action: SetInnerActive = {
+        const relatveItemAction: SetInnerSectionRelativeItem = {
+            type:    'SetInnerSectionRelativeItem',
+            payload: heroCtaRef.current
+        };
+
+        const setInnerActive: SetInnerActive = {
             type:    'SetInnerActive',
             payload: !innerActive
         };
-        dispatch( action );
+
+        dispatch( relatveItemAction );
+        dispatch( setInnerActive );
 
     }, [ innerActive, dispatch ] );
 
@@ -68,6 +76,19 @@ const Home = () => {
 
     }, [ dispatch ] );
 
+    useEffect( () => {
+
+        if ( !innerRelative ) {
+            const action: SetInnerSectionRelativeItem = {
+                type:    'SetInnerSectionRelativeItem',
+                payload: heroCtaRef.current
+            };
+
+            dispatch( action );
+        }
+
+    }, [ innerRelative ] );
+
     return (
         <ThemeProvider theme={ { mode: theme.mode } }>
             <HomeWrapper innerActive={ didOpen } className="home">
@@ -76,7 +97,7 @@ const Home = () => {
                 <HeroImage srcs={ [ Mountains, LandscapeNight ] } activeSrc={ theme.mode === 'black' ? 1 : 0 }>
                     <HeroText ctaRef={ heroCtaRef } onCtaClick={ toggleSection }/>
                 </HeroImage>
-                <InnerSection zIndex={ 2 } onOpen={ onOpen } className="inner-section" relativeTo={ heroCtaRef.current } isOpen={ innerActive }>
+                <InnerSection zIndex={ 2 } onOpen={ onOpen } className="inner-section" relativeTo={ innerRelative } isOpen={ innerActive }>
                     <Suspense fallback={ <div/> }>
                         { innerActive &&
                           <>

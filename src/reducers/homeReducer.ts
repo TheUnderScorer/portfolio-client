@@ -9,29 +9,35 @@ export const initialState: HomeReducer = {
 };
 
 const handlers: HomeReducerHandler = {
-    SetHeroWrote:      ( state, didHeroWrote: boolean ) => {
+    SetHeroWrote:                ( state, didHeroWrote: boolean ) => {
         return {
             ...state,
             didHeroWrote
-        }
+        };
     },
-    SetCurrentSection: ( state, currentSection: string ) => {
+    SetCurrentSection:           ( state, currentSection: string ) => {
         return {
             ...state,
             currentSection
-        }
+        };
     },
-    SetInnerActive:    ( state, innerActive: boolean ) => {
+    SetInnerActive:              ( state, innerActive: boolean ) => {
         return {
             ...state,
             innerActive
         };
     },
-    SetDidInnerOpen:   ( state, didInnerOpen: boolean ) => {
+    SetDidInnerOpen:             ( state, didInnerOpen: boolean ) => {
         return {
             ...state,
             didInnerOpen
-        }
+        };
+    },
+    SetInnerSectionRelativeItem: ( state, innerSectionRelativeItem: HTMLElement ) => {
+        return {
+            ...state,
+            innerSectionRelativeItem
+        };
     }
 };
 

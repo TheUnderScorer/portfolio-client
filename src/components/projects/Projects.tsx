@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
 
 const Projects = ( { projects }: ProjectsProps ) => {
     return (
-        <HomeSection id="projects" colorBackground={ true } centered={ true }>
+        <HomeSection id={ texts.projects.id } colorBackground={ true } centered={ true }>
             <div className="title-container">
                 <SectionTitle className="section-title">
                     { texts.projects.sectionTitle }
