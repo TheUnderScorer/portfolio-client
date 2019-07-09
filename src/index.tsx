@@ -5,9 +5,14 @@ import * as serviceWorker from './serviceWorker';
 import 'react-flexbox-grid/dist/react-flexbox-grid.css';
 import Modal from 'react-modal';
 
-Modal.setAppElement( document.getElementById( 'root' ) as HTMLElement );
+const root = document.getElementById( 'root' ) as HTMLElement;
 
-ReactDOM.render( <App/>, document.getElementById( 'root' ) );
+Modal.setAppElement( root );
 
-// TODO Change to register() in prod
-serviceWorker.unregister();
+ReactDOM.render( <App/>, root );
+
+if ( process.env.NODE_ENV === 'production' ) {
+    serviceWorker.register();
+} else {
+    serviceWorker.unregister();
+}
