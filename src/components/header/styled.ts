@@ -13,6 +13,7 @@ export const HeaderWrapper = styled.header<HeaderProps>`
     display: flex;
     justify-content: space-between;
     padding: 0 6em;
+    overflow-x: visible;
     
     &, span, small, path {
         color: ${ props => props.transparent ? colors.white : ( props.theme.mode === 'black' ? colors.white : colors.dark ) };
@@ -25,8 +26,13 @@ export const HeaderWrapper = styled.header<HeaderProps>`
     
     @media(max-width: ${ breakpoints.tabletSmall }) {
         height: 100px;
+        
+        ${ props => props.overflowHidden && `
+            overflow-x: hidden;
+        ` }
     
         ${ props => props.isOpen && `
+        
             &, span, small, a, path {
                 color: ${ props.theme.mode === 'black' ? colors.white : colors.dark };
             }
@@ -40,7 +46,7 @@ export const HeaderWrapper = styled.header<HeaderProps>`
     }
     
     @media(max-width: ${ breakpoints.phoneBig }) {
-        padding: 0 1em;
+        padding: 0 1.5em;
     }
 `;
 
