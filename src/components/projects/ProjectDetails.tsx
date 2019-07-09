@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { UIEventHandler, useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { DetailsContainer, ProjectImage, SliderArrow, SliderContainer, TextContainer } from './styled';
 import Slider from 'react-slick';
 import ProjectDetailsProps from './types/ProjectDetailsProps';
@@ -41,24 +41,6 @@ const ProjectDetails = ( { project }: ProjectDetailsProps ) => {
 
     };
 
-    const handleTextScroll: UIEventHandler<HTMLElement> = useCallback( ( event ) => {
-
-        event.preventDefault();
-
-        const maxPosition = 5000;
-
-        const target = event.target as HTMLElement;
-
-        const styles = getComputedStyle( target );
-        const currentBottom = parseInt( styles.bottom as string );
-
-        const { scrollHeight, scrollTop } = target;
-
-        if ( currentBottom <= maxPosition && currentBottom >= 0 ) {
-            target.style.bottom = `${ Math.floor( ( scrollTop / scrollHeight ) * 100 ) }%`;
-        }
-    }, [] );
-
     return (
         <DetailsContainer>
             <SliderContainer className="slider-container">
@@ -78,7 +60,7 @@ const ProjectDetails = ( { project }: ProjectDetailsProps ) => {
                     ) }
                 </Slider>
             </SliderContainer>
-            <TextContainer onScroll={ handleTextScroll }>
+            <TextContainer>
                 <div className="title">
                     <SectionTitle uplined={ true }>
                         { name }
