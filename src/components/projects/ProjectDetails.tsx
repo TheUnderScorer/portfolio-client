@@ -7,30 +7,35 @@ import Loader from '../loader/Loader';
 import { SectionTitle, Text } from '../styled/typography';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-const ProjectDetails = ( { project }: ProjectDetailsProps ) => {
+const ProjectDetails = ( { project }: ProjectDetailsProps ) =>
+{
 
     const { details, images = [], name } = project;
 
     const [ imageLoader, setImageLoader ] = useState( true );
     const [ scheduleHideLoader, setScheduleHideLoader ] = useState( false );
 
-    useEffect( () => {
+    useEffect( () =>
+    {
 
         if ( !scheduleHideLoader ) {
             return;
         }
 
-        const timeout = setTimeout( () => {
+        const timeout = setTimeout( () =>
+        {
             setImageLoader( false );
         }, 1500 );
 
-        return () => {
+        return () =>
+        {
             clearTimeout( timeout )
         };
 
     }, [ scheduleHideLoader ] );
 
-    const handleImageLoad = ( index: number ) => () => {
+    const handleImageLoad = ( index: number ) => () =>
+    {
 
         // We only need to handle first image
         if ( index > 0 ) {
@@ -50,11 +55,21 @@ const ProjectDetails = ( { project }: ProjectDetailsProps ) => {
                 } } asOverlay={ true } active={ imageLoader }/>
                 <Slider
                     prevArrow={
-                        <SliderArrow ripple={ true } visible={ !imageLoader }><FontAwesomeIcon icon="chevron-left"/></SliderArrow> }
+                        (
+                            <SliderArrow ripple={ true } visible={ !imageLoader }>
+                                <FontAwesomeIcon icon="chevron-left"/>
+                            </SliderArrow>
+                        )
+                    }
                     nextArrow={
-                        <SliderArrow ripple={ true } visible={ !imageLoader }><FontAwesomeIcon icon="chevron-right"/></SliderArrow> }
+                        (
+                            <SliderArrow ripple={ true } visible={ !imageLoader }>
+                                <FontAwesomeIcon icon="chevron-right"/>
+                            </SliderArrow>
+                        )
+                    }
                     dots={ true }
-                    lazyLoad="progressive">
+                    lazyLoad="ondemand">
                     { images && images.map( ( imageSrc, index ) =>
                         <ProjectImage onLoad={ handleImageLoad( index ) } key={ index } src={ imageSrc } alt=""/>
                     ) }

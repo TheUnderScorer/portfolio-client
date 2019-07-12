@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useCallback, useEffect, useState } from 'react';
 import { Cta, CtaWrapper, NameWrapper, TextWrapper } from './styled';
-import { H1 } from '../styled/typography';
+import { H1, Text } from '../styled/typography';
 import Typist from 'react-typist';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Props from './types/HeroTextProps';
@@ -27,7 +27,8 @@ const Headline = styled( H1 )`
     }
 `;
 
-const HeroText = ( { onCtaClick, ctaRef }: Props ) => {
+const HeroText = ( { onCtaClick, ctaRef }: Props ) =>
+{
 
     const dispatch = useDispatch();
 
@@ -36,7 +37,8 @@ const HeroText = ( { onCtaClick, ctaRef }: Props ) => {
 
     const didWrote = useSelector( ( store: HomeStore ) => store.home.didHeroWrote );
 
-    const onTypingDone = useCallback( () => {
+    const onTypingDone = useCallback( () =>
+    {
         const action: SetHeroWrote = {
             type:    'SetHeroWrote',
             payload: true
@@ -45,21 +47,25 @@ const HeroText = ( { onCtaClick, ctaRef }: Props ) => {
         dispatch( action );
     }, [ dispatch ] );
 
-    useEffect( () => {
+    useEffect( () =>
+    {
 
         if ( !didWrote ) {
             return;
         }
 
-        const showTimeout = setTimeout( () => {
+        const showTimeout = setTimeout( () =>
+        {
             setCtaVisible( true );
         }, 700 );
 
-        const rotateTimeout = setTimeout( () => {
+        const rotateTimeout = setTimeout( () =>
+        {
             setCtaRotated( false );
         }, 1350 );
 
-        return () => {
+        return () =>
+        {
             clearTimeout( showTimeout );
             clearTimeout( rotateTimeout );
         }
@@ -85,7 +91,9 @@ const HeroText = ( { onCtaClick, ctaRef }: Props ) => {
             <CtaWrapper>
                 <Cta withIcon={ true } ripple={ true } flat={ true } ref={ ctaRef } onClick={ onCtaClick } className={ `${ ctaVisible ? '' : 'hidden' } ${ ctaRotated ? 'rotated' : '' }` }>
                     <FontAwesomeIcon icon="arrow-down"/>
-                    { texts.aboutMe.sectionTitle }
+                    <Text>
+                        { texts.aboutMe.sectionTitle }
+                    </Text>
                 </Cta>
             </CtaWrapper>
         </TextWrapper>

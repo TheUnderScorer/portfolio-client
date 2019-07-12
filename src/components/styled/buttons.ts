@@ -16,7 +16,7 @@ export const Button = styled.button<ButtonProps>`
     transition: all .3s;
     border: 2px solid ${ props => getPrimary( props.theme.mode ) };
     
-    &, * {
+    &, *, span {
         color: ${ colors.white };
     }
     
@@ -35,8 +35,32 @@ export const Button = styled.button<ButtonProps>`
     
     
     ${ props => props.withIcon && `
+        
+        span {
+            margin: 0 10px;
+        }
+    ` }
+    
+    ${ props => props.iconOnHover && `
         svg, i {
-            margin-right: 10px;
+            transition: all .3s;
+            opacity: 0;
+        }
+        
+        span  {
+            transition: all .3s;
+        }
+        
+        &:not(:hover){
+            svg, i {
+                width: 0 !important;
+            }
+        }
+        
+        &:hover {
+            svg, i {
+                opacity: 1;
+            }
         }
     ` }
     

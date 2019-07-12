@@ -13,8 +13,11 @@ import { Text } from '../styled/typography';
 import LazyLoad from 'react-lazyload';
 import ProjectProps from './types/ProjectProps';
 import ProjectDetails from './ProjectDetails';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { RoundButton } from '../styled/buttons';
 
-const Project = ( { project }: ProjectProps ) => {
+const Project = ( { project }: ProjectProps ) =>
+{
 
     const { thumbnailUrl, shortDetails, images } = project;
 
@@ -23,11 +26,13 @@ const Project = ( { project }: ProjectProps ) => {
 
     const thumbRef = useRef() as MutableRefObject<HTMLImageElement>;
 
-    const toggleActive = useCallback( () => {
+    const toggleActive = useCallback( () =>
+    {
         setActive( !isActive );
     }, [ isActive ] );
 
-    const handleLoad = () => {
+    const handleLoad = () =>
+    {
         setThumbLoaded( true );
     };
 
@@ -50,13 +55,19 @@ const Project = ( { project }: ProjectProps ) => {
                             { shortDetails }
                         </Text>
                     </div>
-                    <ReadMore transparent={ true } flat={ true } onClick={ toggleActive }>
-                        Check Out
+                    <ReadMore iconOnHover={ true } withIcon={ true } transparent={ true } flat={ true } onClick={ toggleActive }>
+                        <Text>
+                            Check Out
+                        </Text>
+                        <FontAwesomeIcon icon="arrow-right"/>
                     </ReadMore>
                 </ProjectImageCaption>
             </ProjectImageFigure>
             <ProjectModal shouldFocusAfterRender={ false } htmlOpenClassName="has-overlay" className={ `${ isActive ? 'active' : '' }` } overlayClassName="middle center" isOpen={ isActive } onRequestClose={ toggleActive }>
                 <ProjectDetails project={ project }/>
+                <RoundButton ripple={ true } flat={ true } onClick={ toggleActive } className="close">
+                    <FontAwesomeIcon icon="times"/>
+                </RoundButton>
             </ProjectModal>
         </ProjectContainer>
     )

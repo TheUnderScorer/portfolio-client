@@ -17,6 +17,7 @@ export interface SectionSubtitleProps {
 export interface ButtonProps {
     flat?: boolean;
     withIcon?: boolean;
+    iconOnHover?: boolean;
     ripple?: boolean;
     transparent?: boolean;
 }

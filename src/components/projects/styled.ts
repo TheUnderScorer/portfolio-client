@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import ReactModal from 'react-modal';
 import colors, { getPrimary } from '../styled/colors';
 import { IconButton, RoundButton } from '../styled/buttons';
 import {
@@ -10,6 +9,7 @@ import {
 } from './types/styled';
 import Loader from '../loader/Loader';
 import breakpoints from '../styled/breakpoints';
+import { Modal } from '../styled/modal';
 
 const borderRadius = '6px';
 
@@ -109,7 +109,7 @@ export const ThumbnailLoader = styled( Loader )`
     background: transparent;
 `;
 
-export const ProjectModal = styled( ReactModal )`
+export const ProjectModal = styled( Modal )`
     width: 80%;
     height: 80%;
     display: flex;
