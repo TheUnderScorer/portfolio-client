@@ -18,14 +18,17 @@ const colors = {
     dark:         '#424242',
     lightDark:    '#797979',
     green:        '#289c28',
-    lightGreen:   '#9bd559'
+    lightGreen:   '#9bd559',
+    red:          '#fd3417'
 };
 
-export const getPrimary = ( mode: ThemeMode ): string => {
+export const getPrimary = ( mode: ThemeMode ): string =>
+{
     return mode === 'black' ? colors.lightBlue : colors.pink;
 };
 
-export const getPrimaryVariation = ( mode: ThemeMode ): string => {
+export const getPrimaryVariation = ( mode: ThemeMode ): string =>
+{
     return mode === 'black' ? colors.lightBlue : colors.orange;
 };
 

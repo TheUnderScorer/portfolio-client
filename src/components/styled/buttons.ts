@@ -14,7 +14,7 @@ export const Button = styled.button<ButtonProps>`
     outline: none;
     position: relative;
     transition: all .3s;
-    border: 2px solid ${ props => getPrimary( props.theme.mode ) };
+    border: none;
     
     &, *, span {
         color: ${ colors.white };
