@@ -115,19 +115,19 @@ const Home = () =>
 
     usePopState( event =>
     {
-        const innerActive = getStateFromEvent( event, 'innerActive' );
+        const innerActiveHistoryState = getStateFromEvent( event, 'innerActive' );
 
-        if ( innerActive === null ) {
+        if ( innerActiveHistoryState === null && !innerActive ) {
             return;
         }
 
         const action: SetInnerActive = {
             type:    'SetInnerActive',
-            payload: innerActive
+            payload: innerActiveHistoryState
         };
 
         dispatch( action );
-    } );
+    }, [ innerActive ] );
 
     useEffect( () =>
     {

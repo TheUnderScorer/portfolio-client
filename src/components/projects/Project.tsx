@@ -69,11 +69,15 @@ const Project = ( { project, active = false, index }: ProjectProps ) =>
 
         // Push history state with fake project permalink
         pushState( {
-            state: {
+            state:              {
                 activeProject: index,
                 innerActive:   true
             },
-            url:   projectUrl( name ),
+            url:                projectUrl( name ),
+            validationCallback: ( state ) =>
+                                {
+                                    return !state || !state.hasOwnProperty( 'activeProject' );
+                                }
         } );
     }, [ active, index, name ] );
 
