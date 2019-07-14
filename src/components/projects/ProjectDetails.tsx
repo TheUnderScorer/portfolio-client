@@ -1,16 +1,18 @@
 import * as React from 'react';
 import { useEffect, useState } from 'react';
-import { DetailsContainer, ProjectImage, SliderArrow, SliderContainer, TextContainer } from './styled';
+import { Actions, DetailsContainer, ProjectImage, SliderArrow, SliderContainer, TextContainer } from './styled';
 import Slider from 'react-slick';
 import ProjectDetailsProps from './types/ProjectDetailsProps';
 import Loader from '../loader/Loader';
-import { SectionTitle, Text } from '../styled/typography';
+import { Paragraph, SectionTitle, Text } from '../styled/typography';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Button } from '../styled/buttons';
+import texts from '../../pages/data/texts';
 
 const ProjectDetails = ( { project }: ProjectDetailsProps ) =>
 {
 
-    const { details, images = [], name } = project;
+    const { details, images = [], name, url, repositoryUrl } = project;
 
     const [ imageLoader, setImageLoader ] = useState( true );
     const [ scheduleHideLoader, setScheduleHideLoader ] = useState( false );
@@ -77,15 +79,35 @@ const ProjectDetails = ( { project }: ProjectDetailsProps ) =>
             </SliderContainer>
             <TextContainer>
                 <div className="title">
-                    <SectionTitle uplined={ true }>
+                    <SectionTitle underlined={ true }>
                         { name }
                     </SectionTitle>
                 </div>
                 <div className="details">
-                    <Text>
+                    <Paragraph>
                         { details }
-                    </Text>
+                    </Paragraph>
                 </div>
+                <Actions>
+                    { url &&
+                      // @ts-ignore
+                      <Button as="a" href={ url } withIcon={ true } ripple={ true }>
+                          <FontAwesomeIcon icon="external-link-alt"/>
+                          <Text>
+                              { texts.projects.viewProject }
+                          </Text>
+                      </Button>
+                    }
+                    { repositoryUrl &&
+                      // @ts-ignore
+                      <Button as="a" href={ repositoryUrl } withIcon={ true } ripple={ true }>
+                          <FontAwesomeIcon icon={ [ 'fab', 'github' ] }/>
+                          <Text>
+                              { texts.projects.viewRepo }
+                          </Text>
+                      </Button>
+                    }
+                </Actions>
             </TextContainer>
         </DetailsContainer>
     )

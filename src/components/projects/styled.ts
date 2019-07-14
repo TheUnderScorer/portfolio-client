@@ -123,6 +123,16 @@ export const ProjectModal = styled( Modal )`
         opacity: 1;
         visibility: visible;
     }
+    
+    @media(max-width: ${ breakpoints.tabletSmall })     {
+        width: 85%;
+        height: 85%;
+    }
+    
+    @media(max-width: ${ breakpoints.phoneSmall }) {
+        width: 80%;
+        height: 80%;
+    }
 `;
 
 export const ReadMore = styled( RoundButton )`
@@ -183,7 +193,6 @@ export const TextContainer = styled.div`
     padding: 2em 2em 0.5em;
     overflow: auto;
     transition: all .3s;
-    position: relative;
     background: inherit;
     
     .title{
@@ -201,6 +210,45 @@ export const TextContainer = styled.div`
         
         .title h4{
             margin-bottom: 1em;
+        }
+    }
+    
+    @media(max-width: ${ breakpoints.tabletSmall }){
+        .details p {
+            padding-bottom: 4rem;
+        }
+    }
+`;
+
+export const Actions = styled.div`
+    display: flex;
+    justify-content: center;
+    margin-top: 2em;
+    border-top: 1px solid ${ colors.lightBorder };
+    padding-top: 2em;
+    
+    > * {
+        margin: 0 1em;
+    }
+    
+    @media(max-width: ${ breakpoints.tabletSmall }){
+        position: absolute;
+        border: none;
+        bottom: 0;
+        left: 0;
+        justify-content: space-between;
+        width: 100%;
+        padding: 0;
+        height: 40px;
+        
+        > * {
+            margin: 0;
+            box-shadow: none;
+            flex: 1;
+            text-align: center;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
     }
 `;

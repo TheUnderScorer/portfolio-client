@@ -10,11 +10,12 @@ export const Button = styled.button<ButtonProps>`
     font-size: 0.9em;
     padding: 10px 20px;
     cursor: pointer;
-    box-shadow: 2px 2px 5px 0 rgba(0,0,0,0.75);
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
     outline: none;
     position: relative;
     transition: all .3s;
     border: none;
+    text-decoration: none;
     
     &, *, span {
         color: ${ colors.white };

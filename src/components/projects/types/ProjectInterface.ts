@@ -1,9 +1,11 @@
 import { ReactNode } from 'react';
 import { ProjectTypes } from '../../../types/ProjectTypes';
 
-export default interface ProjectInterface {
+export default interface ProjectInterface
+{
     name: string;
-    url: string;
+    url?: string;
+    repositoryUrl?: string;
     thumbnailUrl: string;
     logoUrl?: string;
     images?: string[];

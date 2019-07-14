@@ -18,7 +18,6 @@ import { RoundButton } from '../styled/buttons';
 
 const Project = ( { project }: ProjectProps ) =>
 {
-
     const { thumbnailUrl, shortDetails, images } = project;
 
     const [ thumbLoaded, setThumbLoaded ] = useState( false );

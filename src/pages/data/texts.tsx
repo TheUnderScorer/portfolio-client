@@ -21,11 +21,13 @@ const texts = {
         sectionTitle: 'My Projects',
         label:        'Projects',
         id:           'projects',
+        viewProject:  'View project',
+        viewRepo:     'View repository'
     },
     hire:     {
         sectionTitle: 'Hire me!',
         id:           'contact'
-    }
+    },
 };
 
 export default texts;
