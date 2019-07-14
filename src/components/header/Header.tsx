@@ -36,6 +36,7 @@ import { ThemeMode } from '../../types/reducers/ThemeReducer';
 import { getPrimary } from '../styled/colors';
 import { smoothScroll } from '../../utils/scroll';
 import { pushState } from '../../utils/history';
+import 'hamburgers/dist/hamburgers.min.css';
 
 const html = document.querySelector( 'html' );
 
@@ -282,8 +283,10 @@ const Header = () =>
                     </NavigationListItem>
                 </NavigationList>
             </Navigation>
-            <MenuActivator onClick={ switchOpenState } flat={ true } transparent={ true }>
-                <FontAwesomeIcon icon="bars"/>
+            <MenuActivator className={ `hamburger hamburger--collapse ${ isOpen ? 'is-active' : '' }` } onClick={ switchOpenState } flat={ true } transparent={ true }>
+                <Text className="hamburger-box">
+                    <Text className="hamburger-inner"/>
+                </Text>
             </MenuActivator>
         </HeaderWrapper>
     )

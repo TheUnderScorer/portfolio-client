@@ -43,12 +43,8 @@ const HomeWrapper = styled.div<HomeWrapperProps>`
     ` }
 `;
 
-const InnerSection = styled( OpenableSection )`
-`;
-
 const Home = () =>
 {
-
     const theme = useSelector( ( store: HomeStore ) => store.theme );
     const heroCtaRef = useRef() as MutableRefObject<HTMLButtonElement>;
 
@@ -60,7 +56,6 @@ const Home = () =>
 
     const toggleSection = useCallback( () =>
     {
-
         const relativeItemAction: SetInnerSectionRelativeItem = {
             type:    'SetInnerSectionRelativeItem',
             payload: heroCtaRef.current
@@ -78,7 +73,6 @@ const Home = () =>
 
     const onOpen = useCallback( () =>
     {
-
         const action: SetDidInnerOpen = {
             type:    'SetDidInnerOpen',
             payload: true
@@ -87,9 +81,9 @@ const Home = () =>
 
     }, [ dispatch ] );
 
+    // Restores default relative item
     useEffect( () =>
     {
-
         if ( !innerRelative ) {
             const action: SetInnerSectionRelativeItem = {
                 type:    'SetInnerSectionRelativeItem',
@@ -134,6 +128,7 @@ const Home = () =>
         dispatch( action );
     }, [ innerActive ] );
 
+    // Sets "DidInnerOpen" to false whenever innerActive gets set to false
     useEffect( () =>
     {
         if ( innerActive ) {
@@ -171,7 +166,7 @@ const Home = () =>
                 <HeroImage srcs={ [ Mountains, LandscapeNight ] } activeSrc={ theme.mode === 'black' ? 1 : 0 }>
                     <HeroText ctaRef={ heroCtaRef } onCtaClick={ toggleSection }/>
                 </HeroImage>
-                <InnerSection zIndex={ 2 } onOpen={ onOpen } className="inner-section" relativeTo={ innerRelative } isOpen={ innerActive }>
+                <OpenableSection zIndex={ 2 } onOpen={ onOpen } className="inner-section" relativeTo={ innerRelative } isOpen={ innerActive }>
                     <Suspense fallback={ <div/> }>
                         { innerActive &&
                           <>
@@ -181,7 +176,7 @@ const Home = () =>
                           </>
                         }
                     </Suspense>
-                </InnerSection>
+                </OpenableSection>
             </HomeWrapper>
         </ThemeProvider>
     )

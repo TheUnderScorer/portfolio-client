@@ -25,7 +25,7 @@ export const Button = styled.button<ButtonProps>`
         background: transparent;
         border: 2px solid ${ getPrimary( props.theme.mode ) };
         
-        &: hover{
+        &:hover {
             background-color: ${ getPrimary( props.theme.mode ) }
         }
     ` }
@@ -149,4 +149,5 @@ export const RoundButton = styled( Button )`
 export const IconButton = styled( RoundButton )`
     padding: 5px 10px;
     border: none;
+    border-radius: 50%;
 `;

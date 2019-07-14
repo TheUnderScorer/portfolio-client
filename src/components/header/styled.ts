@@ -39,6 +39,12 @@ export const HeaderWrapper = styled.header<HeaderProps>`
         color: ${ props => props.transparent ? colors.white : ( props.theme.mode === 'black' ? colors.white : colors.dark ) };
     }
     
+     .hamburger-inner {
+        &, &::before, &::after {
+            background-color: ${ props => props.transparent ? colors.white : ( props.theme.mode === 'black' ? colors.white : colors.dark ) };
+        }
+    }
+    
     @media(max-width: ${ breakpoints.tabletBig }) {
         align-items: center;
         padding: 0 2em;
@@ -180,6 +186,24 @@ export const MenuActivator = styled( IconButton )`
 
     @media(min-width: ${ parseInt( breakpoints.tabletSmall ) + 1 }px){
         display: none;
+    }
+    
+    &, &:hover {
+        background: transparent;
+    }
+    
+    .hamburger-box, .hamburger-inner {
+        &, &::before, &::after {
+            width: 1.5rem;
+            min-width: 24px;
+        }
+    }
+    
+      .hamburger-inner {
+        &, &::before, &::after {
+            height: 0.18em;
+            min-height: 2px;
+        }
     }
 `;
 
