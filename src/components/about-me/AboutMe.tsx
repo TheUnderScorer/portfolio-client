@@ -2,7 +2,7 @@ import * as React from 'react';
 import { HomeSection } from '../styled/wrappers';
 import styled from 'styled-components';
 import { SectionSubtitle, SectionTitle, Text } from '../styled/typography';
-import Me from '../../assets/me2.jpg';
+import Me from '../../assets/me.jpg';
 import { RoundImage } from '../styled/images';
 import breakpoints from '../styled/breakpoints';
 import { getPrimary } from '../styled/colors';
@@ -49,7 +49,7 @@ const AboutMe = () => {
                     { texts.aboutMe.subTitle }
                 </SectionSubtitle>
             </div>
-            <RoundImage width="20em" maxWidth="250px" height="auto" src={ Me } alt=""/>
+            <RoundImage width="20em" maxWidth="250px" maxHeight="250px" height="auto" src={ Me } alt=""/>
             <Text className="text">
                 { texts.aboutMe.text }
             </Text>

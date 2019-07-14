@@ -1,20 +1,26 @@
-export interface HomeSectionProps {
+import { MaxHeightProperty, MaxWidthProperty } from 'csstype';
+
+export interface HomeSectionProps
+{
     centered?: boolean;
     odd?: boolean;
     colorBackground?: boolean;
 }
 
-export interface SectionTitleProps {
+export interface SectionTitleProps
+{
     underlined?: boolean;
     hasSubtitle?: boolean;
     uplined?: boolean;
 }
 
-export interface SectionSubtitleProps {
+export interface SectionSubtitleProps
+{
     underlined?: boolean;
 }
 
-export interface ButtonProps {
+export interface ButtonProps
+{
     flat?: boolean;
     withIcon?: boolean;
     iconOnHover?: boolean;
@@ -22,13 +28,16 @@ export interface ButtonProps {
     transparent?: boolean;
 }
 
-export interface RoundImageProps {
-    width: string | number;
-    height: string | number;
-    maxWidth?: string | number;
+export interface RoundImageProps
+{
+    width: string;
+    height: string;
+    maxWidth?: MaxWidthProperty<string>;
+    maxHeight?: MaxHeightProperty<string>;
 }
 
-export interface LinkProps {
+export interface LinkProps
+{
     highlight?: boolean;
     underlined?: boolean;
 }

@@ -28,7 +28,7 @@ import Switch from '@material/react-switch';
 import '@material/react-switch/dist/switch.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { SetThemeMode } from '../../types/actions/ThemeActions';
-import Me from '../../assets/me.jpg';
+import Logo from '../../assets/logo.jpg';
 import { SmallText, Text } from '../styled/typography';
 import { RoundButton } from '../styled/buttons';
 import texts from '../../pages/data/texts';
@@ -233,7 +233,7 @@ const Header = () =>
                 <GoBackButton isActive={ backgroundVisible } flat={ true } transparent={ true }>
                     <FontAwesomeIcon icon="arrow-left"/>
                 </GoBackButton>
-                <img src={ Me } alt=""/>
+                <img src={ Logo } alt=""/>
                 <InnerCaption>
                     <Text>
                         { texts.me.name }
