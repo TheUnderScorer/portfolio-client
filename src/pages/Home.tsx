@@ -18,6 +18,7 @@ import projects from './data/projects';
 import { getState, getStateFromEvent, pushState } from '../utils/history';
 import { about } from './data/links';
 import usePopState from '../hooks/usePopState';
+import breakpoints from '../components/styled/breakpoints';
 
 const AboutMe = lazy( () => import('../components/about-me/AboutMe') );
 const HowCanIHelp = lazy( () => import('../components/how-can-i-help/HowCanIHelp') );
@@ -33,7 +34,11 @@ const HomeWrapper = styled.div<HomeWrapperProps>`
         }
         
         .content{
-            margin-top: 80px;
+            margin-top: 4rem;
+            
+            @media(max-width: ${ breakpoints.tabletSmall }) {
+                margin-top: 2rem;
+            }
         }
     ` }
 `;

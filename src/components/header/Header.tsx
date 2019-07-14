@@ -37,9 +37,10 @@ import { getPrimary } from '../styled/colors';
 import { smoothScroll } from '../../utils/scroll';
 import { pushState } from '../../utils/history';
 
+const html = document.querySelector( 'html' );
+
 const Header = () =>
 {
-
     const dispatch = useDispatch();
 
     const headerRef = useRef() as MutableRefObject<HTMLElement>;
@@ -56,7 +57,6 @@ const Header = () =>
 
     const setSection = useCallback( ( section: string ): MouseEventHandler => ( event ) =>
     {
-
         const target = event.target as HTMLElement;
 
         if ( !innerActive ) {
@@ -110,7 +110,6 @@ const Header = () =>
 
     const handleToggle: ChangeEventHandler<HTMLInputElement> = useCallback( ( event ) =>
     {
-
         const action: SetThemeMode = {
             type:    'SetThemeMode',
             payload: event.target.checked ? 'black' : 'white'
@@ -121,7 +120,6 @@ const Header = () =>
 
     const handleLogoClick = useCallback( () =>
     {
-
         const sectionAction: SetCurrentSection = {
             type:    'SetCurrentSection',
             payload: ''
@@ -162,7 +160,6 @@ const Header = () =>
 
     useEffect( () =>
     {
-
         const timeout = setTimeout( () =>
         {
             setBackVisible( innerActive );
@@ -174,7 +171,6 @@ const Header = () =>
 
     useEffect( () =>
     {
-
         const offset = 100;
 
         if ( !didInnerOpen || !currentSection ) {
@@ -206,9 +202,7 @@ const Header = () =>
 
         const callback = () =>
         {
-
             const targetScroll = headerRef.current.offsetHeight * 2;
-            const scrollingUpOffset = 50;
 
             if ( !document.scrollingElement ) {
                 return;
@@ -216,7 +210,7 @@ const Header = () =>
 
             if ( document.scrollingElement.scrollTop > targetScroll ) {
                 setFixed( true );
-            } else if ( document.scrollingElement.scrollTop <= scrollingUpOffset ) {
+            } else if ( document.scrollingElement.scrollTop <= targetScroll ) {
                 setFixed( false );
             }
         };
@@ -227,10 +221,21 @@ const Header = () =>
 
     }, [ headerRef ] );
 
+    useEffect( () =>
+    {
+        if ( !html ) {
+            return;
+        }
+
+        isOpen ?
+            html.classList.add( 'has-overlay' ) :
+            html.classList.remove( 'has-overlay' );
+    }, [ isOpen ] );
+
     return (
         <HeaderWrapper ref={ headerRef } isFixed={ isFixed } isOpen={ isOpen } transparent={ transparent }>
             <LogoWrapper onClick={ handleLogoClick }>
-                <GoBackButton isActive={ backgroundVisible } flat={ true } transparent={ true }>
+                <GoBackButton isActive={ backgroundVisible && !isOpen } flat={ true } transparent={ true }>
                     <FontAwesomeIcon icon="arrow-left"/>
                 </GoBackButton>
                 <img src={ Logo } alt=""/>

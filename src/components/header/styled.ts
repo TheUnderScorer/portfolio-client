@@ -25,9 +25,14 @@ export const HeaderWrapper = styled.header<HeaderProps>`
     padding: 0 6em;
     overflow-x: visible;
     animation: ${ slideAnimation } .3s ease-in-out forwards;
+    transition: height .3s;
     
-    ${ props => !props.isFixed && `
+    ${ ( { isFixed } ) => !isFixed && `
         animation: none;
+    ` }
+    
+    ${ ( { isFixed } ) => isFixed && `
+        box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
     ` }
     
     &, span, small, path {
@@ -40,7 +45,7 @@ export const HeaderWrapper = styled.header<HeaderProps>`
     }
     
     @media(max-width: ${ breakpoints.tabletSmall }) {
-        height: 100px;
+        height: 60px;
     
         ${ props => props.isOpen && `
         
