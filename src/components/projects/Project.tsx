@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { MutableRefObject, useCallback, useRef, useState } from 'react';
+import { MutableRefObject, useCallback, useEffect, useRef, useState } from 'react';
 import {
     ProjectContainer,
     ProjectImageCaption,
@@ -15,25 +15,71 @@ import ProjectProps from './types/ProjectProps';
 import ProjectDetails from './ProjectDetails';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { RoundButton } from '../styled/buttons';
+import { SetActiveProject } from '../../types/actions/HomeActions';
+import { useDispatch } from 'react-redux';
+import { pushState } from '../../utils/history';
 
-const Project = ( { project }: ProjectProps ) =>
+const Project = ( { project, active = false, index }: ProjectProps ) =>
 {
-    const { thumbnailUrl, shortDetails, images } = project;
+    const dispatch = useDispatch();
+
+    const { thumbnailUrl, shortDetails, images, name } = project;
 
     const [ thumbLoaded, setThumbLoaded ] = useState( false );
-    const [ isActive, setActive ] = useState( false );
+    const [ isClosing, setClosing ] = useState( false );
 
     const thumbRef = useRef() as MutableRefObject<HTMLImageElement>;
 
-    const toggleActive = useCallback( () =>
+    const handleOpen = useCallback( () =>
     {
-        setActive( !isActive );
-    }, [ isActive ] );
+        const action: SetActiveProject = {
+            type:    'SetActiveProject',
+            payload: index
+        };
+
+        dispatch( action );
+    }, [ index ] );
+
+    const handleClose = () => setClosing( true );
 
     const handleLoad = () =>
     {
         setThumbLoaded( true );
     };
+
+    useEffect( () =>
+    {
+        if ( !active ) {
+            return;
+        }
+
+        // Push history state with fake project permalink
+        pushState( {
+            state: {
+                activeProject: index
+            },
+            url:   `/project/${ name }`,
+        } );
+    }, [ active, index, name ] );
+
+    useEffect( () =>
+    {
+        if ( isClosing ) {
+
+            if ( active ) {
+                window.history.back();
+            } else {
+                setClosing( false );
+
+                // Remove project data from history
+                pushState( {
+                    state: null,
+                    url:   '',
+                } );
+            }
+
+        }
+    }, [ isClosing, active ] );
 
     return (
         <ProjectContainer className="project">
@@ -54,7 +100,7 @@ const Project = ( { project }: ProjectProps ) =>
                             { shortDetails }
                         </Text>
                     </div>
-                    <ReadMore iconOnHover={ true } withIcon={ true } transparent={ true } flat={ true } onClick={ toggleActive }>
+                    <ReadMore iconOnHover={ true } withIcon={ true } transparent={ true } flat={ true } onClick={ handleOpen }>
                         <Text>
                             Check Out
                         </Text>
@@ -62,9 +108,9 @@ const Project = ( { project }: ProjectProps ) =>
                     </ReadMore>
                 </ProjectImageCaption>
             </ProjectImageFigure>
-            <ProjectModal shouldFocusAfterRender={ false } htmlOpenClassName="has-overlay" className={ `${ isActive ? 'active' : '' }` } overlayClassName="middle center" isOpen={ isActive } onRequestClose={ toggleActive }>
+            <ProjectModal shouldFocusAfterRender={ false } htmlOpenClassName="has-overlay" className={ `${ active ? 'active' : '' }` } overlayClassName="middle center" isOpen={ active } onRequestClose={ handleClose }>
                 <ProjectDetails project={ project }/>
-                <RoundButton ripple={ true } flat={ true } onClick={ toggleActive } className="close">
+                <RoundButton ripple={ true } flat={ true } onClick={ handleClose } className="close">
                     <FontAwesomeIcon icon="times"/>
                 </RoundButton>
             </ProjectModal>
