@@ -11,13 +11,15 @@ export const pushState = ( { validationCallback, state, url = '' }: PushStatePar
     window.history.pushState( state, '', url );
 };
 
-export const getState = ( key: string ): any =>
+export const getState = <T>( key: string, def: T ): T =>
 {
     if ( !window.history.state ) {
-        return null;
+        return def;
     }
 
-    return window.history.state[ key ] ? window.history.state[ key ] : null
+    return window.history.state.hasOwnProperty( key ) ?
+        window.history.state[ key ] :
+        def;
 };
 
 export const getStateFromEvent = ( event: PopStateEvent, key: string ): any =>
@@ -26,7 +28,7 @@ export const getStateFromEvent = ( event: PopStateEvent, key: string ): any =>
         return null;
     }
 
-    return event.state[ key ] ? event.state[ key ] : null
+    return event.state.hasOwnProperty( key ) ? event.state[ key ] : null
 };
 
 export type PushStateParams = {

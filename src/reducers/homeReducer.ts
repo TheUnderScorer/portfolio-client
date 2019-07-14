@@ -6,6 +6,7 @@ export const initialState: HomeReducer = {
     currentSection: '',
     innerActive:    false,
     didInnerOpen:   false,
+    activeProject:  null,
 };
 
 const handlers: HomeReducerHandler = {

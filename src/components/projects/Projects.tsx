@@ -9,13 +9,14 @@ import texts from '../../pages/data/texts';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import HomeStore from '../../types/stores/HomeStore';
 import { SetActiveProject } from '../../types/actions/HomeActions';
-import { getStateFromEvent } from '../../utils/history';
+import { getState, getStateFromEvent } from '../../utils/history';
 
 const Projects = ( { projects }: ProjectsProps ) =>
 {
     const dispatch = useDispatch();
 
     const activeProject = useSelector( ( store: HomeStore ) => store.home.activeProject );
+    const didInnerOpen = useSelector( ( store: HomeStore ) => store.home.didInnerOpen );
 
     useEffect( () =>
     {
@@ -35,6 +36,28 @@ const Projects = ( { projects }: ProjectsProps ) =>
 
         return () => window.removeEventListener( 'popstate', handleHistoryState );
     }, [ activeProject ] );
+
+    // Get default active project from history
+    useEffect( () =>
+    {
+        if ( !didInnerOpen ) {
+            return;
+        }
+
+        const timeout = setTimeout( () =>
+        {
+            const activeProject = getState( 'activeProject', null );
+
+            const action: SetActiveProject = {
+                type:    'SetActiveProject',
+                payload: activeProject
+            };
+
+            dispatch( action );
+        }, 100 );
+
+        return () => clearTimeout( timeout );
+    }, [ didInnerOpen ] );
 
     return (
         <HomeSection id={ texts.projects.id } colorBackground={ true } centered={ true }>

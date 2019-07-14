@@ -15,6 +15,8 @@ import HomeWrapperProps from './types/HomeWrapperProps';
 import GlobalStyle from '../components/styled/GlobalStyle';
 import Projects from '../components/projects/Projects';
 import projects from './data/projects';
+import { getState, getStateFromEvent, pushState } from '../utils/history';
+import { about } from './data/links';
 
 const AboutMe = lazy( () => import('../components/about-me/AboutMe') );
 const HowCanIHelp = lazy( () => import('../components/how-can-i-help/HowCanIHelp') );
@@ -38,7 +40,8 @@ const HomeWrapper = styled.div<HomeWrapperProps>`
 const InnerSection = styled( OpenableSection )`
 `;
 
-const Home = () => {
+const Home = () =>
+{
 
     const theme = useSelector( ( store: HomeStore ) => store.theme );
     const heroCtaRef = useRef() as MutableRefObject<HTMLButtonElement>;
@@ -49,9 +52,10 @@ const Home = () => {
 
     const dispatch = useDispatch();
 
-    const toggleSection = useCallback( () => {
+    const toggleSection = useCallback( () =>
+    {
 
-        const relatveItemAction: SetInnerSectionRelativeItem = {
+        const relativeItemAction: SetInnerSectionRelativeItem = {
             type:    'SetInnerSectionRelativeItem',
             payload: heroCtaRef.current
         };
@@ -61,12 +65,13 @@ const Home = () => {
             payload: !innerActive
         };
 
-        dispatch( relatveItemAction );
+        dispatch( relativeItemAction );
         dispatch( setInnerActive );
 
     }, [ innerActive, dispatch ] );
 
-    const onOpen = useCallback( () => {
+    const onOpen = useCallback( () =>
+    {
 
         const action: SetDidInnerOpen = {
             type:    'SetDidInnerOpen',
@@ -76,7 +81,8 @@ const Home = () => {
 
     }, [ dispatch ] );
 
-    useEffect( () => {
+    useEffect( () =>
+    {
 
         if ( !innerRelative ) {
             const action: SetInnerSectionRelativeItem = {
@@ -88,6 +94,75 @@ const Home = () => {
         }
 
     }, [ innerRelative ] );
+
+    // History state handler
+    useEffect( () =>
+    {
+        if ( getState( 'innerActive', false ) ) {
+            return;
+        }
+
+        if ( innerActive ) {
+            pushState( {
+                state: {
+                    innerActive: true,
+                },
+                url:   about
+            } );
+        }
+    }, [ innerActive ] );
+
+    useEffect( () =>
+    {
+        const historyChangeHandler = ( event: PopStateEvent ) =>
+        {
+            const innerActive = getStateFromEvent( event, 'innerActive' );
+
+            if ( innerActive === null ) {
+                return;
+            }
+
+            const action: SetInnerActive = {
+                type:    'SetInnerActive',
+                payload: innerActive
+            };
+
+            dispatch( action );
+        };
+
+        window.addEventListener( 'popstate', historyChangeHandler );
+
+        return () => window.removeEventListener( 'popstate', historyChangeHandler );
+    } );
+
+    useEffect( () =>
+    {
+        if ( innerActive ) {
+            return;
+        }
+
+        const didOpenAction: SetDidInnerOpen = {
+            type:    'SetDidInnerOpen',
+            payload: false
+        };
+
+        dispatch( didOpenAction );
+
+    }, [ innerActive ] );
+
+    // Get default inner state from history (this needs to be called here, since the relative button must render before we can use OpenableSection component)
+    useEffect( () =>
+    {
+        setTimeout( () =>
+        {
+            const action: SetInnerActive = {
+                type:    'SetInnerActive',
+                payload: getState( 'innerActive', false )
+            };
+
+            dispatch( action );
+        }, 500 );
+    }, [ dispatch ] );
 
     return (
         <ThemeProvider theme={ { mode: theme.mode } }>

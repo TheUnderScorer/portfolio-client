@@ -18,6 +18,7 @@ import { RoundButton } from '../styled/buttons';
 import { SetActiveProject } from '../../types/actions/HomeActions';
 import { useDispatch } from 'react-redux';
 import { pushState } from '../../utils/history';
+import { about, project as projectUrl } from '../../pages/data/links';
 
 const Project = ( { project, active = false, index }: ProjectProps ) =>
 {
@@ -26,7 +27,6 @@ const Project = ( { project, active = false, index }: ProjectProps ) =>
     const { thumbnailUrl, shortDetails, images, name } = project;
 
     const [ thumbLoaded, setThumbLoaded ] = useState( false );
-    const [ isClosing, setClosing ] = useState( false );
 
     const thumbRef = useRef() as MutableRefObject<HTMLImageElement>;
 
@@ -40,7 +40,21 @@ const Project = ( { project, active = false, index }: ProjectProps ) =>
         dispatch( action );
     }, [ index ] );
 
-    const handleClose = () => setClosing( true );
+    const handleClose = () =>
+    {
+        const action: SetActiveProject = {
+            type:    'SetActiveProject',
+            payload: null
+        };
+
+        // Remove project data from history
+        pushState( {
+            state: null,
+            url:   about,
+        } );
+
+        dispatch( action );
+    };
 
     const handleLoad = () =>
     {
@@ -56,30 +70,12 @@ const Project = ( { project, active = false, index }: ProjectProps ) =>
         // Push history state with fake project permalink
         pushState( {
             state: {
-                activeProject: index
+                activeProject: index,
+                innerActive:   true
             },
-            url:   `/project/${ name }`,
+            url:   projectUrl( name ),
         } );
     }, [ active, index, name ] );
-
-    useEffect( () =>
-    {
-        if ( isClosing ) {
-
-            if ( active ) {
-                window.history.back();
-            } else {
-                setClosing( false );
-
-                // Remove project data from history
-                pushState( {
-                    state: null,
-                    url:   '',
-                } );
-            }
-
-        }
-    }, [ isClosing, active ] );
 
     return (
         <ProjectContainer className="project">

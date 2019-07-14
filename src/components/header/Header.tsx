@@ -23,12 +23,7 @@ import {
 } from './styled';
 import { useDispatch, useSelector } from 'react-redux';
 import HomeStore from '../../types/stores/HomeStore';
-import {
-    SetCurrentSection,
-    SetDidInnerOpen,
-    SetInnerActive,
-    SetInnerSectionRelativeItem
-} from '../../types/actions/HomeActions';
+import { SetCurrentSection, SetInnerActive, SetInnerSectionRelativeItem } from '../../types/actions/HomeActions';
 import Switch from '@material/react-switch';
 import '@material/react-switch/dist/switch.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -40,8 +35,10 @@ import texts from '../../pages/data/texts';
 import { ThemeMode } from '../../types/reducers/ThemeReducer';
 import { getPrimary } from '../styled/colors';
 import { smoothScroll } from '../../utils/scroll';
+import { pushState } from '../../utils/history';
 
-const Header = () => {
+const Header = () =>
+{
 
     const dispatch = useDispatch();
 
@@ -57,7 +54,8 @@ const Header = () => {
     const [ isOpen, setOpen ] = useState( false );
     const [ isFixed, setFixed ] = useState( false );
 
-    const setSection = useCallback( ( section: string ): MouseEventHandler => ( event ) => {
+    const setSection = useCallback( ( section: string ): MouseEventHandler => ( event ) =>
+    {
 
         const target = event.target as HTMLElement;
 
@@ -100,7 +98,8 @@ const Header = () => {
 
     }, [ dispatch, innerActive, mode, isOpen ] );
 
-    const setThemeMode = ( mode: ThemeMode ) => () => {
+    const setThemeMode = ( mode: ThemeMode ) => () =>
+    {
         const action: SetThemeMode = {
             type:    'SetThemeMode',
             payload: mode
@@ -109,7 +108,8 @@ const Header = () => {
         dispatch( action );
     };
 
-    const handleToggle: ChangeEventHandler<HTMLInputElement> = useCallback( ( event ) => {
+    const handleToggle: ChangeEventHandler<HTMLInputElement> = useCallback( ( event ) =>
+    {
 
         const action: SetThemeMode = {
             type:    'SetThemeMode',
@@ -119,7 +119,8 @@ const Header = () => {
 
     }, [ dispatch ] );
 
-    const handleLogoClick = useCallback( () => {
+    const handleLogoClick = useCallback( () =>
+    {
 
         const sectionAction: SetCurrentSection = {
             type:    'SetCurrentSection',
@@ -137,27 +138,33 @@ const Header = () => {
             payload: false
         };
 
-        const didOpenAction: SetDidInnerOpen = {
-            type:    'SetDidInnerOpen',
-            payload: false
-        };
+        // Reset history state
+        pushState( {
+            state: {
+                innerActive: false,
+            },
+            url:   '/'
+        } );
 
         dispatch( innerAction );
-        dispatch( didOpenAction );
 
     }, [ innerActive ] );
 
-    const switchOpenState = useCallback( () => {
+    const switchOpenState = useCallback( () =>
+    {
         setOpen( !isOpen );
     }, [ isOpen ] );
 
-    useEffect( () => {
+    useEffect( () =>
+    {
         setTransparent( !didInnerOpen );
     }, [ didInnerOpen ] );
 
-    useEffect( () => {
+    useEffect( () =>
+    {
 
-        const timeout = setTimeout( () => {
+        const timeout = setTimeout( () =>
+        {
             setBackVisible( innerActive );
         }, 100 );
 
@@ -165,7 +172,8 @@ const Header = () => {
 
     }, [ innerActive ] );
 
-    useEffect( () => {
+    useEffect( () =>
+    {
 
         const offset = 100;
 
@@ -181,7 +189,8 @@ const Header = () => {
 
         setOpen( false );
 
-        smoothScroll( section.offsetTop - offset, 600 ).then( () => {
+        smoothScroll( section.offsetTop - offset, 600 ).then( () =>
+        {
             const sectionAction: SetCurrentSection = {
                 type:    'SetCurrentSection',
                 payload: ''
@@ -192,9 +201,11 @@ const Header = () => {
 
     }, [ didInnerOpen, currentSection ] );
 
-    useEffect( () => {
+    useEffect( () =>
+    {
 
-        const callback = () => {
+        const callback = () =>
+        {
 
             const targetScroll = headerRef.current.offsetHeight * 2;
             const scrollingUpOffset = 50;
