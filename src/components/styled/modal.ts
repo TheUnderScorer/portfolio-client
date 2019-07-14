@@ -4,6 +4,10 @@ import colors from './colors';
 
 export const Modal = styled( ReactModal )`
     position: relative;
+    
+    &, * {
+        outline: none;
+    }
 
     .close {
         position: absolute;
