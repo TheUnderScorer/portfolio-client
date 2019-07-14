@@ -10,6 +10,7 @@ import { connect, useDispatch, useSelector } from 'react-redux';
 import HomeStore from '../../types/stores/HomeStore';
 import { SetActiveProject } from '../../types/actions/HomeActions';
 import { getState, getStateFromEvent } from '../../utils/history';
+import usePopState from '../../hooks/usePopState';
 
 const Projects = ( { projects }: ProjectsProps ) =>
 {
@@ -18,23 +19,16 @@ const Projects = ( { projects }: ProjectsProps ) =>
     const activeProject = useSelector( ( store: HomeStore ) => store.home.activeProject );
     const didInnerOpen = useSelector( ( store: HomeStore ) => store.home.didInnerOpen );
 
-    useEffect( () =>
+    usePopState( event =>
     {
-        const handleHistoryState = ( event: PopStateEvent ) =>
-        {
-            let projectIndex: number | null = getStateFromEvent( event, 'activeProject' );
+        let projectIndex: number | null = getStateFromEvent( event, 'activeProject' );
 
-            const action: SetActiveProject = {
-                type:    'SetActiveProject',
-                payload: projectIndex
-            };
-
-            dispatch( action );
+        const action: SetActiveProject = {
+            type:    'SetActiveProject',
+            payload: projectIndex
         };
 
-        window.addEventListener( 'popstate', handleHistoryState );
-
-        return () => window.removeEventListener( 'popstate', handleHistoryState );
+        dispatch( action );
     }, [ activeProject ] );
 
     // Get default active project from history

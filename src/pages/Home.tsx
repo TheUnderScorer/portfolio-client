@@ -17,6 +17,7 @@ import Projects from '../components/projects/Projects';
 import projects from './data/projects';
 import { getState, getStateFromEvent, pushState } from '../utils/history';
 import { about } from './data/links';
+import usePopState from '../hooks/usePopState';
 
 const AboutMe = lazy( () => import('../components/about-me/AboutMe') );
 const HowCanIHelp = lazy( () => import('../components/how-can-i-help/HowCanIHelp') );
@@ -112,27 +113,20 @@ const Home = () =>
         }
     }, [ innerActive ] );
 
-    useEffect( () =>
+    usePopState( event =>
     {
-        const historyChangeHandler = ( event: PopStateEvent ) =>
-        {
-            const innerActive = getStateFromEvent( event, 'innerActive' );
+        const innerActive = getStateFromEvent( event, 'innerActive' );
 
-            if ( innerActive === null ) {
-                return;
-            }
+        if ( innerActive === null ) {
+            return;
+        }
 
-            const action: SetInnerActive = {
-                type:    'SetInnerActive',
-                payload: innerActive
-            };
-
-            dispatch( action );
+        const action: SetInnerActive = {
+            type:    'SetInnerActive',
+            payload: innerActive
         };
 
-        window.addEventListener( 'popstate', historyChangeHandler );
-
-        return () => window.removeEventListener( 'popstate', historyChangeHandler );
+        dispatch( action );
     } );
 
     useEffect( () =>
