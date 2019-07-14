@@ -185,7 +185,7 @@ export const MenuActivator = styled( IconButton )`
     z-index: 12;
 
     @media(min-width: ${ parseInt( breakpoints.tabletSmall ) + 1 }px){
-        display: none;
+        display: none !important;
     }
     
     &, &:hover {
@@ -194,15 +194,13 @@ export const MenuActivator = styled( IconButton )`
     
     .hamburger-box, .hamburger-inner {
         &, &::before, &::after {
-            width: 1.5rem;
-            min-width: 24px;
+            width: 25px;
         }
     }
     
       .hamburger-inner {
         &, &::before, &::after {
-            height: 0.18em;
-            min-height: 2px;
+            height: 2px;
         }
     }
 `;
