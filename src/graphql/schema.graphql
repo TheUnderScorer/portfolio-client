@@ -1,0 +1,74 @@
+type Conversation {
+    id: ID!
+    title: String
+    author: User!
+    messages: [Message!]
+    createdAt: String
+}
+
+input ConversationInput {
+    title: String
+}
+
+type DeleteConversationResult {
+    result: Boolean!
+}
+
+type Message {
+    id: ID!
+    author: User!
+    conversation: Conversation!
+    content: String!
+    createdAt: String
+    updatedAt: String
+}
+
+type Mutation {
+    createUser(userInput: UserInput): User!
+    updateMe(userInput: UserInput!): User!
+    updateUser(userInput: UserInput!, id: ID!): User!
+    createConversation(conversationInput: ConversationInput!): Conversation!
+    updateConversation(
+        conversationInput: ConversationInput!
+        id: ID!
+    ): Conversation!
+    deleteConversation(id: ID!): DeleteConversationResult!
+}
+
+type Query {
+    getUsers(perPage: Int, page: Int): [User!]!
+    getUser(id: ID!): User!
+    me: User!
+    myConversations(perPage: Int, page: Int): [Conversation!]!
+}
+
+type Subscription {
+    newConversation: Conversation!
+    conversationUpdated: Conversation!
+    conversationDeleted: Conversation!
+}
+
+type Token {
+    expires: String!
+    value: String!
+}
+
+type User {
+    id: ID!
+    name: String
+    lastLogin: String
+    role: String!
+    password: String
+    ip: String!
+    email: String
+    conversations: [Conversation!]
+    messages: [Message!]!
+    token: Token
+}
+
+input UserInput {
+    name: String
+    email: String
+    password: String
+}
+

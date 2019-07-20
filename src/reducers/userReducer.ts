@@ -1,5 +1,5 @@
 import { UserReducerHandlers } from '../types/reducers/UserReducer';
-import User from '../types/models/User';
+import User from '../types/graphql/User';
 import reducer from './reducer';
 
 const initialState = {};

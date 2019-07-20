@@ -139,6 +139,7 @@ export const NavigationListItem = styled.li`
     margin: 0 2.2rem;
     display: flex;
     align-items: center;
+    position: relative;
 `;
 
 export const NavigationLink = styled.a<NavigationLinkProps>`

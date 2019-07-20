@@ -14,6 +14,7 @@ const colors = {
     darkerBorder: '#BDBDBD',
     pink:         '#FD523A',
     lightBg:      '#f5f5f5',
+    lightbgAlt:   '#f7f7f7',
     violet:       '#8C43FF',
     dark:         '#424242',
     lightDark:    '#797979',

@@ -37,6 +37,8 @@ import { getPrimary } from '../styled/colors';
 import { smoothScroll } from '../../utils/scroll';
 import { pushState } from '../../utils/history';
 import 'hamburgers/dist/hamburgers.min.css';
+import { SetContactActive } from '../../types/actions/ContactActions';
+import Contact from '../contact/Contact';
 
 const html = document.querySelector( 'html' );
 
@@ -50,6 +52,17 @@ const Header = () =>
     const didInnerOpen = useSelector( ( store: HomeStore ) => store.home.didInnerOpen );
     const innerActive = useSelector( ( store: HomeStore ) => store.home.innerActive );
     const mode = useSelector( ( store: HomeStore ) => store.theme.mode );
+    const contactActive = useSelector( ( store: HomeStore ) => store.contact.active );
+
+    const toggleContact = useCallback( () =>
+    {
+        const action: SetContactActive = {
+            type:    'SetContactActive',
+            payload: !contactActive
+        };
+
+        dispatch( action );
+    }, [ contactActive ] );
 
     const [ transparent, setTransparent ] = useState( !didInnerOpen );
     const [ backgroundVisible, setBackVisible ] = useState( false );
@@ -261,10 +274,17 @@ const Header = () =>
                             { texts.projects.label }
                         </NavigationLink>
                     </NavigationListItem>
-                    <NavigationListItem>
-                        <RoundButton className="header-cta" flat={ true } ripple={ innerActive } onClick={ setSection( texts.hire.id ) }>
-                            { texts.hire.sectionTitle }
+                    <NavigationListItem style={ { width: '112px' } }>
+                        <RoundButton style={ {
+                            zIndex:       15,
+                            borderRadius: contactActive ? 0 : '20px'
+                        } } className="header-cta" flat={ true } ripple={ innerActive } onClick={ toggleContact }>
+                            { contactActive ?
+                                <FontAwesomeIcon icon={ 'times' }/> :
+                                texts.hire.sectionTitle
+                            }
                         </RoundButton>
+                        <Contact/>
                     </NavigationListItem>
                     <NavigationListItem>
                         <SwitchContainer>

@@ -7,6 +7,13 @@ const textStyles = css`
     color: ${ props => props.theme.mode === 'black' ? colors.white : colors.lightDark };
 `;
 
+const headerStyles = css`
+    margin: 0;
+    font-weight: 500;
+    display: inline-block;
+    color: ${ props => props.theme.mode === 'black' ? colors.white : colors.lightDark };
+`;
+
 export const Text = styled.span`
     ${ textStyles }
 `;
@@ -22,34 +29,27 @@ export const SmallText = styled.small`
 
 export const H1 = styled.h1`
     font-size: 3.5em;
-    font-weight: 500;
-    color: ${ props => props.theme.mode === 'black' ? colors.white : colors.lightDark };
-    display: inline-block;
-    margin: 0;
+    ${ headerStyles }
 `;
 
 export const H2 = styled.h2`
-    margin: 0;
     font-size: 3em;
-    font-weight: 500;
-    display: inline-block;
-    color: ${ props => props.theme.mode === 'black' ? colors.white : colors.lightDark };
+    ${ headerStyles }
 `;
 
 export const H3 = styled.h3`
-    margin: 0;
+    ${ headerStyles };
     font-size: 2.5em;
-    font-weight: 500;
-    display: inline-block;
-    color: ${ props => props.theme.mode === 'black' ? colors.white : colors.lightDark };
 `;
 
 export const H4 = styled.h4`
-    margin: 0;
     font-size: 2em;
-    font-weight: 500;
-    display: inline-block;
-    color: ${ props => props.theme.mode === 'black' ? colors.white : colors.lightDark };
+    ${ headerStyles }
+`;
+
+export const H5 = styled.h5`
+    font-size: 1.5em;
+    ${ headerStyles }
 `;
 
 export const SectionTitle = styled( H4 )<SectionTitleProps>`

@@ -1,4 +1,4 @@
-import User from '../models/User';
+import User from '../graphql/User';
 import { ReducerHandler } from './ReducerHandler';
 import { UserActions } from '../actions/UserActions';
 

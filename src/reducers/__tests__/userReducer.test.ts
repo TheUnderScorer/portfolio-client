@@ -1,7 +1,7 @@
 import UserReducer from '../../types/reducers/UserReducer';
 import * as faker from 'faker';
 import userReducer from '../userReducer';
-import User from '../../types/models/User';
+import User from '../../types/graphql/User';
 import { SetCurrentUser } from '../../types/actions/UserActions';
 
 describe( 'userReducer', () => {
