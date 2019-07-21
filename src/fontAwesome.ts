@@ -1,5 +1,6 @@
 import { library } from '@fortawesome/fontawesome-svg-core'
 import {
+    faAngleRight,
     faArrowDown,
     faArrowLeft,
     faArrowRight,
@@ -7,7 +8,9 @@ import {
     faChevronLeft,
     faChevronRight,
     faComment,
+    faCommentAlt,
     faDesktop,
+    faEnvelope,
     faExternalLinkAlt,
     faMobile,
     faMoon,
@@ -15,8 +18,8 @@ import {
     faPlus,
     faSun,
     faTimes,
-    faTools,
+    faTools
 } from '@fortawesome/free-solid-svg-icons'
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
 
-library.add( faArrowDown, faSun, faMoon, faPaintBrush, faPlus, faTools, faMobile, faDesktop, faBars, faArrowLeft, faChevronLeft, faChevronRight, faArrowRight, faTimes, faExternalLinkAlt, faGithub, faComment );
+library.add( faArrowDown, faSun, faMoon, faPaintBrush, faPlus, faTools, faMobile, faDesktop, faBars, faArrowLeft, faChevronLeft, faChevronRight, faArrowRight, faTimes, faExternalLinkAlt, faGithub, faComment, faCommentAlt, faEnvelope, faAngleRight );

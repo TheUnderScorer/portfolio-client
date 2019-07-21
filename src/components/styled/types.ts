@@ -1,10 +1,26 @@
-import { MaxHeightProperty, MaxWidthProperty } from 'csstype';
+import {
+    AlignItemsProperty,
+    FlexDirectionProperty,
+    FlexWrapProperty,
+    JustifyContentProperty,
+    MaxHeightProperty,
+    MaxWidthProperty
+} from 'csstype';
 
 export interface HomeSectionProps
 {
     isCentered?: boolean;
     odd?: boolean;
     colorBackground?: boolean;
+}
+
+export interface FlexProps
+{
+    inline?: boolean;
+    flexDirection?: FlexDirectionProperty;
+    justifyContent?: JustifyContentProperty;
+    alignItems?: AlignItemsProperty;
+    flexWrap?: FlexWrapProperty;
 }
 
 export interface SectionTitleProps

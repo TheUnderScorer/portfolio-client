@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { HomeSectionProps } from './types';
+import { FlexProps, HomeSectionProps } from './types';
 import colors, { getPrimary } from './colors';
 
 export const Main = styled.main`
@@ -42,5 +42,15 @@ export const HomeSection = styled.section<HomeSectionProps>`
             position: relative;
             bottom: 8rem;
         }
+    ` }
+`;
+
+export const Flex = styled.div<FlexProps>`
+    ${ ( { flexDirection = 'row', flexWrap = 'nowrap', justifyContent = 'flex-start', alignItems = 'flex-start', inline = false } ) => `
+        display: ${ inline ? 'inline-flex' : 'flex' }
+        flex-direction: ${ flexDirection };
+        flex-wrap: ${ flexWrap };
+        justify-content: ${ justifyContent };
+        align-items: ${ alignItems }
     ` }
 `;

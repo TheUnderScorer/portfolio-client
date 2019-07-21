@@ -1,8 +1,9 @@
 import reducer from './reducer';
-import ContactReducer, { ContactReducerHandler } from '../types/reducers/ContactReducer';
+import ContactReducer, { ContactReducerHandler, ContactTypes } from '../types/reducers/ContactReducer';
 
 const initialState: ContactReducer = {
     active: false,
+    type:   ContactTypes.UserForm,
 };
 
 const handlers: ContactReducerHandler = {

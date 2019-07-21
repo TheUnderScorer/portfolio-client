@@ -1,0 +1,37 @@
+import * as React from 'react';
+import SelectionProps from './types/SelectionProps';
+import { SelectionContainer, SelectionItem } from './styled';
+import { SmallText, Text } from '../styled/typography';
+import { Flex } from '../styled/wrappers';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
+const Selection = ( { options, onSelection }: SelectionProps ) =>
+{
+    const handleSelection = ( id: string ) => () =>
+    {
+        onSelection( id );
+    };
+
+    return (
+        <SelectionContainer flexDirection="column">
+            { options.map( ( { icon, subTitle, title, id } ) =>
+                <SelectionItem ripple={ true } key={ id } onClick={ handleSelection( id ) }>
+                    { icon }
+                    <Flex inline={ true } flexDirection="column" as="span">
+                        <Text className="text">
+                            { title }
+                        </Text>
+                        { subTitle &&
+                          <SmallText className="small-text">
+                              { subTitle }
+                          </SmallText>
+                        }
+                    </Flex>
+                    <FontAwesomeIcon className="arrow" icon="angle-right"/>
+                </SelectionItem>
+            ) }
+        </SelectionContainer>
+    )
+};
+
+export default Selection;

@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { NameHighlight } from '../../components/hero-text/styled';
+import { ContactTypes } from '../../types/reducers/ContactReducer';
 
 const texts = {
     me:       {
@@ -25,9 +26,11 @@ const texts = {
         viewRepo:     'View repository'
     },
     contact:  {
-        sectionTitle: 'Contact',
-        id:           'contact',
-        label:        'Contact',
+        sectionTitle:               'Contact',
+        id:                         'contact',
+        label:                      'Contact',
+        basicInfo:                  'Let\'s start with some basic info.',
+        [ ContactTypes.Selection ]: ( name: string ) => `How would you like to contact me, ${ name }?`,
     },
 };
 

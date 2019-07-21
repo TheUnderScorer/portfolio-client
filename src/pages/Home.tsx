@@ -164,11 +164,9 @@ const Home = () =>
 
     useMemo( async () =>
     {
-
         if ( !token ) {
             await createUser();
         }
-
     }, [ token ] );
 
     return (

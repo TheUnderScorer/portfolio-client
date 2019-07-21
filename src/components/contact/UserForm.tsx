@@ -34,7 +34,7 @@ const UserForm = ( props: UserFormProps & FormikProps<UserFormData> ) =>
 };
 
 const validationSchema = Yup.object().shape( {
-    name:  Yup.string().required( 'Provide your name' ).max( 50, 'Name cannot contain more than 50 characters' ),
+    name:  Yup.string().trim().required( 'Provide your name' ).max( 50, 'Name cannot contain more than 50 characters' ),
     email: Yup.string().email( 'Invalid e-mail format.' )
 } );
 

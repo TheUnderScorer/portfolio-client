@@ -3,14 +3,16 @@ import { ContactActions } from '../actions/ContactActions';
 
 export default interface ContactReducer
 {
-    type?: ContactTypes;
+    type: ContactTypes;
     active?: boolean;
 }
 
 export enum ContactTypes
 {
     Chat        = 'Chat',
-    ContactForm = 'ContactForm'
+    ContactForm = 'ContactForm',
+    UserForm    = 'UserForm',
+    Selection   = 'Selection',
 }
 
 export type ContactReducerHandler = {

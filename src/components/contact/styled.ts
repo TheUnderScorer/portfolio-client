@@ -5,6 +5,7 @@ import { H5, H6 } from '../styled/typography';
 import { Button } from '../styled/buttons';
 import { IconContainerProps } from './types/styled';
 import breakpoints from '../styled/breakpoints';
+import Slider from 'react-slick';
 
 export const ContactWrapper = styled( animated.div )`
    position: fixed;
@@ -79,3 +80,10 @@ export const FormTitle = styled( H6 )`
     color: ${ colors.white };
 `;
 
+export const ContactSlider = styled( Slider )`
+    flex: 1;
+    
+    .slick-list, .slick-track, .slick-slide > div {
+        height: 100%;
+    }
+`;

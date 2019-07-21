@@ -1,5 +1,5 @@
 import * as React from 'react';
-import FormikInputProps from './FormikInputProps';
+import FormikInputProps from './types/FormikInputProps';
 import { ErrorMessage, Field } from 'formik';
 import { Text } from '../styled/typography';
 import { ErrorMessage as ErrorMsg, Label } from '../styled/form';

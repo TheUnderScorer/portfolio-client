@@ -33,4 +33,9 @@ export const getPrimaryVariation = ( mode: ThemeMode ): string =>
     return mode === 'black' ? colors.lightBlue : colors.orange;
 };
 
+export const getPrimaryLight = ( mode: ThemeMode ): string =>
+{
+    return mode === 'black' ? 'rgba(78, 143, 209, 0.2)' : 'rgba(253, 82, 58, 0.2)'
+};
+
 export default colors;
