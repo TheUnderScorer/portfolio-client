@@ -1,8 +1,8 @@
-import User from '../graphql/User';
 import Action from './Action';
 
-export interface SetCurrentUser extends Action<'SetCurrentUser'> {
-    payload: User;
+export interface SetToken extends Action<'SetToken'>
+{
+    payload: string;
 }
 
-export type UserActions = SetCurrentUser | any;
+export type UserActions = SetToken | any;

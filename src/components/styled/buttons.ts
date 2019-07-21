@@ -4,11 +4,12 @@ import breakpoints from './breakpoints';
 import { ButtonProps } from './types';
 
 export const Button = styled.button<ButtonProps>`
+    border-radius: 2px;
     display: inline-block;
     background: ${ props => getPrimary( props.theme.mode ) };
     background-position: center;
     font-size: 0.9em;
-    padding: 10px 20px;
+    padding: 0.8em 2em;
     cursor: pointer;
     box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
     outline: none;

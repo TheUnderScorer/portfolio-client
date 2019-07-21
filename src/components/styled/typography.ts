@@ -1,6 +1,7 @@
 import styled, { css } from 'styled-components';
 import colors, { getPrimary } from './colors';
 import { LinkProps, SectionSubtitleProps, SectionTitleProps } from './types';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const textStyles = css`
     font-size: 1em;  
@@ -49,6 +50,11 @@ export const H4 = styled.h4`
 
 export const H5 = styled.h5`
     font-size: 1.5em;
+    ${ headerStyles }
+`;
+
+export const H6 = styled.h6`
+    font-size: 1.2em;
     ${ headerStyles }
 `;
 
@@ -128,4 +134,8 @@ export const SectionSubtitle = styled( Text )<SectionSubtitleProps>`
             max-width: 30px
         }
     ` }
+`;
+
+export const FaIcon = styled( FontAwesomeIcon )`
+    color: ${ props => props.theme.mode === 'black' ? colors.dark : colors.white };
 `;

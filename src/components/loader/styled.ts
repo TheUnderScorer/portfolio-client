@@ -5,7 +5,7 @@ import colors from '../styled/colors';
 export const LoaderContainer = styled.div<LoaderContainerProps>`
     width: ${ props => props.width };
     height: ${ props => props.height };
-    transition: all .3s;
+    transition: opacity .3s;
     opacity: 0;
     visibility: hidden;
     display: flex;

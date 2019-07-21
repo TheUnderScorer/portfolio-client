@@ -54,7 +54,7 @@ const Projects = ( { projects }: ProjectsProps ) =>
     }, [ didInnerOpen ] );
 
     return (
-        <HomeSection id={ texts.projects.id } colorBackground={ true } centered={ true }>
+        <HomeSection id={ texts.projects.id } colorBackground={ true } isCentered={ true }>
             <div className="title-container">
                 <SectionTitle className="section-title">
                     { texts.projects.sectionTitle }

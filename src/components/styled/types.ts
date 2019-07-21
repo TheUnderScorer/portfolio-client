@@ -2,7 +2,7 @@ import { MaxHeightProperty, MaxWidthProperty } from 'csstype';
 
 export interface HomeSectionProps
 {
-    centered?: boolean;
+    isCentered?: boolean;
     odd?: boolean;
     colorBackground?: boolean;
 }
@@ -40,4 +40,20 @@ export interface LinkProps
 {
     highlight?: boolean;
     underlined?: boolean;
+}
+
+export interface StyledInputProps
+{
+    hasValue?: boolean;
+    hasError?: boolean;
+}
+
+export interface FormProps
+{
+    isCentered?: boolean;
+}
+
+export interface FormSectionProps
+{
+    width?: string;
 }

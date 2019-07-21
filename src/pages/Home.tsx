@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { lazy, MutableRefObject, Suspense, useCallback, useEffect, useRef } from 'react';
+import { lazy, MutableRefObject, Suspense, useCallback, useEffect, useMemo, useRef } from 'react';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import HomeStore from '../types/stores/HomeStore';
 import styled, { ThemeProvider } from 'styled-components';
@@ -19,9 +19,11 @@ import { getState, getStateFromEvent, pushState } from '../utils/history';
 import { about } from './data/links';
 import usePopState from '../hooks/usePopState';
 import breakpoints from '../components/styled/breakpoints';
+import useAuth from '../hooks/useAuth';
 
 const AboutMe = lazy( () => import('../components/about-me/AboutMe') );
 const HowCanIHelp = lazy( () => import('../components/how-can-i-help/HowCanIHelp') );
+const Contact = lazy( () => import('../components/contact/Contact') );
 
 const HomeWrapper = styled.div<HomeWrapperProps>`
     ${ props => props.innerActive && `
@@ -51,6 +53,8 @@ const Home = () =>
     const innerActive = useSelector( ( store: HomeStore ) => store.home.innerActive );
     const didOpen = useSelector( ( store: HomeStore ) => store.home.didInnerOpen );
     const innerRelative = useSelector( ( store: HomeStore ) => store.home.innerSectionRelativeItem ) as HTMLElement;
+
+    const [ token, createUser ] = useAuth();
 
     const dispatch = useDispatch();
 
@@ -158,6 +162,15 @@ const Home = () =>
         }, 500 );
     }, [ dispatch ] );
 
+    useMemo( async () =>
+    {
+
+        if ( !token ) {
+            await createUser();
+        }
+
+    }, [ token ] );
+
     return (
         <ThemeProvider theme={ { mode: theme.mode } }>
             <HomeWrapper innerActive={ didOpen } className="home">
@@ -177,6 +190,9 @@ const Home = () =>
                         }
                     </Suspense>
                 </OpenableSection>
+                <Suspense fallback={ < div/> }>
+                    { token && <Contact/> }
+                </Suspense>
             </HomeWrapper>
         </ThemeProvider>
     )

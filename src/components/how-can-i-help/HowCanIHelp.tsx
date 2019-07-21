@@ -34,7 +34,7 @@ const HowCanIHelp = () => {
     }, [ didInnerOpen ] );
 
     return (
-        <Section id="how_can_i_help" centered={ true }>
+        <Section id="how_can_i_help" isCentered={ true }>
             <div>
                 <SectionTitle underlined={ true }>
                     How can I help?

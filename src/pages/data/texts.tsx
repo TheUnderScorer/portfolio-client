@@ -24,9 +24,10 @@ const texts = {
         viewProject:  'View project',
         viewRepo:     'View repository'
     },
-    hire:     {
-        sectionTitle: 'Hire me!',
-        id:           'contact'
+    contact:  {
+        sectionTitle: 'Contact',
+        id:           'contact',
+        label:        'Contact',
     },
 };
 

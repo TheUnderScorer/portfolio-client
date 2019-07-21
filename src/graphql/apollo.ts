@@ -1,10 +1,9 @@
+import { TOKEN_KEY } from './auth';
 import { ApolloClient, HttpLink, InMemoryCache } from 'apollo-boost'
 import { setContext } from 'apollo-link-context'
 import { split } from 'apollo-link'
 import { WebSocketLink } from 'apollo-link-ws'
 import { getMainDefinition } from 'apollo-utilities'
-import { createUser, TOKEN_KEY } from './auth';
-
 
 const authLink = setContext( async ( _, { headers } ) =>
 {
@@ -27,7 +26,7 @@ const wsLink = new WebSocketLink( {
     options: {
         reconnect:        true,
         connectionParams: {
-            authToken: localStorage.getItem( TOKEN_KEY ),
+            authToken: localStorage.getItem( 'token' ),
         }
     }
 } );
@@ -47,12 +46,3 @@ export const client = new ApolloClient( {
     link,
     connectToDevTools: true,
 } );
-
-( async () =>
-{
-    if ( !localStorage.getItem( TOKEN_KEY ) ) {
-        const user = await createUser();
-
-        localStorage.setItem( TOKEN_KEY, user.token.value );
-    }
-} )();

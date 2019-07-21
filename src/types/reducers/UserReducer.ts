@@ -1,9 +1,9 @@
-import User from '../graphql/User';
 import { ReducerHandler } from './ReducerHandler';
 import { UserActions } from '../actions/UserActions';
 
-export default interface UserReducer {
-    currentUser?: User;
+export default interface UserReducer
+{
+    readonly token: string;
 }
 
 export type UserReducerHandlers = {

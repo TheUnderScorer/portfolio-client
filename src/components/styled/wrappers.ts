@@ -14,7 +14,7 @@ export const HomeSection = styled.section<HomeSectionProps>`
     position: relative;
     padding: 4rem 2rem;
     width: 100%;
-    text-align: ${ props => props.centered ? 'center' : 'left' }
+    text-align: ${ props => props.isCentered ? 'center' : 'left' }
     background-color : ${ props => props.odd ?
     ( props.theme.mode === 'black' ? colors.dark : colors.lightBg ) :
     ( props.theme.mode === 'black' ? colors.black : colors.white )

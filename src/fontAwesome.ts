@@ -6,6 +6,7 @@ import {
     faBars,
     faChevronLeft,
     faChevronRight,
+    faComment,
     faDesktop,
     faExternalLinkAlt,
     faMobile,
@@ -18,4 +19,4 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
 
-library.add( faArrowDown, faSun, faMoon, faPaintBrush, faPlus, faTools, faMobile, faDesktop, faBars, faArrowLeft, faChevronLeft, faChevronRight, faArrowRight, faTimes, faExternalLinkAlt, faGithub );
+library.add( faArrowDown, faSun, faMoon, faPaintBrush, faPlus, faTools, faMobile, faDesktop, faBars, faArrowLeft, faChevronLeft, faChevronRight, faArrowRight, faTimes, faExternalLinkAlt, faGithub, faComment );

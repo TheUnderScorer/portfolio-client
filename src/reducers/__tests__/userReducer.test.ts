@@ -2,7 +2,7 @@ import UserReducer from '../../types/reducers/UserReducer';
 import * as faker from 'faker';
 import userReducer from '../userReducer';
 import User from '../../types/graphql/User';
-import { SetCurrentUser } from '../../types/actions/UserActions';
+import { SetToken } from '../../types/actions/UserActions';
 
 describe( 'userReducer', () => {
 
@@ -28,7 +28,7 @@ describe( 'userReducer', () => {
             token: faker.random.uuid(),
             name:  faker.name.firstName()
         };
-        const action: SetCurrentUser = {
+        const action: SetToken = {
             type:    'SetCurrentUser',
             payload: newUser
         };
