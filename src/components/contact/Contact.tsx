@@ -6,7 +6,7 @@ import { ContactSlider, ContactWrapper, Error, FormTitle, IconContainer, Inner }
 import { FaIcon, Text } from '../styled/typography';
 import { useSpring } from 'react-spring';
 import { SetContactActive, SetContactType } from '../../types/actions/ContactActions';
-import { useQuery } from 'react-apollo-hooks';
+import { useMutation, useQuery } from 'react-apollo-hooks';
 import { GET_ME } from '../../graphql/queries/users';
 import Loader from '../loader/Loader';
 import UserForm from './UserForm';
@@ -17,6 +17,11 @@ import { Settings } from 'react-slick';
 import ContactReducer, { ContactTypes } from '../../types/reducers/ContactReducer';
 import Selection from '../selection/Selection';
 import contactSelections from '../../pages/data/contactSelections';
+import Result from '../../types/graphql/Result';
+import { SEND } from '../../graphql/queries/contact';
+import useApolloErrors from '../../hooks/useApolloErrors';
+import ContactForm from './ContactForm';
+import { ContactInputVariable } from '../../types/graphql/inputs/ContactInput';
 
 const sections = {
     [ ContactTypes.UserForm ]:    0,
@@ -34,24 +39,25 @@ const sliderSettings: Settings = {
     slidesToShow:   1,
 };
 
+const ContactError = ( { message = '' } ) =>
+{
+    return (
+        <Error>
+            <Text>
+                { message }
+            </Text>
+        </Error>
+    )
+};
+
 const Contact = () =>
 {
     const dispatch = useDispatch();
 
-    const { data, ...userQuery } = useQuery<GetMeResult>( GET_ME );
-    const { me: user = {} } = data || {};
+    const userQuery = useQuery<GetMeResult>( GET_ME );
+    const { me: user = {} } = userQuery.data || {};
 
-    const slider = useRef() as any;
-    const [ currentSlide, setSlide ] = useState( 0 );
-
-    useEffect( () =>
-    {
-        if ( !slider.current ) {
-            return;
-        }
-
-        slider.current.slickGoTo( currentSlide );
-    }, [ currentSlide, slider ] );
+    const contactMutation = useMutation<Result, ContactInputVariable>( SEND );
 
     const userMutation = useUpdateUser( async () =>
     {
@@ -62,6 +68,15 @@ const Contact = () =>
             }
         } ) );
     } );
+
+    const [ errors, setErrors ] = useApolloErrors( [
+        userQuery,
+        userMutation[ 1 ],
+        contactMutation[ 1 ],
+    ] );
+
+    const slider = useRef() as any;
+    const [ currentSlide, setSlide ] = useState( 0 );
 
     const { active = false, type }: ContactReducer = useSelector( ( store: HomeStore ) => ( {
         active: store.contact.active,
@@ -94,14 +109,26 @@ const Contact = () =>
         transformOrigin: 'right bottom',
     } );
 
-    const renderError = ( message: string ) => (
-        <Error>
-            <Text>
-                { message }
-            </Text>
-        </Error>
-    );
+    useEffect( () =>
+    {
+        setErrors( [
+            userQuery,
+            userMutation[ 1 ],
+            contactMutation[ 1 ],
+        ] );
+    }, [ userQuery.data, userMutation[ 1 ].data, contactMutation[ 1 ].data ] );
 
+    // Moves to current slide
+    useEffect( () =>
+    {
+        if ( !slider.current ) {
+            return;
+        }
+
+        slider.current.slickGoTo( currentSlide );
+    }, [ currentSlide, slider ] );
+
+    // Updates section index on change
     useEffect( () =>
     {
         if ( !type ) {
@@ -113,6 +140,7 @@ const Contact = () =>
         setSlide( section );
     }, [ type ] );
 
+    // Moves to first section after used filled UserForm
     useEffect( () =>
     {
         // User have filled the form, move him to next slide
@@ -137,15 +165,13 @@ const Contact = () =>
                 <FormTitle className="form-title">
                     { getFormTitle( type, user ) }
                 </FormTitle>
-                { userQuery.error &&
-                  renderError( userQuery.error.message )
-                }
-                { userMutation[ 1 ].error &&
-                  renderError( userMutation[ 1 ].error.message )
-                }
+                { errors.length > 0 && errors.map( ( item, index ) =>
+                    <ContactError message={ item && item.error ? item.error.message : '' } key={ index }/>
+                ) }
                 <ContactSlider className="contact-slider" ref={ slider } { ...sliderSettings }>
                     <UserForm user={ user } mutation={ userMutation }/>
                     <Selection onSelection={ section => console.log( section ) } options={ contactSelections }/>
+                    <ContactForm user={ user } mutation={ contactMutation }/>
                 </ContactSlider>
             </Inner>
         </ContactWrapper>

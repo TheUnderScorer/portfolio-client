@@ -3,11 +3,13 @@ import { Input as BaseInput, InputContainer, Label } from '../styled/form';
 import InputProps from './types/InputProps';
 import { Text } from '../styled/typography';
 
-const Input = ( { value = '', hasError, ...props }: InputProps ) =>
+const Input = ( { value = '', hasError, inputComponent, ...props }: InputProps ) =>
 {
+    const Component = inputComponent ? inputComponent : BaseInput;
+
     return (
         <InputContainer>
-            <BaseInput hasError={ hasError } hasValue={ !!value } value={ value } { ...props } />
+            <Component hasError={ hasError } hasValue={ !!value } value={ value } { ...props } />
             { props.label &&
               <Label>
                   <Text>

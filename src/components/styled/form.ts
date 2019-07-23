@@ -54,6 +54,13 @@ export const Input = styled.input<StyledInputProps>`
     ` }
 `;
 
+export const Textarea = styled( Input ).attrs( {
+    as:     'textarea',
+    resize: 'none',
+} )`
+
+`;
+
 export const Label = styled.label`
     position: absolute;
     left: 1em;

@@ -9,6 +9,11 @@ import Input from '../inputs/Input';
 import { Button } from '../styled/buttons';
 import Loader from '../loader/Loader';
 
+const validationSchema = Yup.object().shape( {
+    name:  Yup.string().trim().required( 'Provide your name' ).max( 50, 'Name cannot contain more than 50 characters' ),
+    email: Yup.string().email( 'Invalid e-mail format.' )
+} );
+
 const UserForm = ( props: UserFormProps & FormikProps<UserFormData> ) =>
 {
     const [ , updateUserResult ] = props.mutation;
@@ -32,11 +37,6 @@ const UserForm = ( props: UserFormProps & FormikProps<UserFormData> ) =>
         </Form>
     )
 };
-
-const validationSchema = Yup.object().shape( {
-    name:  Yup.string().trim().required( 'Provide your name' ).max( 50, 'Name cannot contain more than 50 characters' ),
-    email: Yup.string().email( 'Invalid e-mail format.' )
-} );
 
 const formikWrapper = withFormik( {
     mapPropsToValues: ( { user = {} }: UserFormProps ) => ( {

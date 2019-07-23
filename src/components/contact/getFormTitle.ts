@@ -8,11 +8,10 @@ export default ( type: ContactTypes, user?: User ): string =>
         return texts.contact.basicInfo;
     }
 
-    // @ts-ignore
     const text = texts.contact[ type ];
 
     if ( typeof text === 'function' ) {
-        return text( user ? user.name : '' );
+        return text( user && user.name ? user.name : '' );
     }
 
     return text;

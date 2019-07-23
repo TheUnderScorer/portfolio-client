@@ -1,3 +1,16 @@
+type Contact {
+    id: ID!
+    content: String!
+    createdAt: String!
+    subject: String!
+    user: User!
+}
+
+input ContactInput {
+    subject: String!
+    content: String!
+}
+
 type Conversation {
     id: ID!
     title: String
@@ -33,6 +46,7 @@ type Mutation {
         id: ID!
     ): Conversation!
     deleteConversation(id: ID!): DeleteConversationResult!
+    send(contactInput: ContactInput!): Contact!
 }
 
 type Query {
@@ -61,8 +75,9 @@ type User {
     password: String
     ip: String!
     email: String
-    conversations: [Conversation!]
-    messages: [Message!]!
+    conversations(perPage: Int, page: Int): [Conversation!]
+    messages: [Message!]
+    contacts: [Contact!]
     token: Token
 }
 
