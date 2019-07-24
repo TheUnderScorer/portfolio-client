@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { lazy, useCallback, useEffect, useRef, useState } from 'react';
+import { lazy, MutableRefObject, useCallback, useEffect, useRef, useState } from 'react';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import HomeStore from '../../types/stores/HomeStore';
 import { ContactSlider, ContactWrapper, Error, FormTitle, FormTitleContainer, IconContainer, Inner } from './styled';
@@ -22,9 +22,7 @@ import { SEND } from '../../graphql/queries/contact';
 import useApolloErrors from '../../hooks/useApolloErrors';
 import { ContactInputVariable } from '../../types/graphql/inputs/ContactInput';
 import { SelectionCallback } from '../selection/types/SelectionProps';
-import { IconButton } from '../styled/buttons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Tooltip } from '@material-ui/core';
+import { IconButton, Menu, MenuItem, Tooltip } from '@material-ui/core';
 
 const ContactForm = lazy( () => import('./ContactForm') );
 
@@ -87,6 +85,15 @@ const Contact = () =>
 
     const slider = useRef() as any;
     const [ currentSlide, setSlide ] = useState( 0 );
+
+    const [ menuOpen, setMenuOpen ] = useState( false );
+    const toggleMenu = useCallback( () =>
+    {
+        setMenuOpen( !menuOpen );
+    }, [ menuOpen, setMenuOpen ] );
+
+    const menuIconRef = useRef() as MutableRefObject<HTMLElement | null>;
+    const setMenuRef = ( ref: HTMLElement | null ) => menuIconRef.current = ref;
 
     const { active = false, type }: ContactReducer = useSelector( ( store: HomeStore ) => ( {
         active: store.contact.active,
@@ -176,14 +183,39 @@ const Contact = () =>
                 <FormTitleContainer>
                     { shouldAddIcon( type ) &&
                       <Tooltip title="Return to selection">
-                          <IconButton buttonHeight="32px" buttonWidth="32px" onClick={ handleReturnClick } flat={ true } transparent={ true }>
-                              <FontAwesomeIcon icon="arrow-left"/>
+                          <IconButton href="#" onClick={ handleReturnClick }>
+                              <FaIcon icon="arrow-left"/>
                           </IconButton>
                       </Tooltip>
                     }
                     <FormTitle className="form-title">
                         { getFormTitle( type, user ) }
                     </FormTitle>
+                    { user && type !== ContactTypes.UserForm &&
+                      <>
+                          <IconButton
+                              href="#"
+                              ref={ setMenuRef }
+                              aria-label="More"
+                              aria-controls="long-menu"
+                              aria-haspopup="true"
+                              onClick={ toggleMenu }
+                          >
+                              <FaIcon icon="ellipsis-v"/>
+                          </IconButton>
+                          <Menu
+                              id="long-menu"
+                              anchorEl={ menuIconRef.current }
+                              keepMounted
+                              open={ menuOpen }
+                              onClose={ toggleMenu }
+                          >
+                              <MenuItem button>
+                                  Test option
+                              </MenuItem>
+                          </Menu>
+                      </>
+                    }
                 </FormTitleContainer>
                 { errors.length > 0 && errors.map( ( item, index ) =>
                     <ContactError message={ item && item.error ? item.error.message : '' } key={ index }/>

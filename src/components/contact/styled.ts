@@ -6,6 +6,7 @@ import { Button } from '../styled/buttons';
 import { IconContainerProps } from './types/styled';
 import breakpoints from '../styled/breakpoints';
 import Slider from 'react-slick';
+import { Flex } from '../styled/wrappers';
 
 export const ContactWrapper = styled( animated.div )`
    position: fixed;
@@ -72,10 +73,13 @@ export const Error = styled.div`
     }
 `;
 
-export const FormTitleContainer = styled.div`
+export const FormTitleContainer = styled( Flex ).attrs( {
+    justifyContent: 'space-evenly',
+    alignItems:     'center'
+} )`
     border-bottom: none;
     background-color: ${ props => getPrimary( props.theme.mode ) };
-    padding: 1rem 0;
+    padding: 1rem;
     width: 100%;
     color: ${ colors.white };
 `;
@@ -83,6 +87,7 @@ export const FormTitleContainer = styled.div`
 export const FormTitle = styled( H6 )`
     border-bottom: none;
     color: ${ colors.white };
+    flex: 1;
 `;
 
 export const ContactSlider = styled( Slider )`

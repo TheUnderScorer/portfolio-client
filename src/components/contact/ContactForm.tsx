@@ -9,18 +9,24 @@ import { Button } from '../styled/buttons';
 import Loader from '../loader/Loader';
 import { TextField } from '@material-ui/core';
 
-const validationSchema = Yup.object().shape( {
-    subject: Yup.string().required( 'Provide message title.' ).max( 50, 'Title is too long!' ),
-    message: Yup.string().required( 'Provide your message.' ).min( 20, 'Your message should contain at least 20 characters.' ).max( 600, 'Your message is too long.' ),
-    email:   Yup.string().email( 'Invalid e-mail provided.' ),
-} );
+const validationSchema = ( props: ContactFormProps ) =>
+{
+    const shape: any = {
+        subject: Yup.string().required( 'Provide message title.' ).max( 50, 'Title is too long!' ),
+        message: Yup.string().required( 'Provide your message.' ).min( 20, 'Your message should contain at least 20 characters.' ).max( 600, 'Your message is too long.' ),
+    };
+
+    if ( !props.user || !props.user.email ) {
+        shape.email = Yup.string().required( 'Provide your e-mail address.' ).email( 'E-mail is required.' );
+    }
+
+    return Yup.object().shape( shape );
+};
 
 const ContactForm = ( props: ContactFormProps & FormikProps<ContactInput> ) =>
 {
     const [ , mutationResult ] = props.mutation;
     const { user } = props;
-
-    console.log( { props } );
 
     return (
         <CentredFrom>

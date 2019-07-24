@@ -10,6 +10,7 @@ import {
     faComment,
     faCommentAlt,
     faDesktop,
+    faEllipsisV,
     faEnvelope,
     faExclamationCircle,
     faExternalLinkAlt,
@@ -24,4 +25,4 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
 
-library.add( faArrowDown, faSun, faMoon, faPaintBrush, faPlus, faTools, faMobile, faDesktop, faBars, faArrowLeft, faChevronLeft, faChevronRight, faArrowRight, faTimes, faExternalLinkAlt, faGithub, faComment, faCommentAlt, faEnvelope, faAngleRight, faExclamationCircle, faMailBulk );
+library.add( faArrowDown, faSun, faMoon, faPaintBrush, faPlus, faTools, faMobile, faDesktop, faBars, faArrowLeft, faChevronLeft, faChevronRight, faArrowRight, faTimes, faExternalLinkAlt, faGithub, faComment, faCommentAlt, faEnvelope, faAngleRight, faExclamationCircle, faMailBulk, faEllipsisV );
