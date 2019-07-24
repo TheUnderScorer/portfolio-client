@@ -5,9 +5,9 @@ import { SmallText, Text } from '../styled/typography';
 import { Flex } from '../styled/wrappers';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-const Selection = ( { options, onSelection }: SelectionProps ) =>
+function Selection<T extends string>( { options, onSelection }: SelectionProps<T> )
 {
-    const handleSelection = ( id: string ) => () =>
+    const handleSelection = ( id: T ) => () =>
     {
         onSelection( id );
     };
@@ -15,7 +15,7 @@ const Selection = ( { options, onSelection }: SelectionProps ) =>
     return (
         <SelectionContainer flexDirection="column">
             { options.map( ( { icon, subTitle, title, id } ) =>
-                <SelectionItem ripple={ true } key={ id } onClick={ handleSelection( id ) }>
+                <SelectionItem ripple={ true } key={ id } onClick={ handleSelection( id as T ) }>
                     { icon }
                     <Flex inline={ true } flexDirection="column" as="span">
                         <Text className="text">
@@ -32,6 +32,6 @@ const Selection = ( { options, onSelection }: SelectionProps ) =>
             ) }
         </SelectionContainer>
     )
-};
+}
 
 export default Selection;

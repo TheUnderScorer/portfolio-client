@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { lazy, useCallback, useEffect, useRef, useState } from 'react';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import HomeStore from '../../types/stores/HomeStore';
-import { ContactSlider, ContactWrapper, Error, FormTitle, IconContainer, Inner } from './styled';
+import { ContactSlider, ContactWrapper, Error, FormTitle, FormTitleContainer, IconContainer, Inner } from './styled';
 import { FaIcon, Text } from '../styled/typography';
 import { useSpring } from 'react-spring';
 import { SetContactActive, SetContactType } from '../../types/actions/ContactActions';
@@ -20,15 +20,23 @@ import contactSelections from '../../pages/data/contactSelections';
 import Result from '../../types/graphql/Result';
 import { SEND } from '../../graphql/queries/contact';
 import useApolloErrors from '../../hooks/useApolloErrors';
-import ContactForm from './ContactForm';
 import { ContactInputVariable } from '../../types/graphql/inputs/ContactInput';
+import { SelectionCallback } from '../selection/types/SelectionProps';
+import { IconButton } from '../styled/buttons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Tooltip } from '@material-ui/core';
+
+const ContactForm = lazy( () => import('./ContactForm') );
 
 const sections = {
     [ ContactTypes.UserForm ]:    0,
     [ ContactTypes.Selection ]:   1,
-    [ ContactTypes.Chat ]:        2,
-    [ ContactTypes.ContactForm ]: 3
+    [ ContactTypes.Chat ]:        3,
+    [ ContactTypes.ContactForm ]: 2
 };
+
+const titlesWithReturnIcon = [ ContactTypes.ContactForm, ContactTypes.Chat ];
+const shouldAddIcon = ( type: ContactTypes ) => titlesWithReturnIcon.includes( type );
 
 const sliderSettings: Settings = {
     autoplay:       false,
@@ -58,6 +66,7 @@ const Contact = () =>
     const { me: user = {} } = userQuery.data || {};
 
     const contactMutation = useMutation<Result, ContactInputVariable>( SEND );
+    const [ , contactMutationResult ] = contactMutation;
 
     const userMutation = useUpdateUser( async () =>
     {
@@ -68,6 +77,7 @@ const Contact = () =>
             }
         } ) );
     } );
+    const [ , userMutationResult ] = userMutation;
 
     const [ errors, setErrors ] = useApolloErrors( [
         userQuery,
@@ -83,7 +93,7 @@ const Contact = () =>
         type:   store.contact.type
     } ) );
 
-    const setSection = useCallback( ( section: ContactTypes ) =>
+    const setSection: SelectionCallback<ContactTypes> = useCallback( ( section: ContactTypes ) =>
     {
         const action: SetContactType = {
             type:    'SetContactType',
@@ -92,6 +102,7 @@ const Contact = () =>
 
         dispatch( action );
     }, [ dispatch ] );
+    const handleReturnClick = () => setSection( ContactTypes.Selection );
 
     const toggleActive = useCallback( () =>
     {
@@ -116,7 +127,7 @@ const Contact = () =>
             userMutation[ 1 ],
             contactMutation[ 1 ],
         ] );
-    }, [ userQuery.data, userMutation[ 1 ].data, contactMutation[ 1 ].data ] );
+    }, [ userQuery.error, userMutationResult.error, contactMutationResult.error ] );
 
     // Moves to current slide
     useEffect( () =>
@@ -162,15 +173,24 @@ const Contact = () =>
                     width:  '30%',
                     height: '30%'
                 } }/>
-                <FormTitle className="form-title">
-                    { getFormTitle( type, user ) }
-                </FormTitle>
+                <FormTitleContainer>
+                    { shouldAddIcon( type ) &&
+                      <Tooltip title="Return to selection">
+                          <IconButton buttonHeight="32px" buttonWidth="32px" onClick={ handleReturnClick } flat={ true } transparent={ true }>
+                              <FontAwesomeIcon icon="arrow-left"/>
+                          </IconButton>
+                      </Tooltip>
+                    }
+                    <FormTitle className="form-title">
+                        { getFormTitle( type, user ) }
+                    </FormTitle>
+                </FormTitleContainer>
                 { errors.length > 0 && errors.map( ( item, index ) =>
                     <ContactError message={ item && item.error ? item.error.message : '' } key={ index }/>
                 ) }
                 <ContactSlider className="contact-slider" ref={ slider } { ...sliderSettings }>
                     <UserForm user={ user } mutation={ userMutation }/>
-                    <Selection onSelection={ section => console.log( section ) } options={ contactSelections }/>
+                    <Selection<ContactTypes> onSelection={ setSection } options={ contactSelections }/>
                     <ContactForm user={ user } mutation={ contactMutation }/>
                 </ContactSlider>
             </Inner>

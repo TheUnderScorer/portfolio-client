@@ -2,7 +2,7 @@ import User from '../../types/graphql/User';
 import texts from '../../pages/data/texts';
 import { ContactTypes } from '../../types/reducers/ContactReducer';
 
-export default ( type: ContactTypes, user?: User ): string =>
+export default ( type: ContactTypes, user?: User ) =>
 {
     if ( ( user && !user.name ) || type === ContactTypes.UserForm ) {
         return texts.contact.basicInfo;

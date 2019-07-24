@@ -42,6 +42,8 @@ export interface ButtonProps
     iconOnHover?: boolean;
     ripple?: boolean;
     transparent?: boolean;
+    buttonWidth?: string;
+    buttonHeight?: string;
 }
 
 export interface RoundImageProps
@@ -66,10 +68,11 @@ export interface StyledInputProps
 
 export interface FormProps
 {
-    isCentered?: boolean;
+    formCentered?: boolean;
 }
 
 export interface FormSectionProps
 {
     width?: string;
+    margin?: 'normal' | 'none';
 }

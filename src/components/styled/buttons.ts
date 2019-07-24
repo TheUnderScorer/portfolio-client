@@ -17,6 +17,8 @@ export const Button = styled.button<ButtonProps>`
     transition: all .3s;
     border: none;
     text-decoration: none;
+    width: ${ ( { buttonWidth = 'auto' } ) => buttonWidth };
+    height: ${ ( { buttonHeight = 'auto' } ) => buttonHeight };
     
     &, *, span {
         color: ${ colors.white };

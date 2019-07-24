@@ -1,22 +1,34 @@
 import styled, { css } from 'styled-components';
 import colors, { getPrimaryVariation } from './colors';
-import { FormProps, FormSectionProps, StyledInputProps } from './types';
+import { FormSectionProps, StyledInputProps } from './types';
 import { Form as FormikForm } from 'formik';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-export const Form = styled( FormikForm )<FormProps>`
-    ${ props => props.isCentered && `
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        height: 100%;
-    ` }
+export const Form = styled( FormikForm )`
+   
+`;
+
+export const CentredFrom = styled( Form )`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
 `;
 
 export const InputContainer = styled.div`
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
     position: relative;
     width: 100%;
+`;
+
+export const ErrorIcon = styled( FontAwesomeIcon ).attrs( {
+    icon: 'exclamation-circle'
+} )`
+    color: ${ colors.red };
+    position: absolute;
+    right: 15px;
 `;
 
 const labelActive = css`
@@ -51,6 +63,7 @@ export const Input = styled.input<StyledInputProps>`
     ${ props => props.hasError && `
         border-width: 2px;
         border-color: ${ colors.red };
+        padding-right: 40px;
     ` }
 `;
 
@@ -76,11 +89,27 @@ export const Label = styled.label`
 
 export const ErrorMessage = styled.div`
     color: ${ colors.red };
-    font-size: 0.85em;
-    margin-top: 0.5em;
+    font-size: 0.80em;
+    text-align: left;
 `;
 
 export const FormSection = styled.section<FormSectionProps>`
-    margin: 1em 0;
+    margin: ${ ( { margin = 'none' } ) => margin === 'none' ? '0' : '1em 0' };
     width: ${ ( { width = '100%' } ) => width };
+    
+    input, label {
+        color: ${ props => props.theme.mode === 'black' ? colors.white : colors.dark };
+    }
+    
+    .MuiInputLabel-outlined {
+        background-color: ${ props => props.theme.mode === 'black' ? colors.dark : colors.white };
+    }
+    
+    .Mui-error fieldset{
+        border-width: 2px;
+    }
+    
+    .MuiFormControl-root .MuiInputBase-root.Mui-focused fieldset {
+        border-width: 1px;
+    }
 `;

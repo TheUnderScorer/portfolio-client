@@ -72,11 +72,16 @@ export const Error = styled.div`
     }
 `;
 
-export const FormTitle = styled( H6 )`
+export const FormTitleContainer = styled.div`
     border-bottom: none;
     background-color: ${ props => getPrimary( props.theme.mode ) };
     padding: 1rem 0;
     width: 100%;
+    color: ${ colors.white };
+`;
+
+export const FormTitle = styled( H6 )`
+    border-bottom: none;
     color: ${ colors.white };
 `;
 

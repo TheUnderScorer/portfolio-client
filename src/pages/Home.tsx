@@ -20,6 +20,9 @@ import { about } from './data/links';
 import usePopState from '../hooks/usePopState';
 import breakpoints from '../components/styled/breakpoints';
 import useAuth from '../hooks/useAuth';
+import { ThemeProvider as MaterialThemeProvider } from '@material-ui/styles';
+import { createMuiTheme } from '@material-ui/core';
+import colors, { getPrimary } from '../components/styled/colors';
 
 const AboutMe = lazy( () => import('../components/about-me/AboutMe') );
 const HowCanIHelp = lazy( () => import('../components/how-can-i-help/HowCanIHelp') );
@@ -48,6 +51,17 @@ const HomeWrapper = styled.div<HomeWrapperProps>`
 const Home = () =>
 {
     const theme = useSelector( ( store: HomeStore ) => store.theme );
+    const materialTheme = createMuiTheme( {
+        palette: {
+            primary: {
+                main: getPrimary( theme.mode ),
+            },
+            error:   {
+                main: colors.red
+            },
+        },
+    } );
+
     const heroCtaRef = useRef() as MutableRefObject<HTMLButtonElement>;
 
     const innerActive = useSelector( ( store: HomeStore ) => store.home.innerActive );
@@ -171,27 +185,29 @@ const Home = () =>
 
     return (
         <ThemeProvider theme={ { mode: theme.mode } }>
-            <HomeWrapper innerActive={ didOpen } className="home">
-                <GlobalStyle/>
-                <Header/>
-                <HeroImage srcs={ [ Mountains, LandscapeNight ] } activeSrc={ theme.mode === 'black' ? 1 : 0 }>
-                    <HeroText ctaRef={ heroCtaRef } onCtaClick={ toggleSection }/>
-                </HeroImage>
-                <OpenableSection zIndex={ 2 } onOpen={ onOpen } className="inner-section" relativeTo={ innerRelative } isOpen={ innerActive }>
-                    <Suspense fallback={ <div/> }>
-                        { innerActive &&
-                          <>
-                              <AboutMe/>
-                              <HowCanIHelp/>
-                              <Projects projects={ projects }/>
-                          </>
-                        }
+            <MaterialThemeProvider theme={ materialTheme }>
+                <HomeWrapper innerActive={ didOpen } className="home">
+                    <GlobalStyle/>
+                    <Header/>
+                    <HeroImage srcs={ [ Mountains, LandscapeNight ] } activeSrc={ theme.mode === 'black' ? 1 : 0 }>
+                        <HeroText ctaRef={ heroCtaRef } onCtaClick={ toggleSection }/>
+                    </HeroImage>
+                    <OpenableSection zIndex={ 2 } onOpen={ onOpen } className="inner-section" relativeTo={ innerRelative } isOpen={ innerActive }>
+                        <Suspense fallback={ <div/> }>
+                            { innerActive &&
+                              <>
+                                  <AboutMe/>
+                                  <HowCanIHelp/>
+                                  <Projects projects={ projects }/>
+                              </>
+                            }
+                        </Suspense>
+                    </OpenableSection>
+                    <Suspense fallback={ < div/> }>
+                        { token && <Contact/> }
                     </Suspense>
-                </OpenableSection>
-                <Suspense fallback={ < div/> }>
-                    { token && <Contact/> }
-                </Suspense>
-            </HomeWrapper>
+                </HomeWrapper>
+            </MaterialThemeProvider>
         </ThemeProvider>
     )
 

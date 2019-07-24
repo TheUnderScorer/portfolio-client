@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Input as BaseInput, InputContainer, Label } from '../styled/form';
+import { ErrorIcon, Input as BaseInput, InputContainer, Label } from '../styled/form';
 import InputProps from './types/InputProps';
 import { Text } from '../styled/typography';
 
@@ -16,6 +16,9 @@ const Input = ( { value = '', hasError, inputComponent, ...props }: InputProps )
                       { props.label }
                   </Text>
               </Label>
+            }
+            { hasError &&
+              <ErrorIcon/>
             }
         </InputContainer>
     )
