@@ -5,8 +5,8 @@ import { H5, H6 } from '../styled/typography';
 import { Button } from '../styled/buttons';
 import { IconContainerProps } from './types/styled';
 import breakpoints from '../styled/breakpoints';
-import Slider from 'react-slick';
 import { Flex } from '../styled/wrappers';
+import SliderSection from '../slider-section/SliderSection';
 
 export const ContactWrapper = styled( animated.div )`
    position: fixed;
@@ -90,10 +90,6 @@ export const FormTitle = styled( H6 )`
     flex: 1;
 `;
 
-export const ContactSlider = styled( Slider )`
+export const ContactSlider = styled( SliderSection )`
     flex: 1;
-    
-    .slick-list, .slick-track, .slick-slide > div {
-        height: 100%;
-    }
 `;

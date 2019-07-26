@@ -11,7 +11,6 @@ import Loader from '../loader/Loader';
 import UserForm from './UserForm';
 import useUpdateUser from '../../hooks/useUpdateUser';
 import getFormTitle from './getFormTitle';
-import { Settings } from 'react-slick';
 import ContactReducer, { ContactTypes } from '../../types/reducers/ContactReducer';
 import Selection from '../selection/Selection';
 import contactSelections from '../../pages/data/contactSelections';
@@ -36,15 +35,6 @@ const sections = {
 
 const titlesWithReturnIcon = [ ContactTypes.ContactForm, ContactTypes.Chat ];
 const shouldAddIcon = ( type: ContactTypes ) => titlesWithReturnIcon.includes( type );
-
-const sliderSettings: Settings = {
-    autoplay:       false,
-    dots:           false,
-    arrows:         false,
-    draggable:      false,
-    slidesToScroll: 1,
-    slidesToShow:   1,
-};
 
 const ContactError = ( { message = '' } ) =>
 {
@@ -86,9 +76,6 @@ const Contact = () =>
         contactMutation[ 1 ],
     ] );
 
-    const slider = useRef() as any;
-    const [ currentSlide, setSlide ] = useState( 0 );
-
     const [ menuOpen, setMenuOpen ] = useState( false );
     const toggleMenu = useCallback( () =>
     {
@@ -102,6 +89,8 @@ const Contact = () =>
         active: store.contact.active,
         type:   store.contact.type
     } ) );
+
+    const [ currentSlide, setCurrentSlide ] = useState<number>( sections[ type ] );
 
     const setSection: SelectionCallback<ContactTypes> = useCallback( ( section: ContactTypes ) =>
     {
@@ -139,36 +128,29 @@ const Contact = () =>
         ] );
     }, [ userQuery.error, userMutationResult.error, contactMutationResult.error ] );
 
-    // Moves to current slide
-    useEffect( () =>
-    {
-        if ( !slider.current ) {
-            return;
-        }
-
-        slider.current.slickGoTo( currentSlide );
-    }, [ currentSlide, slider ] );
-
-    // Updates section index on change
-    useEffect( () =>
-    {
-        if ( !type ) {
-            return;
-        }
-
-        const section = sections[ type ];
-
-        setSlide( section );
-    }, [ type ] );
-
     // Moves to first section after used filled UserForm
     useEffect( () =>
     {
         // User have filled the form, move him to next slide
-        if ( currentSlide === 0 && user && user.name ) {
+        if ( type === ContactTypes.UserForm && user && user.name ) {
             setSection( ContactTypes.Selection )
         }
-    }, [ user, currentSlide ] );
+    }, [ user, type ] );
+
+    useEffect( () =>
+    {
+        const timeout = setTimeout( () =>
+        {
+            const section = sections[ type ];
+
+            setCurrentSlide( section );
+        }, 50 );
+
+        return () =>
+        {
+            clearTimeout( timeout );
+        }
+    }, [ type ] );
 
     useEffect( () =>
     {
@@ -233,7 +215,7 @@ const Contact = () =>
                     <ContactError message={ item && item.error ? item.error.message : '' } key={ index }/>
                 ) }
                 { user &&
-                  <ContactSlider className="contact-slider" ref={ slider } { ...sliderSettings }>
+                  <ContactSlider activeSection={ currentSlide }>
                       <UserForm user={ user } mutation={ userMutation }/>
                       <Selection<ContactTypes> onSelection={ setSection } options={ contactSelections }/>
                       <ContactForm user={ user } mutation={ contactMutation }/>
