@@ -16,6 +16,9 @@ const validationSchema = ( props: ContactFormProps ) =>
         message: Yup.string().required( 'Provide your message.' ).min( 20, 'Your message should contain at least 20 characters.' ).max( 600, 'Your message is too long.' ),
     };
 
+
+    console.log( { props } );
+
     if ( !props.user || !props.user.email ) {
         shape.email = Yup.string().required( 'Provide your e-mail address.' ).email( 'E-mail is required.' );
     }
@@ -89,16 +92,21 @@ const formikWrapper = withFormik( {
     validationSchema,
     mapPropsToValues: ( { initialInput = {} }: ContactFormProps ) =>
                       {
-                          const { subject = '', message = '' } = initialInput;
+                          const { subject = '', message = '', email = '' } = initialInput;
 
                           return {
                               subject,
-                              message
+                              message,
+                              email,
                           }
                       },
     handleSubmit:     async ( input, formBag: FormikBag<ContactFormProps, ContactInput> ) =>
                       {
                           const { mutation } = formBag.props;
+
+                          if ( !input.email ) {
+                              delete input.email;
+                          }
 
                           await mutation[ 0 ]( {
                               variables: {

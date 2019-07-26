@@ -112,4 +112,21 @@ export const FormSection = styled.section<FormSectionProps>`
     .MuiFormControl-root .MuiInputBase-root.Mui-focused fieldset {
         border-width: 1px;
     }
+    
+   ${ props => props.theme.mode === 'black' && `
+        .MuiFormControl-root .MuiInputBase-root fieldset {
+            border-color: ${ colors.darkerBorder };
+        }
+        
+        .MuiFormControl-root .MuiInputBase-root.Mui-focused {
+            fieldset{
+                border-color: ${ colors.lightBorder };
+            }
+        }
+        
+        .MuiFormControl-root label {
+            color: ${ colors.white }
+        }
+       
+   ` } 
 `;

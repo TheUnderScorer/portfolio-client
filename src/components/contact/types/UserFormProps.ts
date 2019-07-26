@@ -4,6 +4,6 @@ import { UserInputVariable } from '../../../types/graphql/inputs/UserInput';
 
 export default interface UserFormProps
 {
-    user?: User;
+    user: User;
     mutation: [ MutationFn<User, UserInputVariable>, MutationResult<User> ];
 }

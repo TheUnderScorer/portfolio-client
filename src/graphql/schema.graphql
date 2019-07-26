@@ -9,6 +9,8 @@ type Contact {
 input ContactInput {
     subject: String!
     content: String!
+    # Optional, only if user have not provided any email yet
+    email: String
 }
 
 type Conversation {
@@ -40,6 +42,7 @@ type Mutation {
     createUser(userInput: UserInput): User!
     updateMe(userInput: UserInput!): User!
     updateUser(userInput: UserInput!, id: ID!): User!
+    updateLoginDate: User!
     createConversation(conversationInput: ConversationInput!): Conversation!
     updateConversation(
         conversationInput: ConversationInput!
@@ -79,6 +82,7 @@ type User {
     messages: [Message!]
     contacts: [Contact!]
     token: Token
+    hasPassword: Boolean!
 }
 
 input UserInput {

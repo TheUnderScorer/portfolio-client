@@ -1,17 +1,15 @@
 import * as React from 'react';
-import { lazy, MutableRefObject, useCallback, useEffect, useRef, useState } from 'react';
+import { MutableRefObject, useCallback, useEffect, useRef, useState } from 'react';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import HomeStore from '../../types/stores/HomeStore';
 import { ContactSlider, ContactWrapper, Error, FormTitle, FormTitleContainer, IconContainer, Inner } from './styled';
 import { FaIcon, Text } from '../styled/typography';
 import { useSpring } from 'react-spring';
 import { SetContactActive, SetContactType } from '../../types/actions/ContactActions';
-import { useMutation, useQuery } from 'react-apollo-hooks';
-import { GET_ME } from '../../graphql/queries/users';
+import { useMutation } from 'react-apollo-hooks';
 import Loader from '../loader/Loader';
 import UserForm from './UserForm';
 import useUpdateUser from '../../hooks/useUpdateUser';
-import { GetMeResult } from '../../types/graphql/Queries';
 import getFormTitle from './getFormTitle';
 import { Settings } from 'react-slick';
 import ContactReducer, { ContactTypes } from '../../types/reducers/ContactReducer';
@@ -23,8 +21,11 @@ import useApolloErrors from '../../hooks/useApolloErrors';
 import { ContactInputVariable } from '../../types/graphql/inputs/ContactInput';
 import { SelectionCallback } from '../selection/types/SelectionProps';
 import { IconButton, Menu, MenuItem, Tooltip } from '@material-ui/core';
-
-const ContactForm = lazy( () => import('./ContactForm') );
+import useCurrentUser from '../../hooks/useCurrentUser';
+import useUpdateLoginDate from '../../hooks/useUpdateLoginDate';
+import usePrevious from '../../hooks/usePrevious';
+import User from '../../types/graphql/User';
+import ContactForm from './ContactForm';
 
 const sections = {
     [ ContactTypes.UserForm ]:    0,
@@ -60,8 +61,10 @@ const Contact = () =>
 {
     const dispatch = useDispatch();
 
-    const userQuery = useQuery<GetMeResult>( GET_ME );
-    const { me: user = {} } = userQuery.data || {};
+    const userQuery = useCurrentUser();
+    const user: User | undefined = userQuery.data && userQuery.data.user ? userQuery.data.user : undefined;
+    const prevUserID = usePrevious( user ? user.id : 0 );
+    const updateLastLoginDate = useUpdateLoginDate( userQuery );
 
     const contactMutation = useMutation<Result, ContactInputVariable>( SEND );
     const [ , contactMutationResult ] = contactMutation;
@@ -69,8 +72,8 @@ const Contact = () =>
     const userMutation = useUpdateUser( async () =>
     {
         await userQuery.updateQuery( ( oldUser ) => ( {
-            me: {
-                ...oldUser.me,
+            user: {
+                ...oldUser.user,
                 ...userMutation[ 1 ].data
             }
         } ) );
@@ -167,6 +170,15 @@ const Contact = () =>
         }
     }, [ user, currentSlide ] );
 
+    useEffect( () =>
+    {
+        if ( user && user.id === prevUserID ) {
+            return;
+        }
+
+        updateLastLoginDate();
+    }, [ updateLastLoginDate, user, prevUserID ] );
+
     return (
         <ContactWrapper>
             <IconContainer active={ active } onClick={ toggleActive } ripple={ true }>
@@ -210,7 +222,7 @@ const Contact = () =>
                               open={ menuOpen }
                               onClose={ toggleMenu }
                           >
-                              <MenuItem button>
+                              <MenuItem>
                                   Test option
                               </MenuItem>
                           </Menu>
@@ -220,11 +232,13 @@ const Contact = () =>
                 { errors.length > 0 && errors.map( ( item, index ) =>
                     <ContactError message={ item && item.error ? item.error.message : '' } key={ index }/>
                 ) }
-                <ContactSlider className="contact-slider" ref={ slider } { ...sliderSettings }>
-                    <UserForm user={ user } mutation={ userMutation }/>
-                    <Selection<ContactTypes> onSelection={ setSection } options={ contactSelections }/>
-                    <ContactForm user={ user } mutation={ contactMutation }/>
-                </ContactSlider>
+                { user &&
+                  <ContactSlider className="contact-slider" ref={ slider } { ...sliderSettings }>
+                      <UserForm user={ user } mutation={ userMutation }/>
+                      <Selection<ContactTypes> onSelection={ setSection } options={ contactSelections }/>
+                      <ContactForm user={ user } mutation={ contactMutation }/>
+                  </ContactSlider>
+                }
             </Inner>
         </ContactWrapper>
     );

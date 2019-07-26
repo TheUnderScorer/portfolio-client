@@ -7,8 +7,7 @@ import { CentredFrom, FormSection } from '../styled/form';
 import FormikInput from '../formik/FormikInput';
 import { Button } from '../styled/buttons';
 import Loader from '../loader/Loader';
-import { InputAdornment, TextField } from '@material-ui/core';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { TextField } from '@material-ui/core';
 
 const validationSchema = Yup.object().shape( {
     name:  Yup.string().trim().required( 'Provide your name' ).max( 50, 'Name cannot contain more than 50 characters' ),
@@ -24,13 +23,6 @@ const UserForm = ( props: UserFormProps & FormikProps<UserFormData> ) =>
             <FormSection width="60%">
                 <FormikInput id="name" name="name" type="text" render={ ( { form, field } ) =>
                     <TextField
-                        InputProps={ {
-                            startAdornment: (
-                                                <InputAdornment position="start">
-                                                    <FontAwesomeIcon icon="mail-bulk"/>
-                                                </InputAdornment>
-                                            )
-                        } }
                         margin="normal"
                         label="Name *"
                         disabled={ updateUserResult.loading }
@@ -66,13 +58,13 @@ const UserForm = ( props: UserFormProps & FormikProps<UserFormData> ) =>
 };
 
 const formikWrapper = withFormik( {
-    mapPropsToValues: ( { user = {} }: UserFormProps ) =>
+    mapPropsToValues: ( { user }: UserFormProps ) =>
                       {
                           const { name = '', email = '' } = user;
 
                           return {
-                              name,
-                              email
+                              name:  name ? name : '',
+                              email: email ? email : ''
                           }
                       },
     validationSchema,

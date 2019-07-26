@@ -84,7 +84,7 @@ export const Navigation = styled.nav`
         background: ${ props => props.theme.mode === 'black' ? colors.dark : colors.white };
         transition: all .3s;
         left: 0;
-        z-index: 11;
+        z-index: 20;
         padding-top: 10em;
         
         ul {
@@ -107,7 +107,7 @@ export const LogoWrapper = styled.a`
     cursor: pointer;
     display: flex;
     align-items: center;
-    z-index: 12;
+    z-index: 21;
 
     img {
         width: 40px;
@@ -183,7 +183,7 @@ export const SwitchContainer = styled.div`
 
 export const MenuActivator = styled( IconButton )`
     font-size: 2em;
-    z-index: 12;
+    z-index: 21;
 
     @media(min-width: ${ parseInt( breakpoints.tabletSmall ) + 1 }px){
         display: none !important;

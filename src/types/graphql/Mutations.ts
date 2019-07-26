@@ -1,6 +1,6 @@
 import User from './User';
 
-export interface CreateUserResult
+export interface UserResult
 {
-    createUser: User;
+    user: User;
 }

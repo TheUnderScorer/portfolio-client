@@ -2,7 +2,7 @@ import { gql } from 'apollo-boost';
 
 export const GET_ME = gql`
     {
-        me {
+        user:me {
             id,
             name,
             email,
@@ -15,7 +15,7 @@ export const GET_ME = gql`
 
 export const CREATE_USER = gql`
     mutation CreateUser ($input: UserInput){
-        createUser(userInput: $input) {
+        user:createUser(userInput: $input) {
             id,
             name,
             email,
@@ -32,6 +32,14 @@ export const UPDATE_USER = gql`
             id,
             name,
             email
+        }
+    }
+`;
+
+export const UPDATE_LOGIN_DATE = gql`
+    mutation {
+        user:updateLoginDate {
+            lastLogin
         }
     }
 `;

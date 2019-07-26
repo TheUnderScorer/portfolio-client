@@ -4,22 +4,22 @@ import { useCallback } from 'react';
 import { SetToken } from '../types/actions/UserActions';
 import { MutationFn, MutationResult, useMutation } from 'react-apollo-hooks';
 import { CREATE_USER } from '../graphql/queries/users';
-import { CreateUserResult } from '../types/graphql/Mutations';
+import { UserResult } from '../types/graphql/Mutations';
 import User from '../types/graphql/User';
 import Exception from '../errors/Exception';
 
 export type UseAuthResult = [
     string,
     ( input?: Partial<User> ) => Promise<User>,
-    [ MutationFn<any, any>, MutationResult<CreateUserResult> ]
+    [ MutationFn<any, any>, MutationResult<UserResult> ]
     ]
 
 export default (): UseAuthResult =>
 {
     const token = useSelector( ( store: HomeStore ) => store.user.token );
 
-    const mutation = useMutation<CreateUserResult>( CREATE_USER );
-    const [ callMutation ] = mutation;
+    const creationMutation = useMutation<UserResult>( CREATE_USER );
+    const [ callMutation ] = creationMutation;
 
     const dispatch = useDispatch();
 
@@ -45,7 +45,7 @@ export default (): UseAuthResult =>
             throw new Exception( 'Unable to create new user.' )
         }
 
-        const { createUser: user } = result.data;
+        const { user } = result.data;
         const { token = '' } = user as User;
 
         if ( token ) {
@@ -55,5 +55,5 @@ export default (): UseAuthResult =>
         return user;
     };
 
-    return [ token, createUser, mutation ];
+    return [ token, createUser, creationMutation ];
 }
