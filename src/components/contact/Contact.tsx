@@ -2,8 +2,8 @@ import * as React from 'react';
 import { MutableRefObject, useCallback, useEffect, useRef, useState } from 'react';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import HomeStore from '../../types/stores/HomeStore';
-import { ContactSlider, ContactWrapper, Error, FormTitle, FormTitleContainer, IconContainer, Inner } from './styled';
-import { FaIcon, Text } from '../styled/typography';
+import { ContactSlider, ContactWrapper, FormTitle, FormTitleContainer, IconContainer, Inner } from './styled';
+import { FaIconReversed } from '../styled/typography';
 import { useSpring } from 'react-spring';
 import { SetContactActive, SetContactType } from '../../types/actions/ContactActions';
 import { useMutation } from 'react-apollo-hooks';
@@ -25,6 +25,8 @@ import useUpdateLoginDate from '../../hooks/useUpdateLoginDate';
 import usePrevious from '../../hooks/usePrevious';
 import User from '../../types/graphql/User';
 import ContactForm from './ContactForm';
+import { Notice } from './Notice';
+import ErrorMessage from '../error-message/ErrorMessage';
 
 const sections = {
     [ ContactTypes.UserForm ]:    0,
@@ -35,17 +37,6 @@ const sections = {
 
 const titlesWithReturnIcon = [ ContactTypes.ContactForm, ContactTypes.Chat ];
 const shouldAddIcon = ( type: ContactTypes ) => titlesWithReturnIcon.includes( type );
-
-const ContactError = ( { message = '' } ) =>
-{
-    return (
-        <Error>
-            <Text>
-                { message }
-            </Text>
-        </Error>
-    )
-};
 
 const Contact = () =>
 {
@@ -75,6 +66,10 @@ const Contact = () =>
         userMutation[ 1 ],
         contactMutation[ 1 ],
     ] );
+
+    const [ isConnected, setConnected ] = useState( true );
+
+    const [ successMessages, setSuccesMessages ] = useState<string[]>( [] );
 
     const [ menuOpen, setMenuOpen ] = useState( false );
     const toggleMenu = useCallback( () =>
@@ -113,12 +108,14 @@ const Contact = () =>
         dispatch( action );
     }, [ active, dispatch ] );
 
+    // Props for opening animation
     const props = useSpring( {
         opacity:         active ? 1 : 0,
         transform:       `scale(${ active ? 1 : 0 })`,
         transformOrigin: 'right bottom',
     } );
 
+    // Handles errors update
     useEffect( () =>
     {
         setErrors( [
@@ -137,6 +134,7 @@ const Contact = () =>
         }
     }, [ user, type ] );
 
+    // Sets timeout for changing slider section in order to enable smooth transition
     useEffect( () =>
     {
         const timeout = setTimeout( () =>
@@ -152,6 +150,7 @@ const Contact = () =>
         }
     }, [ type ] );
 
+    // Updates login data on user change
     useEffect( () =>
     {
         if ( user && user.id === prevUserID ) {
@@ -161,12 +160,54 @@ const Contact = () =>
         updateLastLoginDate();
     }, [ updateLastLoginDate, user, prevUserID ] );
 
+    const onContactFormSubmit = useCallback( ( result: boolean ) =>
+    {
+
+        if ( result ) {
+            const newMessages = [ ...successMessages, 'Your message have been sent!' ];
+
+            setSuccesMessages( newMessages );
+        }
+
+    }, [] );
+
+    // Clears success messages after timeout
+    useEffect( () =>
+    {
+        const timeout = setTimeout( () =>
+        {
+            setSuccesMessages( [] );
+        }, 6000 );
+
+        return () =>
+        {
+            clearTimeout( timeout );
+        }
+    }, [ successMessages ] );
+
+    useEffect( () =>
+    {
+        if ( !errors.length ) {
+            setConnected( true );
+
+            return;
+        }
+
+        errors.forEach( error =>
+        {
+            if ( error && error.error && error.error.message.includes( 'Failed to fetch' ) ) {
+                setConnected( false );
+            }
+        } );
+
+    }, [ errors ] );
+
     return (
         <ContactWrapper>
             <IconContainer active={ active } onClick={ toggleActive } ripple={ true }>
                 { active ?
-                    <FaIcon icon="times"/> :
-                    <FaIcon icon="comment"/>
+                    <FaIconReversed icon="times"/> :
+                    <FaIconReversed icon="comment"/>
                 }
             </IconContainer>
             <Inner style={ props }>
@@ -174,53 +215,66 @@ const Contact = () =>
                     width:  '30%',
                     height: '30%'
                 } }/>
-                <FormTitleContainer>
-                    { shouldAddIcon( type ) &&
-                      <Tooltip title="Return to selection">
-                          <IconButton href="#" onClick={ handleReturnClick }>
-                              <FaIcon icon="arrow-left"/>
-                          </IconButton>
-                      </Tooltip>
-                    }
-                    <FormTitle className="form-title">
-                        { getFormTitle( type, user ) }
-                    </FormTitle>
-                    { user && type !== ContactTypes.UserForm &&
-                      <>
-                          <IconButton
-                              href="#"
-                              ref={ setMenuRef }
-                              aria-label="More"
-                              aria-controls="long-menu"
-                              aria-haspopup="true"
-                              onClick={ toggleMenu }
-                          >
-                              <FaIcon icon="ellipsis-v"/>
-                          </IconButton>
-                          <Menu
-                              id="long-menu"
-                              anchorEl={ menuIconRef.current }
-                              keepMounted
-                              open={ menuOpen }
-                              onClose={ toggleMenu }
-                          >
-                              <MenuItem>
-                                  Test option
-                              </MenuItem>
-                          </Menu>
-                      </>
-                    }
-                </FormTitleContainer>
-                { errors.length > 0 && errors.map( ( item, index ) =>
-                    <ContactError message={ item && item.error ? item.error.message : '' } key={ index }/>
-                ) }
-                { user &&
-                  <ContactSlider activeSection={ currentSlide }>
-                      <UserForm user={ user } mutation={ userMutation }/>
-                      <Selection<ContactTypes> onSelection={ setSection } options={ contactSelections }/>
-                      <ContactForm user={ user } mutation={ contactMutation }/>
-                  </ContactSlider>
+
+                { !isConnected &&
+                  <ErrorMessage title="Oh no!" message="We are unable to connect to our server. Please check your internet connection"/>
                 }
+
+                { isConnected &&
+                  <>
+                      <FormTitleContainer>
+                          { shouldAddIcon( type ) &&
+                            <Tooltip title="Return to selection">
+                                <IconButton href="#" onClick={ handleReturnClick }>
+                                    <FaIconReversed icon="arrow-left"/>
+                                </IconButton>
+                            </Tooltip>
+                          }
+                          <FormTitle className="form-title">
+                              { getFormTitle( type, user ) }
+                          </FormTitle>
+                          { user && type !== ContactTypes.UserForm &&
+                            <>
+                                <IconButton
+                                    href="#"
+                                    ref={ setMenuRef }
+                                    aria-label="More"
+                                    aria-controls="long-menu"
+                                    aria-haspopup="true"
+                                    onClick={ toggleMenu }
+                                >
+                                    <FaIconReversed icon="ellipsis-v"/>
+                                </IconButton>
+                                <Menu
+                                    id="long-menu"
+                                    anchorEl={ menuIconRef.current }
+                                    keepMounted
+                                    open={ menuOpen }
+                                    onClose={ toggleMenu }
+                                >
+                                    <MenuItem>
+                                        Test option
+                                    </MenuItem>
+                                </Menu>
+                            </>
+                          }
+                      </FormTitleContainer>
+                      { errors.length > 0 && errors.map( ( item, index ) =>
+                          <Notice type="error" message={ item && item.error ? item.error.message : '' } key={ index }/>
+                      ) }
+                      { successMessages.length > 0 && successMessages.map( ( item, index ) =>
+                          <Notice type="success" message={ item } key={ index }/>
+                      ) }
+                      { user &&
+                        <ContactSlider activeSection={ currentSlide }>
+                            <UserForm user={ user } mutation={ userMutation }/>
+                            <Selection<ContactTypes> onSelection={ setSection } options={ contactSelections }/>
+                            <ContactForm afterSubmit={ onContactFormSubmit } user={ user } mutation={ contactMutation }/>
+                        </ContactSlider>
+                      }
+                  </>
+                }
+
             </Inner>
         </ContactWrapper>
     );

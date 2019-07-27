@@ -8,4 +8,5 @@ export default interface ContactFormProps
     mutation: [ MutationFn<Result, ContactInputVariable>, MutationResult<Result> ];
     user?: User;
     initialInput?: Partial<ContactInput>;
+    afterSubmit: ( result: boolean ) => any;
 }

@@ -3,7 +3,7 @@ import { animated } from 'react-spring';
 import colors, { getPrimary, getPrimaryVariation } from '../styled/colors';
 import { H5, H6 } from '../styled/typography';
 import { Button } from '../styled/buttons';
-import { IconContainerProps } from './types/styled';
+import { IconContainerProps, NoticeProps } from './types/styled';
 import breakpoints from '../styled/breakpoints';
 import { Flex } from '../styled/wrappers';
 import SliderSection from '../slider-section/SliderSection';
@@ -63,14 +63,30 @@ export const ContactTitle = styled( H5 )`
     margin-top: 1em;
 `;
 
-export const Error = styled.div`
+export const Notice = styled.div<NoticeProps>`
     text-align: center;
-    background-color: ${ colors.red };
     padding: 0.5em 0;
-   
+       
     span {
         color: ${ colors.white }
     }
+    
+    background-color: ${ props =>
+{
+
+    switch ( props.type ) {
+
+        case 'error':
+            return colors.red;
+
+        case 'success':
+            return colors.green;
+
+        default:
+            return getPrimary( props.theme.mode );
+    }
+
+} };
 `;
 
 export const FormTitleContainer = styled( Flex ).attrs( {
@@ -79,7 +95,7 @@ export const FormTitleContainer = styled( Flex ).attrs( {
 } )`
     border-bottom: none;
     background-color: ${ props => getPrimary( props.theme.mode ) };
-    padding: 1rem;
+    padding: 0.7rem;
     width: 100%;
     color: ${ colors.white };
 `;

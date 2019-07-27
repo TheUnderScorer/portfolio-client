@@ -136,6 +136,10 @@ export const SectionSubtitle = styled( Text )<SectionSubtitleProps>`
     ` }
 `;
 
-export const FaIcon = styled( FontAwesomeIcon )`
+export const FaIconReversed = styled( FontAwesomeIcon )`
     color: ${ props => props.theme.mode === 'black' ? colors.dark : colors.white };
+`;
+
+export const FaIcon = styled( FontAwesomeIcon )`
+    color: ${ props => props.theme.mode === 'black' ? colors.white : colors.dark };
 `;

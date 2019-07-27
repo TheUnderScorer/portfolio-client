@@ -13,11 +13,8 @@ const validationSchema = ( props: ContactFormProps ) =>
 {
     const shape: any = {
         subject: Yup.string().required( 'Provide message title.' ).max( 50, 'Title is too long!' ),
-        message: Yup.string().required( 'Provide your message.' ).min( 20, 'Your message should contain at least 20 characters.' ).max( 600, 'Your message is too long.' ),
+        message: Yup.string().required( 'Provide your message.' ).min( 20, 'Your message should contain at least 20 characters.' ).max( 1000, 'Your message is too long.' ),
     };
-
-
-    console.log( { props } );
 
     if ( !props.user || !props.user.email ) {
         shape.email = Yup.string().required( 'Provide your e-mail address.' ).email( 'E-mail is required.' );
@@ -108,11 +105,19 @@ const formikWrapper = withFormik( {
                               delete input.email;
                           }
 
-                          await mutation[ 0 ]( {
+                          const mutationResult = await mutation[ 0 ]( {
                               variables: {
                                   input
                               },
                           } );
+
+                          const result = !!mutationResult.data.send.id;
+
+                          if ( result ) {
+                              formBag.resetForm();
+                          }
+
+                          formBag.props.afterSubmit( result );
                       }
 } );
 

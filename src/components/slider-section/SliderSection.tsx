@@ -17,7 +17,6 @@ const SliderSection = ( { children, activeSection, className }: SliderSectionPro
 {
     const sliderRef = useRef() as any;
 
-    // Moves to current slide
     useEffect( () =>
     {
         if ( !sliderRef.current ) {
@@ -30,13 +29,19 @@ const SliderSection = ( { children, activeSection, className }: SliderSectionPro
     return (
         <Slider ref={ sliderRef } className={ className } { ...sliderSettings }>
             { children.map( ( child, index ) =>
-                <SliderItem active={ index === activeSection } key={ index }>
-                    { child }
-                </SliderItem>
-            ) }
+            {
+                if ( activeSection !== index ) {
+                    return <SliderItem key={ index } active={ false }/>;
+                }
+
+                return (
+                    <SliderItem active={ index === activeSection } key={ index }>
+                        { child }
+                    </SliderItem>
+                )
+            } ) }
         </Slider>
     )
-
 };
 
 export default SliderSection;
