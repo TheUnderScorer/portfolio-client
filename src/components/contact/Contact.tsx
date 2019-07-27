@@ -185,6 +185,24 @@ const Contact = () =>
         }
     }, [ successMessages ] );
 
+    // Clears errors after timeout
+    useEffect( () =>
+    {
+        if ( !errors.length ) {
+            return;
+        }
+
+        const timeout = setTimeout( () =>
+        {
+            setErrors( [] );
+        }, 8000 );
+
+        return () =>
+        {
+            clearTimeout( timeout );
+        }
+    }, [ errors ] );
+
     useEffect( () =>
     {
         if ( !errors.length ) {

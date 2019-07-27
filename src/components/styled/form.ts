@@ -97,7 +97,7 @@ export const FormSection = styled.section<FormSectionProps>`
     margin: ${ ( { margin = 'none' } ) => margin === 'none' ? '0' : '1em 0' };
     width: ${ ( { width = '100%' } ) => width };
     
-    input, label {
+    input, label, textarea {
         color: ${ props => props.theme.mode === 'black' ? colors.white : colors.dark };
     }
     
