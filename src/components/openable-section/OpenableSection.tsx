@@ -14,31 +14,30 @@ const body = document.body;
 const positionToRelativeBeforeOpen = positionToRelativeItem( 50 );
 const positionToRelativeOnClose = positionToRelativeItem( 300 );
 
-const OpenableSection = ( { children, isOpen = false, relativeTo, className = '', zIndex = 2, positionAfter, onOpen, positionTypeAfter = 'absolute', portalTarget }: Props ) => {
-
+const OpenableSection = ( { children, isOpen = false, relativeTo, className = '', zIndex = 2, positionAfter, onOpen, positionTypeAfter = 'absolute', portalTarget }: Props ) =>
+{
     const [ isChangingState, setIsChangingState ] = useState( false );
     const [ isActive, setActive ] = useState( false );
     const [ hasBg, setHasBg ] = useState( false );
-    const [ wrapperStyle, setWrapperStyle ] = useState( {} as CSSProperties );
-    const [ placeholderStyles, setPlaceholderStyle ] = useState( {} as CSSProperties );
+    const [ wrapperStyle, setWrapperStyle ] = useState<CSSProperties>( {} );
+    const [ placeholderStyles, setPlaceholderStyle ] = useState<CSSProperties>( {} );
     const [ placeholder, setPlaceholder ] = useState( '' );
     const [ currentAction, setCurrentAction ] = useState( '' );
     const [ animated, setAnimated ] = useState( false );
 
     const wasOpen = usePrevious( isOpen );
 
-    useEffect( () => {
-
+    useEffect( () =>
+    {
         if ( isChangingState ) {
             body.style.overflow = 'hidden';
         } else {
             body.style.overflow = 'auto';
         }
-
     }, [ isChangingState ] );
 
-    useEffect( () => {
-
+    useEffect( () =>
+    {
         if ( currentAction === Actions.open ) {
             handleOpen(
                 setWrapperStyle,
@@ -49,14 +48,13 @@ const OpenableSection = ( { children, isOpen = false, relativeTo, className = ''
                 positionTypeAfter,
                 setActive,
                 setHasBg,
-            ).then( () => {
-
+            ).then( () =>
+            {
                 setIsChangingState( false );
 
                 if ( onOpen ) {
                     onOpen();
                 }
-
             } );
         } else if ( currentAction === Actions.close ) {
             positionToRelativeOnClose(
@@ -64,7 +62,8 @@ const OpenableSection = ( { children, isOpen = false, relativeTo, className = ''
                 setPlaceholderStyle,
                 setPlaceholder,
                 relativeTo
-            ).then( () => {
+            ).then( () =>
+            {
                 setAnimated( false );
                 setWrapperStyle( {} );
                 setActive( false );
@@ -73,7 +72,8 @@ const OpenableSection = ( { children, isOpen = false, relativeTo, className = ''
 
     }, [ currentAction ] );
 
-    useEffect( () => {
+    useEffect( () =>
+    {
 
         if ( isOpen && !wasOpen ) {
 
@@ -88,7 +88,8 @@ const OpenableSection = ( { children, isOpen = false, relativeTo, className = ''
                 setPlaceholderStyle,
                 setPlaceholder,
                 relativeTo
-            ).then( () => {
+            ).then( () =>
+            {
                 setAnimated( true );
                 setCurrentAction( Actions.open )
             } )
@@ -99,7 +100,8 @@ const OpenableSection = ( { children, isOpen = false, relativeTo, className = ''
                 setPlaceholderStyle,
                 setHasBg,
                 relativeTo
-            ).then( () => {
+            ).then( () =>
+            {
                 setPlaceholderStyle( {
                     display: 'none'
                 } );

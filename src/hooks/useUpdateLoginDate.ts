@@ -9,7 +9,7 @@ export default () =>
 {
     const [ mutationFn, mutationResult ] = useMutation<UserResult>( UPDATE_LOGIN_DATE );
     const { data } = useCurrentUser();
-    const prevUserID = usePrevious( data ? data.user.id : null );
+    const prevUserID = usePrevious( data && data.user ? data.user.id : null );
 
     useEffect( () =>
     {

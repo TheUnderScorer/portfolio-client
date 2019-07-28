@@ -185,13 +185,12 @@ const ContactInner = () =>
     useEffect( () =>
     {
         if ( !errors.length ) {
-            setConnected( true );
-
             return;
         }
 
         errors.forEach( error =>
         {
+            console.log( { error } );
             if ( error && error.error && error.error.message.includes( 'Failed to fetch' ) ) {
                 setConnected( false );
             }
