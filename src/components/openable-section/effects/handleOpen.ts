@@ -12,10 +12,10 @@ export default (
     positionTypeAfter: PositionProperty,
     setIsActive: ( active: boolean ) => any,
     setHasBg: ( hasBg: boolean ) => any,
-) => {
-
-    return new Promise( ( resolve ) => {
-
+) =>
+{
+    return new Promise( ( resolve ) =>
+    {
         // Hide placeholder
         setPlaceholderStyles( {
             display: 'none'
@@ -33,16 +33,16 @@ export default (
             borderRadius: '0',
         } );
 
-        setTimeout( () => {
+        setTimeout( () =>
+        {
             setHasBg( true );
             setPlaceholder( '' );
         }, 600 );
-        setTimeout( () => {
+        setTimeout( () =>
+        {
             setIsActive( true );
 
             resolve();
         }, 900 );
-
-    } )
-
+    } );
 }

@@ -5,9 +5,10 @@ export default (
     setPlaceholderStyles: SetCssProperties,
     setHasBg: ( hasBg: boolean ) => any,
     relativeTo: HTMLElement,
-) => {
-
-    return new Promise( resolve => {
+) =>
+{
+    return new Promise( resolve =>
+    {
 
         const styles = getComputedStyle( relativeTo );
 
@@ -22,9 +23,9 @@ export default (
             backgroundColor: styles.backgroundColor as string
         } );
 
-        setTimeout( () => {
+        setTimeout( () =>
+        {
             resolve();
         }, 300 );
-    } )
-
+    } );
 }

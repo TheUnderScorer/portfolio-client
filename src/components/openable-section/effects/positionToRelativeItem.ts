@@ -1,9 +1,9 @@
 import { SetCssProperties } from '../../../types/common/SetCssProperties';
 
-export default ( animationTimeout: number ) => ( setWrapperStyles: SetCssProperties, setPlaceholderStyles: SetCssProperties, setPlaceholder: ( placeholder: string ) => any, relativeItem: HTMLElement ) => {
-
-    return new Promise( ( resolve ) => {
-
+export default ( animationTimeout: number ) => ( setWrapperStyles: SetCssProperties, setPlaceholderStyles: SetCssProperties, setPlaceholder: ( placeholder: string ) => any, relativeItem: HTMLElement ) =>
+{
+    return new Promise( ( resolve ) =>
+    {
         const position = relativeItem.getBoundingClientRect();
 
         const styles = getComputedStyle( relativeItem );
@@ -41,7 +41,5 @@ export default ( animationTimeout: number ) => ( setWrapperStyles: SetCssPropert
         } );
 
         setTimeout( () => resolve(), animationTimeout );
-
-    } )
-
+    } );
 }
