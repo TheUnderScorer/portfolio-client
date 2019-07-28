@@ -1,28 +1,24 @@
-import { QueryHookResult, useMutation } from 'react-apollo-hooks';
+import { useMutation } from 'react-apollo-hooks';
 import { UserResult } from '../types/graphql/Mutations';
 import { UPDATE_LOGIN_DATE } from '../graphql/queries/users';
+import useCurrentUser from './useCurrentUser';
 import { useEffect } from 'react';
+import usePrevious from './usePrevious';
 
-export default ( userQuery: QueryHookResult<UserResult, any> ) =>
+export default () =>
 {
-    const [ mutation, result ] = useMutation<UserResult>( UPDATE_LOGIN_DATE );
+    const [ mutationFn, mutationResult ] = useMutation<UserResult>( UPDATE_LOGIN_DATE );
+    const { data } = useCurrentUser();
+    const prevUserID = usePrevious( data ? data.user.id : null );
 
     useEffect( () =>
     {
-        if ( !result.data ) {
+        if ( prevUserID && data && data.user.id === prevUserID ) {
             return;
         }
 
-        const { lastLogin } = result.data.user;
+        mutationFn();
+    }, [ data ] );
 
-        userQuery.updateQuery( oldUser => ( {
-            user: {
-                ...oldUser.user,
-                lastLogin
-            }
-        } ) );
-
-    }, [ result.data ] );
-
-    return mutation;
+    return [ mutationFn, mutationResult ];
 }

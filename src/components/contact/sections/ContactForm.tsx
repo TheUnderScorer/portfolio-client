@@ -1,12 +1,12 @@
 import * as React from 'react';
 import * as Yup from 'yup';
-import ContactFormProps from './types/ContactFormProps';
+import ContactFormProps from '../types/ContactFormProps';
 import { FormikBag, FormikProps, withFormik } from 'formik';
-import ContactInput from '../../types/graphql/inputs/ContactInput';
-import { CentredFrom, FormSection } from '../styled/form';
-import FormikInput from '../formik/FormikInput';
-import { Button } from '../styled/buttons';
-import Loader from '../loader/Loader';
+import ContactInput from '../../../types/graphql/inputs/ContactInput';
+import { CentredFrom, FormSection } from '../../styled/form';
+import FormikInput from '../../formik/FormikInput';
+import { Button } from '../../styled/buttons';
+import Loader from '../../loader/Loader';
 import { TextField } from '@material-ui/core';
 
 const validationSchema = ( props: ContactFormProps ) =>
@@ -101,7 +101,9 @@ const formikWrapper = withFormik( {
                       {
                           const { mutation } = formBag.props;
 
-                          if ( !input.email ) {
+                          const modifiedEmail = !!input.email;
+
+                          if ( !modifiedEmail ) {
                               delete input.email;
                           }
 
@@ -117,7 +119,7 @@ const formikWrapper = withFormik( {
                               formBag.resetForm();
                           }
 
-                          formBag.props.afterSubmit( result );
+                          formBag.props.afterSubmit( result, modifiedEmail );
                       }
 } );
 

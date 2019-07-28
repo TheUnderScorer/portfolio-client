@@ -13,6 +13,7 @@ export enum ContactTypes
     ContactForm = 'ContactForm',
     UserForm    = 'UserForm',
     Selection   = 'Selection',
+    EditProfile = 'EditProfile'
 }
 
 export type ContactReducerHandler = {

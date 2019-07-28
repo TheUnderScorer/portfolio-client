@@ -32,7 +32,8 @@ const texts = {
         basicInfo:                    'Let\'s start with some basic info.',
         [ ContactTypes.Selection ]:   ( name: string ) => `How would you like to contact me, ${ name }?`,
         [ ContactTypes.ContactForm ]: 'Create your message',
-        [ ContactTypes.Chat ]:        'Chat with me'
+        [ ContactTypes.Chat ]:        'Chat with me',
+        [ ContactTypes.EditProfile ]: 'Edit your profile'
     },
 };
 

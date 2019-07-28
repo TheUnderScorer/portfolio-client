@@ -6,6 +6,7 @@ export const GET_ME = gql`
             id,
             name,
             email,
+            lastLogin,
             token {
                 value
             }
@@ -39,6 +40,7 @@ export const UPDATE_USER = gql`
 export const UPDATE_LOGIN_DATE = gql`
     mutation {
         user:updateLoginDate {
+            id,
             lastLogin
         }
     }

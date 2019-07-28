@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
 import colors, { getPrimary } from './colors';
-import { LinkProps, SectionSubtitleProps, SectionTitleProps } from './types';
+import { IconProps, LinkProps, SectionSubtitleProps, SectionTitleProps } from './types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const textStyles = css`
@@ -136,10 +136,12 @@ export const SectionSubtitle = styled( Text )<SectionSubtitleProps>`
     ` }
 `;
 
-export const FaIconReversed = styled( FontAwesomeIcon )`
+export const FaIconReversed = styled( FontAwesomeIcon )<IconProps>`
     color: ${ props => props.theme.mode === 'black' ? colors.dark : colors.white };
+    margin: ${ ( { margin = 'none' } ) => margin === 'none' ? '0' : '0 0.5em' };
+    font-size: ${ ( { size = '1em' } ) => size }
 `;
 
-export const FaIcon = styled( FontAwesomeIcon )`
+export const FaIcon = styled( FaIconReversed )`
     color: ${ props => props.theme.mode === 'black' ? colors.white : colors.dark };
 `;

@@ -76,3 +76,9 @@ export interface FormSectionProps
     width?: string;
     margin?: 'normal' | 'none';
 }
+
+export interface IconProps
+{
+    margin?: 'normal' | 'none';
+    size?: string;
+}

@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { FormikBag, FormikProps, withFormik } from 'formik';
-import UserFormData from './types/UserFormData';
+import UserFormData from '../types/UserFormData';
 import * as Yup from 'yup';
-import UserFormProps from './types/UserFormProps';
-import { CentredFrom, FormSection } from '../styled/form';
-import FormikInput from '../formik/FormikInput';
-import { Button } from '../styled/buttons';
-import Loader from '../loader/Loader';
+import UserFormProps from '../types/UserFormProps';
+import { CentredFrom, FormSection } from '../../styled/form';
+import FormikInput from '../../formik/FormikInput';
+import { Button } from '../../styled/buttons';
+import Loader from '../../loader/Loader';
 import { TextField } from '@material-ui/core';
 
 const validationSchema = Yup.object().shape( {
