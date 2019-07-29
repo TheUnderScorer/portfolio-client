@@ -8,10 +8,10 @@ import { FaIcon, FaIconReversed, Text } from '../styled/typography';
 import getFormTitle from './getFormTitle';
 import { ContactTypes } from '../../types/reducers/ContactReducer';
 import { Notice } from './Notice';
-import UserForm from './sections/UserForm';
+import UserForm from '../user-form/UserForm';
 import Selection from '../selection/Selection';
 import contactSelections from '../../pages/data/contactSelections';
-import ContactForm from './sections/ContactForm';
+import ContactForm from '../contact-form/ContactForm';
 import { useDispatch, useSelector } from 'react-redux';
 import useCurrentUser from '../../hooks/useCurrentUser';
 import User from '../../types/graphql/User';
@@ -28,7 +28,7 @@ import { SetContactType } from '../../types/actions/ContactActions';
 import { useSpring } from 'react-spring';
 import { faUserCircle } from '@fortawesome/free-regular-svg-icons';
 import useChat from '../../hooks/useChat';
-import Conversation from './Conversation';
+import Conversation from '../conversation/Conversation';
 
 const sections = {
     [ ContactTypes.UserForm ]:     0,
