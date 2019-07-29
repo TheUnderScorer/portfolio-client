@@ -26,14 +26,14 @@ const texts = {
         viewRepo:     'View repository'
     },
     contact:  {
-        sectionTitle:                 'Contact',
-        id:                           'contact',
-        label:                        'Contact',
-        basicInfo:                    'Let\'s start with some basic info.',
-        [ ContactTypes.Selection ]:   ( name: string ) => `How would you like to contact me, ${ name }?`,
-        [ ContactTypes.ContactForm ]: 'Create your message',
-        [ ContactTypes.Chat ]:        'Chat with me',
-        [ ContactTypes.EditProfile ]: 'Edit your profile'
+        sectionTitle:                  'Contact',
+        id:                            'contact',
+        label:                         'Contact',
+        basicInfo:                     'Let\'s start with some basic info.',
+        [ ContactTypes.Selection ]:    ( name: string ) => `How would you like to contact me, ${ name }?`,
+        [ ContactTypes.ContactForm ]:  'Create your message',
+        [ ContactTypes.EditProfile ]:  'Edit your profile',
+        [ ContactTypes.Conversation ]: 'Conversation'
     },
 };
 

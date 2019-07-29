@@ -2,11 +2,10 @@ import * as React from 'react';
 import { useCallback } from 'react';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import HomeStore from '../../types/stores/HomeStore';
-import { ContactWrapper, IconContainer } from './styled';
+import { ContactWrapper, IconContainer } from './styled/contact';
 import { FaIconReversed } from '../styled/typography';
 import { SetContactActive } from '../../types/actions/ContactActions';
 import ContactInner from './ContactInner';
-import useUpdateLoginDate from '../../hooks/useUpdateLoginDate';
 
 const Contact = () =>
 {
@@ -23,8 +22,6 @@ const Contact = () =>
 
         dispatch( action );
     }, [ active, dispatch ] );
-
-    useUpdateLoginDate();
 
     return (
         <ContactWrapper>

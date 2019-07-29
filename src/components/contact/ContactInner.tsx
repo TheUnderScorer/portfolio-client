@@ -2,11 +2,11 @@ import * as React from 'react';
 import { MutableRefObject, useCallback, useEffect, useRef, useState } from 'react';
 import Loader from '../loader/Loader';
 import ErrorMessage from '../error-message/ErrorMessage';
-import { ContactSlider, FormTitle, FormTitleContainer, Inner } from './styled';
+import { ContactSlider, FormTitle, FormTitleContainer, Inner } from './styled/contact';
 import { IconButton, Menu, MenuItem, Tooltip } from '@material-ui/core';
 import { FaIcon, FaIconReversed, Text } from '../styled/typography';
 import getFormTitle from './getFormTitle';
-import ContactReducer, { ContactTypes } from '../../types/reducers/ContactReducer';
+import { ContactTypes } from '../../types/reducers/ContactReducer';
 import { Notice } from './Notice';
 import UserForm from './sections/UserForm';
 import Selection from '../selection/Selection';
@@ -27,21 +27,26 @@ import { SelectionCallback } from '../selection/types/SelectionProps';
 import { SetContactType } from '../../types/actions/ContactActions';
 import { useSpring } from 'react-spring';
 import { faUserCircle } from '@fortawesome/free-regular-svg-icons';
+import useChat from '../../hooks/useChat';
+import Conversation from './Conversation';
 
 const sections = {
-    [ ContactTypes.UserForm ]:    0,
-    [ ContactTypes.Selection ]:   1,
-    [ ContactTypes.ContactForm ]: 2,
-    [ ContactTypes.Chat ]:        3,
-    [ ContactTypes.EditProfile ]: 4,
+    [ ContactTypes.UserForm ]:     0,
+    [ ContactTypes.Selection ]:    1,
+    [ ContactTypes.ContactForm ]:  2,
+    [ ContactTypes.Conversation ]: 3,
+    [ ContactTypes.EditProfile ]:  4,
 };
 
-const titlesWithReturnIcon = [ ContactTypes.ContactForm, ContactTypes.Chat, ContactTypes.EditProfile ];
+const titlesWithReturnIcon = [ ContactTypes.ContactForm, ContactTypes.EditProfile, ContactTypes.Conversation ];
 const shouldAddIcon = ( type: ContactTypes ) => titlesWithReturnIcon.includes( type );
 
 const ContactInner = () =>
 {
     const dispatch = useDispatch();
+
+    const active = useSelector( ( store: HomeStore ) => store.contact.active );
+    const type = useSelector( ( store: HomeStore ) => store.contact.type );
 
     const userQuery = useCurrentUser();
     const { data: userData, loading: userLoading } = userQuery;
@@ -53,15 +58,18 @@ const ContactInner = () =>
     const userMutation = useMutation<User, UserInputVariable>( UPDATE_ME );
     const [ , userMutationResult ] = userMutation;
 
+    const [ conversationsQuery, conversationMutation ] = useChat( type === ContactTypes.Conversation );
+
     const [ errors, setErrors ] = useApolloErrors( [
         userQuery,
+        conversationsQuery,
         userMutation[ 1 ],
         contactMutation[ 1 ],
     ] );
 
     const [ isConnected, setConnected ] = useState( true );
 
-    const [ successMessages, setSuccesMessages ] = useState<string[]>( [] );
+    const [ successMessages, setSuccessMessages ] = useState<string[]>( [] );
 
     const [ menuOpen, setMenuOpen ] = useState( false );
     const toggleMenu = useCallback( () =>
@@ -71,11 +79,6 @@ const ContactInner = () =>
 
     const menuIconRef = useRef() as MutableRefObject<HTMLElement | null>;
     const setMenuRef = ( ref: HTMLElement | null ) => menuIconRef.current = ref;
-
-    const { active = false, type }: ContactReducer = useSelector( ( store: HomeStore ) => ( {
-        active: store.contact.active,
-        type:   store.contact.type
-    } ) );
 
     const [ currentSlide, setCurrentSlide ] = useState<number>( sections[ type ] );
 
@@ -88,12 +91,15 @@ const ContactInner = () =>
 
         dispatch( action );
     }, [ dispatch ] );
-    const handleReturnClick = () => setSection( ContactTypes.Selection );
-    const changeProfile = () =>
+    const handleReturnClick = useCallback( () =>
+    {
+        setSection( ContactTypes.Selection );
+    }, [ type ] );
+    const changeProfile = useCallback( () =>
     {
         setMenuOpen( false );
         setSection( ContactTypes.EditProfile );
-    };
+    }, [] );
 
     // Props for opening animation
     const props = useSpring( {
@@ -146,7 +152,7 @@ const ContactInner = () =>
                 newMessages.push( 'Your e-mail have been saved, you won\'t need to provide it again.' );
             }
 
-            setSuccesMessages( newMessages );
+            setSuccessMessages( newMessages );
         }
     }, [] );
 
@@ -155,7 +161,7 @@ const ContactInner = () =>
     {
         const timeout = setTimeout( () =>
         {
-            setSuccesMessages( [] );
+            setSuccessMessages( [] );
         }, 6000 );
 
         return () =>
@@ -190,7 +196,6 @@ const ContactInner = () =>
 
         errors.forEach( error =>
         {
-            console.log( { error } );
             if ( error && error.error && error.error.message.includes( 'Failed to fetch' ) ) {
                 setConnected( false );
             }
@@ -262,9 +267,7 @@ const ContactInner = () =>
                         <UserForm user={ user } mutation={ userMutation }/>
                         <Selection<ContactTypes> onSelection={ setSection } options={ contactSelections }/>
                         <ContactForm afterSubmit={ onContactFormSubmit } user={ user } mutation={ contactMutation }/>
-                        <div>
-                            Chat!
-                        </div>
+                        <Conversation query={ conversationsQuery } creationMutation={ conversationMutation }/>
                         <div>
                             Edit profile!
                         </div>
@@ -272,7 +275,6 @@ const ContactInner = () =>
                   }
               </>
             }
-
         </Inner>
     )
 };

@@ -1,8 +1,8 @@
 import Token from './Token';
+import Model from './Model';
 
-export default interface User
+export default interface User extends Model
 {
-    id: number;
     token?: Token;
     name?: string;
     email?: string;

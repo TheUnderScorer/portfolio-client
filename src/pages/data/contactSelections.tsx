@@ -8,7 +8,7 @@ const contactSelections: SelectionOption[] = [
         icon:     <FontAwesomeIcon icon="comment-alt"/>,
         title:    'Chat',
         subTitle: 'Chat with me in real time.',
-        id:       ContactTypes.Chat
+        id:       ContactTypes.Conversation
     },
     {
         icon:     <FontAwesomeIcon icon="envelope"/>,

@@ -6,7 +6,6 @@ import { MutationFn, MutationResult, useMutation } from 'react-apollo-hooks';
 import { CREATE_USER } from '../graphql/queries/users';
 import { UserResult } from '../types/graphql/Mutations';
 import User from '../types/graphql/User';
-import Exception from '../errors/Exception';
 
 export type UseAuthResult = [
     string,
@@ -33,7 +32,7 @@ export default (): UseAuthResult =>
         dispatch( action );
     }, [ dispatch ] );
 
-    const createUser = async ( input: Partial<User> = {} ): Promise<User> =>
+    const createUser = useCallback( async ( input: Partial<User> = {} ): Promise<User> =>
     {
         const result = await callMutation( {
             variables: {
@@ -41,19 +40,15 @@ export default (): UseAuthResult =>
             }
         } );
 
-        if ( !result ) {
-            throw new Exception( 'Unable to create new user.' )
-        }
-
         const { user } = result.data;
-        const { token = '' } = user as User;
+        const { token } = user as User;
 
         if ( token ) {
             setToken( token.value );
         }
 
         return user;
-    };
+    }, [] );
 
     return [ token, createUser, creationMutation ];
 }

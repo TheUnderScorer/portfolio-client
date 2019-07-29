@@ -5,15 +5,16 @@ export default interface ContactReducer
 {
     type: ContactTypes;
     active?: boolean;
+    activeConversationID?: number;
 }
 
 export enum ContactTypes
 {
-    Chat        = 'Chat',
-    ContactForm = 'ContactForm',
-    UserForm    = 'UserForm',
-    Selection   = 'Selection',
-    EditProfile = 'EditProfile'
+    Conversation = 'Conversation',
+    ContactForm  = 'ContactForm',
+    UserForm     = 'UserForm',
+    Selection    = 'Selection',
+    EditProfile  = 'EditProfile',
 }
 
 export type ContactReducerHandler = {

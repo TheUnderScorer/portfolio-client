@@ -1,6 +1,6 @@
 type Contact {
     id: ID!
-    content: String!
+    message: String!
     createdAt: String!
     subject: String!
     user: User!
@@ -8,7 +8,7 @@ type Contact {
 
 input ContactInput {
     subject: String!
-    content: String!
+    message: String!
     # Optional, only if user have not provided any email yet
     email: String
 }
@@ -17,12 +17,19 @@ type Conversation {
     id: ID!
     title: String
     author: User!
-    messages: [Message!]
+    messages(perPage: Int, page: Int): [Message!]
     createdAt: String
+    status: ConversationStatuses!
 }
 
 input ConversationInput {
     title: String
+}
+
+# Current status of conversation
+enum ConversationStatuses {
+    open
+    closed
 }
 
 type DeleteConversationResult {
@@ -43,12 +50,16 @@ type Mutation {
     updateMe(userInput: UserInput!): User!
     updateUser(userInput: UserInput!, id: ID!): User!
     updateLoginDate: User!
-    createConversation(conversationInput: ConversationInput!): Conversation!
+    createConversation(conversationInput: ConversationInput): Conversation!
     updateConversation(
         conversationInput: ConversationInput!
         id: ID!
     ): Conversation!
     deleteConversation(id: ID!): DeleteConversationResult!
+    changeStatus(
+        status: ConversationStatuses!
+        conversationID: ID!
+    ): Conversation!
     send(contactInput: ContactInput!): Contact!
 }
 
@@ -56,6 +67,7 @@ type Query {
     getUsers(perPage: Int, page: Int): [User!]!
     getUser(id: ID!): User!
     me: User!
+    getCurrentConversation: Conversation!
     myConversations(perPage: Int, page: Int): [Conversation!]!
 }
 
@@ -74,7 +86,7 @@ type User {
     id: ID!
     name: String
     lastLogin: String
-    role: String!
+    role: UserRole!
     password: String
     ip: String!
     email: String
@@ -89,5 +101,10 @@ input UserInput {
     name: String
     email: String
     password: String
+}
+
+enum UserRole {
+    user
+    administrator
 }
 

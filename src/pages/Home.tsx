@@ -23,6 +23,7 @@ import useAuth from '../hooks/useAuth';
 import { ThemeProvider as MaterialThemeProvider } from '@material-ui/styles';
 import { createMuiTheme } from '@material-ui/core';
 import colors, { getPrimary } from '../components/styled/colors';
+import useUpdateLoginDate from '../hooks/useUpdateLoginDate';
 
 const AboutMe = lazy( () => import('../components/about-me/AboutMe') );
 const HowCanIHelp = lazy( () => import('../components/how-can-i-help/HowCanIHelp') );
@@ -182,6 +183,8 @@ const Home = () =>
             await createUser();
         }
     }, [ token ] );
+
+    useUpdateLoginDate();
 
     return (
         <ThemeProvider theme={ { mode: theme.mode } }>

@@ -1,4 +1,4 @@
-import { Notice as StyledNotice } from './styled';
+import { Notice as StyledNotice } from './styled/contact';
 import { Text } from '../styled/typography';
 import * as React from 'react';
 import { NoticeProps } from './types/notices';

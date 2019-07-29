@@ -21,6 +21,7 @@ export interface FlexProps
     justifyContent?: JustifyContentProperty;
     alignItems?: AlignItemsProperty;
     flexWrap?: FlexWrapProperty;
+    flex?: string;
 }
 
 export interface SectionTitleProps

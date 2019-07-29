@@ -11,4 +11,9 @@ export interface SetContactActive extends Action<'SetContactActive'>
     payload: boolean;
 }
 
-export type ContactActions = SetContactType | SetContactActive;
+export interface SetActiveConversationID extends Action<'SetActiveConversationID'>
+{
+    payload: number;
+}
+
+export type ContactActions = SetContactType | SetContactActive | SetActiveConversationID;

@@ -13,7 +13,7 @@ export default () =>
 
     useEffect( () =>
     {
-        if ( prevUserID && data && data.user.id === prevUserID ) {
+        if ( !data || !data.user || data.user.id === prevUserID ) {
             return;
         }
 

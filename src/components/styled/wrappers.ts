@@ -46,11 +46,12 @@ export const HomeSection = styled.section<HomeSectionProps>`
 `;
 
 export const Flex = styled.div<FlexProps>`
-    ${ ( { flexDirection = 'row', flexWrap = 'nowrap', justifyContent = 'flex-start', alignItems = 'flex-start', inline = false } ) => `
+    ${ ( { flexDirection = 'row', flexWrap = 'nowrap', justifyContent = 'flex-start', alignItems = 'flex-start', inline = false, flex = 0 } ) => `
         display: ${ inline ? 'inline-flex' : 'flex' }
         flex-direction: ${ flexDirection };
         flex-wrap: ${ flexWrap };
         justify-content: ${ justifyContent };
-        align-items: ${ alignItems }
+        align-items: ${ alignItems };
+        flex: ${ flex ? flex : 'inherit' };
     ` }
 `;
