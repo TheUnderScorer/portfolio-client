@@ -19,7 +19,7 @@ export const MY_CONVERSATIONS = gql`
 `;
 
 export const MY_CONVERSATION = gql`
-    query MyConversation($page: Int, $perPage: Int = 15) {
+    query MyConversation($page: Int = 1, $perPage: Int = 15) {
         conversation:getCurrentConversation{
             id,
             title,

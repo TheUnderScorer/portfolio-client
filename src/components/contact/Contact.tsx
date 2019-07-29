@@ -6,6 +6,7 @@ import { ContactWrapper, IconContainer } from './styled/contact';
 import { FaIconReversed } from '../styled/typography';
 import { SetContactActive } from '../../types/actions/ContactActions';
 import ContactInner from './ContactInner';
+import { Tooltip } from '@material-ui/core';
 
 const Contact = () =>
 {
@@ -25,12 +26,14 @@ const Contact = () =>
 
     return (
         <ContactWrapper>
-            <IconContainer active={ active } onClick={ toggleActive } ripple={ true }>
-                { active ?
-                    <FaIconReversed icon="times"/> :
-                    <FaIconReversed icon="comment"/>
-                }
-            </IconContainer>
+            <Tooltip enterDelay={ 1000 } title={ !active ? '' : 'Click to close' }>
+                <IconContainer active={ active } onClick={ toggleActive } ripple={ true }>
+                    { active ?
+                        <FaIconReversed icon="times"/> :
+                        <FaIconReversed icon="comment"/>
+                    }
+                </IconContainer>
+            </Tooltip>
             <ContactInner/>
         </ContactWrapper>
     );

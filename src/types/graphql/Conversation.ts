@@ -6,6 +6,6 @@ export default interface Conversation extends Model
 {
     title?: string;
     createdAt: number;
-    messages?: Message[];
+    messages: Message[];
     author?: User;
 }

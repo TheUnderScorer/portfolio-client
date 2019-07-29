@@ -67,7 +67,7 @@ type Query {
     getUsers(perPage: Int, page: Int): [User!]!
     getUser(id: ID!): User!
     me: User!
-    getCurrentConversation: Conversation!
+    getCurrentConversation: Conversation
     myConversations(perPage: Int, page: Int): [Conversation!]!
 }
 

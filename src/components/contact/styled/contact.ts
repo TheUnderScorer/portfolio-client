@@ -26,14 +26,20 @@ export const IconContainer = styled( Button )<IconContainerProps>`
     justify-content: center;
     z-index: 16;
     
-    ${ props => props.active && `
-        border-radius: 0;
-        box-shadow: none;
-    ` }
-    
     svg {
         font-size: 2rem;
     }
+    
+    ${ props => props.active && `
+        border-radius: 0;
+        box-shadow: none;
+        width: 40px;
+        height: 40px;
+        
+        svg {
+            font-size: 1.5em;
+        }
+    ` }
 `;
 
 export const Inner = styled( animated.div )`

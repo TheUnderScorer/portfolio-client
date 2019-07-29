@@ -83,3 +83,8 @@ export interface IconProps
     margin?: 'normal' | 'none';
     size?: string;
 }
+
+export interface HeadlineProps
+{
+    display?: 'block' | 'inline-block' | 'flex' | 'inline-flex' | 'inline';
+}

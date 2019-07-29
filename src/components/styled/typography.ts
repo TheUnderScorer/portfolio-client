@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
 import colors, { getPrimary } from './colors';
-import { IconProps, LinkProps, SectionSubtitleProps, SectionTitleProps } from './types';
+import { HeadlineProps, IconProps, LinkProps, SectionSubtitleProps, SectionTitleProps } from './types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const textStyles = css`
@@ -28,34 +28,41 @@ export const SmallText = styled.small`
     color: ${ props => props.theme.mode === 'black' ? colors.white : colors.lightDark };
 `;
 
-export const H1 = styled.h1`
+
+export const H1 = styled.h1<HeadlineProps>`
     font-size: 3.5em;
+    display: ${ ( { display = 'block' } ) => display };
     ${ headerStyles }
 `;
 
-export const H2 = styled.h2`
+export const H2 = styled( H1 ).attrs( {
+    as: 'h2'
+} )`
     font-size: 3em;
-    ${ headerStyles }
 `;
 
-export const H3 = styled.h3`
-    ${ headerStyles };
+export const H3 = styled( H1 ).attrs( {
+    as: 'h3'
+} )`
     font-size: 2.5em;
 `;
 
-export const H4 = styled.h4`
+export const H4 = styled( H1 ).attrs( {
+    as: 'h4'
+} )`
     font-size: 2em;
-    ${ headerStyles }
 `;
 
-export const H5 = styled.h5`
+export const H5 = styled( H1 ).attrs( {
+    as: 'h5'
+} )`
     font-size: 1.5em;
-    ${ headerStyles }
 `;
 
-export const H6 = styled.h6`
+export const H6 = styled( H1 ).attrs( {
+    as: 'h6'
+} )`
     font-size: 1.2em;
-    ${ headerStyles }
 `;
 
 export const SectionTitle = styled( H4 )<SectionTitleProps>`

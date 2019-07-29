@@ -23,7 +23,9 @@ import useAuth from '../hooks/useAuth';
 import { ThemeProvider as MaterialThemeProvider } from '@material-ui/styles';
 import { createMuiTheme } from '@material-ui/core';
 import colors, { getPrimary } from '../components/styled/colors';
-import useUpdateLoginDate from '../hooks/useUpdateLoginDate';
+import { useMutation } from 'react-apollo-hooks';
+import { UserResult } from '../types/graphql/Mutations';
+import { UPDATE_LOGIN_DATE } from '../graphql/queries/users';
 
 const AboutMe = lazy( () => import('../components/about-me/AboutMe') );
 const HowCanIHelp = lazy( () => import('../components/how-can-i-help/HowCanIHelp') );
@@ -62,6 +64,8 @@ const Home = () =>
             },
         },
     } );
+
+    const [ updateLoginDate ] = useMutation<UserResult>( UPDATE_LOGIN_DATE );
 
     const heroCtaRef = useRef() as MutableRefObject<HTMLButtonElement>;
 
@@ -184,7 +188,14 @@ const Home = () =>
         }
     }, [ token ] );
 
-    useUpdateLoginDate();
+    useEffect( () =>
+    {
+        if ( !token ) {
+            return;
+        }
+
+        updateLoginDate();
+    }, [ token ] );
 
     return (
         <ThemeProvider theme={ { mode: theme.mode } }>

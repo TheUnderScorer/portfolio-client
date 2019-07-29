@@ -58,7 +58,7 @@ const ContactInner = () =>
     const userMutation = useMutation<User, UserInputVariable>( UPDATE_ME );
     const [ , userMutationResult ] = userMutation;
 
-    const [ conversationsQuery, conversationMutation ] = useChat( type === ContactTypes.Conversation );
+    const [ conversationsQuery, conversationMutation ] = useChat( type !== ContactTypes.Conversation );
 
     const [ errors, setErrors ] = useApolloErrors( [
         userQuery,
