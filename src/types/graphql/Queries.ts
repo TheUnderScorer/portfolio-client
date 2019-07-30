@@ -21,3 +21,8 @@ export interface GetMessagesResult
 {
     messages: Message[];
 }
+
+export interface MessageResult
+{
+    message: Message;
+}

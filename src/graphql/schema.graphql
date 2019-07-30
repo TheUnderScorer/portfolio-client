@@ -13,6 +13,7 @@ input ContactInput {
     email: String
 }
 
+# Describes conversation model
 type Conversation {
     id: ID!
     title: String
@@ -36,6 +37,7 @@ type DeleteConversationResult {
     result: Boolean!
 }
 
+# Describes message model
 type Message {
     id: ID!
     author: User!
@@ -43,6 +45,11 @@ type Message {
     content: String!
     createdAt: String
     updatedAt: String
+}
+
+input MessageInput {
+    conversationID: ID!
+    content: String!
 }
 
 type Mutation {
@@ -61,6 +68,7 @@ type Mutation {
         conversationID: ID!
     ): Conversation!
     send(contactInput: ContactInput!): Contact!
+    sendMessage(messageInput: MessageInput!): Message!
 }
 
 type Query {
@@ -75,6 +83,8 @@ type Subscription {
     newConversation: Conversation!
     conversationUpdated: Conversation!
     conversationDeleted: Conversation!
+    # Subscription that gets triggered whenever new message is being sent.
+    newMessage: Message!
 }
 
 type Token {
