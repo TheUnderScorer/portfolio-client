@@ -1,6 +1,6 @@
 import { client } from './apollo';
-import { CREATE_USER } from './queries/users';
 import User from '../types/graphql/User';
+import { CREATE_USER } from './mutations/users';
 
 export const TOKEN_KEY = 'token';
 

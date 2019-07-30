@@ -1,7 +1,8 @@
 import { MutationFn, MutationResult, QueryHookResult, useMutation, useQuery } from 'react-apollo-hooks';
-import { CREATE_CONVERSATION, MY_CONVERSATION } from '../graphql/queries/conversations';
+import { MY_CONVERSATION } from '../graphql/queries/conversations';
 import { ConversationResult } from '../types/graphql/Queries';
 import { useEffect } from 'react';
+import { CREATE_CONVERSATION } from '../graphql/mutations/conversations';
 
 export type Result = [
     QueryHookResult<ConversationResult, any>,
@@ -37,7 +38,6 @@ export default ( suspend: boolean = false ): Result =>
         }
 
         mutationFn();
-
     }, [ data, suspend ] );
 
     return [ conversationsQuery, createConversation ];

@@ -16,10 +16,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import useCurrentUser from '../../hooks/useCurrentUser';
 import User from '../../types/graphql/User';
 import { useMutation } from 'react-apollo-hooks';
-import { UPDATE_ME } from '../../graphql/queries/users';
 import Result from '../../types/graphql/Result';
 import { ContactInputVariable } from '../../types/graphql/inputs/ContactInput';
-import { SEND } from '../../graphql/queries/contact';
+import { SEND } from '../../graphql/mutations/contact';
 import { UserInputVariable } from '../../types/graphql/inputs/UserInput';
 import useApolloErrors from '../../hooks/useApolloErrors';
 import HomeStore from '../../types/stores/HomeStore';
@@ -29,6 +28,7 @@ import { useSpring } from 'react-spring';
 import { faUserCircle } from '@fortawesome/free-regular-svg-icons';
 import useChat from '../../hooks/useChat';
 import Conversation from '../conversation/Conversation';
+import { UPDATE_ME } from '../../graphql/mutations/users';
 
 const sections = {
     [ ContactTypes.UserForm ]:     0,

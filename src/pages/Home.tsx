@@ -25,7 +25,7 @@ import { createMuiTheme } from '@material-ui/core';
 import colors, { getPrimary } from '../components/styled/colors';
 import { useMutation } from 'react-apollo-hooks';
 import { UserResult } from '../types/graphql/Mutations';
-import { UPDATE_LOGIN_DATE } from '../graphql/queries/users';
+import { UPDATE_LOGIN_DATE } from '../graphql/mutations/users';
 
 const AboutMe = lazy( () => import('../components/about-me/AboutMe') );
 const HowCanIHelp = lazy( () => import('../components/how-can-i-help/HowCanIHelp') );

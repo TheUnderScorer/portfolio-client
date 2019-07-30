@@ -3,9 +3,9 @@ import HomeStore from '../types/stores/HomeStore';
 import { useCallback } from 'react';
 import { SetToken } from '../types/actions/UserActions';
 import { MutationFn, MutationResult, useMutation } from 'react-apollo-hooks';
-import { CREATE_USER } from '../graphql/queries/users';
 import { UserResult } from '../types/graphql/Mutations';
 import User from '../types/graphql/User';
+import { CREATE_USER } from '../graphql/mutations/users';
 
 export type UseAuthResult = [
     string,
