@@ -1,5 +1,5 @@
 import { gql } from 'apollo-boost';
-import { MESSAGE_FRAGMENT } from '../fragments/messages';
+import { MESSAGE_FRAGMENT } from '../fragments/conversations';
 
 export const MY_CONVERSATIONS = gql`
     query GetConversations($page: Int = 1, $perPage: Int = 15) {

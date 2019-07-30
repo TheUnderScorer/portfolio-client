@@ -1,5 +1,5 @@
 import gql from 'graphql-tag';
-import { MESSAGE_FRAGMENT } from '../fragments/messages';
+import { MESSAGE_FRAGMENT } from '../fragments/conversations';
 
 export const NEW_MESSAGE = gql`
     subscription {
