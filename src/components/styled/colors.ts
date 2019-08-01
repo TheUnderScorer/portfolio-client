@@ -20,7 +20,8 @@ const colors = {
     lightDark:    '#797979',
     green:        '#289c28',
     lightGreen:   '#9bd559',
-    red:          '#fd3417'
+    red:          '#fd3417',
+    grey:         '#F7F7F7'
 };
 
 export const getPrimary = ( mode: ThemeMode ): string =>

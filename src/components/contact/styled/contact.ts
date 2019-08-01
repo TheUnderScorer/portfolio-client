@@ -19,8 +19,8 @@ export const IconContainer = styled( Button )<IconContainerProps>`
     background: ${ props => getPrimaryVariation( props.theme.mode ) };
     padding: 10px;
     border-radius: 50%;
-    height: 70px;
-    width: 70px;
+    height: 5em;
+    width: 5em;
     display: flex;
     align-items: center;
     justify-content: center;

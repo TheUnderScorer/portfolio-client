@@ -1,5 +1,5 @@
-import { gql } from 'apollo-boost';
 import { MESSAGE_FRAGMENT } from '../fragments/conversations';
+import gql from 'graphql-tag';
 
 export const CREATE_CONVERSATION = gql`
     mutation CreateConversation ($input: ConversationInput) {
@@ -27,6 +27,6 @@ export const SEND_MESSAGE = gql`
         sendMessage(messageInput: $input) {
             ...MessageFragment
         }
-        ${MESSAGE_FRAGMENT}
     }
+    ${MESSAGE_FRAGMENT}
 `;

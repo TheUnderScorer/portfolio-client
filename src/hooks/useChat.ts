@@ -64,7 +64,7 @@ export default ( suspend: boolean = false ): Result =>
 
     useEffect( () =>
     {
-        if ( !conversationsQuery.data || conversationsQuery.data.conversation || suspend ) {
+        if ( !data || data.conversation || suspend ) {
             return;
         }
 

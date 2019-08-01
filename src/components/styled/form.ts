@@ -14,6 +14,7 @@ export const CentredFrom = styled( Form )`
     align-items: center;
     justify-content: center;
     height: 100%;
+    width: 100%;
 `;
 
 export const InputContainer = styled.div`
@@ -129,4 +130,10 @@ export const FormSection = styled.section<FormSectionProps>`
         }
        
    ` } 
+`;
+
+export const FlexFormSection = styled( FormSection )`
+    display: flex;
+    padding: 0 3rem;
+    align-items: center;
 `;

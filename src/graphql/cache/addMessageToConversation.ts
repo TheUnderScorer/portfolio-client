@@ -4,7 +4,9 @@ import { MY_CONVERSATION } from '../queries/conversations';
 
 export default ( cache: DataProxy, data?: MessageResult ) =>
 {
-    const conversationResult = cache.readQuery<ConversationResult>( MY_CONVERSATION );
+    const conversationResult = cache.readQuery<ConversationResult>( {
+        query: MY_CONVERSATION
+    } );
 
     if ( !conversationResult || !data ) {
         return;

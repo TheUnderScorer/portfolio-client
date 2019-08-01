@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import colors, { getPrimary } from './colors';
-import breakpoints from './breakpoints';
 import { ButtonProps } from './types';
 
 export const Button = styled.button<ButtonProps>`
@@ -115,14 +114,23 @@ export const Button = styled.button<ButtonProps>`
 `;
 
 export const CtaButton = styled( Button )`
+    text-transform: uppercase;
+    font-size: 1em;
+    border-radius: 0;
+    padding: 0.7em 1.5em;
+    
+    &.ripple {
+          &.hidden{
+            transform: translate3d(0, 0, 0) scale(0);
+          }
+    }
+`;
+
+export const CtaButtonRound = styled( Button )`
     border-radius: 30px;
     padding: 1.2rem 2rem;
     text-transform: uppercase;
     font-size: 1em;
-    
-    @media(min-width: ${ breakpoints.tabletSmall }){
-        font-size: 1em;
-    }
     
     &.ripple {
           &.hidden{

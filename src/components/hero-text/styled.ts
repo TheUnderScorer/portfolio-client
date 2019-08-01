@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import colors, { getPrimaryVariation } from '../styled/colors';
 import { FullWidth } from '../styled/wrappers';
-import { CtaButton } from '../styled/buttons';
+import { CtaButtonRound } from '../styled/buttons';
 import breakpoints from '../styled/breakpoints';
 
 export const TextWrapper = styled.div`
@@ -31,7 +31,7 @@ export const CtaWrapper = styled( FullWidth )`
     }
 `;
 
-export const Cta = styled( CtaButton )`
+export const Cta = styled( CtaButtonRound )`
     svg{
          transition: all .3s;
     }

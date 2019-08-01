@@ -11,6 +11,8 @@ const sliderSettings: Settings = {
     draggable:      false,
     slidesToScroll: 1,
     slidesToShow:   1,
+    touchMove:      false,
+    swipeToSlide:   false,
 };
 
 const SliderSection = ( { children, activeSection, className }: SliderSectionProps ) =>

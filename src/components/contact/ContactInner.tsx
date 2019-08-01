@@ -58,7 +58,7 @@ const ContactInner = () =>
     const userMutation = useMutation<User, UserInputVariable>( UPDATE_ME );
     const [ , userMutationResult ] = userMutation;
 
-    const [ conversationsQuery, conversationMutation ] = useChat( type !== ContactTypes.Conversation );
+    const [ conversationsQuery, conversationMutation, messageCreationMutation ] = useChat( type !== ContactTypes.Conversation );
 
     const [ errors, setErrors ] = useApolloErrors( [
         userQuery,
@@ -267,7 +267,7 @@ const ContactInner = () =>
                         <UserForm user={ user } mutation={ userMutation }/>
                         <Selection<ContactTypes> onSelection={ setSection } options={ contactSelections }/>
                         <ContactForm afterSubmit={ onContactFormSubmit } user={ user } mutation={ contactMutation }/>
-                        <Conversation query={ conversationsQuery } creationMutation={ conversationMutation }/>
+                        <Conversation messageCreationMutation={ messageCreationMutation } query={ conversationsQuery } creationMutation={ conversationMutation }/>
                         <div>
                             Edit profile!
                         </div>

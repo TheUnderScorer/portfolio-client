@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as Yup from 'yup';
 import ContactFormProps from './types/ContactFormProps';
-import { FormikBag, FormikProps, withFormik } from 'formik';
+import { FormikProps, withFormik } from 'formik';
 import ContactInput from '../../types/graphql/inputs/ContactInput';
 import { CentredFrom, FormSection } from '../styled/form';
 import FormikInput from '../formik/FormikInput';
@@ -85,9 +85,9 @@ const ContactForm = ( props: ContactFormProps & FormikProps<ContactInput> ) =>
     )
 };
 
-const formikWrapper = withFormik( {
+const formikWrapper = withFormik<ContactFormProps, ContactInput>( {
     validationSchema,
-    mapPropsToValues: ( { initialInput = {} }: ContactFormProps ) =>
+    mapPropsToValues: ( { initialInput = {} } ) =>
                       {
                           const { subject = '', message = '', email = '' } = initialInput;
 
@@ -97,7 +97,7 @@ const formikWrapper = withFormik( {
                               email,
                           }
                       },
-    handleSubmit:     async ( input, formBag: FormikBag<ContactFormProps, ContactInput> ) =>
+    handleSubmit:     async ( input, formBag ) =>
                       {
                           const { mutation } = formBag.props;
 

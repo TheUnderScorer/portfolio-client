@@ -6,6 +6,6 @@ export const NEW_MESSAGE = gql`
         message: newMessage {
             ...MessageFragment
         }
-        ${MESSAGE_FRAGMENT}
     }
+    ${MESSAGE_FRAGMENT}
 `;
