@@ -24,7 +24,7 @@ export const CREATE_CONVERSATION = gql`
 
 export const SEND_MESSAGE = gql`
     mutation SendMessage($input: MessageInput!) {
-        sendMessage(messageInput: $input) {
+        message: sendMessage(messageInput: $input) {
             ...MessageFragment
         }
     }
