@@ -1,9 +1,9 @@
 import * as React from 'react';
 import Loader from '../loader/Loader';
 import ConversationProps from './types/ConversationProps';
-import { ConversationContainer, ConversationList, HelperText } from './styled';
-import { H6, Text } from '../styled/typography';
+import { ConversationContainer } from './styled';
 import ConversationEditor from '../conversation-editor/ConversationEditor';
+import ConversationMessages from '../conversation-messages/ConversationMessages';
 
 const Conversation = ( { query, creationMutation, messageCreationMutation }: ConversationProps ) =>
 {
@@ -20,18 +20,7 @@ const Conversation = ( { query, creationMutation, messageCreationMutation }: Con
             } }/>
             { result && result.conversation &&
               <>
-                  <ConversationList>
-                      { !result.conversation.messages.length &&
-                        <HelperText>
-                            <H6 display="block">
-                                Hello there!
-                            </H6>
-                            <Text>
-                                Write your message below in order to start conversation with me!
-                            </Text>
-                        </HelperText>
-                      }
-                  </ConversationList>
+                  <ConversationMessages conversation={ result.conversation }/>
                   <ConversationEditor mutation={ messageCreationMutation } disabled={ queryLoading } conversationID={ result ? result.conversation.id : 0 }/>
               </>
             }

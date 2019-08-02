@@ -23,6 +23,10 @@ export const Paragraph = styled.p`
     ${ textStyles }
 `;
 
+export const Time = styled.time`
+    ${ textStyles }
+`;
+
 export const SmallText = styled.small`
     font-size: 0.8em;  
     color: ${ props => props.theme.mode === 'black' ? colors.white : colors.lightDark };

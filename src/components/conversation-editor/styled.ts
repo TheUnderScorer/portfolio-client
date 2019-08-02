@@ -36,7 +36,7 @@ export const MessageSection = styled( FormSection )<MessageSectionProps>`
     svg {
         color: ${ colors.darkerBorder };
         position: relative;
-        bottom: 0.1em;
+        bottom: 0.2em;
     }
     
     ${ props => props.filled && `
