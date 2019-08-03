@@ -1,13 +1,17 @@
-export const smoothScroll = ( elementY: number, duration: number ): Promise<void> => {
+const scrollTopOffset = 50;
 
-    return new Promise( resolve => {
+export const smoothScroll = ( elementY: number, duration: number, element?: HTMLElement ): Promise<void> =>
+{
 
-        const startingY = window.pageYOffset;
+    return new Promise( resolve =>
+    {
+
+        const startingY = element ? element.scrollTop - scrollTopOffset : window.pageYOffset;
         const diff = elementY - startingY;
         let start: number;
 
-        // Bootstrap our animation - it will get called right before next frame shall be rendered.
-        window.requestAnimationFrame( function step( timestamp ) {
+        window.requestAnimationFrame( function step( timestamp )
+        {
             if ( !start ) {
                 start = timestamp;
             }
@@ -16,7 +20,11 @@ export const smoothScroll = ( elementY: number, duration: number ): Promise<void
             // Get percent of completion in range [0, 1].
             const percent = Math.min( time / duration, 1 );
 
-            window.scrollTo( 0, startingY + diff * percent );
+            if ( element ) {
+                element.scrollTo( 0, startingY + diff * percent );
+            } else {
+                window.scrollTo( 0, startingY + diff * percent );
+            }
 
             // Proceed with animation as long as we wanted it to.
             if ( time < duration ) {

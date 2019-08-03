@@ -4,6 +4,7 @@ export const MESSAGE_FRAGMENT = gql`
     fragment MessageFragment on Message {
         id,
         content,
+        createdAt,
         author {
             id,
             name,

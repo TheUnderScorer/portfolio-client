@@ -110,7 +110,8 @@ export const SectionTitle = styled( H4 )<SectionTitleProps>`
 `;
 
 export const A = styled.a<LinkProps>`
-    ${ textStyles }
+    ${ textStyles };
+    cursor: pointer;
     
     ${ props => props.highlight && `
         color: ${ getPrimary( props.theme.mode ) };

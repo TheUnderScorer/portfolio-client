@@ -101,9 +101,10 @@ export const FormTitleContainer = styled( Flex ).attrs( {
 } )`
     border-bottom: none;
     background-color: ${ props => getPrimary( props.theme.mode ) };
-    padding: 0.7rem;
+    padding: 1rem;
     width: 100%;
     color: ${ colors.white };
+    height: 70px;
 `;
 
 export const FormTitle = styled( H6 )`
