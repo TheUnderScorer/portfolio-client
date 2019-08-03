@@ -4,6 +4,7 @@ import moment from 'moment';
 import { DateHeadline, MessageDate, MessageItem, MessageText } from './styled';
 import { Text } from '../styled/typography';
 import { Tooltip } from '@material-ui/core';
+import { DateFormats } from '../../types/common/DateFormats';
 
 const ConversationMessage = ( { message, showDate = true, prevMessage, isSelf = false, isFirstMessage = false, nextMessage }: ConversationMessageProps ) =>
 {
@@ -12,9 +13,8 @@ const ConversationMessage = ( { message, showDate = true, prevMessage, isSelf = 
     const prevMessageDate = prevMessage ? moment( prevMessage.createdAt ) : null;
     const nextMessageDate = nextMessage ? moment( nextMessage.createdAt ) : null;
 
-    const displayDate = showDate && ( !nextMessageDate || nextMessageDate.format( 'DD/MM/YYYY HH:mm' ) !== date.format( 'DD/MM/YYYY HH:mm' ) );
+    const displayDate = showDate && ( !nextMessageDate || nextMessageDate.format( DateFormats.DateTime ) !== date.format( DateFormats.DateTime ) );
     const displayDateHeadline = !isFirstMessage && ( !!prevMessageDate && prevMessageDate.format( 'DD' ) !== date.format( 'DD' ) );
-
 
     return <>
         { displayDateHeadline &&
@@ -31,7 +31,7 @@ const ConversationMessage = ( { message, showDate = true, prevMessage, isSelf = 
               </Text>
           </DateHeadline>
         }
-        <MessageItem marginTop={ !isFirstMessage && !!prevMessageDate && prevMessageDate.format( 'DD/MM/YYYY HH:mm' ) !== date.format( 'DD/MM/YYYY HH:mm' ) } isSelf={ isSelf }>
+        <MessageItem marginTop={ !isFirstMessage && !!prevMessageDate && prevMessageDate.format( DateFormats.DateTime ) !== date.format( DateFormats.DateTime ) } isSelf={ isSelf }>
             <Tooltip title={ date.format( 'DD/MM/YYYY HH:mm' ) }>
                 <MessageText isSelf={ isSelf }>
                     { message.content }

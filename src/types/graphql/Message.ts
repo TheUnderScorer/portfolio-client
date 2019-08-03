@@ -7,6 +7,6 @@ export default interface Message extends Model
     author: User;
     conversation?: Conversation;
     content: string;
-    createdAt: number;
-    updatedAt: number;
+    createdAt: string;
+    updatedAt: string;
 }
