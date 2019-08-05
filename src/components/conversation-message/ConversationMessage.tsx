@@ -4,6 +4,7 @@ import moment from 'moment';
 import { DateHeadline, MessageDate, MessageItem, MessageText } from './styled';
 import { Text } from '../styled/typography';
 import { Tooltip } from '@material-ui/core';
+import { DateFormats } from '../../types/common/DateFormats';
 
 const comparisonFormat = 'YYYY-MM-DD HH:mm';
 
@@ -34,7 +35,7 @@ const ConversationMessage = ( { message, showDate = true, prevMessage, isSelf = 
           </DateHeadline>
         }
         <MessageItem marginTop={ marginTop } isSelf={ isSelf }>
-            <Tooltip placement="top-start" title={ date.format( 'DD/MM/YYYY HH:mm' ) }>
+            <Tooltip placement="top-start" title={ date.format( DateFormats.DateTime ) }>
                 <MessageText isSelf={ isSelf }>
                     { message.content }
                 </MessageText>

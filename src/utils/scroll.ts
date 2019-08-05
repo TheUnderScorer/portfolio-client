@@ -1,4 +1,4 @@
-const scrollTopOffset = 50;
+const scrollTopOffset = 100;
 
 export const smoothScroll = ( elementY: number, duration: number, element?: HTMLElement ): Promise<void> =>
 {

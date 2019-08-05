@@ -18,7 +18,7 @@ const Conversation = ( { query, creationMutation, messageCreationMutation }: Con
 
     const client = useApolloClient();
 
-    const conversationID = result ? result.conversation.id : 0;
+    const conversationID = result && result.conversation ? result.conversation.id : 0;
     const prevConversationID = usePrevious( conversationID );
 
     const [ , mutationResult ] = creationMutation;
@@ -62,7 +62,7 @@ const Conversation = ( { query, creationMutation, messageCreationMutation }: Con
                 query: MY_CONVERSATION
             } );
 
-            if ( !data || data.conversation.messages.length < messagesPerPage ) {
+            if ( !data || !data.conversation || data.conversation.messages.length < messagesPerPage ) {
                 return;
             }
 
@@ -84,7 +84,7 @@ const Conversation = ( { query, creationMutation, messageCreationMutation }: Con
 
     useEffect( () =>
     {
-        if ( !result || ( conversationID && conversationID === prevConversationID ) ) {
+        if ( !result || !result.conversation || ( conversationID && conversationID === prevConversationID ) ) {
             return;
         }
 
