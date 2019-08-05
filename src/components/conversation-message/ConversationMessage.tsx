@@ -4,7 +4,8 @@ import moment from 'moment';
 import { DateHeadline, MessageDate, MessageItem, MessageText } from './styled';
 import { Text } from '../styled/typography';
 import { Tooltip } from '@material-ui/core';
-import { DateFormats } from '../../types/common/DateFormats';
+
+const comparisonFormat = 'YYYY-MM-DD HH:mm';
 
 const ConversationMessage = ( { message, showDate = true, prevMessage, isSelf = false, isFirstMessage = false, nextMessage }: ConversationMessageProps ) =>
 {
@@ -13,9 +14,9 @@ const ConversationMessage = ( { message, showDate = true, prevMessage, isSelf = 
     const prevMessageDate = prevMessage ? moment( prevMessage.createdAt ) : null;
     const nextMessageDate = nextMessage ? moment( nextMessage.createdAt ) : null;
 
-    const displayDate = showDate && ( !nextMessageDate || nextMessageDate.format( DateFormats.DateTime ) !== date.format( DateFormats.DateTime ) );
+    const displayDate = showDate && ( !nextMessageDate || nextMessageDate.format( comparisonFormat ) !== date.format( comparisonFormat ) );
     const displayDateHeadline = !isFirstMessage && ( !!prevMessageDate && prevMessageDate.format( 'DD' ) !== date.format( 'DD' ) );
-    const marginTop = !isFirstMessage && !!prevMessageDate && prevMessageDate.format( DateFormats.DateTime ) !== date.format( DateFormats.DateTime );
+    const marginTop = !isFirstMessage && !!prevMessageDate && prevMessageDate.format( comparisonFormat ) !== date.format( comparisonFormat );
 
     return <>
         { displayDateHeadline &&
