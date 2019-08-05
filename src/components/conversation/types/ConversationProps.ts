@@ -5,7 +5,7 @@ import { MessageInputVariable } from '../../../types/graphql/inputs/MessageInput
 
 export default interface ConversationProps
 {
-    query: QueryHookResult<ConversationResult, any>;
+    query: QueryHookResult<ConversationResult, PaginationInput>;
     creationMutation: [ MutationFn<ConversationResult, PaginationInput>, MutationResult<ConversationResult> ],
     messageCreationMutation: [ MutationFn<MessageResult, MessageInputVariable>, MutationResult<MessageResult> ];
 }

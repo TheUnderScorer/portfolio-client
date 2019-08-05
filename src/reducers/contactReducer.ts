@@ -2,24 +2,34 @@ import reducer from './reducer';
 import ContactReducer, { ContactReducerHandler, ContactTypes } from '../types/reducers/ContactReducer';
 
 const initialState: ContactReducer = {
-    active:               false,
-    type:                 ContactTypes.UserForm,
-    activeConversationID: 0,
+    active:                   false,
+    type:                     ContactTypes.UserForm,
+    fullyLoadedConversations: [],
 };
 
 const handlers: ContactReducerHandler = {
-    SetContactType:          ( state, type ) => ( {
+    SetContactType:        ( state, type ) => ( {
         ...state,
         type
     } ),
-    SetContactActive:        ( state, active ) => ( {
+    SetContactActive:      ( state, active ) => ( {
         ...state,
         active
     } ),
-    SetActiveConversationID: ( state, activeConversationID ) => ( {
-        ...state,
-        activeConversationID
-    } ),
+    AddLoadedConversation: ( state, conversationID ) =>
+                           {
+                               if ( state.fullyLoadedConversations.includes( conversationID ) ) {
+                                   return state;
+                               }
+
+                               const fullyLoadedConversations = [ ...state.fullyLoadedConversations ];
+                               fullyLoadedConversations.push( conversationID );
+
+                               return {
+                                   ...state,
+                                   fullyLoadedConversations
+                               }
+                           }
 };
 
 export default reducer( handlers, initialState );

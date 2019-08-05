@@ -5,7 +5,7 @@ export default interface ContactReducer
 {
     type: ContactTypes;
     active?: boolean;
-    activeConversationID?: number;
+    fullyLoadedConversations: number[];
 }
 
 export enum ContactTypes

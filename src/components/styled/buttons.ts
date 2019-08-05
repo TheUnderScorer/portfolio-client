@@ -67,6 +67,11 @@ export const Button = styled.button<ButtonProps>`
         }
     ` }
     
+    &:disabled {
+        opacity: 0.2;
+        cursor: not-allowed;
+    }
+    
      &::before {
           content: "";
           position: absolute;

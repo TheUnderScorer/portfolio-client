@@ -15,6 +15,7 @@ const ConversationMessage = ( { message, showDate = true, prevMessage, isSelf = 
 
     const displayDate = showDate && ( !nextMessageDate || nextMessageDate.format( DateFormats.DateTime ) !== date.format( DateFormats.DateTime ) );
     const displayDateHeadline = !isFirstMessage && ( !!prevMessageDate && prevMessageDate.format( 'DD' ) !== date.format( 'DD' ) );
+    const marginTop = !isFirstMessage && !!prevMessageDate && prevMessageDate.format( DateFormats.DateTime ) !== date.format( DateFormats.DateTime );
 
     return <>
         { displayDateHeadline &&
@@ -31,8 +32,8 @@ const ConversationMessage = ( { message, showDate = true, prevMessage, isSelf = 
               </Text>
           </DateHeadline>
         }
-        <MessageItem marginTop={ !isFirstMessage && !!prevMessageDate && prevMessageDate.format( DateFormats.DateTime ) !== date.format( DateFormats.DateTime ) } isSelf={ isSelf }>
-            <Tooltip title={ date.format( 'DD/MM/YYYY HH:mm' ) }>
+        <MessageItem marginTop={ marginTop } isSelf={ isSelf }>
+            <Tooltip placement="top-start" title={ date.format( 'DD/MM/YYYY HH:mm' ) }>
                 <MessageText isSelf={ isSelf }>
                     { message.content }
                 </MessageText>

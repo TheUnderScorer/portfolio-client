@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { CentredFrom, FormSection } from '../styled/form';
 import colors from '../styled/colors';
 import { MessageSectionProps } from '../conversation/types/styled';
+import { CtaButton } from '../styled/buttons';
 
 export const EditorForm = styled( CentredFrom )`
     background-color: ${ colors.grey };
@@ -44,6 +45,11 @@ export const MessageSection = styled( FormSection )<MessageSectionProps>`
             color: ${ colors.dark };
         }
     ` }
+`;
+
+export const SendButton = styled( CtaButton )`
+    background-color: ${ colors.green };
+    color: ${ colors.white };
 `;
 
 export const EditorActions = styled.div``;

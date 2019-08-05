@@ -20,12 +20,12 @@ export const DateHeadline = styled( Time )`
     display: block;
     width: 100%;
     text-align: center;
-    margin-top: 1em;
+    margin-top: 2em;
     position: relative;
     
     span {
         z-index: 2;
-        background: ${ props => props.theme.mode === 'black' ? colors.black : colors.white };
+        background: ${ props => props.theme.mode === 'black' ? colors.dark : colors.white };
         position: relative;
         padding: 0 1em;
     }

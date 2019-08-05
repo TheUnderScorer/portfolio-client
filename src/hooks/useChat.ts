@@ -25,7 +25,7 @@ export type Result = [
 export default ( suspend: boolean = false ): Result =>
 {
     const conversationsQuery = useQuery<ConversationResult>( MY_CONVERSATION, {
-        suspend
+        suspend,
     } );
     const { data } = conversationsQuery;
 

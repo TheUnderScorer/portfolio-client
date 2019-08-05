@@ -1,18 +1,21 @@
 import styled from 'styled-components';
 import colors from '../styled/colors';
-import { Flex } from '../styled/wrappers';
-import { FlexProps } from '../styled/types';
+import InfiniteScroll from 'react-infinite-scroller';
 
-export const List = styled( Flex ).attrs<FlexProps>( {
-    as:            'ul',
-    flex:          '1',
-    flexDirection: 'column',
-} )`
-    list-style: none;
-    padding: 1em 0;
-    margin: 0;
+export const ListContainer = styled.div`
+    flex: 1;
     width: 100%;
     overflow: auto;
+    padding: 1em 0;
+`;
+
+export const List = styled( InfiniteScroll )`
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+    margin: 0;
+    width: 100%;
+    padding: 0;
 `;
 
 export const HelperText = styled.li`
