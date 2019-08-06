@@ -6,4 +6,5 @@ export default interface ConversationMessagesProps
     loading?: boolean;
     onLoadMore: ( page: number ) => any;
     hasMore?: boolean;
+    onCloseClick: () => any;
 }

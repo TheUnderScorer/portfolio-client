@@ -41,6 +41,7 @@ const sections = {
 const titlesWithReturnIcon = [ ContactTypes.ContactForm, ContactTypes.EditProfile, ContactTypes.Conversation ];
 const shouldAddIcon = ( type: ContactTypes ) => titlesWithReturnIcon.includes( type );
 
+// TODO - Refactor Title, Notices and Errors into separate components
 const ContactInner = () =>
 {
     const dispatch = useDispatch();
@@ -58,7 +59,7 @@ const ContactInner = () =>
     const userMutation = useMutation<User, UserInputVariable>( UPDATE_ME );
     const [ , userMutationResult ] = userMutation;
 
-    const [ conversationsQuery, conversationMutation, messageCreationMutation ] = useChat( type !== ContactTypes.Conversation );
+    const { conversationsQuery, createConversationMutation, createMessageMutation, changeStatusMutation } = useChat( type !== ContactTypes.Conversation );
 
     const [ errors, setErrors ] = useApolloErrors( [
         userQuery,
@@ -267,7 +268,7 @@ const ContactInner = () =>
                         <UserForm user={ user } mutation={ userMutation }/>
                         <Selection<ContactTypes> onSelection={ setSection } options={ contactSelections }/>
                         <ContactForm afterSubmit={ onContactFormSubmit } user={ user } mutation={ contactMutation }/>
-                        <Conversation messageCreationMutation={ messageCreationMutation } query={ conversationsQuery } creationMutation={ conversationMutation }/>
+                        <Conversation changeStatusMutation={ changeStatusMutation } messageCreationMutation={ createMessageMutation } query={ conversationsQuery } creationMutation={ createConversationMutation }/>
                         <div>
                             Edit profile!
                         </div>

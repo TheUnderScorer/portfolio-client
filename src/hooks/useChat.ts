@@ -10,17 +10,23 @@ import {
 import { MY_CONVERSATION } from '../graphql/queries/conversations';
 import { ConversationResult, MessageResult } from '../types/graphql/Queries';
 import { useEffect } from 'react';
-import { CREATE_CONVERSATION, SEND_MESSAGE } from '../graphql/mutations/conversations';
+import { CHANGE_STATUS, CREATE_CONVERSATION, SEND_MESSAGE } from '../graphql/mutations/conversations';
 import { NEW_MESSAGE } from '../graphql/subscriptions/messages';
 import addMessageToConversation from '../graphql/cache/addMessageToConversation';
 import { MessageInputVariable } from '../types/graphql/inputs/MessageInput';
+import { ChangeConversationStatusInputVariable } from '../types/graphql/inputs/ChangeConversationStatusInput';
 
-export type Result = [
-    QueryHookResult<ConversationResult, any>,
-    [ MutationFn<ConversationResult, any>, MutationResult<ConversationResult> ],
-    [ MutationFn<MessageResult, MessageInputVariable>, MutationResult<MessageResult> ],
-    SubscriptionHookResult<MessageResult>
-];
+export type ChangeStatusMutation = [ MutationFn<ConversationResult, ChangeConversationStatusInputVariable>, MutationResult<ConversationResult> ];
+export type CreateMessageMutation = [ MutationFn<MessageResult, MessageInputVariable>, MutationResult<MessageResult> ];
+export type CreateConversationMutation = [ MutationFn<ConversationResult, any>, MutationResult<ConversationResult> ];
+
+export type Result = {
+    conversationsQuery: QueryHookResult<ConversationResult, any>,
+    createConversationMutation: CreateConversationMutation,
+    createMessageMutation: CreateMessageMutation,
+    newMessagesSubscription: SubscriptionHookResult<MessageResult>,
+    changeStatusMutation: ChangeStatusMutation
+}
 
 export default ( suspend: boolean = false ): Result =>
 {
@@ -29,7 +35,7 @@ export default ( suspend: boolean = false ): Result =>
     } );
     const { data } = conversationsQuery;
 
-    const createConversation = useMutation<ConversationResult>( CREATE_CONVERSATION, {
+    const createConversationMutation = useMutation<ConversationResult>( CREATE_CONVERSATION, {
         update: ( cache, { data } ) =>
                 {
                     if ( !data ) {
@@ -46,7 +52,7 @@ export default ( suspend: boolean = false ): Result =>
                     } )
                 }
     } );
-    const [ mutationFn ] = createConversation;
+    const [ mutationFn ] = createConversationMutation;
 
     const newMessagesSubscription = useSubscription<MessageResult>( NEW_MESSAGE, {
         onSubscriptionData: ( { client: { cache }, subscriptionData: { data } } ) =>
@@ -71,5 +77,13 @@ export default ( suspend: boolean = false ): Result =>
         mutationFn();
     }, [ data, suspend ] );
 
-    return [ conversationsQuery, createConversation, createMessageMutation, newMessagesSubscription, ];
+    const changeStatusMutation = useMutation<ConversationResult, ChangeConversationStatusInputVariable>( CHANGE_STATUS );
+
+    return {
+        conversationsQuery,
+        createConversationMutation,
+        createMessageMutation,
+        newMessagesSubscription,
+        changeStatusMutation
+    };
 }

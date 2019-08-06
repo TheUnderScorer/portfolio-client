@@ -1,3 +1,11 @@
+input ChangeConversationStatusInput {
+    id: ID!
+    status: ConversationStatuses!
+    # Optional e-mail, if user have not provided one previously.
+    email: String
+    sendTranscript: Boolean
+}
+
 type Contact {
     id: ID!
     message: String!
@@ -33,10 +41,6 @@ enum ConversationStatuses {
     closed
 }
 
-type DeleteConversationResult {
-    result: Boolean!
-}
-
 # Describes message model
 type Message {
     id: ID!
@@ -62,11 +66,10 @@ type Mutation {
         conversationInput: ConversationInput!
         id: ID!
     ): Conversation!
-    deleteConversation(id: ID!): DeleteConversationResult!
-    changeStatus(
-        status: ConversationStatuses!
-        conversationID: ID!
-    ): Conversation!
+    deleteConversation(id: ID!): Result!
+    changeStatus(input: ChangeConversationStatusInput!): Conversation!
+    # Sends transcript of given conversation to it's author.
+    sendTranscript(conversationID: ID!): Result!
     send(contactInput: ContactInput!): Contact!
     sendMessage(messageInput: MessageInput!): Message!
 }
@@ -77,6 +80,10 @@ type Query {
     me: User!
     getCurrentConversation: Conversation
     myConversations(perPage: Int, page: Int): [Conversation!]!
+}
+
+type Result {
+    result: Boolean!
 }
 
 type Subscription {

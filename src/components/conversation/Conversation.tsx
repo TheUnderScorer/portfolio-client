@@ -9,14 +9,22 @@ import usePrevious from '../../hooks/usePrevious';
 import { useApolloClient } from 'react-apollo-hooks';
 import { MY_CONVERSATION } from '../../graphql/queries/conversations';
 import { ConversationResult } from '../../types/graphql/Queries';
+import CloseConversationForm from '../close-conversation-form/CloseConversationForm';
+import useCurrentUser from '../../hooks/useCurrentUser';
 
 const messagesPerPage = 30;
 
-const Conversation = ( { query, creationMutation, messageCreationMutation }: ConversationProps ) =>
+const Conversation = ( { query, creationMutation, messageCreationMutation, changeStatusMutation }: ConversationProps ) =>
 {
     const { data: result, loading: queryLoading } = query;
 
+    const currentUser = useCurrentUser();
+
     const client = useApolloClient();
+
+    const [ isClosing, setIsClosing ] = useState( false );
+    const handleClose = useCallback( () => setIsClosing( true ), [] );
+    const handleCancel = useCallback( () => setIsClosing( false ), [] );
 
     const conversationID = result && result.conversation ? result.conversation.id : 0;
     const prevConversationID = usePrevious( conversationID );
@@ -97,12 +105,17 @@ const Conversation = ( { query, creationMutation, messageCreationMutation }: Con
                 width:  '30%',
                 height: '30%'
             } }/>
-            { result && result.conversation &&
+            { !isClosing && result && result.conversation &&
               <>
-                  <ConversationMessages loading={ query.loading } onLoadMore={ loadMore } hasMore={ hasMore } conversation={ result.conversation }/>
+                  <ConversationMessages onCloseClick={ handleClose } loading={ query.loading } onLoadMore={ loadMore } hasMore={ hasMore } conversation={ result.conversation }/>
                   <ConversationEditor mutation={ messageCreationMutation } disabled={ queryLoading } conversationID={ conversationID }/>
               </>
             }
+
+            { isClosing && result && result.conversation && currentUser.data &&
+              <CloseConversationForm onCancel={ handleCancel } closeConversationMutation={ changeStatusMutation } conversationID={ result.conversation.id } currentUser={ currentUser.data.user }/>
+            }
+
         </ConversationContainer>
     )
 

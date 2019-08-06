@@ -9,7 +9,7 @@ import { smoothScroll } from '../../utils/scroll';
 import ConversationMessage from '../conversation-message/ConversationMessage';
 import Loader from '../loader/Loader';
 
-const ConversationMessages = ( { conversation, hasMore, onLoadMore }: ConversationMessagesProps ) =>
+const ConversationMessages = ( { conversation, hasMore, onLoadMore, onCloseClick }: ConversationMessagesProps ) =>
 {
     const { messages } = conversation;
     const prevMessagesLength = usePrevious( messages.length );
@@ -119,7 +119,7 @@ const ConversationMessages = ( { conversation, hasMore, onLoadMore }: Conversati
                             <Text>
                                 This is start of your current conversation with me.
                                 <br/>
-                                <A underlined={ true }>Click here to close this conversation.</A>
+                                <A onClick={ onCloseClick } underlined={ true }>Click here to close this conversation.</A>
                             </Text>
                         </HelperText>
                       }
