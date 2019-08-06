@@ -1,4 +1,4 @@
-export const pushState = ( { validationCallback, state, url = '' }: PushStateParams ): void =>
+export const pushState = <T>( { validationCallback, state, url = '' }: PushStateParams<T> ): void =>
 {
     if ( window.history.state && validationCallback ) {
 
@@ -22,7 +22,7 @@ export const getState = <T>( key: string, def: T ): T =>
         def;
 };
 
-export const getStateFromEvent = ( event: PopStateEvent, key: string ): any =>
+export const getStateFromEvent = <T>( event: PopStateEvent, key: string ): T | null =>
 {
     if ( !event.state ) {
         return null;
@@ -31,8 +31,8 @@ export const getStateFromEvent = ( event: PopStateEvent, key: string ): any =>
     return event.state.hasOwnProperty( key ) ? event.state[ key ] : null
 };
 
-export type PushStateParams = {
-    state: any;
+export type PushStateParams<T = any> = {
+    state: T;
     url?: string;
     validationCallback?: ( state: any ) => boolean;
 }
