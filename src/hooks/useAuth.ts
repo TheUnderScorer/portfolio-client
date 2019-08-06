@@ -10,8 +10,8 @@ import { CREATE_USER } from '../graphql/mutations/users';
 export type UseAuthResult = [
     string,
     ( input?: Partial<User> ) => Promise<User>,
-    [ MutationFn<any, any>, MutationResult<UserResult> ]
-    ]
+    [ MutationFn<UserResult, any>, MutationResult<UserResult> ]
+]
 
 export default (): UseAuthResult =>
 {

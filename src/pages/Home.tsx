@@ -137,18 +137,16 @@ const Home = () =>
 
     usePopState( event =>
     {
-        const innerActiveHistoryState = getStateFromEvent( event, 'innerActive' );
+        const innerActiveHistoryState = getStateFromEvent<boolean>( event, 'innerActive' );
 
         if ( innerActiveHistoryState === null && !innerActive ) {
             return;
         }
 
-        const action: SetInnerActive = {
+        dispatch<SetInnerActive>( {
             type:    'SetInnerActive',
             payload: innerActiveHistoryState
-        };
-
-        dispatch( action );
+        } as SetInnerActive );
     }, [ innerActive ] );
 
     // Sets "DidInnerOpen" to false whenever innerActive gets set to false
