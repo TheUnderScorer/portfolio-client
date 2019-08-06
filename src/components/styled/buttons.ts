@@ -23,7 +23,7 @@ export const Button = styled.button<ButtonProps>`
         color: ${ colors.white };
     }
     
-    ${ props => props.transparent && `
+    ${ props => props.mode === 'secondary' && `
         background: transparent;
         border: 2px solid ${ getPrimary( props.theme.mode ) };
         
@@ -36,7 +36,7 @@ export const Button = styled.button<ButtonProps>`
          box-shadow: none;
     ` }
     
-    
+   
     ${ props => props.withIcon && `
         
         span {
@@ -116,6 +116,28 @@ export const Button = styled.button<ButtonProps>`
           transition: 0s;
         }
    ` }
+   
+   ${ props => props.round && `
+        border-radius: 40px;
+        padding: 0.7rem 1.7rem;
+        overflow: hidden;
+   ` }
+   
+    ${ props => props.cta && `
+        text-transform: uppercase;
+        font-size: 1em;
+        padding: 0.7em 1.5em;
+        
+        ${ props.round && `
+            padding: 1.2rem 2rem;
+        ` }
+        
+        &.ripple {
+              &.hidden {
+                transform: translate3d(0, 0, 0) scale(0);
+              }
+        }
+   ` }
 `;
 
 export const CtaButton = styled( Button )`
@@ -131,38 +153,9 @@ export const CtaButton = styled( Button )`
     }
 `;
 
-export const CtaButtonRound = styled( Button )`
-    border-radius: 30px;
-    padding: 1.2rem 2rem;
-    text-transform: uppercase;
-    font-size: 1em;
-    
-    &.ripple {
-          &.hidden{
-            transform: translate3d(0, 0, 0) scale(0);
-          }
-    }
-`;
-
-export const DarkButton = styled( Button )`
-    background: ${ colors.darkBlue };
-    color: ${ props => getPrimary( props.theme.mode ) };
-    font-weight: 600;
-`;
-
-export const RoundDarkButton = styled( DarkButton )`
-    border-radius: 20px;
-    padding: 10px 25px;
-    overflow: hidden;
-`;
-
-export const RoundButton = styled( Button )`
-    border-radius: 20px;
-    padding: 0.7rem 1.7rem;
-    overflow: hidden;
-`;
-
-export const IconButton = styled( RoundButton )`
+export const IconButton = styled( Button ).attrs( {
+    round: true,
+} )`
     padding: 5px 10px;
     border: none;
     border-radius: 50%;

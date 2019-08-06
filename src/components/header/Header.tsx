@@ -235,7 +235,7 @@ const Header = () =>
     return (
         <HeaderWrapper ref={ headerRef } isFixed={ isFixed } isOpen={ isOpen } transparent={ transparent }>
             <LogoWrapper onClick={ handleLogoClick }>
-                <GoBackButton isActive={ backgroundVisible && !isOpen } flat={ true } transparent={ true }>
+                <GoBackButton isActive={ backgroundVisible && !isOpen } flat={ true } mode="secondary">
                     <FontAwesomeIcon icon="arrow-left"/>
                 </GoBackButton>
                 <img src={ Logo } alt=""/>
@@ -282,7 +282,7 @@ const Header = () =>
                     </NavigationListItem>
                 </NavigationList>
             </Navigation>
-            <MenuActivator className={ `hamburger hamburger--collapse ${ isOpen ? 'is-active' : '' }` } onClick={ switchOpenState } flat={ true } transparent={ true }>
+            <MenuActivator className={ `hamburger hamburger--collapse ${ isOpen ? 'is-active' : '' }` } onClick={ switchOpenState } flat={ true } mode="secondary">
                 <Text className="hamburger-box">
                     <Text className="hamburger-inner"/>
                 </Text>

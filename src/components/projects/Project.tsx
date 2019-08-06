@@ -14,7 +14,7 @@ import LazyLoad from 'react-lazyload';
 import ProjectProps from './types/ProjectProps';
 import ProjectDetails from './ProjectDetails';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { RoundButton } from '../styled/buttons';
+import { Button } from '../styled/buttons';
 import { SetActiveProject } from '../../types/actions/HomeActions';
 import { useDispatch } from 'react-redux';
 import { pushState } from '../../utils/history';
@@ -100,7 +100,7 @@ const Project = ( { project, active = false, index }: ProjectProps ) =>
                             { shortDetails }
                         </Text>
                     </div>
-                    <ReadMore iconOnHover={ true } withIcon={ true } transparent={ true } flat={ true } onClick={ handleOpen }>
+                    <ReadMore iconOnHover={ true } withIcon={ true } mode="secondary" flat={ true } onClick={ handleOpen }>
                         <Text>
                             Check Out
                         </Text>
@@ -110,9 +110,9 @@ const Project = ( { project, active = false, index }: ProjectProps ) =>
             </ProjectImageFigure>
             <ProjectModal shouldFocusAfterRender={ false } htmlOpenClassName="has-overlay" className={ `${ active ? 'active' : '' }` } overlayClassName="middle center" isOpen={ active } onRequestClose={ handleClose }>
                 <ProjectDetails project={ project }/>
-                <RoundButton ripple={ true } flat={ true } onClick={ handleClose } className="close">
+                <Button round={ true } ripple={ true } flat={ true } onClick={ handleClose } className="close">
                     <FontAwesomeIcon icon="times"/>
-                </RoundButton>
+                </Button>
             </ProjectModal>
         </ProjectContainer>
     )

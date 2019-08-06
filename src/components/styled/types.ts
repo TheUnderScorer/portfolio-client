@@ -38,6 +38,7 @@ export interface SectionSubtitleProps
 
 export interface ButtonProps
 {
+    mode?: 'primary' | 'secondary';
     flat?: boolean;
     withIcon?: boolean;
     iconOnHover?: boolean;
@@ -45,6 +46,9 @@ export interface ButtonProps
     transparent?: boolean;
     buttonWidth?: string;
     buttonHeight?: string;
+    cta?: boolean;
+    isTransparent?: boolean;
+    round?: boolean;
 }
 
 export interface RoundImageProps

@@ -1,8 +1,9 @@
 import styled from 'styled-components';
 import colors, { getPrimaryVariation } from '../styled/colors';
 import { FullWidth } from '../styled/wrappers';
-import { CtaButtonRound } from '../styled/buttons';
+import { Button } from '../styled/buttons';
 import breakpoints from '../styled/breakpoints';
+import { ButtonProps } from '../styled/types';
 
 export const TextWrapper = styled.div`
     display: inline-flex;
@@ -31,7 +32,10 @@ export const CtaWrapper = styled( FullWidth )`
     }
 `;
 
-export const Cta = styled( CtaButtonRound )`
+export const Cta = styled( Button ).attrs<ButtonProps>( {
+    round: true,
+    cta:   true,
+} )`
     svg{
          transition: all .3s;
     }

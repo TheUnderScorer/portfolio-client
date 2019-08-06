@@ -6,7 +6,7 @@ import ChangeConversationStatusInput from '../../types/graphql/inputs/ChangeConv
 import { ConversationStatuses } from '../../types/graphql/Conversation';
 import { CentredFrom, FlexFormSection, FormSection } from '../styled/form';
 import { H6, Text } from '../styled/typography';
-import { Button, CtaButton } from '../styled/buttons';
+import { Button } from '../styled/buttons';
 
 const validationSchema = Yup.object().shape( {
     email:          Yup.string().required( 'Provide your e-mail address.' ).email( 'Invalid e-mail address.' ),
@@ -27,10 +27,10 @@ const CloseConversationForm = ( { onCancel }: Props & FormikProps<ChangeConversa
                 </Text>
             </FormSection>
             <FlexFormSection>
-                <CtaButton>
+                <Button cta={ true }>
                     Close conversation
-                </CtaButton>
-                <Button flat={ true } transparent={ true } onClick={ onCancel }>
+                </Button>
+                <Button mode="secondary" transparent={ true } onClick={ onCancel }>
                     Cancel
                 </Button>
             </FlexFormSection>

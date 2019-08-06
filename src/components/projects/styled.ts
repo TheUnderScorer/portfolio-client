@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import colors, { getPrimary } from '../styled/colors';
-import { IconButton, RoundButton } from '../styled/buttons';
+import { Button, IconButton } from '../styled/buttons';
 import {
     ProjectContainerProps,
     ProjectDetailsContainerProps,
@@ -10,6 +10,7 @@ import {
 import Loader from '../loader/Loader';
 import breakpoints from '../styled/breakpoints';
 import { Modal } from '../styled/modal';
+import { ButtonProps } from '../styled/types';
 
 const borderRadius = '6px';
 
@@ -135,7 +136,9 @@ export const ProjectModal = styled( Modal )`
     }
 `;
 
-export const ReadMore = styled( RoundButton )`
+export const ReadMore = styled( Button ).attrs<ButtonProps>( {
+    round: true,
+} )`
     margin-top: 40px;
 `;
 
