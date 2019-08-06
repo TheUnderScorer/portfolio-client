@@ -1,0 +1,127 @@
+input ChangeConversationStatusInput {
+    id: ID!
+    status: ConversationStatuses!
+    # Optional e-mail, if user have not provided one previously.
+    email: String
+    sendTranscript: Boolean
+}
+
+type Contact {
+    id: ID!
+    message: String!
+    createdAt: String!
+    subject: String!
+    user: User!
+}
+
+input ContactInput {
+    subject: String!
+    message: String!
+    # Optional, only if user have not provided any email yet
+    email: String
+}
+
+# Describes conversation model
+type Conversation {
+    id: ID!
+    title: String
+    author: User!
+    messages(perPage: Int, page: Int): [Message!]
+    createdAt: String
+    status: ConversationStatuses!
+}
+
+input ConversationInput {
+    title: String
+}
+
+# Current status of conversation
+enum ConversationStatuses {
+    open
+    closed
+}
+
+# Describes message model
+type Message {
+    id: ID!
+    author: User!
+    conversation: Conversation!
+    content: String!
+    createdAt: String
+    updatedAt: String
+}
+
+input MessageInput {
+    conversationID: ID!
+    content: String!
+}
+
+type Mutation {
+    createUser(userInput: UserInput): User!
+    updateMe(userInput: UserInput!): User!
+    updateUser(userInput: UserInput!, id: ID!): User!
+    updateLoginDate: User!
+    createConversation(conversationInput: ConversationInput): Conversation!
+    updateConversation(
+        conversationInput: ConversationInput!
+        id: ID!
+    ): Conversation!
+    deleteConversation(id: ID!): Result!
+    changeStatus(input: ChangeConversationStatusInput!): Conversation!
+    # Sends transcript of given conversation to it's author.
+    sendTranscript(conversationID: ID!): Result!
+    send(contactInput: ContactInput!): Contact!
+    sendMessage(messageInput: MessageInput!): Message!
+}
+
+type Query {
+    getUsers(perPage: Int, page: Int): [User!]!
+    getUser(id: ID!): User!
+    me: User!
+    getCurrentConversation: Conversation
+    myConversations(perPage: Int, page: Int): [Conversation!]!
+}
+
+type Result {
+    result: Boolean!
+}
+
+type Subscription {
+    newConversation: Conversation!
+    conversationUpdated: Conversation!
+    conversationDeleted: Conversation!
+    # Subscription that gets triggered whenever new message is being sent.
+    newMessage: Message!
+}
+
+type Token {
+    expires: String!
+    value: String!
+}
+
+type User {
+    id: ID!
+    name: String
+    lastLogin: String
+    role: UserRole!
+    password: String
+    ip: String!
+    email: String
+    conversations(perPage: Int, page: Int): [Conversation!]
+    messages: [Message!]
+    contacts: [Contact!]
+    token: Token
+    hasPassword: Boolean!
+}
+
+input UserInput {
+    name: String
+    email: String
+    password: String
+}
+
+enum UserRole {
+    user
+    administrator
+}
+
