@@ -33,7 +33,6 @@ export const ProjectsContainer = styled.div`
     
     .project {
         margin-bottom: 1em; 
-        height: 18rem;
         max-height: 300px;
         min-height: 100px;
         
@@ -149,7 +148,7 @@ export const DetailsContainer = styled.div<ProjectDetailsContainerProps>`
     display: flex;
     overflow: visible;
     
-    @media(max-width: ${ breakpoints.tabletBig }) {
+    @media(max-width: ${ breakpoints.tabletSmall }) {
         flex-direction: column;
         
         > div {
@@ -202,7 +201,7 @@ export const TextContainer = styled.div`
         text-align: center;
     }
     
-    @media(max-width: ${ breakpoints.tabletBig }) {
+    @media(max-width: ${ breakpoints.tabletSmall }) {
         display: flex;
         flex-direction: column;   
         
@@ -233,6 +232,16 @@ export const Actions = styled.div`
     > * {
         margin: 0 1em;
     }
+    
+    @media(max-width: ${ parseInt( breakpoints.tabletBig ) + 1 }px) and (min-width: ${ breakpoints.tabletSmall }){
+        flex-wrap: wrap;
+        
+        a {
+            width: 100%;
+            margin-bottom: 1em;
+            text-align: center;
+        }
+    } 
     
     @media(max-width: ${ breakpoints.tabletSmall }){
         position: absolute;

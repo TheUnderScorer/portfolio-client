@@ -67,7 +67,7 @@ const GlobalStyle = createGlobalStyle<any>`
     }
     
     .ReactModal__Overlay{
-        z-index: 4;
+        z-index: 14;
         position: fixed;
         top: 0;
         left: 0;

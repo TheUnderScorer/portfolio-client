@@ -120,6 +120,10 @@ const Header = () =>
 
     const handleLogoClick = useCallback( () =>
     {
+        if ( isOpen ) {
+            return;
+        }
+
         const sectionAction: SetCurrentSection = {
             type:    'SetCurrentSection',
             payload: ''
@@ -146,7 +150,7 @@ const Header = () =>
 
         dispatch( innerAction );
 
-    }, [ innerActive ] );
+    }, [ innerActive, isOpen ] );
 
     const switchOpenState = useCallback( () =>
     {
