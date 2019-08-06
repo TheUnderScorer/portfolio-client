@@ -110,8 +110,8 @@ export const LogoWrapper = styled.a`
     z-index: 21;
 
     img {
-        width: 40px;
-        height: 40px;
+        width: 35px;
+        height: 35px;
         border-radius: 50%;
     }
     
