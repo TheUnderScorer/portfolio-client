@@ -2,7 +2,7 @@
 
 ## Description
 
-This project acts as a client for my portfolip site. Feel free to use it for your needs :).
+This project acts as a client for my portfolio site. Feel free to use it for your needs :).
 
 ## Scripts
 
