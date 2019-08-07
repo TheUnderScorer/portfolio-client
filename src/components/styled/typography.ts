@@ -123,6 +123,10 @@ export const A = styled.a<LinkProps>`
     ` }
 `;
 
+export const Highlight = styled.span`
+    color: ${ props => getPrimary( props.theme.mode ) };
+`;
+
 export const SectionSubtitle = styled( Text )<SectionSubtitleProps>`
     display: block;
     margin-bottom: 40px;
