@@ -15,12 +15,12 @@ import { ButtonProps } from '../styled/types';
 const borderRadius = '6px';
 
 export const ProjectsContainer = styled.div`
-    max-width: 1500px;
+    max-width: 1200px;
     margin: 0 auto !important;
     display: grid;
     grid-template-rows: 1fr;
-    grid-row-gap: 3em;
-    grid-column-gap: 3em;
+    grid-row-gap: 1em;
+    grid-column-gap: 2em;
     grid-template-columns: repeat(3, 1fr);
     
     @media(max-width: ${ breakpoints.tabletBig }){
@@ -53,6 +53,7 @@ export const ProjectContainer = styled.div<ProjectContainerProps>`
 
 export const ProjectImageFigure = styled.figure<ProjectImageFigProps>`
     height: 100%;
+    max-height: 300px;
     border-radius: ${ borderRadius };
     overflow: hidden;
     position: relative;

@@ -12,6 +12,7 @@ export interface HomeSectionProps
     isCentered?: boolean;
     odd?: boolean;
     colorBackground?: boolean;
+    hasSeparator?: boolean;
 }
 
 export interface FlexProps

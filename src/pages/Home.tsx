@@ -30,6 +30,7 @@ import { UPDATE_LOGIN_DATE } from '../graphql/mutations/users';
 const AboutMe = lazy( () => import('../components/about-me/AboutMe') );
 const HowCanIHelp = lazy( () => import('../components/how-can-i-help/HowCanIHelp') );
 const Contact = lazy( () => import('../components/contact/Contact') );
+const ContactSection = lazy( () => import('../components/contact-section/ContactSection') );
 
 const HomeWrapper = styled.div<HomeWrapperProps>`
     ${ props => props.innerActive && `
@@ -211,6 +212,7 @@ const Home = () =>
                                   <AboutMe/>
                                   <HowCanIHelp/>
                                   <Projects projects={ projects }/>
+                                  <ContactSection/>
                               </>
                             }
                         </Suspense>
