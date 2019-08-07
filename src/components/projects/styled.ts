@@ -140,6 +140,9 @@ export const ReadMore = styled( Button ).attrs<ButtonProps>( {
     round: true,
 } )`
     margin-top: 40px;
+    &, * {
+        color: ${ colors.white }
+    }
 `;
 
 export const DetailsContainer = styled.div<ProjectDetailsContainerProps>`

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import colors, { getPrimary } from './colors';
+import colors, { getPrimary, getPrimaryVariation } from './colors';
 import { ButtonProps } from './types';
 
 export const Button = styled.button<ButtonProps>`
@@ -27,8 +27,17 @@ export const Button = styled.button<ButtonProps>`
         background: transparent;
         border: 2px solid ${ getPrimary( props.theme.mode ) };
         
+        &, * {
+            color: ${ props.theme.mode === 'black' ? colors.white : getPrimaryVariation( props.theme.mode ) }
+        }
+        
         &:hover {
-            background-color: ${ getPrimary( props.theme.mode ) }
+            background-color: ${ getPrimary( props.theme.mode ) };
+            border-color: transparent;
+            
+           &, * {
+                color: ${ colors.white }
+           }
         }
     ` }
     
