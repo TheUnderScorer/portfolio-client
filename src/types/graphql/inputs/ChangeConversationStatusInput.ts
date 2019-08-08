@@ -5,6 +5,7 @@ export default interface ChangeConversationStatusInput extends Partial<Conversat
     conversationID: number;
     status: ConversationStatuses;
     email?: string;
+    sendTranscript?: boolean;
 }
 
 export interface ChangeConversationStatusInputVariable

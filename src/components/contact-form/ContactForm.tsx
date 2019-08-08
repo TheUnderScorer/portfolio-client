@@ -76,7 +76,7 @@ const ContactForm = ( props: ContactFormProps & FormikProps<ContactInput> ) =>
                 }/>
             </FormSection>
             <FormSection margin="normal">
-                <Button flat={ true } type="submit" disabled={ mutationResult.loading }>
+                <Button disabledOpacity={ false } flat={ true } type="submit" disabled={ mutationResult.loading }>
                     <Loader asOverlay={ true } active={ mutationResult.loading }/>
                     Send message
                 </Button>

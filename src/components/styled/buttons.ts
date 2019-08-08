@@ -33,7 +33,7 @@ export const Button = styled.button<ButtonProps>`
         
         &:hover {
             background-color: ${ getPrimary( props.theme.mode ) };
-            border-color: transparent;
+            border-color: inherit;
             
            &, * {
                 color: ${ colors.white }
@@ -77,7 +77,9 @@ export const Button = styled.button<ButtonProps>`
     ` }
     
     &:disabled {
-        opacity: 0.2;
+        ${ ( { disabledOpacity = true } ) => disabledOpacity && `
+            opacity: 0.2;
+        ` }
         cursor: not-allowed;
     }
     
