@@ -2,7 +2,7 @@ import Conversation, { ConversationStatuses } from '../Conversation';
 
 export default interface ChangeConversationStatusInput extends Partial<Conversation>
 {
-    conversationID: number;
+    id: number;
     status: ConversationStatuses;
     email?: string;
     sendTranscript?: boolean;

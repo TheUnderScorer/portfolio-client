@@ -95,6 +95,7 @@ export const ErrorMessage = styled.div`
 `;
 
 export const FormSection = styled.section<FormSectionProps>`
+    position: relative;
     margin: ${ ( { margin = 'none' } ) =>
 {
     switch ( margin ) {

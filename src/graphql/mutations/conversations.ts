@@ -24,10 +24,10 @@ export const CREATE_CONVERSATION = gql`
 export const CHANGE_STATUS = gql`
     mutation ChangeStatus($input: ChangeConversationStatusInput!) {
         changeStatus(input: $input) {
-            ...ConversationFragment
+            id,
+            status
         }
     }
-    ${CONVERSATION_FRAGMENT}
 `;
 
 export const SEND_MESSAGE = gql`

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Flex } from '../styled/wrappers';
 
-export const ErrorMessageWrapper = styled( Flex ).attrs( {
+export const IconMessageWrapper = styled( Flex ).attrs( {
     alignItems:     'center',
     justifyContent: 'center',
     flexDirection:  'column'

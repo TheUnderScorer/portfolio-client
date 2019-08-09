@@ -3,14 +3,18 @@ import { useCallback, useEffect, useState } from 'react';
 import Loader from '../loader/Loader';
 import ConversationProps from './types/ConversationProps';
 import { ConversationContainer } from './styled';
-import ConversationEditor from '../conversation-editor/ConversationEditor';
-import ConversationMessages from '../conversation-messages/ConversationMessages';
 import usePrevious from '../../hooks/usePrevious';
 import { useApolloClient } from 'react-apollo-hooks';
 import { MY_CONVERSATION } from '../../graphql/queries/conversations';
 import { ConversationResult } from '../../types/graphql/Queries';
-import CloseConversationForm from '../close-conversation-form/CloseConversationForm';
 import useCurrentUser from '../../hooks/useCurrentUser';
+import ConversationEditor from '../conversation-editor/ConversationEditor';
+import ConversationMessages from '../conversation-messages/ConversationMessages';
+import CloseConversationForm from '../close-conversation-form/CloseConversationForm';
+import { ConversationStatuses } from '../../types/graphql/Conversation';
+import IconMessage from '../icon-message/IconMessage';
+import { A, FaIcon } from '../styled/typography';
+import { faCheckCircle } from '@fortawesome/free-regular-svg-icons';
 
 const messagesPerPage = 30;
 
@@ -105,15 +109,31 @@ const Conversation = ( { query, creationMutation, messageCreationMutation, chang
                 width:  '30%',
                 height: '30%'
             } }/>
-            { !isClosing && result && result.conversation &&
-              <>
-                  <ConversationMessages onCloseClick={ handleClose } loading={ query.loading } onLoadMore={ loadMore } hasMore={ hasMore } conversation={ result.conversation }/>
-                  <ConversationEditor mutation={ messageCreationMutation } disabled={ queryLoading } conversationID={ conversationID }/>
-              </>
-            }
 
-            { isClosing && result && result.conversation && currentUser.data &&
-              <CloseConversationForm onCancel={ handleCancel } closeConversationMutation={ changeStatusMutation } conversationID={ result.conversation.id } currentUser={ currentUser.data.user }/>
+            { result && result.conversation &&
+
+              <>
+
+                  { result.conversation.status === ConversationStatuses.closed && isClosing &&
+                    <IconMessage title="Conversation closed" icon={ <FaIcon icon={ faCheckCircle }/> }>
+                        <A underlined={ true }>
+                            Click here to return.
+                        </A>
+                    </IconMessage>
+                  }
+
+                  { !isClosing &&
+                    <>
+                        <ConversationMessages onCloseClick={ handleClose } loading={ query.loading } onLoadMore={ loadMore } hasMore={ hasMore } conversation={ result.conversation }/>
+                        <ConversationEditor mutation={ messageCreationMutation } disabled={ queryLoading } conversationID={ conversationID }/>
+                    </>
+                  }
+
+                  { isClosing && currentUser.data &&
+                    <CloseConversationForm onCancel={ handleCancel } closeConversationMutation={ changeStatusMutation } conversationID={ result.conversation.id } currentUser={ currentUser.data.user }/>
+                  }
+              </>
+
             }
 
         </ConversationContainer>

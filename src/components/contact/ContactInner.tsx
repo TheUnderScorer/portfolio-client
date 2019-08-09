@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { MutableRefObject, useCallback, useEffect, useRef, useState } from 'react';
 import Loader from '../loader/Loader';
-import ErrorMessage from '../error-message/ErrorMessage';
+import IconMessage from '../icon-message/IconMessage';
 import { ContactSlider, FormTitle, FormTitleContainer, Inner } from './styled/contact';
 import { IconButton, Menu, MenuItem, Tooltip } from '@material-ui/core';
 import { FaIcon, FaIconReversed, Text } from '../styled/typography';
@@ -25,10 +25,11 @@ import HomeStore from '../../types/stores/HomeStore';
 import { SelectionCallback } from '../selection/types/SelectionProps';
 import { SetContactType } from '../../types/actions/ContactActions';
 import { useSpring } from 'react-spring';
-import { faUserCircle } from '@fortawesome/free-regular-svg-icons';
+import { faFrown, faUserCircle } from '@fortawesome/free-regular-svg-icons';
 import useChat from '../../hooks/useChat';
 import Conversation from '../conversation/Conversation';
 import { UPDATE_ME } from '../../graphql/mutations/users';
+import { ConversationStatuses } from '../../types/graphql/Conversation';
 
 const sections = {
     [ ContactTypes.UserForm ]:     0,
@@ -60,6 +61,7 @@ const ContactInner = () =>
     const [ , userMutationResult ] = userMutation;
 
     const { conversationsQuery, createConversationMutation, createMessageMutation, changeStatusMutation } = useChat( type !== ContactTypes.Conversation );
+    const [ createConversation ] = createConversationMutation;
 
     const [ errors, setErrors ] = useApolloErrors( [
         userQuery,
@@ -189,6 +191,7 @@ const ContactInner = () =>
         }
     }, [ errors ] );
 
+    // Handles connection error
     useEffect( () =>
     {
         if ( !errors.length ) {
@@ -204,6 +207,20 @@ const ContactInner = () =>
 
     }, [ errors ] );
 
+    useEffect( () =>
+    {
+        if ( !conversationsQuery.data ) {
+            return;
+        }
+
+        const { conversation } = conversationsQuery.data;
+
+        if ( !conversation || conversation.status === ConversationStatuses.closed && !createConversationMutation[ 1 ].loading ) {
+            createConversation();
+        }
+
+    }, [ conversationsQuery.data, createConversationMutation ] );
+
     return (
         <Inner style={ props }>
             <Loader active={ userLoading } asOverlay={ true } svgProps={ {
@@ -212,7 +229,12 @@ const ContactInner = () =>
             } }/>
 
             { !isConnected &&
-              <ErrorMessage title="Oh no!" message="We are unable to connect to our server. Please check your internet connection"/>
+              <IconMessage icon={
+                  <FaIcon icon={ faFrown }/> } title="Oh no!">
+                  <Text>
+                      We are unable to connect to our server. Please check your internet connection.
+                  </Text>
+              </IconMessage>
             }
 
             { isConnected &&

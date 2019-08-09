@@ -9,19 +9,17 @@ import { H6, Text } from '../styled/typography';
 import { Button } from '../styled/buttons';
 import { Checkbox, FormControlLabel, TextField } from '@material-ui/core';
 import FormikInput from '../formik/FormikInput';
-import useCurrentUser from '../../hooks/useCurrentUser';
+import Loader from '../loader/Loader';
 
 const validationSchema = Yup.object().shape( {
-    email:          Yup.string().email( 'Invalid e-mail address.' ).required( 'Provide your e-mail address.' ),
-    conversationID: Yup.number().required( 'ConversationID is missing.' ),
-    status:         Yup.string().oneOf( Object.values( ConversationStatuses ), 'Invalid conversation status provided.' )
+    email:  Yup.string().email( 'Invalid e-mail address.' ).required( 'Provide your e-mail address.' ),
+    id:     Yup.number().required( 'ConversationID is missing.' ),
+    status: Yup.string().oneOf( Object.values( ConversationStatuses ), 'Invalid conversation status provided.' )
 } );
 
-const CloseConversationForm = ( { onCancel, values, closeConversationMutation }: Props & FormikProps<ChangeConversationStatusInput> ) =>
+const CloseConversationForm = ( { onCancel, values, closeConversationMutation, currentUser }: Props & FormikProps<ChangeConversationStatusInput> ) =>
 {
     const [ , mutationResult ] = closeConversationMutation;
-
-    const { data: userData } = useCurrentUser();
 
     return (
         <CentredFrom>
@@ -56,7 +54,7 @@ const CloseConversationForm = ( { onCancel, values, closeConversationMutation }:
                   <FormikInput id="email" name="email" type="text" render={ ( { form, field } ) =>
                       <TextField
                           helperText={ !form.errors.email || !form.touched.email ? 'Email to which transcript will be sent.' : '' }
-                          defaultValue={ userData ? userData.user.email : '' }
+                          defaultValue={ currentUser.email ? currentUser.email : '' }
                           disabled={ mutationResult.loading }
                           label="Email"
                           fullWidth
@@ -69,6 +67,7 @@ const CloseConversationForm = ( { onCancel, values, closeConversationMutation }:
               </FormSection>
             }
             <FlexFormSection margin="normal" isCentered={ true }>
+                <Loader active={ mutationResult.loading } asOverlay={ true }/>
                 <Button disabled={ mutationResult.loading } flat={ true }>
                     Close conversation
                 </Button>
@@ -82,15 +81,21 @@ const CloseConversationForm = ( { onCancel, values, closeConversationMutation }:
 
 const wrapper = withFormik<Props, ChangeConversationStatusInput>( {
     mapPropsToValues: ( { conversationID, currentUser } ) => ( {
-        conversationID,
+        id:             conversationID,
         email:          currentUser.email ? currentUser.email : '',
         status:         ConversationStatuses.closed,
         sendTranscript: false,
     } ),
     validationSchema,
-    handleSubmit:     async () =>
+    handleSubmit:     async ( input, formikBag ) =>
                       {
+                          const [ mutationFn ] = formikBag.props.closeConversationMutation;
 
+                          await mutationFn( {
+                              variables: {
+                                  input
+                              }
+                          } )
                       }
 } );
 
