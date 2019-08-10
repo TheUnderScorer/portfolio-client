@@ -67,11 +67,11 @@ const CloseConversationForm = ( { onCancel, values, closeConversationMutation, c
               </FormSection>
             }
             <FlexFormSection margin="normal" isCentered={ true }>
-                <Loader active={ mutationResult.loading } asOverlay={ true }/>
-                <Button disabled={ mutationResult.loading } flat={ true }>
+                <Loader active={ mutationResult.loading } asOverlay/>
+                <Button disabled={ mutationResult.loading } ripple flat>
                     Close conversation
                 </Button>
-                <Button mode="secondary" flat={ true } disabled={ mutationResult.loading } transparent={ true } onClick={ onCancel }>
+                <Button mode="secondary" ripple flat disabled={ mutationResult.loading } transparent onClick={ onCancel }>
                     Cancel
                 </Button>
             </FlexFormSection>

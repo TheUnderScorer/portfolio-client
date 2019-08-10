@@ -25,19 +25,10 @@ export const Button = styled.button<ButtonProps>`
     
     ${ props => props.mode === 'secondary' && `
         background: transparent;
-        border: 2px solid ${ getPrimary( props.theme.mode ) };
+        border: 1px solid ${ getPrimary( props.theme.mode ) };
         
         &, * {
             color: ${ props.theme.mode === 'black' ? colors.white : getPrimaryVariation( props.theme.mode ) }
-        }
-        
-        &:hover {
-            background-color: ${ getPrimary( props.theme.mode ) };
-            border-color: inherit;
-            
-           &, * {
-                color: ${ colors.white }
-           }
         }
     ` }
     

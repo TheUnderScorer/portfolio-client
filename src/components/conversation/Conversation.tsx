@@ -13,13 +13,18 @@ import ConversationMessages from '../conversation-messages/ConversationMessages'
 import CloseConversationForm from '../close-conversation-form/CloseConversationForm';
 import { ConversationStatuses } from '../../types/graphql/Conversation';
 import IconMessage from '../icon-message/IconMessage';
-import { A, FaIcon } from '../styled/typography';
+import { A, FaIcon, Text } from '../styled/typography';
 import { faCheckCircle } from '@fortawesome/free-regular-svg-icons';
+import { useDispatch } from 'react-redux';
+import { SetContactType } from '../../types/actions/ContactActions';
+import { ContactTypes } from '../../types/reducers/ContactReducer';
 
 const messagesPerPage = 30;
 
 const Conversation = ( { query, creationMutation, messageCreationMutation, changeStatusMutation }: ConversationProps ) =>
 {
+    const dispatch = useDispatch();
+
     const { data: result, loading: queryLoading } = query;
 
     const currentUser = useCurrentUser();
@@ -29,6 +34,11 @@ const Conversation = ( { query, creationMutation, messageCreationMutation, chang
     const [ isClosing, setIsClosing ] = useState( false );
     const handleClose = useCallback( () => setIsClosing( true ), [] );
     const handleCancel = useCallback( () => setIsClosing( false ), [] );
+
+    const handleReturn = useCallback( () => dispatch<SetContactType>( {
+        type:    'SetContactType',
+        payload: ContactTypes.Selection
+    } ), [ dispatch ] );
 
     const conversationID = result && result.conversation ? result.conversation.id : 0;
     const prevConversationID = usePrevious( conversationID );
@@ -115,22 +125,29 @@ const Conversation = ( { query, creationMutation, messageCreationMutation, chang
               <>
 
                   { result.conversation.status === ConversationStatuses.closed && isClosing &&
-                    <IconMessage title="Conversation closed" icon={ <FaIcon icon={ faCheckCircle }/> }>
-                        <A underlined={ true }>
+                    <IconMessage title="Conversation closed." icon={ <FaIcon icon={ faCheckCircle }/> }>
+                        <Text>
+                            Thanks for chat!
+                        </Text>
+                        <A onClick={ handleReturn } underlined={ true }>
                             Click here to return.
                         </A>
                     </IconMessage>
                   }
 
-                  { !isClosing &&
+                  { result.conversation.status === ConversationStatuses.open &&
                     <>
-                        <ConversationMessages onCloseClick={ handleClose } loading={ query.loading } onLoadMore={ loadMore } hasMore={ hasMore } conversation={ result.conversation }/>
-                        <ConversationEditor mutation={ messageCreationMutation } disabled={ queryLoading } conversationID={ conversationID }/>
-                    </>
-                  }
+                        { !isClosing &&
+                          <>
+                              <ConversationMessages onCloseClick={ handleClose } loading={ query.loading } onLoadMore={ loadMore } hasMore={ hasMore } conversation={ result.conversation }/>
+                              <ConversationEditor mutation={ messageCreationMutation } disabled={ queryLoading } conversationID={ conversationID }/>
+                          </>
+                        }
 
-                  { isClosing && currentUser.data &&
-                    <CloseConversationForm onCancel={ handleCancel } closeConversationMutation={ changeStatusMutation } conversationID={ result.conversation.id } currentUser={ currentUser.data.user }/>
+                        { isClosing && currentUser.data &&
+                          <CloseConversationForm onCancel={ handleCancel } closeConversationMutation={ changeStatusMutation } conversationID={ result.conversation.id } currentUser={ currentUser.data.user }/>
+                        }
+                    </>
                   }
               </>
 

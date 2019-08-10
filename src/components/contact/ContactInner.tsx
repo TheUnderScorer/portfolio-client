@@ -209,17 +209,17 @@ const ContactInner = () =>
 
     useEffect( () =>
     {
-        if ( !conversationsQuery.data ) {
+        if ( !conversationsQuery.data || !conversationsQuery.data.conversation ) {
             return;
         }
 
         const { conversation } = conversationsQuery.data;
 
-        if ( !conversation || conversation.status === ConversationStatuses.closed && !createConversationMutation[ 1 ].loading ) {
+        if ( conversation.status && conversation.status === ConversationStatuses.closed && !createConversationMutation[ 1 ].loading && type === ContactTypes.Selection ) {
             createConversation();
         }
 
-    }, [ conversationsQuery.data, createConversationMutation ] );
+    }, [ conversationsQuery.data, createConversationMutation, type ] );
 
     return (
         <Inner style={ props }>
