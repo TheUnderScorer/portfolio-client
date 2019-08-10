@@ -1,12 +1,4 @@
-import {
-    MutationFn,
-    MutationResult,
-    QueryHookResult,
-    SubscriptionHookResult,
-    useMutation,
-    useQuery,
-    useSubscription
-} from 'react-apollo-hooks';
+import { MutationTuple, QueryLazyOptions, useLazyQuery, useMutation, useSubscription } from '@apollo/react-hooks';
 import { MY_CONVERSATION } from '../graphql/queries/conversations';
 import { ConversationResult, MessageResult } from '../types/graphql/Queries';
 import { useEffect } from 'react';
@@ -15,25 +7,28 @@ import { NEW_MESSAGE } from '../graphql/subscriptions/messages';
 import addMessageToConversation from '../graphql/cache/addMessageToConversation';
 import { MessageInputVariable } from '../types/graphql/inputs/MessageInput';
 import { ChangeConversationStatusInputVariable } from '../types/graphql/inputs/ChangeConversationStatusInput';
+import { QueryResult } from '@apollo/react-common';
+import SubscriptionResult from '../types/graphql/SubscriptionResult';
+import PaginationInput from '../types/graphql/inputs/PaginationInput';
 
-export type ChangeStatusMutation = [ MutationFn<ConversationResult, ChangeConversationStatusInputVariable>, MutationResult<ConversationResult> ];
-export type CreateMessageMutation = [ MutationFn<MessageResult, MessageInputVariable>, MutationResult<MessageResult> ];
-export type CreateConversationMutation = [ MutationFn<ConversationResult, any>, MutationResult<ConversationResult> ];
+export type ChangeStatusMutation = MutationTuple<ConversationResult, ChangeConversationStatusInputVariable>;
+export type CreateMessageMutation = MutationTuple<MessageResult, MessageInputVariable>;
+export type CreateConversationMutation = MutationTuple<ConversationResult, any>;
+// TODO Create type for callback function
+export type ConversationQuery = [ ( options?: QueryLazyOptions<PaginationInput> ) => void, QueryResult<ConversationResult, any> ];
 
 export type Result = {
-    conversationsQuery: QueryHookResult<ConversationResult, any>,
+    conversationsQuery: ConversationQuery,
     createConversationMutation: CreateConversationMutation,
     createMessageMutation: CreateMessageMutation,
-    newMessagesSubscription: SubscriptionHookResult<MessageResult>,
+    newMessagesSubscription: SubscriptionResult<MessageResult>,
     changeStatusMutation: ChangeStatusMutation
 }
 
 export default ( suspend: boolean = false ): Result =>
 {
-    const conversationsQuery = useQuery<ConversationResult>( MY_CONVERSATION, {
-        suspend,
-    } );
-    const { data } = conversationsQuery;
+    const conversationsQuery = useLazyQuery<ConversationResult>( MY_CONVERSATION );
+    const { data } = conversationsQuery[ 1 ];
 
     const createConversationMutation = useMutation<ConversationResult>( CREATE_CONVERSATION, {
         update: ( cache, { data } ) =>

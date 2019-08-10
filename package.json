@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@apollo/react-hooks": "^3.0.0",
     "@fortawesome/fontawesome-svg-core": "^1.2.19",
     "@fortawesome/free-brands-svg-icons": "^5.9.0",
     "@fortawesome/free-regular-svg-icons": "^5.9.0",
@@ -20,8 +21,6 @@
     "lodash": ">=4.17.14",
     "moment": "^2.24.0",
     "react": "^16.8.6",
-    "react-apollo": "^2.5.8",
-    "react-apollo-hooks": "^0.5.0",
     "react-dom": "^16.8.6",
     "react-flexbox-grid": "^2.1.2",
     "react-gsap": "^1.2.0",

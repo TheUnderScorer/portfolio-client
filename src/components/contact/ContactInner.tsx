@@ -15,7 +15,6 @@ import ContactForm from '../contact-form/ContactForm';
 import { useDispatch, useSelector } from 'react-redux';
 import useCurrentUser from '../../hooks/useCurrentUser';
 import User from '../../types/graphql/User';
-import { useMutation } from 'react-apollo-hooks';
 import Result from '../../types/graphql/Result';
 import { ContactInputVariable } from '../../types/graphql/inputs/ContactInput';
 import { SEND } from '../../graphql/mutations/contact';
@@ -29,6 +28,7 @@ import { faFrown, faUserCircle } from '@fortawesome/free-regular-svg-icons';
 import useChat from '../../hooks/useChat';
 import Conversation from '../conversation/Conversation';
 import { UPDATE_ME } from '../../graphql/mutations/users';
+import { useMutation } from '@apollo/react-hooks';
 import { ConversationStatuses } from '../../types/graphql/Conversation';
 
 const sections = {
@@ -61,11 +61,12 @@ const ContactInner = () =>
     const [ , userMutationResult ] = userMutation;
 
     const { conversationsQuery, createConversationMutation, createMessageMutation, changeStatusMutation } = useChat( type !== ContactTypes.Conversation );
-    const [ createConversation ] = createConversationMutation;
+    const [ , conversationQueryResult ] = conversationsQuery;
+    const [ createConversation, createConversationResult ] = createConversationMutation;
 
     const [ errors, setErrors ] = useApolloErrors( [
         userQuery,
-        conversationsQuery,
+        conversationQueryResult,
         userMutation[ 1 ],
         contactMutation[ 1 ],
     ] );
@@ -157,7 +158,7 @@ const ContactInner = () =>
 
             setSuccessMessages( newMessages );
         }
-    }, [] );
+    }, [ successMessages ] );
 
     // Clears success messages after timeout
     useEffect( () =>
@@ -209,17 +210,17 @@ const ContactInner = () =>
 
     useEffect( () =>
     {
-        if ( !conversationsQuery.data || !conversationsQuery.data.conversation ) {
+        if ( !conversationQueryResult.data || !Object.values( conversationQueryResult.data as object ).length ) {
             return;
         }
 
-        const { conversation } = conversationsQuery.data;
+        const { conversation } = conversationQueryResult.data;
 
-        if ( conversation.status && conversation.status === ConversationStatuses.closed && !createConversationMutation[ 1 ].loading && type === ContactTypes.Selection ) {
+        if ( conversation.status && conversation.status === ConversationStatuses.closed && !createConversationResult.loading && type === ContactTypes.Selection ) {
             createConversation();
         }
 
-    }, [ conversationsQuery.data, createConversationMutation, type ] );
+    }, [ conversationQueryResult, createConversationMutation, createConversationMutation ] );
 
     return (
         <Inner style={ props }>
@@ -290,7 +291,7 @@ const ContactInner = () =>
                         <UserForm user={ user } mutation={ userMutation }/>
                         <Selection<ContactTypes> onSelection={ setSection } options={ contactSelections }/>
                         <ContactForm afterSubmit={ onContactFormSubmit } user={ user } mutation={ contactMutation }/>
-                        <Conversation changeStatusMutation={ changeStatusMutation } messageCreationMutation={ createMessageMutation } query={ conversationsQuery } creationMutation={ createConversationMutation }/>
+                        <Conversation createConversationMutation={ createConversationMutation } changeStatusMutation={ changeStatusMutation } messageCreationMutation={ createMessageMutation } conversationQuery={ conversationsQuery } creationMutation={ createConversationMutation }/>
                         <div>
                             Edit profile!
                         </div>

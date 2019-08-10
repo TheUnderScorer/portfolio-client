@@ -4,7 +4,6 @@ import Loader from '../loader/Loader';
 import ConversationProps from './types/ConversationProps';
 import { ConversationContainer } from './styled';
 import usePrevious from '../../hooks/usePrevious';
-import { useApolloClient } from 'react-apollo-hooks';
 import { MY_CONVERSATION } from '../../graphql/queries/conversations';
 import { ConversationResult } from '../../types/graphql/Queries';
 import useCurrentUser from '../../hooks/useCurrentUser';
@@ -18,13 +17,17 @@ import { faCheckCircle } from '@fortawesome/free-regular-svg-icons';
 import { useDispatch } from 'react-redux';
 import { SetContactType } from '../../types/actions/ContactActions';
 import { ContactTypes } from '../../types/reducers/ContactReducer';
+import { useApolloClient } from '@apollo/react-hooks';
 
 const messagesPerPage = 30;
 
-const Conversation = ( { query, creationMutation, messageCreationMutation, changeStatusMutation }: ConversationProps ) =>
+const Conversation = ( { conversationQuery, creationMutation, messageCreationMutation, changeStatusMutation, createConversationMutation }: ConversationProps ) =>
 {
     const dispatch = useDispatch();
 
+    const [ createConversation ] = createConversationMutation;
+
+    const [ fetchConversation, query ] = conversationQuery;
     const { data: result, loading: queryLoading } = query;
 
     const currentUser = useCurrentUser();
@@ -75,6 +78,24 @@ const Conversation = ( { query, creationMutation, messageCreationMutation, chang
                          }
         } )
     }, [ hasMore, result, query ] );
+
+    useEffect( () =>
+    {
+        if ( result || queryLoading ) {
+            return;
+        }
+
+        fetchConversation();
+    }, [ query ] );
+
+    useEffect( () =>
+    {
+        if ( query.data || !query.called || createConversationMutation[ 1 ].loading ) {
+            return;
+        }
+
+        createConversation();
+    }, [ query.data, createConversationMutation, query.called, createConversation ] );
 
     useEffect( () =>
     {

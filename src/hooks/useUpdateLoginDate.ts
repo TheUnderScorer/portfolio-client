@@ -1,9 +1,9 @@
-import { useMutation } from 'react-apollo-hooks';
 import { UserResult } from '../types/graphql/Mutations';
 import useCurrentUser from './useCurrentUser';
 import { useEffect } from 'react';
 import usePrevious from './usePrevious';
 import { UPDATE_LOGIN_DATE } from '../graphql/mutations/users';
+import { useMutation } from '@apollo/react-hooks';
 
 export default () =>
 {

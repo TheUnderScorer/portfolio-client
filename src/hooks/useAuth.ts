@@ -2,15 +2,16 @@ import { useDispatch, useSelector } from 'react-redux';
 import HomeStore from '../types/stores/HomeStore';
 import { useCallback } from 'react';
 import { SetToken } from '../types/actions/UserActions';
-import { MutationFn, MutationResult, useMutation } from 'react-apollo-hooks';
 import { UserResult } from '../types/graphql/Mutations';
 import User from '../types/graphql/User';
 import { CREATE_USER } from '../graphql/mutations/users';
+import { MutationTuple, useMutation } from '@apollo/react-hooks';
+import { ExecutionResult } from '@apollo/react-common';
 
 export type UseAuthResult = [
     string,
-    ( input?: Partial<User> ) => Promise<User>,
-    [ MutationFn<UserResult, any>, MutationResult<UserResult> ]
+    ( input?: Partial<User> ) => Promise<User | null>,
+    MutationTuple<UserResult, any>
 ]
 
 export default (): UseAuthResult =>
@@ -32,13 +33,17 @@ export default (): UseAuthResult =>
         dispatch( action );
     }, [ dispatch ] );
 
-    const createUser = useCallback( async ( input: Partial<User> = {} ): Promise<User> =>
+    const createUser = useCallback( async ( input: Partial<User> = {} ): Promise<User | null> =>
     {
         const result = await callMutation( {
             variables: {
                 input,
             }
-        } );
+        } ) as ExecutionResult<UserResult>;
+
+        if ( !result.data ) {
+            return null;
+        }
 
         const { user } = result.data;
         const { token } = user as User;
