@@ -44,7 +44,7 @@ describe( 'Header component', () => {
 
         const actions = store.getActions();
 
-        expect( actions[ 0 ].payload ).toEqual( 'about' );
+        expect( actions[ 2 ].payload ).toEqual( 'about_me' );
     } );
 
 } );

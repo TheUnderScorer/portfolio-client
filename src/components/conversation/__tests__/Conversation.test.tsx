@@ -1,8 +1,5 @@
 import { MockedResponse, wait } from '@apollo/react-testing';
 import { MY_CONVERSATION } from '../../../graphql/queries/conversations';
-import ConversationInterface, { ConversationStatuses } from '../../../types/graphql/Conversation';
-import moment from 'moment';
-import { DateFormats } from '../../../types/common/DateFormats';
 import Conversation from '../Conversation';
 import * as React from 'react';
 import { useEffect } from 'react';
@@ -13,10 +10,14 @@ import { NEW_MESSAGE } from '../../../graphql/subscriptions/messages';
 import { act } from 'react-dom/test-utils';
 import { CREATE_CONVERSATION } from '../../../graphql/mutations/conversations';
 import '../../../fontAwesome';
-import User from '../../../types/graphql/User';
 import { GET_ME } from '../../../graphql/queries/users';
 import ConversationMessages from '../../conversation-messages/ConversationMessages';
 import CloseConversationForm from '../../close-conversation-form/CloseConversationForm';
+import mockUser from '../../../tests/data/mockUser';
+import mockConversation from '../../../tests/data/mockConversation';
+
+// @ts-ignore
+global.scrollTo = jest.fn();
 
 const MockComponent = () =>
 {
@@ -44,37 +45,6 @@ const MockComponent = () =>
 describe( 'Conversation component', () =>
 {
     jest.setTimeout( 10000 );
-
-    const mockUser: User & any = {
-        id:         1,
-        name:       'Greg',
-        email:      '',
-        role:       'user',
-        lastLogin:  0,
-        token:      {
-            value:      'test',
-            __typename: 'Token'
-        },
-        __typename: 'User'
-    };
-
-    const mockConversation: ConversationInterface & any = {
-        id:         1,
-        title:      '',
-        createdAt:  0,
-        status:     ConversationStatuses.open,
-        messages:   [
-            {
-                id:         1,
-                content:    'Test',
-                author:     mockUser,
-                createdAt:  moment().subtract( 10, 'minutes' ).format( DateFormats.DateTime ),
-                updatedAt:  moment().subtract( 10, 'minutes' ).format( DateFormats.DateTime ),
-                __typename: 'Message'
-            }
-        ],
-        __typename: 'Conversation'
-    };
 
     let mocks: MockedResponse[] = [
         {
