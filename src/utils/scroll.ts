@@ -20,7 +20,7 @@ export const smoothScroll = ( elementY: number, duration: number, element?: HTML
             // Get percent of completion in range [0, 1].
             const percent = Math.min( time / duration, 1 );
 
-            if ( element ) {
+            if ( element && element.scrollTo ) {
                 element.scrollTo( 0, startingY + diff * percent );
             } else {
                 window.scrollTo( 0, startingY + diff * percent );

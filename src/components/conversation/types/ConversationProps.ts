@@ -9,7 +9,6 @@ export default interface ConversationProps
 {
     createConversationMutation: CreateConversationMutation;
     conversationQuery: ConversationQuery;
-    creationMutation: CreateConversationMutation,
     messageCreationMutation: CreateMessageMutation;
     changeStatusMutation: ChangeStatusMutation
 }

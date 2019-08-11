@@ -21,13 +21,14 @@ import { useApolloClient } from '@apollo/react-hooks';
 
 const messagesPerPage = 30;
 
-const Conversation = ( { conversationQuery, creationMutation, messageCreationMutation, changeStatusMutation, createConversationMutation }: ConversationProps ) =>
+const Conversation = ( { conversationQuery, messageCreationMutation, changeStatusMutation, createConversationMutation }: ConversationProps ) =>
 {
     const dispatch = useDispatch();
 
-    const [ createConversation ] = createConversationMutation;
+    const [ createConversation, mutationResult ] = createConversationMutation;
+    const { loading: mutationLoading } = mutationResult;
 
-    const [ fetchConversation, query ] = conversationQuery;
+    const [ , query ] = conversationQuery;
     const { data: result, loading: queryLoading } = query;
 
     const currentUser = useCurrentUser();
@@ -45,9 +46,6 @@ const Conversation = ( { conversationQuery, creationMutation, messageCreationMut
 
     const conversationID = result && result.conversation ? result.conversation.id : 0;
     const prevConversationID = usePrevious( conversationID );
-
-    const [ , mutationResult ] = creationMutation;
-    const { loading: mutationLoading } = mutationResult;
 
     const [ hasMore, setHasMore ] = useState( true );
 
@@ -78,15 +76,6 @@ const Conversation = ( { conversationQuery, creationMutation, messageCreationMut
                          }
         } )
     }, [ hasMore, result, query ] );
-
-    useEffect( () =>
-    {
-        if ( result || queryLoading ) {
-            return;
-        }
-
-        fetchConversation();
-    }, [ query ] );
 
     useEffect( () =>
     {

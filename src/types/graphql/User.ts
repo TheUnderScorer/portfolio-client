@@ -7,4 +7,5 @@ export default interface User extends Model
     name?: string;
     email?: string;
     lastLogin: number;
+    role?: string;
 }

@@ -28,10 +28,11 @@ export type Result = {
 export default ( suspend: boolean = false ): Result =>
 {
     const conversationsQuery = useLazyQuery<ConversationResult>( MY_CONVERSATION );
-    const { data } = conversationsQuery[ 1 ];
+    const [ fetchConversation, { data } ] = conversationsQuery;
 
     const createConversationMutation = useMutation<ConversationResult>( CREATE_CONVERSATION, {
-        update: ( cache, { data } ) =>
+        variables: {},
+        update:    ( cache, { data } ) =>
                 {
                     if ( !data ) {
                         return;
@@ -47,7 +48,7 @@ export default ( suspend: boolean = false ): Result =>
                     } )
                 }
     } );
-    const [ mutationFn ] = createConversationMutation;
+    const [ mutationFn, mutationResult ] = createConversationMutation;
 
     const newMessagesSubscription = useSubscription<MessageResult>( NEW_MESSAGE, {
         onSubscriptionData: ( { client: { cache }, subscriptionData: { data } } ) =>
@@ -73,6 +74,15 @@ export default ( suspend: boolean = false ): Result =>
     }, [ data, suspend ] );
 
     const changeStatusMutation = useMutation<ConversationResult, ChangeConversationStatusInputVariable>( CHANGE_STATUS );
+
+    useEffect( () =>
+    {
+        if ( data || mutationResult.loading || suspend ) {
+            return;
+        }
+
+        fetchConversation();
+    }, [ data, fetchConversation, mutationResult.loading, suspend ] );
 
     return {
         conversationsQuery,

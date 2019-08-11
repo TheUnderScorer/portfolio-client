@@ -14,19 +14,16 @@ export type MountWithStoreResult<Props, Store> = {
 
 export const renderWithStore = ( component: ReactElement, initialState: any ): Cheerio =>
 {
-
     const mockStore = configureStore( [ thunk ] );
     const store = mockStore( initialState );
 
     return render( <Provider store={ store }>
         { component }
     </Provider>, )
-
 };
 
 export function mountWithStore<Props = any, Store extends object = {}>( component: ReactElement<Props>, initialState: Store, apolloClientProps: MockedProviderProps = {} ): MountWithStoreResult<Props, Store>
 {
-
     const mockStore = configureStore( [ thunk ] );
     const store = mockStore( initialState );
 
@@ -40,5 +37,4 @@ export function mountWithStore<Props = any, Store extends object = {}>( componen
         ),
         store:     store as any
     }
-
 }
