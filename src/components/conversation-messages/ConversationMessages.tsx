@@ -23,10 +23,11 @@ const ConversationMessages = ( { conversation, hasMore, onLoadMore, onCloseClick
     const { data: userData } = useCurrentUser();
 
     const listRef = useRef<any>();
+    const prevListRef = usePrevious( listRef.current );
 
     useEffect( () =>
     {
-        if ( !listRef.current || prevMessagesLength === messages.length || isScrolling || isPaginationEvent ) {
+        if ( !listRef.current || ( prevMessagesLength === messages.length && prevListRef ) || isScrolling || isPaginationEvent ) {
             return;
         }
 
@@ -89,7 +90,7 @@ const ConversationMessages = ( { conversation, hasMore, onLoadMore, onCloseClick
     const { user } = userData;
 
     return (
-        <ListContainer className="messages" ref={ listRef }>
+        <ListContainer className={ `messages ${ didInitialScroll ? 'did-initial-scroll' : '' }` } ref={ listRef }>
             <List
                 element="ul"
                 initialLoad={ false }
