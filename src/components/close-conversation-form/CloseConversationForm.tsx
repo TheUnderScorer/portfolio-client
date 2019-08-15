@@ -11,11 +11,19 @@ import { Checkbox, FormControlLabel, TextField } from '@material-ui/core';
 import FormikInput from '../formik/FormikInput';
 import Loader from '../loader/Loader';
 
-const validationSchema = Yup.object().shape( {
-    email:  Yup.string().email( 'Invalid e-mail address.' ).required( 'Provide your e-mail address.' ),
-    id:     Yup.number().required( 'ConversationID is missing.' ),
-    status: Yup.string().oneOf( Object.values( ConversationStatuses ), 'Invalid conversation status provided.' )
-} );
+const validationSchema = ( props: Props & FormikProps<ChangeConversationStatusInput> ) =>
+{
+    const shape: any = {
+        id:     Yup.number().required( 'ConversationID is missing.' ),
+        status: Yup.string().oneOf( Object.values( ConversationStatuses ), 'Invalid conversation status provided.' )
+    };
+
+    if ( props.values.sendTranscript ) {
+        shape.email = Yup.string().email( 'Invalid e-mail address.' ).required( 'Provide your e-mail address.' );
+    }
+
+    return Yup.object().shape( shape );
+};
 
 const CloseConversationForm = ( { onCancel, values, closeConversationMutation, currentUser }: Props & FormikProps<ChangeConversationStatusInput> ) =>
 {
@@ -68,10 +76,10 @@ const CloseConversationForm = ( { onCancel, values, closeConversationMutation, c
             }
             <FlexFormSection margin="normal" isCentered={ true }>
                 <Loader active={ mutationResult.loading } asOverlay/>
-                <Button disabled={ mutationResult.loading } ripple flat>
+                <Button type="submit" disabled={ mutationResult.loading } ripple flat>
                     Close conversation
                 </Button>
-                <Button mode="secondary" ripple flat disabled={ mutationResult.loading } transparent onClick={ onCancel }>
+                <Button type="button" mode="secondary" ripple flat disabled={ mutationResult.loading } transparent onClick={ onCancel }>
                     Cancel
                 </Button>
             </FlexFormSection>

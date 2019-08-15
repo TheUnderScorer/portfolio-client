@@ -15,7 +15,7 @@ import { ButtonProps } from '../styled/types';
 const borderRadius = '6px';
 
 export const ProjectsContainer = styled.div`
-    max-width: 1200px;
+    max-width: 1400px;
     margin: 0 auto !important;
     display: grid;
     grid-template-rows: 1fr;
