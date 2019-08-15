@@ -4,7 +4,7 @@ import Conversation from '../Conversation';
 import * as React from 'react';
 import { useEffect } from 'react';
 import ConversationEditor from '../../conversation-editor/ConversationEditor';
-import { mountWithStore } from '../../../tests/utils/renderer';
+import { mountWithStore } from '../../../tests/utils/enzyme/renderer';
 import useChat from '../../../hooks/useChat';
 import { NEW_MESSAGE } from '../../../graphql/subscriptions/messages';
 import { act } from 'react-dom/test-utils';

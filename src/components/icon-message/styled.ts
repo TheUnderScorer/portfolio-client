@@ -16,5 +16,6 @@ export const IconMessageWrapper = styled( Flex ).attrs( {
     
     svg {
         font-size: 5rem;
+        margin-bottom: 0.1em;
     }
 `;

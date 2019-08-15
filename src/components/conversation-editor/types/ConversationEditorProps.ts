@@ -7,5 +7,6 @@ export default interface ConversationEditorProps
     conversationID: number;
     mutation: MutationTuple<MessageResult, MessageInputVariable>;
     disabled?: boolean;
+    afterSubmit?: () => any;
 }
 

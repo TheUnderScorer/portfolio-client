@@ -161,3 +161,7 @@ export const FaIconReversed = styled( FontAwesomeIcon )<IconProps>`
 export const FaIcon = styled( FaIconReversed )`
     color: ${ props => props.theme.mode === 'black' ? colors.white : colors.dark };
 `;
+
+export const MenuIcon = styled( FaIcon )`
+    margin: ${ ( { margin = 'none' } ) => margin === 'none' ? '0' : '0 0.5em 0 0' };
+`;

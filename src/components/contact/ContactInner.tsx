@@ -1,9 +1,9 @@
 import * as React from 'react';
-import { MutableRefObject, useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import Loader from '../loader/Loader';
 import IconMessage from '../icon-message/IconMessage';
 import { ContactSlider, FormTitle, FormTitleContainer, Inner } from './styled/contact';
-import { IconButton, Menu, MenuItem, Tooltip } from '@material-ui/core';
+import { IconButton, Tooltip } from '@material-ui/core';
 import { FaIcon, FaIconReversed, Text } from '../styled/typography';
 import getFormTitle from './getFormTitle';
 import { ContactTypes } from '../../types/reducers/ContactReducer';
@@ -23,12 +23,14 @@ import useApolloErrors from '../../hooks/useApolloErrors';
 import HomeStore from '../../types/stores/HomeStore';
 import { SelectionCallback } from '../selection/types/SelectionProps';
 import { SetContactType } from '../../types/actions/ContactActions';
-import { faFrown, faUserCircle } from '@fortawesome/free-regular-svg-icons';
+import { faFrown } from '@fortawesome/free-regular-svg-icons';
 import useChat from '../../hooks/useChat';
 import Conversation from '../conversation/Conversation';
 import { UPDATE_ME } from '../../graphql/mutations/users';
 import { useMutation } from '@apollo/react-hooks';
 import { ConversationStatuses } from '../../types/graphql/Conversation';
+import ContactMenu from '../contact-menu/ContactMenu';
+import { MenuClickHandler } from '../contact-menu/types/ContactMenuProps';
 
 const sections = {
     [ ContactTypes.UserForm ]:     0,
@@ -71,19 +73,13 @@ const ContactInner = () =>
     ] );
 
     const [ isConnected, setConnected ] = useState( true );
-
     const [ successMessages, setSuccessMessages ] = useState<string[]>( [] );
-
-    const [ menuOpen, setMenuOpen ] = useState( false );
-    const toggleMenu = useCallback( () =>
-    {
-        setMenuOpen( !menuOpen );
-    }, [ menuOpen, setMenuOpen ] );
-
-    const menuIconRef = useRef() as MutableRefObject<HTMLElement | null>;
-    const setMenuRef = ( ref: HTMLElement | null ) => menuIconRef.current = ref;
-
     const [ currentSlide, setCurrentSlide ] = useState<number>( sections[ type ] );
+
+    const onMenuClick: MenuClickHandler = ( menu ) => () => dispatch<SetContactType>( {
+        type:    'SetContactType',
+        payload: menu
+    } );
 
     const setSection: SelectionCallback<ContactTypes> = useCallback( ( section: ContactTypes ) =>
     {
@@ -98,11 +94,6 @@ const ContactInner = () =>
     {
         setSection( ContactTypes.Selection );
     }, [ type ] );
-    const changeProfile = useCallback( () =>
-    {
-        setMenuOpen( false );
-        setSection( ContactTypes.EditProfile );
-    }, [] );
 
     // Handles errors update
     useEffect( () =>
@@ -191,15 +182,19 @@ const ContactInner = () =>
             return;
         }
 
-        errors.forEach( error =>
+        errors.forEach( apolloError =>
         {
-            if ( error && error.error && error.error.message.includes( 'Failed to fetch' ) ) {
+            if ( apolloError && apolloError.error && apolloError.error.message.includes( 'Failed to fetch' ) ) {
                 setConnected( false );
+
+                return;
             }
         } );
 
     }, [ errors ] );
 
+    // Creates new conversation after user have closed current one
+    // TODO Check if we actually need this
     useEffect( () =>
     {
         if ( !conversationQueryResult.data || !Object.values( conversationQueryResult.data as object ).length ) {
@@ -244,32 +239,7 @@ const ContactInner = () =>
                           { getFormTitle( type, user ) }
                       </FormTitle>
                       { user && type !== ContactTypes.UserForm &&
-                        <>
-                            <IconButton
-                                href="#"
-                                ref={ setMenuRef }
-                                aria-label="More"
-                                aria-controls="long-menu"
-                                aria-haspopup="true"
-                                onClick={ toggleMenu }
-                            >
-                                <FaIconReversed icon="ellipsis-v"/>
-                            </IconButton>
-                            <Menu
-                                id="long-menu"
-                                anchorEl={ menuIconRef.current }
-                                keepMounted
-                                open={ menuOpen }
-                                onClose={ toggleMenu }
-                            >
-                                <MenuItem button={ false } onClick={ changeProfile }>
-                                    <FaIcon margin="normal" icon={ faUserCircle }/>
-                                    <Text>
-                                        Edit my profile
-                                    </Text>
-                                </MenuItem>
-                            </Menu>
-                        </>
+                        <ContactMenu onMenuClick={ onMenuClick }/>
                       }
                   </FormTitleContainer>
                   { errors.length > 0 && errors.map( ( item, index ) =>
