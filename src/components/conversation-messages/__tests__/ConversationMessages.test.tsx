@@ -1,4 +1,4 @@
-import { mountWithStore } from '../../../tests/utils/renderer';
+import { mountWithStore } from '../../../tests/utils/enzyme/renderer';
 import ConversationMessages from '../ConversationMessages';
 import * as React from 'react';
 import mockConversation from '../../../tests/data/mockConversation';

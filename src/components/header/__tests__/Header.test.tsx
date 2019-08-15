@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { mountWithStore } from '../../../tests/utils/renderer';
+import { mountWithStore } from '../../../tests/utils/enzyme/renderer';
 import Header from '../Header';
 import Switch from '@material/react-switch';
 import '../../../fontAwesome';

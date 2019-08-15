@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Loader from '../Loader';
-import { mountWithStore } from '../../../tests/utils/renderer';
+import { mountWithStore } from '../../../tests/utils/enzyme/renderer';
 import { LoaderContainer } from '../styled';
 
 describe( 'Loader component', () => {
