@@ -45,7 +45,7 @@ export const DateHeadline = styled( Time )`
 export const MessageText = styled( Paragraph )<MessageItemProps>`
     margin: 0.2em;
     padding: 1rem;
-    background: ${ props => props.theme.mode === 'black' ? colors.black : colors.grey };
+    background: ${ props => props.theme.mode === 'black' ? colors.dark : colors.grey };
     position: relative;
     display: inline-block;
     
@@ -55,7 +55,7 @@ export const MessageText = styled( Paragraph )<MessageItemProps>`
             height: 0;
             border-style: solid;
             border-width: 10px 0 10px 20px;
-            border-color: transparent transparent transparent ${ props.theme.mode === 'black' ? colors.black : colors.grey };
+            border-color: transparent transparent transparent ${ props.theme.mode === 'black' ? colors.dark : colors.grey };
             display: block;
             content: '';
             right: -10px;

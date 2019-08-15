@@ -50,13 +50,13 @@ export const Inner = styled.div<InnerProps>`
     width: 60vw;
     max-width: 500px;
     bottom: 0;
-    right: 0;
+    right: 0; 
     margin-top: 30px;
     box-shadow: 0 1px 5px rgba(0, 0, 0, 0.15);
     text-align: center;
     display: flex;
     flex-direction: column;
-    transition: all .5s;
+    transition: transform .5s, opacity .5s;
     transform-origin: right bottom;
     ${ ( { active } ) => `
         opacity: ${ active ? '1' : '0' };

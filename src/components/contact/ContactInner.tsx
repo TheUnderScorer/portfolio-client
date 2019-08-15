@@ -4,7 +4,7 @@ import Loader from '../loader/Loader';
 import IconMessage from '../icon-message/IconMessage';
 import { ContactSlider, FormTitle, FormTitleContainer, Inner } from './styled/contact';
 import { IconButton, Tooltip } from '@material-ui/core';
-import { FaIcon, FaIconReversed, Text } from '../styled/typography';
+import { FaIcon, Text, WhiteFaIcon } from '../styled/typography';
 import getFormTitle from './getFormTitle';
 import { ContactTypes } from '../../types/reducers/ContactReducer';
 import { Notice } from './Notice';
@@ -231,7 +231,7 @@ const ContactInner = () =>
                       { shouldAddIcon( type ) &&
                         <Tooltip title="Return to selection">
                             <IconButton href="#" onClick={ handleReturnClick }>
-                                <FaIconReversed icon="arrow-left"/>
+                                <WhiteFaIcon icon="arrow-left"/>
                             </IconButton>
                         </Tooltip>
                       }

@@ -7,6 +7,7 @@ export const ListContainer = styled.div`
     width: 100%;
     overflow: auto;
     padding: 1em 0;
+    background-color: ${ props => props.theme.mode === 'black' ? colors.black : colors.white }
 `;
 
 export const List = styled( InfiniteScroll )`

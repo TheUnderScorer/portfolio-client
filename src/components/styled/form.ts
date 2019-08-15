@@ -134,7 +134,7 @@ export const FormSection = styled.section<FormSectionProps>`
     }
     
    ${ props => props.theme.mode === 'black' && `
-        .MuiFormControl-root .MuiInputBase-root fieldset {
+        .MuiFormControl-root .MuiInputBase-root:not(.Mui-error) fieldset {
             border-color: ${ colors.darkerBorder };
         }
         
@@ -147,7 +147,6 @@ export const FormSection = styled.section<FormSectionProps>`
         .MuiFormControl-root label {
             color: ${ colors.white }
         }
-       
    ` } 
 `;
 

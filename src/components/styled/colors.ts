@@ -5,7 +5,7 @@ const colors = {
         mainBg: '#364366',
         cta:    '#FD523A',
     },
-    white:        '#ffffff',
+    white:        '#fefefe',
     black:        '#000000',
     lightBlue:    '#4e8fd1',
     darkBlue:     '#00354D',
@@ -37,6 +37,11 @@ export const getPrimaryVariation = ( mode: ThemeMode ): string =>
 export const getPrimaryLight = ( mode: ThemeMode ): string =>
 {
     return mode === 'black' ? 'rgba(78, 143, 209, 0.2)' : 'rgba(253, 82, 58, 0.2)'
+};
+
+export const getBaseTextColor = ( mode: ThemeMode ): string =>
+{
+    return mode === 'black' ? colors.white : colors.dark;
 };
 
 export default colors;

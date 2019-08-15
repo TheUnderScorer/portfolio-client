@@ -22,7 +22,7 @@ import breakpoints from '../components/styled/breakpoints';
 import useAuth from '../hooks/useAuth';
 import { ThemeProvider as MaterialThemeProvider } from '@material-ui/styles';
 import { createMuiTheme } from '@material-ui/core';
-import colors, { getPrimary } from '../components/styled/colors';
+import colors, { getBaseTextColor, getPrimary } from '../components/styled/colors';
 import { UserResult } from '../types/graphql/Mutations';
 import { UPDATE_LOGIN_DATE } from '../graphql/mutations/users';
 import { useMutation } from '@apollo/react-hooks';
@@ -63,6 +63,9 @@ const Home = () =>
             error:   {
                 main: colors.red
             },
+            text:    {
+                secondary: getBaseTextColor( theme.mode )
+            }
         },
     } );
 

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { MutableRefObject, useCallback, useRef, useState } from 'react';
 import { IconButton, Menu, MenuItem } from '@material-ui/core';
-import { FaIconReversed, MenuIcon, Text } from '../styled/typography';
+import { MenuIcon, Text, WhiteFaIcon } from '../styled/typography';
 import { faUserCircle } from '@fortawesome/free-regular-svg-icons';
 import ContactMenuProps from './types/ContactMenuProps';
 import { ContactTypes } from '../../types/reducers/ContactReducer';
@@ -27,7 +27,7 @@ const ContactMenu = ( { onMenuClick }: ContactMenuProps ) =>
                 aria-haspopup="true"
                 onClick={ toggleMenu }
             >
-                <FaIconReversed icon="ellipsis-v"/>
+                <WhiteFaIcon icon="ellipsis-v"/>
             </IconButton>
             <Menu
                 id="long-menu"

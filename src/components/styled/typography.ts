@@ -152,6 +152,10 @@ export const SectionSubtitle = styled( Text )<SectionSubtitleProps>`
     ` }
 `;
 
+export const WhiteFaIcon = styled( FontAwesomeIcon )`
+    color: ${ colors.white };
+`;
+
 export const FaIconReversed = styled( FontAwesomeIcon )<IconProps>`
     color: ${ props => props.theme.mode === 'black' ? colors.dark : colors.white };
     margin: ${ ( { margin = 'none' } ) => margin === 'none' ? '0' : '0 0.5em' };
