@@ -23,7 +23,6 @@ import useApolloErrors from '../../hooks/useApolloErrors';
 import HomeStore from '../../types/stores/HomeStore';
 import { SelectionCallback } from '../selection/types/SelectionProps';
 import { SetContactType } from '../../types/actions/ContactActions';
-import { useSpring } from 'react-spring';
 import { faFrown, faUserCircle } from '@fortawesome/free-regular-svg-icons';
 import useChat from '../../hooks/useChat';
 import Conversation from '../conversation/Conversation';
@@ -104,13 +103,6 @@ const ContactInner = () =>
         setMenuOpen( false );
         setSection( ContactTypes.EditProfile );
     }, [] );
-
-    // Props for opening animation
-    const props = useSpring( {
-        opacity:         active ? 1 : 0,
-        transform:       `scale(${ active ? 1 : 0 })`,
-        transformOrigin: 'right bottom',
-    } );
 
     // Handles errors update
     useEffect( () =>
@@ -223,7 +215,7 @@ const ContactInner = () =>
     }, [ conversationQueryResult, createConversationMutation, createConversationMutation ] );
 
     return (
-        <Inner style={ props }>
+        <Inner active={ active }>
             <Loader active={ userLoading } asOverlay={ true } svgProps={ {
                 width:  '30%',
                 height: '30%'
@@ -270,7 +262,7 @@ const ContactInner = () =>
                                 open={ menuOpen }
                                 onClose={ toggleMenu }
                             >
-                                <MenuItem onClick={ changeProfile }>
+                                <MenuItem button={ false } onClick={ changeProfile }>
                                     <FaIcon margin="normal" icon={ faUserCircle }/>
                                     <Text>
                                         Edit my profile
@@ -291,7 +283,7 @@ const ContactInner = () =>
                         <UserForm user={ user } mutation={ userMutation }/>
                         <Selection<ContactTypes> onSelection={ setSection } options={ contactSelections }/>
                         <ContactForm afterSubmit={ onContactFormSubmit } user={ user } mutation={ contactMutation }/>
-                        <Conversation createConversationMutation={ createConversationMutation } changeStatusMutation={ changeStatusMutation } messageCreationMutation={ createMessageMutation } conversationQuery={ conversationsQuery } creationMutation={ createConversationMutation }/>
+                        <Conversation createConversationMutation={ createConversationMutation } changeStatusMutation={ changeStatusMutation } messageCreationMutation={ createMessageMutation } conversationQuery={ conversationsQuery }/>
                         <div>
                             Edit profile!
                         </div>
