@@ -25,7 +25,7 @@ export const DateHeadline = styled( Time )`
     
     span {
         z-index: 2;
-        background: ${ props => props.theme.mode === 'black' ? colors.dark : colors.white };
+        background: ${ props => props.theme.mode === 'black' ? colors.black : colors.white };
         position: relative;
         padding: 0 1em;
     }
