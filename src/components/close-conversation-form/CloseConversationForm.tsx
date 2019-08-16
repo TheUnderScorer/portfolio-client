@@ -25,7 +25,7 @@ const validationSchema = ( props: Props & FormikProps<ChangeConversationStatusIn
     return Yup.object().shape( shape );
 };
 
-const CloseConversationForm = ( { onCancel, values, closeConversationMutation, currentUser }: Props & FormikProps<ChangeConversationStatusInput> ) =>
+const CloseConversationForm = ( { onCancel, values, closeConversationMutation }: Props & FormikProps<ChangeConversationStatusInput> ) =>
 {
     const [ , mutationResult ] = closeConversationMutation;
 

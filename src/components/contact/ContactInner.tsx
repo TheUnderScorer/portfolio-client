@@ -223,7 +223,10 @@ const ContactInner = () =>
 
         const { conversation } = conversationQueryResult.data;
 
-        if ( conversation.status && conversation.status === ConversationStatuses.closed && !createConversationResult.loading && type === ContactTypes.Selection ) {
+        if ( !!conversation &&
+             conversation.status === ConversationStatuses.closed &&
+             !createConversationResult.loading
+             && type === ContactTypes.Selection ) {
             createConversation();
         }
 
