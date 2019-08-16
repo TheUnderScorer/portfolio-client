@@ -12,13 +12,15 @@ import ConversationMessages from '../conversation-messages/ConversationMessages'
 import CloseConversationForm from '../close-conversation-form/CloseConversationForm';
 import { ConversationStatuses } from '../../types/graphql/Conversation';
 import IconMessage from '../icon-message/IconMessage';
-import { A, FaIcon, Text } from '../styled/typography';
+import { FaIcon, Paragraph } from '../styled/typography';
 import { faCheckCircle } from '@fortawesome/free-regular-svg-icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { SetContactType, SetIsClosing } from '../../types/actions/ContactActions';
 import { ContactTypes } from '../../types/reducers/ContactReducer';
 import { useApolloClient } from '@apollo/react-hooks';
 import HomeStore from '../../types/stores/HomeStore';
+import { FlexFormSection } from '../styled/form';
+import { Button } from '../styled/buttons';
 
 const messagesPerPage = 30;
 
@@ -49,10 +51,22 @@ const Conversation = ( { conversationQuery, messageCreationMutation, changeStatu
     const handleClose = useCallback( () => setIsClosing( true ), [ setIsClosing ] );
     const handleCancel = useCallback( () => setIsClosing( false ), [ setIsClosing ] );
 
-    const handleReturn = useCallback( () => dispatch<SetContactType>( {
-        type:    'SetContactType',
-        payload: ContactTypes.Selection
-    } ), [ dispatch ] );
+    const handleReturn = useCallback( () =>
+    {
+        dispatch<SetContactType>( {
+            type:    'SetContactType',
+            payload: ContactTypes.Selection
+        } );
+
+        setIsClosing( false );
+    }, [ dispatch, setIsClosing ] );
+
+    const startNewConversation = useCallback( async () =>
+    {
+        setIsClosing( false );
+
+        await createConversation();
+    }, [ setIsClosing ] );
 
     const conversationID = result && result.conversation ? result.conversation.id : 0;
     const prevConversationID = usePrevious( conversationID );
@@ -146,12 +160,17 @@ const Conversation = ( { conversationQuery, messageCreationMutation, changeStatu
 
                   { result.conversation.status === ConversationStatuses.closed && isClosing &&
                     <IconMessage title="Conversation closed." icon={ <FaIcon icon={ faCheckCircle }/> }>
-                        <Text>
+                        <Paragraph>
                             Thanks for chat!
-                        </Text>
-                        <A onClick={ handleReturn } underlined={ true }>
-                            Click here to return.
-                        </A>
+                        </Paragraph>
+                        <FlexFormSection isCentered={ true } margin="normal">
+                            <Button onClick={ startNewConversation } ripple flat>
+                                Start new conversation
+                            </Button>
+                            <Button onClick={ handleReturn } mode="secondary" flat ripple>
+                                Return
+                            </Button>
+                        </FlexFormSection>
                     </IconMessage>
                   }
 
