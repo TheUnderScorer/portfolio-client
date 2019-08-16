@@ -21,7 +21,6 @@ export const Text = styled.span`
 
 export const Paragraph = styled.p`
     ${ textStyles };
-    margin: 0 1em;
 `;
 
 export const Time = styled.time`

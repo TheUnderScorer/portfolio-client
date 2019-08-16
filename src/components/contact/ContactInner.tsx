@@ -227,7 +227,7 @@ const ContactInner = () =>
             createConversation();
         }
 
-    }, [ conversationQueryResult, createConversationMutation, createConversationMutation ] );
+    }, [ conversationQueryResult, createConversation, createConversationMutation, createConversationResult.loading, type ] );
 
     return (
         <Inner active={ active }>
