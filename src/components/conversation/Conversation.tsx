@@ -14,10 +14,11 @@ import { ConversationStatuses } from '../../types/graphql/Conversation';
 import IconMessage from '../icon-message/IconMessage';
 import { A, FaIcon, Text } from '../styled/typography';
 import { faCheckCircle } from '@fortawesome/free-regular-svg-icons';
-import { useDispatch } from 'react-redux';
-import { SetContactType } from '../../types/actions/ContactActions';
+import { useDispatch, useSelector } from 'react-redux';
+import { SetContactType, SetIsClosing } from '../../types/actions/ContactActions';
 import { ContactTypes } from '../../types/reducers/ContactReducer';
 import { useApolloClient } from '@apollo/react-hooks';
+import HomeStore from '../../types/stores/HomeStore';
 
 const messagesPerPage = 30;
 
@@ -35,9 +36,18 @@ const Conversation = ( { conversationQuery, messageCreationMutation, changeStatu
 
     const client = useApolloClient();
 
-    const [ isClosing, setIsClosing ] = useState( false );
-    const handleClose = useCallback( () => setIsClosing( true ), [] );
-    const handleCancel = useCallback( () => setIsClosing( false ), [] );
+    const isClosing = useSelector( ( store: HomeStore ) => store.contact.isClosing );
+
+    const setIsClosing = useCallback( ( payload: boolean ) =>
+    {
+        dispatch<SetIsClosing>( {
+            type: 'SetIsClosing',
+            payload
+        } )
+    }, [ dispatch ] );
+
+    const handleClose = useCallback( () => setIsClosing( true ), [ setIsClosing ] );
+    const handleCancel = useCallback( () => setIsClosing( false ), [ setIsClosing ] );
 
     const handleReturn = useCallback( () => dispatch<SetContactType>( {
         type:    'SetContactType',

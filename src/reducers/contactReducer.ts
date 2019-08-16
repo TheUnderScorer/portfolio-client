@@ -5,6 +5,7 @@ const initialState: ContactReducer = {
     active:                   false,
     type:                     ContactTypes.UserForm,
     fullyLoadedConversations: [],
+    isClosing:                false,
 };
 
 const handlers: ContactReducerHandler = {
@@ -29,7 +30,11 @@ const handlers: ContactReducerHandler = {
                                    ...state,
                                    fullyLoadedConversations
                                }
-                           }
+                           },
+    SetIsClosing:          ( state, isClosing ) => ( {
+        ...state,
+        isClosing
+    } )
 };
 
 export default reducer( handlers, initialState );

@@ -5,4 +5,4 @@ export default interface ContactMenuProps
     onMenuClick: MenuClickHandler;
 }
 
-export type MenuClickHandler = ( menuItem: ContactTypes ) => any;
+export type MenuClickHandler = ( menuItem: ContactTypes | string ) => any;

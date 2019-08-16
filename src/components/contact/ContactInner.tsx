@@ -76,10 +76,19 @@ const ContactInner = () =>
     const [ successMessages, setSuccessMessages ] = useState<string[]>( [] );
     const [ currentSlide, setCurrentSlide ] = useState<number>( sections[ type ] );
 
-    const onMenuClick: MenuClickHandler = ( menu ) => () => dispatch<SetContactType>( {
-        type:    'SetContactType',
-        payload: menu
-    } );
+    const onMenuClick: MenuClickHandler = ( menu ) => () =>
+    {
+
+        if ( ContactTypes.hasOwnProperty( menu ) ) {
+            dispatch<SetContactType>( {
+                type:    'SetContactType',
+                payload: menu as ContactTypes
+            } );
+        } else {
+
+        }
+
+    };
 
     const setSection: SelectionCallback<ContactTypes> = useCallback( ( section: ContactTypes ) =>
     {
