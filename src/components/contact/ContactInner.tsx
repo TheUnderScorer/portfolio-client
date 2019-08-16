@@ -22,7 +22,7 @@ import { UserInputVariable } from '../../types/graphql/inputs/UserInput';
 import useApolloErrors from '../../hooks/useApolloErrors';
 import HomeStore from '../../types/stores/HomeStore';
 import { SelectionCallback } from '../selection/types/SelectionProps';
-import { SetContactType } from '../../types/actions/ContactActions';
+import { SetContactType, SetIsClosing } from '../../types/actions/ContactActions';
 import { faFrown } from '@fortawesome/free-regular-svg-icons';
 import useChat from '../../hooks/useChat';
 import Conversation from '../conversation/Conversation';
@@ -30,7 +30,7 @@ import { UPDATE_ME } from '../../graphql/mutations/users';
 import { useMutation } from '@apollo/react-hooks';
 import { ConversationStatuses } from '../../types/graphql/Conversation';
 import ContactMenu from '../contact-menu/ContactMenu';
-import { MenuClickHandler } from '../contact-menu/types/ContactMenuProps';
+import { ContactMenuItems, MenuClickHandler } from '../contact-menu/types/ContactMenuProps';
 
 const sections = {
     [ ContactTypes.UserForm ]:     0,
@@ -76,7 +76,7 @@ const ContactInner = () =>
     const [ successMessages, setSuccessMessages ] = useState<string[]>( [] );
     const [ currentSlide, setCurrentSlide ] = useState<number>( sections[ type ] );
 
-    const onMenuClick: MenuClickHandler = ( menu ) => () =>
+    const onMenuClick: MenuClickHandler = useCallback( ( menu ) =>
     {
 
         if ( ContactTypes.hasOwnProperty( menu ) ) {
@@ -85,10 +85,21 @@ const ContactInner = () =>
                 payload: menu as ContactTypes
             } );
         } else {
+            switch ( menu as ContactMenuItems ) {
 
+                case ContactMenuItems.CloseConversation:
+
+                    dispatch<SetIsClosing>( {
+                        type:    'SetIsClosing',
+                        payload: true,
+                    } );
+
+                    break;
+
+            }
         }
 
-    };
+    }, [ dispatch ] );
 
     const setSection: SelectionCallback<ContactTypes> = useCallback( ( section: ContactTypes ) =>
     {
@@ -248,7 +259,7 @@ const ContactInner = () =>
                           { getFormTitle( type, user ) }
                       </FormTitle>
                       { user && type !== ContactTypes.UserForm &&
-                        <ContactMenu onMenuClick={ onMenuClick }/>
+                        <ContactMenu conversation={ conversationQueryResult.data ? conversationQueryResult.data.conversation : null } onMenuClick={ onMenuClick }/>
                       }
                   </FormTitleContainer>
                   { errors.length > 0 && errors.map( ( item, index ) =>
