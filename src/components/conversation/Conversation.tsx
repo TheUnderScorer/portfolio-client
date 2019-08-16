@@ -12,7 +12,7 @@ import ConversationMessages from '../conversation-messages/ConversationMessages'
 import CloseConversationForm from '../close-conversation-form/CloseConversationForm';
 import { ConversationStatuses } from '../../types/graphql/Conversation';
 import IconMessage from '../icon-message/IconMessage';
-import { FaIcon, Paragraph } from '../styled/typography';
+import { FaIcon, Text } from '../styled/typography';
 import { faCheckCircle } from '@fortawesome/free-regular-svg-icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { SetContactType, SetIsClosing } from '../../types/actions/ContactActions';
@@ -160,9 +160,9 @@ const Conversation = ( { conversationQuery, messageCreationMutation, changeStatu
 
                   { result.conversation.status === ConversationStatuses.closed && isClosing &&
                     <IconMessage title="Conversation closed." icon={ <FaIcon icon={ faCheckCircle }/> }>
-                        <Paragraph>
+                        <Text>
                             Thanks for chat!
-                        </Paragraph>
+                        </Text>
                         <FlexFormSection isCentered={ true } margin="normal">
                             <Button onClick={ startNewConversation } ripple flat>
                                 Start new conversation
