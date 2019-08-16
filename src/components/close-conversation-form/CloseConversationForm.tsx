@@ -62,7 +62,6 @@ const CloseConversationForm = ( { onCancel, values, closeConversationMutation, c
                   <FormikInput id="email" name="email" type="text" render={ ( { form, field } ) =>
                       <TextField
                           helperText={ !form.errors.email || !form.touched.email ? 'Email to which transcript will be sent.' : '' }
-                          defaultValue={ currentUser.email ? currentUser.email : '' }
                           disabled={ mutationResult.loading }
                           label="Email"
                           fullWidth
