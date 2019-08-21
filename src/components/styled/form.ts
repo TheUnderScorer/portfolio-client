@@ -15,6 +15,7 @@ export const CentredFrom = styled( Form )`
     justify-content: center;
     height: 100%;
     width: 100%;
+    position: relative;
 `;
 
 export const InputContainer = styled.div`

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useCallback, useEffect, useRef } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { FormikProps, withFormik } from 'formik';
 import * as Yup from 'yup';
 import UserFormProps from './types/UserFormProps';
@@ -20,25 +20,19 @@ const validationSchema = Yup.object().shape( {
     captcha: Yup.string().required( 'Complete captcha validation.' )
 } );
 
-const UserForm = ( { mutation, setFieldValue, values: { captcha } }: UserFormProps & FormikProps<UserInput> ) =>
+const UserForm = ( { mutation, setFieldValue }: UserFormProps & FormikProps<UserInput> ) =>
 {
     const [ , updateUserResult ] = mutation;
-
-    const themeMode = useSelector<HomeStore, ThemeMode>( store => store.theme.mode );
-
-    let captchaRef = useRef<Recaptcha | null>();
-    const setCaptchaRef = useCallback( ( ref: Recaptcha | null ) => captchaRef.current = ref, [ captchaRef ] );
+    const [ captchaLoaded, setCaptchaLoaded ] = useState( false );
 
     useEffect( () =>
     {
-        if ( !captchaRef.current || !!captcha ) {
-            return;
-        }
+        const timeout = setTimeout( () => setCaptchaLoaded( true ), 3000 );
 
-        const instance = captchaRef.current as Recaptcha;
-        instance.execute();
+        return () => clearTimeout( timeout );
+    }, [] );
 
-    }, [ captchaRef, captcha ] );
+    const themeMode = useSelector<HomeStore, ThemeMode>( store => store.theme.mode );
 
     const handleCaptchaChange = useCallback( ( response: string | null ) =>
     {
@@ -47,12 +41,13 @@ const UserForm = ( { mutation, setFieldValue, values: { captcha } }: UserFormPro
 
     return (
         <CentredFrom>
+            <Loader svgProps={ { width: '50%', height: '50%' } } asOverlay active={ !captchaLoaded }/>
             <FormSection width="60%">
                 <FormikInput id="name" name="name" type="text" render={ ( { form, field } ) =>
                     <TextField
                         margin="normal"
                         label="Name *"
-                        disabled={ updateUserResult.loading || !captcha }
+                        disabled={ updateUserResult.loading }
                         fullWidth
                         variant="outlined"
                         error={ !!form.errors.name && !!form.touched.name }
@@ -66,7 +61,7 @@ const UserForm = ( { mutation, setFieldValue, values: { captcha } }: UserFormPro
                     <TextField
                         margin="normal"
                         label="Email"
-                        disabled={ updateUserResult.loading || !captcha }
+                        disabled={ updateUserResult.loading }
                         fullWidth
                         variant="outlined"
                         error={ !!form.errors.email && !!form.touched.email }
@@ -77,9 +72,8 @@ const UserForm = ( { mutation, setFieldValue, values: { captcha } }: UserFormPro
             <FormSection margin="normal" width="60%">
                 <FormikInput id="captcha" name="captcha" render={ () =>
                     <Recaptcha
-                        ref={ setCaptchaRef }
                         onChange={ handleCaptchaChange }
-                        size="invisible"
+                        size="normal"
                         theme={ themeMode === 'black' ? 'dark' : 'light' }
                         sitekey={ process.env.REACT_APP_SITE_KEY as string }
                     />
@@ -87,7 +81,7 @@ const UserForm = ( { mutation, setFieldValue, values: { captcha } }: UserFormPro
             </FormSection>
             <FormSection margin="normal">
                 <Button flat={ true } type="submit">
-                    <Loader asOverlay={ true } active={ updateUserResult.loading }/>
+                    <Loader asOverlay active={ updateUserResult.loading }/>
                     Save
                 </Button>
             </FormSection>
