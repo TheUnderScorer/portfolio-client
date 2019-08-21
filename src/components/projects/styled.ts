@@ -137,9 +137,18 @@ export const ProjectModal = styled( Modal )`
 `;
 
 export const ReadMore = styled( Button ).attrs<ButtonProps>( {
-    round: true,
+    round:       true,
+    iconOnHover: true,
+    withIcon:    true,
+    mode:        'secondary',
+    flat:        true
 } )`
-    margin-top: 40px;
+    margin-top: 2em;
+    
+    &:hover {
+        background-color: ${ props => getPrimary( props.theme.mode ) };
+    }
+    
     &, * {
         color: ${ colors.white }
     }

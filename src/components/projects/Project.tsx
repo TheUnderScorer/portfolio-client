@@ -100,7 +100,7 @@ const Project = ( { project, active = false, index }: ProjectProps ) =>
                             { shortDetails }
                         </Text>
                     </div>
-                    <ReadMore iconOnHover={ true } withIcon={ true } mode="secondary" flat={ true } onClick={ handleOpen }>
+                    <ReadMore onClick={ handleOpen }>
                         <Text>
                             Check Out
                         </Text>
