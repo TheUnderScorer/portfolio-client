@@ -30,7 +30,6 @@ const ContactMenu = ( { onMenuClick, conversation }: ContactMenuProps ) =>
     return (
         <>
             <IconButton
-                href="#"
                 ref={ setMenuRef }
                 aria-label="More"
                 aria-controls="long-menu"

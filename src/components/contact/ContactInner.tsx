@@ -253,7 +253,7 @@ const ContactInner = () =>
                   <FormTitleContainer>
                       { shouldAddIcon( type ) &&
                         <Tooltip title="Return to selection">
-                            <IconButton href="#" onClick={ handleReturnClick }>
+                            <IconButton onClick={ handleReturnClick }>
                                 <WhiteFaIcon icon="arrow-left"/>
                             </IconButton>
                         </Tooltip>

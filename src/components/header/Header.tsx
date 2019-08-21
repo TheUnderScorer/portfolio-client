@@ -271,7 +271,7 @@ const Header = () =>
                     </NavigationListItem>
                     <NavigationListItem>
                         <SwitchContainer>
-                            <ToggleLink transparent={ !didInnerOpen } href="#" onClick={ setThemeMode( 'white' ) }>
+                            <ToggleLink transparent={ !didInnerOpen } onClick={ setThemeMode( 'white' ) }>
                                 <FontAwesomeIcon className="sun" icon="sun"/>
                             </ToggleLink>
                             <Switch
@@ -279,7 +279,7 @@ const Header = () =>
                                 onChange={ handleToggle }
                                 checked={ mode === 'black' }
                             />
-                            <ToggleLink transparent={ !didInnerOpen } href="#" onClick={ setThemeMode( 'black' ) }>
+                            <ToggleLink transparent={ !didInnerOpen } onClick={ setThemeMode( 'black' ) }>
                                 <FontAwesomeIcon className="moon" icon="moon"/>
                             </ToggleLink>
                         </SwitchContainer>
