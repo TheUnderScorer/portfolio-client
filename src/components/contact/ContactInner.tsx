@@ -1,10 +1,10 @@
 import * as React from 'react';
-import { MutableRefObject, useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import Loader from '../loader/Loader';
-import ErrorMessage from '../error-message/ErrorMessage';
+import IconMessage from '../icon-message/IconMessage';
 import { ContactSlider, FormTitle, FormTitleContainer, Inner } from './styled/contact';
-import { IconButton, Menu, MenuItem, Tooltip } from '@material-ui/core';
-import { FaIcon, FaIconReversed, Text } from '../styled/typography';
+import { IconButton, Tooltip } from '@material-ui/core';
+import { FaIcon, Text, WhiteFaIcon } from '../styled/typography';
 import getFormTitle from './getFormTitle';
 import { ContactTypes } from '../../types/reducers/ContactReducer';
 import { Notice } from './Notice';
@@ -15,7 +15,6 @@ import ContactForm from '../contact-form/ContactForm';
 import { useDispatch, useSelector } from 'react-redux';
 import useCurrentUser from '../../hooks/useCurrentUser';
 import User from '../../types/graphql/User';
-import { useMutation } from 'react-apollo-hooks';
 import Result from '../../types/graphql/Result';
 import { ContactInputVariable } from '../../types/graphql/inputs/ContactInput';
 import { SEND } from '../../graphql/mutations/contact';
@@ -23,12 +22,15 @@ import { UserInputVariable } from '../../types/graphql/inputs/UserInput';
 import useApolloErrors from '../../hooks/useApolloErrors';
 import HomeStore from '../../types/stores/HomeStore';
 import { SelectionCallback } from '../selection/types/SelectionProps';
-import { SetContactType } from '../../types/actions/ContactActions';
-import { useSpring } from 'react-spring';
-import { faUserCircle } from '@fortawesome/free-regular-svg-icons';
+import { SetContactType, SetIsClosing } from '../../types/actions/ContactActions';
+import { faFrown } from '@fortawesome/free-regular-svg-icons';
 import useChat from '../../hooks/useChat';
 import Conversation from '../conversation/Conversation';
 import { UPDATE_ME } from '../../graphql/mutations/users';
+import { useMutation } from '@apollo/react-hooks';
+import { ConversationStatuses } from '../../types/graphql/Conversation';
+import ContactMenu from '../contact-menu/ContactMenu';
+import { ContactMenuItems, MenuClickHandler } from '../contact-menu/types/ContactMenuProps';
 
 const sections = {
     [ ContactTypes.UserForm ]:     0,
@@ -60,28 +62,44 @@ const ContactInner = () =>
     const [ , userMutationResult ] = userMutation;
 
     const { conversationsQuery, createConversationMutation, createMessageMutation, changeStatusMutation } = useChat( type !== ContactTypes.Conversation );
+    const [ , conversationQueryResult ] = conversationsQuery;
+    const [ createConversation, createConversationResult ] = createConversationMutation;
 
     const [ errors, setErrors ] = useApolloErrors( [
         userQuery,
-        conversationsQuery,
+        conversationQueryResult,
         userMutation[ 1 ],
         contactMutation[ 1 ],
     ] );
 
     const [ isConnected, setConnected ] = useState( true );
-
     const [ successMessages, setSuccessMessages ] = useState<string[]>( [] );
-
-    const [ menuOpen, setMenuOpen ] = useState( false );
-    const toggleMenu = useCallback( () =>
-    {
-        setMenuOpen( !menuOpen );
-    }, [ menuOpen, setMenuOpen ] );
-
-    const menuIconRef = useRef() as MutableRefObject<HTMLElement | null>;
-    const setMenuRef = ( ref: HTMLElement | null ) => menuIconRef.current = ref;
-
     const [ currentSlide, setCurrentSlide ] = useState<number>( sections[ type ] );
+
+    const onMenuClick: MenuClickHandler = useCallback( ( menu ) =>
+    {
+
+        if ( ContactTypes.hasOwnProperty( menu ) ) {
+            dispatch<SetContactType>( {
+                type:    'SetContactType',
+                payload: menu as ContactTypes
+            } );
+        } else {
+            switch ( menu as ContactMenuItems ) {
+
+                case ContactMenuItems.CloseConversation:
+
+                    dispatch<SetIsClosing>( {
+                        type:    'SetIsClosing',
+                        payload: true,
+                    } );
+
+                    break;
+
+            }
+        }
+
+    }, [ dispatch ] );
 
     const setSection: SelectionCallback<ContactTypes> = useCallback( ( section: ContactTypes ) =>
     {
@@ -96,18 +114,6 @@ const ContactInner = () =>
     {
         setSection( ContactTypes.Selection );
     }, [ type ] );
-    const changeProfile = useCallback( () =>
-    {
-        setMenuOpen( false );
-        setSection( ContactTypes.EditProfile );
-    }, [] );
-
-    // Props for opening animation
-    const props = useSpring( {
-        opacity:         active ? 1 : 0,
-        transform:       `scale(${ active ? 1 : 0 })`,
-        transformOrigin: 'right bottom',
-    } );
 
     // Handles errors update
     useEffect( () =>
@@ -155,7 +161,7 @@ const ContactInner = () =>
 
             setSuccessMessages( newMessages );
         }
-    }, [] );
+    }, [ successMessages ] );
 
     // Clears success messages after timeout
     useEffect( () =>
@@ -189,30 +195,57 @@ const ContactInner = () =>
         }
     }, [ errors ] );
 
+    // Handles connection error
     useEffect( () =>
     {
         if ( !errors.length ) {
             return;
         }
 
-        errors.forEach( error =>
+        errors.forEach( apolloError =>
         {
-            if ( error && error.error && error.error.message.includes( 'Failed to fetch' ) ) {
+            if ( apolloError && apolloError.error && apolloError.error.message.includes( 'Failed to fetch' ) ) {
                 setConnected( false );
+
+                return;
             }
         } );
 
     }, [ errors ] );
 
+    // Creates new conversation after user have closed current one
+    // TODO Check if we actually need this
+    useEffect( () =>
+    {
+        if ( !conversationQueryResult.data || !Object.values( conversationQueryResult.data as object ).length ) {
+            return;
+        }
+
+        const { conversation } = conversationQueryResult.data;
+
+        if ( !!conversation &&
+             conversation.status === ConversationStatuses.closed &&
+             !createConversationResult.loading
+             && type === ContactTypes.Selection ) {
+            createConversation();
+        }
+
+    }, [ conversationQueryResult, createConversation, createConversationMutation, createConversationResult.loading, type ] );
+
     return (
-        <Inner style={ props }>
+        <Inner active={ active }>
             <Loader active={ userLoading } asOverlay={ true } svgProps={ {
                 width:  '30%',
                 height: '30%'
             } }/>
 
             { !isConnected &&
-              <ErrorMessage title="Oh no!" message="We are unable to connect to our server. Please check your internet connection"/>
+              <IconMessage icon={
+                  <FaIcon icon={ faFrown }/> } title="Oh no!">
+                  <Text>
+                      We are unable to connect to our server. Please check your internet connection.
+                  </Text>
+              </IconMessage>
             }
 
             { isConnected &&
@@ -220,8 +253,8 @@ const ContactInner = () =>
                   <FormTitleContainer>
                       { shouldAddIcon( type ) &&
                         <Tooltip title="Return to selection">
-                            <IconButton href="#" onClick={ handleReturnClick }>
-                                <FaIconReversed icon="arrow-left"/>
+                            <IconButton onClick={ handleReturnClick }>
+                                <WhiteFaIcon icon="arrow-left"/>
                             </IconButton>
                         </Tooltip>
                       }
@@ -229,32 +262,7 @@ const ContactInner = () =>
                           { getFormTitle( type, user ) }
                       </FormTitle>
                       { user && type !== ContactTypes.UserForm &&
-                        <>
-                            <IconButton
-                                href="#"
-                                ref={ setMenuRef }
-                                aria-label="More"
-                                aria-controls="long-menu"
-                                aria-haspopup="true"
-                                onClick={ toggleMenu }
-                            >
-                                <FaIconReversed icon="ellipsis-v"/>
-                            </IconButton>
-                            <Menu
-                                id="long-menu"
-                                anchorEl={ menuIconRef.current }
-                                keepMounted
-                                open={ menuOpen }
-                                onClose={ toggleMenu }
-                            >
-                                <MenuItem onClick={ changeProfile }>
-                                    <FaIcon margin="normal" icon={ faUserCircle }/>
-                                    <Text>
-                                        Edit my profile
-                                    </Text>
-                                </MenuItem>
-                            </Menu>
-                        </>
+                        <ContactMenu conversation={ conversationQueryResult.data ? conversationQueryResult.data.conversation : null } onMenuClick={ onMenuClick }/>
                       }
                   </FormTitleContainer>
                   { errors.length > 0 && errors.map( ( item, index ) =>
@@ -268,7 +276,7 @@ const ContactInner = () =>
                         <UserForm user={ user } mutation={ userMutation }/>
                         <Selection<ContactTypes> onSelection={ setSection } options={ contactSelections }/>
                         <ContactForm afterSubmit={ onContactFormSubmit } user={ user } mutation={ contactMutation }/>
-                        <Conversation changeStatusMutation={ changeStatusMutation } messageCreationMutation={ createMessageMutation } query={ conversationsQuery } creationMutation={ createConversationMutation }/>
+                        <Conversation createConversationMutation={ createConversationMutation } changeStatusMutation={ changeStatusMutation } messageCreationMutation={ createMessageMutation } conversationQuery={ conversationsQuery }/>
                         <div>
                             Edit profile!
                         </div>

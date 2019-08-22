@@ -22,14 +22,15 @@ import breakpoints from '../components/styled/breakpoints';
 import useAuth from '../hooks/useAuth';
 import { ThemeProvider as MaterialThemeProvider } from '@material-ui/styles';
 import { createMuiTheme } from '@material-ui/core';
-import colors, { getPrimary } from '../components/styled/colors';
-import { useMutation } from 'react-apollo-hooks';
+import colors, { getBaseTextColor, getPrimary } from '../components/styled/colors';
 import { UserResult } from '../types/graphql/Mutations';
 import { UPDATE_LOGIN_DATE } from '../graphql/mutations/users';
+import { useMutation } from '@apollo/react-hooks';
 
 const AboutMe = lazy( () => import('../components/about-me/AboutMe') );
 const HowCanIHelp = lazy( () => import('../components/how-can-i-help/HowCanIHelp') );
 const Contact = lazy( () => import('../components/contact/Contact') );
+const ContactSection = lazy( () => import('../components/contact-section/ContactSection') );
 
 const HomeWrapper = styled.div<HomeWrapperProps>`
     ${ props => props.innerActive && `
@@ -62,6 +63,9 @@ const Home = () =>
             error:   {
                 main: colors.red
             },
+            text:    {
+                secondary: getBaseTextColor( theme.mode )
+            }
         },
     } );
 
@@ -211,6 +215,7 @@ const Home = () =>
                                   <AboutMe/>
                                   <HowCanIHelp/>
                                   <Projects projects={ projects }/>
+                                  <ContactSection/>
                               </>
                             }
                         </Suspense>

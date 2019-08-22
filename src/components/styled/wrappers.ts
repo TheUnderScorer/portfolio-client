@@ -18,11 +18,15 @@ export const HomeSection = styled.section<HomeSectionProps>`
     background-color : ${ props => props.odd ?
     ( props.theme.mode === 'black' ? colors.dark : colors.lightBg ) :
     ( props.theme.mode === 'black' ? colors.black : colors.white )
-    }
+}
     
     .section-inner{
         padding: 0 2rem;
     }
+    
+    ${ props => props.hasSeparator && `
+        border-bottom: 1px solid ${ colors.lightBorder }
+    ` }
     
     ${ props => props.colorBackground && `
         padding: 0;

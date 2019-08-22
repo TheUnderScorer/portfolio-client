@@ -5,7 +5,7 @@ import { MessageSectionProps } from '../conversation/types/styled';
 import { CtaButton } from '../styled/buttons';
 
 export const EditorForm = styled( CentredFrom )`
-    background-color: ${ colors.grey };
+    background-color: ${ props => props.theme.mode === 'black' ? colors.dark : colors.grey };
     padding: 1em 0;
     max-height: 7em;
     height: auto;
@@ -15,7 +15,6 @@ export const MessageSection = styled( FormSection )<MessageSectionProps>`
     .error {
         margin-left: 1.85em;
     }
-    
     
      .MuiInput-underline {
         &::after, &::before {
@@ -42,7 +41,7 @@ export const MessageSection = styled( FormSection )<MessageSectionProps>`
     
     ${ props => props.filled && `
         svg {
-            color: ${ colors.dark };
+            color: ${ props.theme.mode === 'black' ? colors.white : colors.black };
         }
     ` }
 `;

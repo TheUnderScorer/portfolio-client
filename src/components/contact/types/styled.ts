@@ -14,3 +14,8 @@ export interface NoticeProps
 {
     type: NoticeType;
 }
+
+export interface InnerProps
+{
+    active?: boolean;
+}

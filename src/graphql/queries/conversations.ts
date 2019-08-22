@@ -1,4 +1,4 @@
-import { MESSAGE_FRAGMENT } from '../fragments/conversations';
+import { CONVERSATION_FRAGMENT, MESSAGE_FRAGMENT } from '../fragments/conversations';
 import gql from 'graphql-tag';
 
 export const MY_CONVERSATIONS = gql`
@@ -22,15 +22,14 @@ export const MY_CONVERSATIONS = gql`
 export const MY_CONVERSATION = gql`
     query MyConversation($page: Int = 1, $perPage: Int = 30) {
         conversation:getCurrentConversation{
-            id,
-            title,
-            createdAt,
+            ...ConversationFragment
             messages(perPage: $perPage, page: $page) {
                 ...MessageFragment
             }
         }
     }
     ${MESSAGE_FRAGMENT}
+    ${CONVERSATION_FRAGMENT}
 `;
 
 

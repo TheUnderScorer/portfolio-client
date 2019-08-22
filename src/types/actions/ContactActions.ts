@@ -16,4 +16,9 @@ export interface AddLoadedConversation extends Action<'AddLoadedConversation'>
     payload: number;
 }
 
-export type ContactActions = SetContactType | SetContactActive | AddLoadedConversation;
+export interface SetIsClosing extends Action<'SetIsClosing'>
+{
+    payload: boolean;
+}
+
+export type ContactActions = SetContactType | SetContactActive | AddLoadedConversation | SetIsClosing;

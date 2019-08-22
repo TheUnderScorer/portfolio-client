@@ -189,7 +189,6 @@ export const SideSectionTitle = styled( H3 )`
 
 export const ReadMoreButton = styled( Button )`
     margin-top: 20px;
-    background-color: ${ props => mainColor( props ) };
     
     svg {
         transition: all 0.75s cubic-bezier(0.175, 0.885, 0.32, 1.275);

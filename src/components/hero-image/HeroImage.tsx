@@ -12,7 +12,7 @@ const HeroContainer = styled.section`
     border: 20px solid #28283E;
     background-color ${ colors.black };
     
-    @media(max-width: ${ breakpoints.tabletSmall }){
+    @media(max-width: ${ breakpoints.tabletBig }){
         border: none;
     }
     

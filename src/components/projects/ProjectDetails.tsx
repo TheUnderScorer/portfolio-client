@@ -11,7 +11,6 @@ import texts from '../../pages/data/texts';
 
 const ProjectDetails = ( { project }: ProjectDetailsProps ) =>
 {
-
     const { details, images = [], name, url, repositoryUrl } = project;
 
     const [ imageLoader, setImageLoader ] = useState( true );

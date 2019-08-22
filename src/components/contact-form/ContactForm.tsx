@@ -8,6 +8,7 @@ import FormikInput from '../formik/FormikInput';
 import { Button } from '../styled/buttons';
 import Loader from '../loader/Loader';
 import { TextField } from '@material-ui/core';
+import { ExecutionResult } from '@apollo/react-common';
 
 const validationSchema = ( props: ContactFormProps ) =>
 {
@@ -76,7 +77,7 @@ const ContactForm = ( props: ContactFormProps & FormikProps<ContactInput> ) =>
                 }/>
             </FormSection>
             <FormSection margin="normal">
-                <Button flat={ true } type="submit" disabled={ mutationResult.loading }>
+                <Button disabledOpacity={ false } flat={ true } type="submit" disabled={ mutationResult.loading }>
                     <Loader asOverlay={ true } active={ mutationResult.loading }/>
                     Send message
                 </Button>
@@ -107,11 +108,12 @@ const formikWrapper = withFormik<ContactFormProps, ContactInput>( {
                               delete input.email;
                           }
 
+                          // TODO Add interface for Contact
                           const mutationResult = await mutation[ 0 ]( {
                               variables: {
                                   input
                               },
-                          } );
+                          } ) as ExecutionResult<any>;
 
                           const result = !!mutationResult.data.send.id;
 

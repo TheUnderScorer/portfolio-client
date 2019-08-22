@@ -120,6 +120,10 @@ const Header = () =>
 
     const handleLogoClick = useCallback( () =>
     {
+        if ( isOpen ) {
+            return;
+        }
+
         const sectionAction: SetCurrentSection = {
             type:    'SetCurrentSection',
             payload: ''
@@ -146,7 +150,7 @@ const Header = () =>
 
         dispatch( innerAction );
 
-    }, [ innerActive ] );
+    }, [ innerActive, isOpen ] );
 
     const switchOpenState = useCallback( () =>
     {
@@ -267,7 +271,7 @@ const Header = () =>
                     </NavigationListItem>
                     <NavigationListItem>
                         <SwitchContainer>
-                            <ToggleLink transparent={ !didInnerOpen } href="#" onClick={ setThemeMode( 'white' ) }>
+                            <ToggleLink transparent={ !didInnerOpen } onClick={ setThemeMode( 'white' ) }>
                                 <FontAwesomeIcon className="sun" icon="sun"/>
                             </ToggleLink>
                             <Switch
@@ -275,7 +279,7 @@ const Header = () =>
                                 onChange={ handleToggle }
                                 checked={ mode === 'black' }
                             />
-                            <ToggleLink transparent={ !didInnerOpen } href="#" onClick={ setThemeMode( 'black' ) }>
+                            <ToggleLink transparent={ !didInnerOpen } onClick={ setThemeMode( 'black' ) }>
                                 <FontAwesomeIcon className="moon" icon="moon"/>
                             </ToggleLink>
                         </SwitchContainer>

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { mountWithStore } from '../../../tests/utils/renderer';
+import { mountWithStore } from '../../../tests/utils/enzyme/renderer';
 import Header from '../Header';
 import Switch from '@material/react-switch';
 import '../../../fontAwesome';
@@ -44,7 +44,7 @@ describe( 'Header component', () => {
 
         const actions = store.getActions();
 
-        expect( actions[ 0 ].payload ).toEqual( 'about' );
+        expect( actions[ 2 ].payload ).toEqual( 'about_me' );
     } );
 
 } );

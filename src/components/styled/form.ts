@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
 import colors, { getPrimaryVariation } from './colors';
-import { FormSectionProps, StyledInputProps } from './types';
+import { FlexFormSectionProps, FormSectionProps, StyledInputProps } from './types';
 import { Form as FormikForm } from 'formik';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -15,6 +15,7 @@ export const CentredFrom = styled( Form )`
     justify-content: center;
     height: 100%;
     width: 100%;
+    position: relative;
 `;
 
 export const InputContainer = styled.div`
@@ -95,11 +96,30 @@ export const ErrorMessage = styled.div`
 `;
 
 export const FormSection = styled.section<FormSectionProps>`
-    margin: ${ ( { margin = 'none' } ) => margin === 'none' ? '0' : '1em 0' };
+    position: relative;
+    margin: ${ ( { margin = 'none' } ) =>
+{
+    switch ( margin ) {
+        case 'normal':
+            return '1em 0';
+
+        case 'top':
+            return '1em 0 0 0 ';
+
+        default:
+            return '0';
+    }
+
+
+} };
     width: ${ ( { width = '100%' } ) => width };
     
     input, label, textarea {
         color: ${ props => props.theme.mode === 'black' ? colors.white : colors.dark };
+    }
+       
+    button {
+        margin-right: 1em;
     }
     
     .MuiInputLabel-outlined {
@@ -115,7 +135,7 @@ export const FormSection = styled.section<FormSectionProps>`
     }
     
    ${ props => props.theme.mode === 'black' && `
-        .MuiFormControl-root .MuiInputBase-root fieldset {
+        .MuiFormControl-root .MuiInputBase-root:not(.Mui-error) fieldset {
             border-color: ${ colors.darkerBorder };
         }
         
@@ -128,12 +148,14 @@ export const FormSection = styled.section<FormSectionProps>`
         .MuiFormControl-root label {
             color: ${ colors.white }
         }
-       
    ` } 
 `;
 
-export const FlexFormSection = styled( FormSection )`
+export const FlexFormSection = styled( FormSection )<FlexFormSectionProps>`
     display: flex;
     padding: 0 3rem;
     align-items: center;
+    ${ props => props.isCentered && `
+        justify-content: center;
+    ` }
 `;

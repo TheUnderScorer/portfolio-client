@@ -4,8 +4,8 @@ import Model from './Model';
 
 export enum ConversationStatuses
 {
-    'open'   = 'Open',
-    'closed' = 'Closed'
+    'open'   = 'open',
+    'closed' = 'closed'
 }
 
 export default interface Conversation extends Model

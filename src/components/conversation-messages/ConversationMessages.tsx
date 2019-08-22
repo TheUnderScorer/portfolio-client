@@ -8,6 +8,7 @@ import usePrevious from '../../hooks/usePrevious';
 import { smoothScroll } from '../../utils/scroll';
 import ConversationMessage from '../conversation-message/ConversationMessage';
 import Loader from '../loader/Loader';
+import { isEmpty } from 'lodash';
 
 const ConversationMessages = ( { conversation, hasMore, onLoadMore, onCloseClick }: ConversationMessagesProps ) =>
 {
@@ -22,10 +23,11 @@ const ConversationMessages = ( { conversation, hasMore, onLoadMore, onCloseClick
     const { data: userData } = useCurrentUser();
 
     const listRef = useRef<any>();
+    const prevListRef = usePrevious( listRef.current );
 
     useEffect( () =>
     {
-        if ( !listRef.current || prevMessagesLength === messages.length || isScrolling || isPaginationEvent ) {
+        if ( !listRef.current || ( prevMessagesLength === messages.length && prevListRef ) || isScrolling || isPaginationEvent ) {
             return;
         }
 
@@ -81,14 +83,14 @@ const ConversationMessages = ( { conversation, hasMore, onLoadMore, onCloseClick
         await onLoadMore( newPage );
     }, [ onLoadMore, isPaginationEvent ] );
 
-    if ( !userData ) {
+    if ( !userData || isEmpty( userData ) ) {
         return null;
     }
 
     const { user } = userData;
 
     return (
-        <ListContainer ref={ listRef }>
+        <ListContainer className={ `messages ${ didInitialScroll ? 'did-initial-scroll' : '' }` } ref={ listRef }>
             <List
                 element="ul"
                 initialLoad={ false }
@@ -119,7 +121,7 @@ const ConversationMessages = ( { conversation, hasMore, onLoadMore, onCloseClick
                             <Text>
                                 This is start of your current conversation with me.
                                 <br/>
-                                <A onClick={ onCloseClick } underlined={ true }>Click here to close this conversation.</A>
+                                <A id="close_conversation" onClick={ onCloseClick } underlined={ true }>Click here to close this conversation.</A>
                             </Text>
                         </HelperText>
                       }

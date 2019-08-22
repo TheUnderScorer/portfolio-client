@@ -40,7 +40,7 @@ const Project = ( { project, active = false, index }: ProjectProps ) =>
         dispatch( action );
     }, [ index ] );
 
-    const handleClose = () =>
+    const handleClose = useCallback( () =>
     {
         const action: SetActiveProject = {
             type:    'SetActiveProject',
@@ -54,12 +54,12 @@ const Project = ( { project, active = false, index }: ProjectProps ) =>
         } );
 
         dispatch( action );
-    };
+    }, [] );
 
-    const handleLoad = () =>
+    const handleLoad = useCallback( () =>
     {
         setThumbLoaded( true );
-    };
+    }, [] );
 
     useEffect( () =>
     {
@@ -82,7 +82,7 @@ const Project = ( { project, active = false, index }: ProjectProps ) =>
     }, [ active, index, name ] );
 
     return (
-        <ProjectContainer className="project">
+        <ProjectContainer loading={ !thumbLoaded } className="project">
             <ProjectImageFigure loaded={ thumbLoaded }>
                 <ThumbnailLoader active={ !thumbLoaded } asOverlay={ true } svgProps={ {
                     width:  '50%',
@@ -100,7 +100,7 @@ const Project = ( { project, active = false, index }: ProjectProps ) =>
                             { shortDetails }
                         </Text>
                     </div>
-                    <ReadMore iconOnHover={ true } withIcon={ true } mode="secondary" flat={ true } onClick={ handleOpen }>
+                    <ReadMore onClick={ handleOpen }>
                         <Text>
                             Check Out
                         </Text>

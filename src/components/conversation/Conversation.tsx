@@ -3,34 +3,73 @@ import { useCallback, useEffect, useState } from 'react';
 import Loader from '../loader/Loader';
 import ConversationProps from './types/ConversationProps';
 import { ConversationContainer } from './styled';
-import ConversationEditor from '../conversation-editor/ConversationEditor';
-import ConversationMessages from '../conversation-messages/ConversationMessages';
 import usePrevious from '../../hooks/usePrevious';
-import { useApolloClient } from 'react-apollo-hooks';
 import { MY_CONVERSATION } from '../../graphql/queries/conversations';
 import { ConversationResult } from '../../types/graphql/Queries';
-import CloseConversationForm from '../close-conversation-form/CloseConversationForm';
 import useCurrentUser from '../../hooks/useCurrentUser';
+import ConversationEditor from '../conversation-editor/ConversationEditor';
+import ConversationMessages from '../conversation-messages/ConversationMessages';
+import CloseConversationForm from '../close-conversation-form/CloseConversationForm';
+import { ConversationStatuses } from '../../types/graphql/Conversation';
+import IconMessage from '../icon-message/IconMessage';
+import { FaIcon, Text } from '../styled/typography';
+import { faCheckCircle } from '@fortawesome/free-regular-svg-icons';
+import { useDispatch, useSelector } from 'react-redux';
+import { SetContactType, SetIsClosing } from '../../types/actions/ContactActions';
+import { ContactTypes } from '../../types/reducers/ContactReducer';
+import { useApolloClient } from '@apollo/react-hooks';
+import HomeStore from '../../types/stores/HomeStore';
+import { FlexFormSection } from '../styled/form';
+import { Button } from '../styled/buttons';
 
 const messagesPerPage = 30;
 
-const Conversation = ( { query, creationMutation, messageCreationMutation, changeStatusMutation }: ConversationProps ) =>
+const Conversation = ( { conversationQuery, messageCreationMutation, changeStatusMutation, createConversationMutation }: ConversationProps ) =>
 {
+    const dispatch = useDispatch();
+
+    const [ createConversation, mutationResult ] = createConversationMutation;
+    const { loading: mutationLoading } = mutationResult;
+
+    const [ , query ] = conversationQuery;
     const { data: result, loading: queryLoading } = query;
 
     const currentUser = useCurrentUser();
 
     const client = useApolloClient();
 
-    const [ isClosing, setIsClosing ] = useState( false );
-    const handleClose = useCallback( () => setIsClosing( true ), [] );
-    const handleCancel = useCallback( () => setIsClosing( false ), [] );
+    const isClosing = useSelector( ( store: HomeStore ) => store.contact.isClosing );
+
+    const setIsClosing = useCallback( ( payload: boolean ) =>
+    {
+        dispatch<SetIsClosing>( {
+            type: 'SetIsClosing',
+            payload
+        } )
+    }, [ dispatch ] );
+
+    const handleClose = useCallback( () => setIsClosing( true ), [ setIsClosing ] );
+    const handleCancel = useCallback( () => setIsClosing( false ), [ setIsClosing ] );
+
+    const handleReturn = useCallback( () =>
+    {
+        dispatch<SetContactType>( {
+            type:    'SetContactType',
+            payload: ContactTypes.Selection
+        } );
+
+        setIsClosing( false );
+    }, [ dispatch, setIsClosing ] );
+
+    const startNewConversation = useCallback( async () =>
+    {
+        setIsClosing( false );
+
+        await createConversation();
+    }, [ setIsClosing ] );
 
     const conversationID = result && result.conversation ? result.conversation.id : 0;
     const prevConversationID = usePrevious( conversationID );
-
-    const [ , mutationResult ] = creationMutation;
-    const { loading: mutationLoading } = mutationResult;
 
     const [ hasMore, setHasMore ] = useState( true );
 
@@ -61,6 +100,15 @@ const Conversation = ( { query, creationMutation, messageCreationMutation, chang
                          }
         } )
     }, [ hasMore, result, query ] );
+
+    useEffect( () =>
+    {
+        if ( query.data || !query.called || createConversationMutation[ 1 ].loading ) {
+            return;
+        }
+
+        createConversation();
+    }, [ query.data, createConversationMutation, query.called, createConversation ] );
 
     useEffect( () =>
     {
@@ -105,15 +153,43 @@ const Conversation = ( { query, creationMutation, messageCreationMutation, chang
                 width:  '30%',
                 height: '30%'
             } }/>
-            { !isClosing && result && result.conversation &&
-              <>
-                  <ConversationMessages onCloseClick={ handleClose } loading={ query.loading } onLoadMore={ loadMore } hasMore={ hasMore } conversation={ result.conversation }/>
-                  <ConversationEditor mutation={ messageCreationMutation } disabled={ queryLoading } conversationID={ conversationID }/>
-              </>
-            }
 
-            { isClosing && result && result.conversation && currentUser.data &&
-              <CloseConversationForm onCancel={ handleCancel } closeConversationMutation={ changeStatusMutation } conversationID={ result.conversation.id } currentUser={ currentUser.data.user }/>
+            { result && result.conversation &&
+
+              <>
+
+                  { result.conversation.status === ConversationStatuses.closed && isClosing &&
+                    <IconMessage title="Conversation closed." icon={ <FaIcon icon={ faCheckCircle }/> }>
+                        <Text>
+                            Thanks for chat!
+                        </Text>
+                        <FlexFormSection isCentered={ true } margin="normal">
+                            <Button onClick={ startNewConversation } ripple flat>
+                                Start new conversation
+                            </Button>
+                            <Button onClick={ handleReturn } mode="secondary" flat ripple>
+                                Return
+                            </Button>
+                        </FlexFormSection>
+                    </IconMessage>
+                  }
+
+                  { result.conversation.status === ConversationStatuses.open &&
+                    <>
+                        { !isClosing &&
+                          <>
+                              <ConversationMessages onCloseClick={ handleClose } loading={ query.loading } onLoadMore={ loadMore } hasMore={ hasMore } conversation={ result.conversation }/>
+                              <ConversationEditor mutation={ messageCreationMutation } disabled={ queryLoading } conversationID={ conversationID }/>
+                          </>
+                        }
+
+                        { isClosing && currentUser.data &&
+                          <CloseConversationForm onCancel={ handleCancel } closeConversationMutation={ changeStatusMutation } conversationID={ result.conversation.id } currentUser={ currentUser.data.user }/>
+                        }
+                    </>
+                  }
+              </>
+
             }
 
         </ConversationContainer>

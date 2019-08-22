@@ -12,6 +12,7 @@ export interface HomeSectionProps
     isCentered?: boolean;
     odd?: boolean;
     colorBackground?: boolean;
+    hasSeparator?: boolean;
 }
 
 export interface FlexProps
@@ -38,6 +39,7 @@ export interface SectionSubtitleProps
 
 export interface ButtonProps
 {
+    disabledOpacity?: boolean;
     mode?: 'primary' | 'secondary';
     flat?: boolean;
     withIcon?: boolean;
@@ -79,7 +81,7 @@ export interface FormProps
 export interface FormSectionProps
 {
     width?: string;
-    margin?: 'normal' | 'none';
+    margin?: 'normal' | 'none' | 'top';
 }
 
 export interface IconProps
@@ -91,4 +93,9 @@ export interface IconProps
 export interface HeadlineProps
 {
     display?: 'block' | 'inline-block' | 'flex' | 'inline-flex' | 'inline';
+}
+
+export interface FlexFormSectionProps
+{
+    isCentered?: boolean;
 }

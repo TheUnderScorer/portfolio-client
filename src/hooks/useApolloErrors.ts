@@ -1,7 +1,7 @@
-import { MutationResult, QueryHookResult } from 'react-apollo-hooks';
 import useFilteredArray from './useFilteredArray';
+import { MutationResult, QueryResult } from '@apollo/react-common';
 
-export default ( initialState: Array<QueryHookResult<any, any> | MutationResult<any> | undefined> = [] ) =>
+export default ( initialState: Array<QueryResult<any, any> | MutationResult<any> | undefined> = [] ) =>
 {
     return useFilteredArray( initialState, item => !!item && !!item.error );
 }

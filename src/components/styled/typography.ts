@@ -20,7 +20,7 @@ export const Text = styled.span`
 `;
 
 export const Paragraph = styled.p`
-    ${ textStyles }
+    ${ textStyles };
 `;
 
 export const Time = styled.time`
@@ -123,6 +123,10 @@ export const A = styled.a<LinkProps>`
     ` }
 `;
 
+export const Highlight = styled.span`
+    color: ${ props => getPrimary( props.theme.mode ) };
+`;
+
 export const SectionSubtitle = styled( Text )<SectionSubtitleProps>`
     display: block;
     margin-bottom: 40px;
@@ -148,6 +152,10 @@ export const SectionSubtitle = styled( Text )<SectionSubtitleProps>`
     ` }
 `;
 
+export const WhiteFaIcon = styled( FontAwesomeIcon )`
+    color: ${ colors.white };
+`;
+
 export const FaIconReversed = styled( FontAwesomeIcon )<IconProps>`
     color: ${ props => props.theme.mode === 'black' ? colors.dark : colors.white };
     margin: ${ ( { margin = 'none' } ) => margin === 'none' ? '0' : '0 0.5em' };
@@ -156,4 +164,8 @@ export const FaIconReversed = styled( FontAwesomeIcon )<IconProps>`
 
 export const FaIcon = styled( FaIconReversed )`
     color: ${ props => props.theme.mode === 'black' ? colors.white : colors.dark };
+`;
+
+export const MenuIcon = styled( FaIcon )`
+    margin: ${ ( { margin = 'none' } ) => margin === 'none' ? '0' : '0 0.5em 0 0' };
 `;

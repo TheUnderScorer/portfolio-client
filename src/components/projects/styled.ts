@@ -15,12 +15,12 @@ import { ButtonProps } from '../styled/types';
 const borderRadius = '6px';
 
 export const ProjectsContainer = styled.div`
-    max-width: 1500px;
+    max-width: 1400px;
     margin: 0 auto !important;
     display: grid;
     grid-template-rows: 1fr;
-    grid-row-gap: 3em;
-    grid-column-gap: 3em;
+    grid-row-gap: 1em;
+    grid-column-gap: 2em;
     grid-template-columns: repeat(3, 1fr);
     
     @media(max-width: ${ breakpoints.tabletBig }){
@@ -33,7 +33,6 @@ export const ProjectsContainer = styled.div`
     
     .project {
         margin-bottom: 1em; 
-        height: 18rem;
         max-height: 300px;
         min-height: 100px;
         
@@ -54,6 +53,7 @@ export const ProjectContainer = styled.div<ProjectContainerProps>`
 
 export const ProjectImageFigure = styled.figure<ProjectImageFigProps>`
     height: 100%;
+    max-height: 300px;
     border-radius: ${ borderRadius };
     overflow: hidden;
     position: relative;
@@ -137,9 +137,21 @@ export const ProjectModal = styled( Modal )`
 `;
 
 export const ReadMore = styled( Button ).attrs<ButtonProps>( {
-    round: true,
+    round:       true,
+    iconOnHover: true,
+    withIcon:    true,
+    mode:        'secondary',
+    flat:        true
 } )`
-    margin-top: 40px;
+    margin-top: 2em;
+    
+    &:hover {
+        background-color: ${ props => getPrimary( props.theme.mode ) };
+    }
+    
+    &, * {
+        color: ${ colors.white }
+    }
 `;
 
 export const DetailsContainer = styled.div<ProjectDetailsContainerProps>`
@@ -149,7 +161,7 @@ export const DetailsContainer = styled.div<ProjectDetailsContainerProps>`
     display: flex;
     overflow: visible;
     
-    @media(max-width: ${ breakpoints.tabletBig }) {
+    @media(max-width: ${ breakpoints.tabletSmall }) {
         flex-direction: column;
         
         > div {
@@ -202,7 +214,7 @@ export const TextContainer = styled.div`
         text-align: center;
     }
     
-    @media(max-width: ${ breakpoints.tabletBig }) {
+    @media(max-width: ${ breakpoints.tabletSmall }) {
         display: flex;
         flex-direction: column;   
         
@@ -233,6 +245,16 @@ export const Actions = styled.div`
     > * {
         margin: 0 1em;
     }
+    
+    @media(max-width: ${ parseInt( breakpoints.tabletBig ) + 1 }px) and (min-width: ${ breakpoints.tabletSmall }){
+        flex-wrap: wrap;
+        
+        a {
+            width: 100%;
+            margin-bottom: 1em;
+            text-align: center;
+        }
+    } 
     
     @media(max-width: ${ breakpoints.tabletSmall }){
         position: absolute;

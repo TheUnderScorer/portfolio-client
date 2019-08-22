@@ -50,7 +50,7 @@ export const HeaderWrapper = styled.header<HeaderProps>`
         padding: 0 2em;
     }
     
-    @media(max-width: ${ breakpoints.tabletSmall }) {
+    @media(max-width: ${ breakpoints.tabletBig }) {
         height: 60px;
     
         ${ props => props.isOpen && `
@@ -74,7 +74,7 @@ export const HeaderWrapper = styled.header<HeaderProps>`
 export const Navigation = styled.nav`
     padding: 1rem 0;
     
-    @media(max-width: ${ breakpoints.tabletSmall }){
+    @media(max-width: ${ breakpoints.tabletBig }){
         top: 0;
         height: 100vh;
         position: absolute;
@@ -115,7 +115,7 @@ export const LogoWrapper = styled.a`
         border-radius: 50%;
     }
     
-    @media(max-width: ${ breakpoints.tabletSmall }){
+    @media(max-width: ${ breakpoints.tabletBig }){
         margin-left: -1em;
     }
 
@@ -185,7 +185,7 @@ export const MenuActivator = styled( IconButton )`
     font-size: 2em;
     z-index: 21;
 
-    @media(min-width: ${ parseInt( breakpoints.tabletSmall ) + 1 }px){
+    @media(min-width: ${ breakpoints.tabletBig }){
         display: none !important;
     }
     
@@ -249,5 +249,5 @@ export const ToggleLink = styled( A )<ToggleLinkProps>`
     color: ${ props => props.transparent ?
     colors.white :
     props.theme.mode === 'black' ? colors.white : colors.dark
-    };
+};
 `;
