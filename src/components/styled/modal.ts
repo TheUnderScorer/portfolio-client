@@ -3,7 +3,24 @@ import styled from 'styled-components';
 import colors from './colors';
 
 export const Modal = styled( ReactModal )`
-    position: relative;
+    position: absolute;
+    transition: all .5s;
+    left: 8%;
+    top: 15%;
+    
+    &.hidden {
+        display: none;
+    }
+    
+    > *: not(.placeholder) {
+        opacity: 0;
+    }
+    
+    &.opened {
+        > * {
+            opacity: 1;
+        }
+    }
     
     &, * {
         outline: none;

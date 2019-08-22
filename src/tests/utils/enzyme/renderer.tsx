@@ -5,7 +5,7 @@ import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
 import { mount, ReactWrapper, render } from 'enzyme';
 import { MockedProvider } from '@apollo/react-testing';
-import { MockedProviderProps } from '@apollo/react-testing/lib/mocks/MockedProvider';
+import { MockedProviderProps } from '@apollo/react-testing';
 
 export interface MountWithStoreResult<Props extends object, Store extends object>
 {

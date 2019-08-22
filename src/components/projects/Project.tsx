@@ -19,6 +19,7 @@ import { SetActiveProject } from '../../types/actions/HomeActions';
 import { useDispatch } from 'react-redux';
 import { pushState } from '../../utils/history';
 import { about, project as projectUrl } from '../../pages/data/links';
+import useOpenableModal from '../../hooks/useOpenableModal';
 
 const Project = ( { project, active = false, index }: ProjectProps ) =>
 {
@@ -29,6 +30,12 @@ const Project = ( { project, active = false, index }: ProjectProps ) =>
     const [ thumbLoaded, setThumbLoaded ] = useState( false );
 
     const thumbRef = useRef() as MutableRefObject<HTMLImageElement>;
+
+    const relativeItemRef = useRef() as MutableRefObject<HTMLDivElement>;
+    const { setModalRef, modalStyles, modalClassList } = useOpenableModal( {
+        relativeElement: relativeItemRef.current,
+        open:            active
+    } );
 
     const handleOpen = useCallback( () =>
     {
@@ -83,7 +90,7 @@ const Project = ( { project, active = false, index }: ProjectProps ) =>
 
     return (
         <ProjectContainer loading={ !thumbLoaded } className="project">
-            <ProjectImageFigure loaded={ thumbLoaded }>
+            <ProjectImageFigure ref={ relativeItemRef } loaded={ thumbLoaded }>
                 <ThumbnailLoader active={ !thumbLoaded } asOverlay={ true } svgProps={ {
                     width:  '50%',
                     height: '50%'
@@ -108,7 +115,7 @@ const Project = ( { project, active = false, index }: ProjectProps ) =>
                     </ReadMore>
                 </ProjectImageCaption>
             </ProjectImageFigure>
-            <ProjectModal shouldFocusAfterRender={ false } htmlOpenClassName="has-overlay" className={ `${ active ? 'active' : '' }` } overlayClassName="middle center" isOpen={ active } onRequestClose={ handleClose }>
+            <ProjectModal style={ { content: modalStyles } } contentRef={ setModalRef } shouldFocusAfterRender={ false } htmlOpenClassName="has-overlay" className={ modalClassList.join( ' ' ) } overlayClassName="middle center" isOpen={ active } onRequestClose={ handleClose }>
                 <ProjectDetails project={ project }/>
                 <Button round={ true } ripple={ true } flat={ true } onClick={ handleClose } className="close">
                     <FontAwesomeIcon icon="times"/>

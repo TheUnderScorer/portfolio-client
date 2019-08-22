@@ -118,7 +118,6 @@ export const ProjectModal = styled( Modal )`
     justify-content: center;
     opacity: 0;
     visibility: hidden;
-    transition: opacity .3s;
     
     &.active {
         opacity: 1;
