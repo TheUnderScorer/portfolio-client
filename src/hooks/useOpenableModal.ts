@@ -87,10 +87,6 @@ export default ( { relativeElement, defaultModalClasses = [], open = false }: Pa
         {
             setModalStyles( {} );
             setDidOpen( false );
-            setModalClasslist( [
-                ...modalClassList,
-                'opened'
-            ] )
         }, 100 );
 
         return () =>
@@ -105,7 +101,14 @@ export default ( { relativeElement, defaultModalClasses = [], open = false }: Pa
             return;
         }
 
-        setTimeout( () => setOverlayStyles( {} ), 400 );
+        setTimeout( () =>
+        {
+            setOverlayStyles( {} );
+            setModalClasslist( [
+                ...modalClassList,
+                'opened'
+            ] )
+        }, 400 );
     }, [ didOpen ] );
 
     return {

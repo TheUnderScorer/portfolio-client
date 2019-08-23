@@ -14,7 +14,7 @@ export const Modal = styled( ReactModal )`
     
     .hide-on-open {
         opacity: 0;
-        transition: opacity .3s, width .3s;
+        transition: opacity 1s, width .3s;
     }
     
     .no-hide {
