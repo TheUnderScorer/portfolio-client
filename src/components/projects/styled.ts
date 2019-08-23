@@ -208,19 +208,21 @@ export const TextContainer = styled.div`
     overflow: auto;
     transition: all .3s;
     background: inherit;
+    display: flex;
+    flex-direction: column;
     
-    .title{
+    .title {
         text-align: center;
     }
+    
+    .details {
+       flex: 1;
+       height: 100%;
+     }
     
     @media(max-width: ${ breakpoints.tabletSmall }) {
         display: flex;
         flex-direction: column;   
-        
-        .details {
-            flex: 1;
-            height: 100%;
-        }
         
         .title h4{
             margin-bottom: 1em;
@@ -239,7 +241,7 @@ export const Actions = styled.div`
     justify-content: center;
     margin-top: 2em;
     border-top: 1px solid ${ colors.lightBorder };
-    padding-top: 2em;
+    padding: 1em 0;
     
     > * {
         margin: 0 1em;

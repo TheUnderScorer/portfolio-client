@@ -90,7 +90,7 @@ const ProjectDetails = ( { project }: ProjectDetailsProps ) =>
                 <Actions>
                     { url &&
                       // @ts-ignore
-                      <Button as="a" href={ url } withIcon={ true } ripple={ true }>
+                      <Button flat as="a" href={ url } withIcon ripple>
                           <FontAwesomeIcon icon="external-link-alt"/>
                           <Text>
                               { texts.projects.viewProject }
@@ -99,7 +99,7 @@ const ProjectDetails = ( { project }: ProjectDetailsProps ) =>
                     }
                     { repositoryUrl &&
                       // @ts-ignore
-                      <Button as="a" href={ repositoryUrl } withIcon={ true } ripple={ true }>
+                      <Button flat as="a" href={ repositoryUrl } withIcon ripple>
                           <FontAwesomeIcon icon={ [ 'fab', 'github' ] }/>
                           <Text>
                               { texts.projects.viewRepo }
