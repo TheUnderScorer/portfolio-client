@@ -49,7 +49,7 @@ const ProjectDetails = ( { project }: ProjectDetailsProps ) =>
 
     return (
         <DetailsContainer>
-            <SliderContainer className="slider-container">
+            <SliderContainer className="slider-container no-hide">
                 <Loader width="100%" height="100%" svgProps={ {
                     width:  '50%',
                     height: '50%'
@@ -76,7 +76,7 @@ const ProjectDetails = ( { project }: ProjectDetailsProps ) =>
                     ) }
                 </Slider>
             </SliderContainer>
-            <TextContainer>
+            <TextContainer className="hide-on-open">
                 <div className="title">
                     <SectionTitle underlined={ true }>
                         { name }

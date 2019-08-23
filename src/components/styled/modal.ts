@@ -12,12 +12,23 @@ export const Modal = styled( ReactModal )`
         display: none;
     }
     
-    > *: not(.placeholder) {
+    .hide-on-open {
         opacity: 0;
+        transition: opacity .3s, width .3s;
+    }
+    
+    .no-hide {
+        transition: width .3s;
+    }
+    
+    &:not(.opened){
+        .no-hide {
+            width: 100%;
+        }
     }
     
     &.opened {
-        > * {
+         .hide-on-open {
             opacity: 1;
         }
     }

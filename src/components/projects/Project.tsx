@@ -32,7 +32,7 @@ const Project = ( { project, active = false, index }: ProjectProps ) =>
     const thumbRef = useRef() as MutableRefObject<HTMLImageElement>;
 
     const relativeItemRef = useRef() as MutableRefObject<HTMLDivElement>;
-    const { setModalRef, modalStyles, modalClassList } = useOpenableModal( {
+    const { setModalRef, modalStyles, modalClassList, overlayStyles } = useOpenableModal( {
         relativeElement: relativeItemRef.current,
         open:            active
     } );
@@ -115,7 +115,10 @@ const Project = ( { project, active = false, index }: ProjectProps ) =>
                     </ReadMore>
                 </ProjectImageCaption>
             </ProjectImageFigure>
-            <ProjectModal style={ { content: modalStyles } } contentRef={ setModalRef } shouldFocusAfterRender={ false } htmlOpenClassName="has-overlay" className={ modalClassList.join( ' ' ) } overlayClassName="middle center" isOpen={ active } onRequestClose={ handleClose }>
+            <ProjectModal style={ {
+                content: modalStyles,
+                overlay: overlayStyles
+            } } contentRef={ setModalRef } shouldFocusAfterRender={ false } htmlOpenClassName="has-overlay" className={ modalClassList.join( ' ' ) } overlayClassName="middle center" isOpen={ active } onRequestClose={ handleClose }>
                 <ProjectDetails project={ project }/>
                 <Button round={ true } ripple={ true } flat={ true } onClick={ handleClose } className="close">
                     <FontAwesomeIcon icon="times"/>
