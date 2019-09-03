@@ -88,13 +88,16 @@ describe( 'Conversation component', () =>
         }
     ];
 
-    const mountComponent = () => mountWithStore(
-        <MockComponent/>,
-        {
-            theme: {
-                mode: 'white'
-            }
+    const mountComponent = ( initialState: any = {
+        theme:   {
+            mode: 'white'
         },
+        contact: {
+            isClosing: false,
+        }
+    } ) => mountWithStore(
+        <MockComponent/>,
+        initialState,
         {
             mocks,
             addTypename: true,
@@ -128,19 +131,20 @@ describe( 'Conversation component', () =>
 
     it( 'Should render closing form if isClosing is set to true', async ( done ) =>
     {
-        const { component } = mountComponent();
-
-        await wait( 2000 );
-
-        const conversation = component.update().find( Conversation );
-        const closeConversation = conversation.find( '#close_conversation' );
-
-        act( () =>
-        {
-            closeConversation.at( 0 ).simulate( 'click' );
+        const { component } = mountComponent( {
+            theme:   {
+                mode: 'white'
+            },
+            contact: {
+                isClosing: true,
+            }
         } );
 
-        const closingForm = conversation.update().find( CloseConversationForm );
+        await wait( 500 );
+
+        const conversation = component.update().find( Conversation );
+
+        const closingForm = conversation.find( CloseConversationForm );
         expect( closingForm ).toHaveLength( 1 );
 
         done();

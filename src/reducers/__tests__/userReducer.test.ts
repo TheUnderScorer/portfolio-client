@@ -1,41 +1,24 @@
 import UserReducer from '../../types/reducers/UserReducer';
 import * as faker from 'faker';
 import userReducer from '../userReducer';
-import User from '../../types/graphql/User';
-import { SetToken } from '../../types/actions/UserActions';
 
-describe( 'userReducer', () => {
+describe( 'userReducer', () =>
+{
 
     let state: UserReducer;
 
-    beforeEach( () => {
+    beforeEach( () =>
+    {
         state = {
-            currentUser: {
-                token: faker.random.uuid(),
-                name:  faker.name.firstName(),
-            }
+            token: faker.random.uuid()
         };
     } );
 
-    it( 'Should return state if action is empty', () => {
-        const newState = userReducer( state, null );
+    it( 'Should return state if action is empty', () =>
+    {
+        const newState = userReducer( state, {} as any );
 
         expect( newState ).toEqual( state );
     } );
-
-    it( 'SetCurrentUser action', () => {
-        const newUser: User = {
-            token: faker.random.uuid(),
-            name:  faker.name.firstName()
-        };
-        const action: SetToken = {
-            type:    'SetCurrentUser',
-            payload: newUser
-        };
-
-        const newState = userReducer( state, action );
-
-        expect( newState.currentUser ).toEqual( newUser );
-    } )
 
 } );
