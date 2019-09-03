@@ -4,7 +4,8 @@ import configureStore, { MockStoreEnhanced } from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
 import { mount, ReactWrapper, render } from 'enzyme';
-import { MockedProvider, MockedProviderProps } from '@apollo/react-testing';
+import { MockedProvider } from '@apollo/react-testing';
+import { MockedProviderProps } from '@apollo/react-testing/lib/mocks/MockedProvider';
 
 export interface MountWithStoreResult<Props extends object, Store extends object>
 {
@@ -50,11 +51,11 @@ export function mountWithStore<Props extends object = any, Store extends object 
 
     return {
         component: mount(
-            <Provider store={ store }>
-                <MockedProvider { ...apolloClientProps }>
+            <MockedProvider { ...apolloClientProps }>
+                <Provider store={ store }>
                     { component }
-                </MockedProvider>
-            </Provider>
+                </Provider>
+            </MockedProvider>
         ),
         store:     store as any
     }

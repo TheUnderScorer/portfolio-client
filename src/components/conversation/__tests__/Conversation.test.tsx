@@ -104,9 +104,9 @@ describe( 'Conversation component', () =>
         }
     );
 
-    it( 'Renders without crashing', () =>
+    it( 'Renders without crashing', async () =>
     {
-        act( () =>
+        await act( async () =>
         {
             mountComponent();
         } );

@@ -5,7 +5,6 @@ import { act } from 'react-dom/test-utils';
 
 describe( 'OpenableSection component', () =>
 {
-
     let relativeItem: HTMLElement;
 
     beforeEach( () =>
@@ -36,13 +35,20 @@ describe( 'OpenableSection component', () =>
             done();
         };
 
-        act( () =>
+        await act( async () =>
         {
             component = mount(
-                <OpenableSection isOpen={ true } onOpen={ onOpen } relativeTo={ relativeItem }>
+                <OpenableSection isOpen={ false } onOpen={ onOpen } relativeTo={ relativeItem }>
                     Test content
                 </OpenableSection>
             );
+        } );
+
+        await act( async () =>
+        {
+            component.setProps( {
+                isOpen: true
+            } )
         } );
     } );
 
