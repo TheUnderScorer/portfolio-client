@@ -32,10 +32,17 @@ const Project = ( { project, active = false, index }: ProjectProps ) =>
     const thumbRef = useRef() as MutableRefObject<HTMLImageElement>;
 
     const relativeItemRef = useRef() as MutableRefObject<HTMLDivElement>;
-    const { setModalRef, modalStyles, modalClassList, overlayStyles } = useOpenableModal( {
+    const { setModalRef, modalStyles, modalClassList, overlayStyles, setModalLoaded } = useOpenableModal( {
         relativeElement: relativeItemRef.current,
         open:            active
     } );
+
+    const handleImageLoad = useCallback( ( index: number ) =>
+    {
+        if ( index === 0 ) {
+            setModalLoaded( true );
+        }
+    }, [ setModalLoaded ] );
 
     const handleOpen = useCallback( () =>
     {
@@ -115,11 +122,19 @@ const Project = ( { project, active = false, index }: ProjectProps ) =>
                     </ReadMore>
                 </ProjectImageCaption>
             </ProjectImageFigure>
-            <ProjectModal style={ {
-                content: modalStyles,
-                overlay: overlayStyles
-            } } contentRef={ setModalRef } shouldFocusAfterRender={ false } htmlOpenClassName="has-overlay" className={ modalClassList.join( ' ' ) } overlayClassName="middle center" isOpen={ active } onRequestClose={ handleClose }>
-                <ProjectDetails project={ project }/>
+            <ProjectModal
+                style={ {
+                    content: modalStyles,
+                    overlay: overlayStyles
+                } }
+                contentRef={ setModalRef }
+                shouldFocusAfterRender={ false }
+                htmlOpenClassName="has-overlay"
+                className={ modalClassList.join( ' ' ) }
+                overlayClassName="middle center"
+                isOpen={ active }
+                onRequestClose={ handleClose }>
+                <ProjectDetails onImageLoad={ handleImageLoad } project={ project }/>
                 <Button round={ true } ripple={ true } flat={ true } onClick={ handleClose } className="close">
                     <FontAwesomeIcon icon="times"/>
                 </Button>

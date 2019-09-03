@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Actions, DetailsContainer, ProjectImage, SliderArrow, SliderContainer, TextContainer } from './styled';
 import Slider from 'react-slick';
 import ProjectDetailsProps from './types/ProjectDetailsProps';
@@ -9,7 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Button } from '../styled/buttons';
 import texts from '../../pages/data/texts';
 
-const ProjectDetails = ( { project }: ProjectDetailsProps ) =>
+const ProjectDetails = ( { project, onImageLoad }: ProjectDetailsProps ) =>
 {
     const { details, images = [], name, url, repositoryUrl } = project;
 
@@ -18,7 +18,6 @@ const ProjectDetails = ( { project }: ProjectDetailsProps ) =>
 
     useEffect( () =>
     {
-
         if ( !scheduleHideLoader ) {
             return;
         }
@@ -35,8 +34,11 @@ const ProjectDetails = ( { project }: ProjectDetailsProps ) =>
 
     }, [ scheduleHideLoader ] );
 
-    const handleImageLoad = ( index: number ) => () =>
+    const handleImageLoad = useCallback( ( index: number ) => () =>
     {
+        if ( onImageLoad ) {
+            onImageLoad( index );
+        }
 
         // We only need to handle first image
         if ( index > 0 ) {
@@ -44,8 +46,7 @@ const ProjectDetails = ( { project }: ProjectDetailsProps ) =>
         }
 
         setScheduleHideLoader( true );
-
-    };
+    }, [ onImageLoad ] );
 
     return (
         <DetailsContainer>

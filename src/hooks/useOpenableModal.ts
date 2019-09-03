@@ -9,6 +9,8 @@ export interface Result
     onModalOpen: () => any;
     modalClassList: string[];
     overlayStyles: CSSProperties;
+    setModalLoaded: ( loaded: boolean ) => any;
+    modalLoaded: boolean;
 }
 
 export interface Params
@@ -28,6 +30,7 @@ export default ( { relativeElement, defaultModalClasses = [], open = false }: Pa
 
     const [ modalStyles, setModalStyles ] = useState<CSSProperties>( {} );
     const [ overlayStyles, setOverlayStyles ] = useState<CSSProperties>( {} );
+    const [ modalLoaded, setModalLoaded ] = useState( false );
 
     const [ didOpen, setDidOpen ] = useState( false );
     const [ modalClassList, setModalClasslist ] = useState( [ ...defaultModalClasses, 'hidden' ] );
@@ -77,9 +80,10 @@ export default ( { relativeElement, defaultModalClasses = [], open = false }: Pa
         onModalOpen();
     }, [ open, onModalOpen ] );
 
+    // Removes all defined modal styles after it has opened
     useEffect( () =>
     {
-        if ( !didOpen ) {
+        if ( !didOpen || !modalLoaded ) {
             return;
         }
 
@@ -93,11 +97,11 @@ export default ( { relativeElement, defaultModalClasses = [], open = false }: Pa
         {
             clearTimeout( timeout );
         };
-    }, [ didOpen ] );
+    }, [ didOpen, modalLoaded ] );
 
     useEffect( () =>
     {
-        if ( !didOpen ) {
+        if ( !didOpen || !modalLoaded ) {
             return;
         }
 
@@ -109,7 +113,7 @@ export default ( { relativeElement, defaultModalClasses = [], open = false }: Pa
                 'opened'
             ] )
         }, 400 );
-    }, [ didOpen ] );
+    }, [ didOpen, modalLoaded ] );
 
     return {
         modalRef,
@@ -117,6 +121,8 @@ export default ( { relativeElement, defaultModalClasses = [], open = false }: Pa
         modalStyles,
         onModalOpen,
         modalClassList,
-        overlayStyles
+        overlayStyles,
+        setModalLoaded,
+        modalLoaded
     }
 }

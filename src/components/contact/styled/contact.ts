@@ -46,7 +46,8 @@ export const Inner = styled.div<InnerProps>`
     background: ${ props => props.theme.mode === 'black' ? colors.dark : colors.white }
     position: absolute;
     height: 60vh;
-    max-height: 500px;
+    max-height: 600px;
+    min-height: 500px;
     width: 60vw;
     max-width: 500px;
     bottom: 0;
