@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { HomeSection } from '../styled/wrappers';
 import { SectionTitle } from '../styled/typography';
 import ProjectsProps from './types/ProjectsProps';
@@ -9,8 +9,9 @@ import texts from '../../pages/data/texts';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import HomeStore from '../../types/stores/HomeStore';
 import { SetActiveProject } from '../../types/actions/HomeActions';
-import { getState, getStateFromEvent } from '../../utils/history';
+import { getState, getStateFromEvent, pushState } from '../../utils/history';
 import usePopState from '../../hooks/usePopState';
+import { about } from '../../pages/data/links';
 
 const Projects = ( { projects }: ProjectsProps ) =>
 {
@@ -18,6 +19,28 @@ const Projects = ( { projects }: ProjectsProps ) =>
 
     const activeProject = useSelector( ( store: HomeStore ) => store.home.activeProject );
     const didInnerOpen = useSelector( ( store: HomeStore ) => store.home.didInnerOpen );
+
+    const handleProjectClose = useCallback( () =>
+    {
+        // Remove project data from history
+        pushState( {
+            state: null,
+            url:   about,
+        } );
+
+        dispatch<SetActiveProject>( {
+            type:    'SetActiveProject',
+            payload: null,
+        } );
+    }, [ dispatch ] );
+
+    const handleProjectOpen = useCallback( ( index: number ) => () =>
+    {
+        dispatch<SetActiveProject>( {
+            type:    'SetActiveProject',
+            payload: index
+        } );
+    }, [ dispatch ] );
 
     usePopState( event =>
     {
@@ -62,7 +85,13 @@ const Projects = ( { projects }: ProjectsProps ) =>
             </div>
             <ProjectsContainer className="section-inner">
                 { projects.map( ( project, index ) =>
-                    <Project index={ index } active={ index === activeProject } key={ index } project={ project }/>
+                    <Project
+                        onClose={ handleProjectClose }
+                        onOpen={ handleProjectOpen( index ) }
+                        index={ index }
+                        active={ index === activeProject }
+                        key={ index }
+                        project={ project }/>
                 ) }
             </ProjectsContainer>
         </HomeSection>

@@ -15,16 +15,12 @@ import ProjectProps from './types/ProjectProps';
 import ProjectDetails from './ProjectDetails';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Button } from '../styled/buttons';
-import { SetActiveProject } from '../../types/actions/HomeActions';
-import { useDispatch } from 'react-redux';
 import { pushState } from '../../utils/history';
-import { about, project as projectUrl } from '../../pages/data/links';
+import { project as projectUrl } from '../../pages/data/links';
 import useOpenableModal from '../../hooks/useOpenableModal';
 
-const Project = ( { project, active = false, index }: ProjectProps ) =>
+const Project = ( { project, active = false, index, onClose, onOpen }: ProjectProps ) =>
 {
-    const dispatch = useDispatch();
-
     const { thumbnailUrl, shortDetails, images, name } = project;
 
     const [ thumbLoaded, setThumbLoaded ] = useState( false );
@@ -43,32 +39,6 @@ const Project = ( { project, active = false, index }: ProjectProps ) =>
             setModalLoaded( true );
         }
     }, [ setModalLoaded ] );
-
-    const handleOpen = useCallback( () =>
-    {
-        const action: SetActiveProject = {
-            type:    'SetActiveProject',
-            payload: index
-        };
-
-        dispatch( action );
-    }, [ index ] );
-
-    const handleClose = useCallback( () =>
-    {
-        const action: SetActiveProject = {
-            type:    'SetActiveProject',
-            payload: null
-        };
-
-        // Remove project data from history
-        pushState( {
-            state: null,
-            url:   about,
-        } );
-
-        dispatch( action );
-    }, [] );
 
     const handleLoad = useCallback( () =>
     {
@@ -114,7 +84,7 @@ const Project = ( { project, active = false, index }: ProjectProps ) =>
                             { shortDetails }
                         </Text>
                     </div>
-                    <ReadMore onClick={ handleOpen }>
+                    <ReadMore onClick={ onOpen }>
                         <Text>
                             Check Out
                         </Text>
@@ -133,9 +103,9 @@ const Project = ( { project, active = false, index }: ProjectProps ) =>
                 className={ modalClassList.join( ' ' ) }
                 overlayClassName="middle center"
                 isOpen={ active }
-                onRequestClose={ handleClose }>
+                onRequestClose={ onClose }>
                 <ProjectDetails onImageLoad={ handleImageLoad } project={ project }/>
-                <Button round={ true } ripple={ true } flat={ true } onClick={ handleClose } className="close">
+                <Button round={ true } ripple={ true } flat={ true } onClick={ onClose } className="close">
                     <FontAwesomeIcon icon="times"/>
                 </Button>
             </ProjectModal>
