@@ -44,7 +44,7 @@ const Projects = ( { projects }: ProjectsProps ) =>
 
     usePopState( event =>
     {
-        let projectIndex: number | null = getStateFromEvent( event, 'activeProject' );
+        const projectIndex: number | null = getStateFromEvent( event, 'activeProject' );
 
         const action: SetActiveProject = {
             type:    'SetActiveProject',
