@@ -17,6 +17,15 @@ const project: ProjectInterface = {
     category:     ProjectTypes.fronted
 };
 
+const initialStore = {
+    home:  {
+        activeProject: null
+    },
+    theme: {
+        mode: 'white'
+    }
+};
+
 jest.mock( 'react-lazyload', () => ( { children }: ReactProps ) =>
 {
     return children;
@@ -32,15 +41,6 @@ describe( 'Project component', () =>
         onOpen = jest.fn();
         onClose = jest.fn();
     } );
-
-    const initialStore = {
-        home:  {
-            activeProject: null
-        },
-        theme: {
-            mode: 'white'
-        }
-    };
 
     it( 'Renders without crashing', () =>
     {
