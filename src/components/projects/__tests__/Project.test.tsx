@@ -5,7 +5,7 @@ import { mountWithStore } from '../../../tests/utils/enzyme/renderer';
 import Project from '../Project';
 import * as React from 'react';
 import '../../../fontAwesome';
-import { ProjectThumbnail, ThumbnailLoader } from '../styled';
+import { ProjectThumbnail, ReadMore, ThumbnailLoader } from '../styled';
 import { act } from 'react-dom/test-utils';
 import ReactProps from '../../../types/ReactProps';
 
@@ -17,9 +17,6 @@ const project: ProjectInterface = {
     category:     ProjectTypes.fronted
 };
 
-const onOpen = jest.fn();
-const onClose = jest.fn();
-
 jest.mock( 'react-lazyload', () => ( { children }: ReactProps ) =>
 {
     return children;
@@ -27,6 +24,15 @@ jest.mock( 'react-lazyload', () => ( { children }: ReactProps ) =>
 
 describe( 'Project component', () =>
 {
+    let onOpen: jest.Mock;
+    let onClose: jest.Mock;
+
+    beforeEach( () =>
+    {
+        onOpen = jest.fn();
+        onClose = jest.fn();
+    } );
+
     const initialStore = {
         home:  {
             activeProject: null
@@ -76,5 +82,39 @@ describe( 'Project component', () =>
         const loaderProps = loader.props();
 
         expect( loaderProps.active ).toBeFalsy();
+    } );
+
+    it( 'Triggers `onOpen` callback after clicking read more button', () =>
+    {
+        const { component } = mountWithStore(
+            <Project project={ project } onOpen={ onOpen } onClose={ onClose } index={ 0 }/>,
+            initialStore
+        );
+
+        const readMore = component.find( ReadMore );
+
+        act( () =>
+        {
+            readMore.simulate( 'click' );
+        } );
+
+        expect( onOpen ).toBeCalledTimes( 1 );
+    } );
+
+    it( 'Triggers `onClose` callback when clicking X icon', () =>
+    {
+        const { component } = mountWithStore(
+            <Project project={ project } active={ true } onOpen={ onOpen } onClose={ onClose } index={ 0 }/>,
+            initialStore
+        );
+
+        const close = component.find( '.close' );
+
+        act( () =>
+        {
+            close.at( 0 ).simulate( 'click' );
+        } );
+
+        expect( onClose ).toBeCalledTimes( 1 );
     } )
 } );
