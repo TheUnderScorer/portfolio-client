@@ -1,7 +1,7 @@
 import ProjectInterface from '../types/ProjectInterface';
 import TestThumbnail from '../../../assets/projects/test.jpg';
 import { ProjectTypes } from '../../../types/ProjectTypes';
-import { mountWithStore } from '../../../tests/utils/enzyme/renderer';
+import { mountWithStoreAndApollo } from '../../../tests/renderer';
 import Project from '../Project';
 import * as React from 'react';
 import '../../../fontAwesome';
@@ -44,7 +44,7 @@ describe( 'Project component', () =>
 
     it( 'Renders without crashing', () =>
     {
-        mountWithStore(
+        mountWithStoreAndApollo(
             <Project project={ project } onOpen={ onOpen } onClose={ onClose } index={ 0 }/>,
             initialStore
         )
@@ -52,7 +52,7 @@ describe( 'Project component', () =>
 
     it( 'Shows loading animation when image is not loaded', () =>
     {
-        const { component } = mountWithStore(
+        const { component } = mountWithStoreAndApollo(
             <Project project={ project } onOpen={ onOpen } onClose={ onClose } index={ 0 }/>,
             initialStore
         );
@@ -64,7 +64,7 @@ describe( 'Project component', () =>
 
     it( 'Hides loading animation on thumbnail load', () =>
     {
-        const { component } = mountWithStore(
+        const { component } = mountWithStoreAndApollo(
             <Project project={ project } onOpen={ onOpen } onClose={ onClose } index={ 0 }/>,
             initialStore
         );
@@ -86,7 +86,7 @@ describe( 'Project component', () =>
 
     it( 'Triggers `onOpen` callback after clicking read more button', () =>
     {
-        const { component } = mountWithStore(
+        const { component } = mountWithStoreAndApollo(
             <Project project={ project } onOpen={ onOpen } onClose={ onClose } index={ 0 }/>,
             initialStore
         );
@@ -103,7 +103,7 @@ describe( 'Project component', () =>
 
     it( 'Triggers `onClose` callback when clicking X icon', () =>
     {
-        const { component } = mountWithStore(
+        const { component } = mountWithStoreAndApollo(
             <Project project={ project } active={ true } onOpen={ onOpen } onClose={ onClose } index={ 0 }/>,
             initialStore
         );

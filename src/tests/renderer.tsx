@@ -41,7 +41,7 @@ export function renderWithStore<Props extends object = any, Store extends object
     }
 }
 
-export function mountWithStore<Props extends object = any, Store extends object = {}>(
+export function mountWithStoreAndApollo<Props extends object = any, Store extends object = {}>(
     component: ReactElement<Props>,
     initialState: Store,
     apolloClientProps: MockedProviderProps = {} ): MountWithStoreResult<Props, Store>

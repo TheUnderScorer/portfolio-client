@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Loader from '../Loader';
-import { mountWithStore } from '../../../tests/utils/enzyme/renderer';
+import { mountWithStoreAndApollo } from '../../../tests/renderer';
 import { LoaderContainer } from '../styled';
 
 describe( 'Loader component', () => {
@@ -12,11 +12,11 @@ describe( 'Loader component', () => {
     };
 
     it( 'Renders without crashing', () => {
-        mountWithStore( <Loader/>, initialState );
+        mountWithStoreAndApollo( <Loader/>, initialState );
     } );
 
     it( 'Is visible if `active` props is set to true', () => {
-        const { component } = mountWithStore( <Loader active={ true }/>, initialState );
+        const { component } = mountWithStoreAndApollo( <Loader active={ true }/>, initialState );
 
         const svg = component.find( LoaderContainer );
         const styles = getComputedStyle( svg.at( 0 ).getDOMNode() );

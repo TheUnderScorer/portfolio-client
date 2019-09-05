@@ -5,6 +5,7 @@ import { MutationTuple } from '@apollo/react-hooks';
 export default interface ConversationEditorProps
 {
     conversationID: number;
+    initialContent?: string;
     mutation: MutationTuple<MessageResult, MessageInputVariable>;
     disabled?: boolean;
     afterSubmit?: () => any;

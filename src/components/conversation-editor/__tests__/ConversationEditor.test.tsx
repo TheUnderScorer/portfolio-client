@@ -1,15 +1,17 @@
-import { renderWithStore } from '../../../tests/utils/enzyme/renderer';
+import { mountWithStoreAndApollo } from '../../../tests/renderer';
 import ConversationEditor from '../ConversationEditor';
 import * as React from 'react';
 import mockConversation from '../../../tests/data/mockConversation';
 import useChat from '../../../hooks/useChat';
-import { MockedResponse } from '@apollo/react-testing';
+import { MockedResponse, wait } from '@apollo/react-testing';
 import { GET_ME } from '../../../graphql/queries/users';
 import mockUser from '../../../tests/data/mockUser';
 import { MY_CONVERSATION } from '../../../graphql/queries/conversations';
 import { CREATE_CONVERSATION } from '../../../graphql/mutations/conversations';
 import { NEW_MESSAGE } from '../../../graphql/subscriptions/messages';
 import '../../../fontAwesome';
+import { SendButton } from '../styled';
+import { act } from 'react-dom/test-utils';
 
 const MockComponent = () =>
 {
@@ -64,7 +66,7 @@ const mocks: MockedResponse[] = [
 
 describe( 'ConversationEditor component', () =>
 {
-    const renderComponent = () => renderWithStore(
+    const mountComponent = () => mountWithStoreAndApollo(
         <MockComponent/>,
         {},
         {
@@ -75,15 +77,24 @@ describe( 'ConversationEditor component', () =>
 
     it( 'Renders without crashing', () =>
     {
-        renderComponent();
+        mountComponent();
     } );
 
-    it( 'Should restore focus to message input after sending message', () =>
+    it( 'Should restore focus to message input after sending message', async () =>
     {
-        const { component } = renderComponent();
+        const { component } = mountComponent();
 
-        const contentInput = component.find( '#content' );
+        const sendBtn = component.find( SendButton );
 
-        console.log( contentInput );
+        act( () =>
+        {
+            sendBtn.simulate( 'click' );
+        } );
+
+        await wait( 500 );
+
+        const focusedElement = document.activeElement;
+
+        return;
     } );
 } );

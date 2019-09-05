@@ -4,7 +4,7 @@ import Conversation from '../Conversation';
 import * as React from 'react';
 import { useEffect } from 'react';
 import ConversationEditor from '../../conversation-editor/ConversationEditor';
-import { mountWithStore } from '../../../tests/utils/enzyme/renderer';
+import { mountWithStoreAndApollo } from '../../../tests/renderer';
 import useChat from '../../../hooks/useChat';
 import { NEW_MESSAGE } from '../../../graphql/subscriptions/messages';
 import { act } from 'react-dom/test-utils';
@@ -95,7 +95,7 @@ describe( 'Conversation component', () =>
         contact: {
             isClosing: false,
         }
-    } ) => mountWithStore(
+    } ) => mountWithStoreAndApollo(
         <MockComponent/>,
         initialState,
         {

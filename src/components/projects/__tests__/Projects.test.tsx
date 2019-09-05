@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { mountWithStore } from '../../../tests/utils/enzyme/renderer';
+import { mountWithStoreAndApollo } from '../../../tests/renderer';
 import Projects from '../Projects';
 import projects from '../../../pages/data/projects';
 import '../../../fontAwesome';
@@ -21,7 +21,7 @@ describe( 'Projects component', () =>
 
     it( 'Renders without crashing', () =>
     {
-        mountWithStore(
+        mountWithStoreAndApollo(
             <Projects projects={ projects }/>,
             initialStore
         );
@@ -29,7 +29,7 @@ describe( 'Projects component', () =>
 
     it( 'Dispatches `SetActiveProject` with project index on read more click', () =>
     {
-        const { component, store } = mountWithStore(
+        const { component, store } = mountWithStoreAndApollo(
             <Projects projects={ projects }/>,
             initialStore
         );
@@ -52,7 +52,7 @@ describe( 'Projects component', () =>
         const state = { ...initialStore };
         state.home.activeProject = 1;
 
-        const { component, store } = mountWithStore(
+        const { component, store } = mountWithStoreAndApollo(
             <Projects projects={ projects }/>,
             state
         );

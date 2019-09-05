@@ -1,4 +1,4 @@
-import { mountWithStore } from '../../../tests/utils/enzyme/renderer';
+import { mountWithStoreAndApollo } from '../../../tests/renderer';
 import ConversationMessages from '../ConversationMessages';
 import * as React from 'react';
 import mockConversation from '../../../tests/data/mockConversation';
@@ -47,7 +47,7 @@ describe( 'ConversationMessages component', () =>
         loading:      false
     };
 
-    const mountComponent = ( props: ConversationMessagesProps = defaultProps ) => mountWithStore(
+    const mountComponent = ( props: ConversationMessagesProps = defaultProps ) => mountWithStoreAndApollo(
         <ConversationMessages { ...props } />,
         {},
         {

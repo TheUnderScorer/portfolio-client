@@ -1,6 +1,6 @@
 import * as React from 'react';
 import projects from '../../../pages/data/projects';
-import { mountWithStore } from '../../../tests/utils/enzyme/renderer';
+import { mountWithStoreAndApollo } from '../../../tests/renderer';
 import ProjectDetails from '../ProjectDetails';
 import '../../../fontAwesome';
 import { ProjectImage } from '../styled';
@@ -27,7 +27,7 @@ describe( 'ProjectDetails component', () =>
 
     it( 'Renders without crashing', () =>
     {
-        mountWithStore(
+        mountWithStoreAndApollo(
             <ProjectDetails project={ project }/>,
             initialState
         );
@@ -35,7 +35,7 @@ describe( 'ProjectDetails component', () =>
 
     it( 'Triggers onImageLoad whenever image loads and hides loader', async () =>
     {
-        const { component } = mountWithStore(
+        const { component } = mountWithStoreAndApollo(
             <ProjectDetails onImageLoad={ onImageLoad } project={ project }/>,
             initialState
         );
@@ -60,7 +60,7 @@ describe( 'ProjectDetails component', () =>
 
     it( 'Displays loader when images have not loaded yet', () =>
     {
-        const { component } = mountWithStore(
+        const { component } = mountWithStoreAndApollo(
             <ProjectDetails project={ project }/>,
             initialState
         );
