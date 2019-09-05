@@ -10,8 +10,8 @@ import { MY_CONVERSATION } from '../../../graphql/queries/conversations';
 import { CREATE_CONVERSATION } from '../../../graphql/mutations/conversations';
 import { NEW_MESSAGE } from '../../../graphql/subscriptions/messages';
 import '../../../fontAwesome';
-import { SendButton } from '../styled';
 import { act } from 'react-dom/test-utils';
+import { ReactWrapper } from 'enzyme';
 
 const MockComponent = () =>
 {
@@ -75,26 +75,34 @@ describe( 'ConversationEditor component', () =>
         }
     );
 
-    it( 'Renders without crashing', () =>
+    it( 'Renders without crashing', async () =>
     {
-        mountComponent();
+        await act( async () =>
+        {
+            mountComponent();
+        } );
     } );
 
     it( 'Should restore focus to message input after sending message', async () =>
     {
-        const { component } = mountComponent();
+        let component: ReactWrapper<any> | any = null;
 
-        const sendBtn = component.find( SendButton );
-
-        act( () =>
+        await act( async () =>
         {
-            sendBtn.simulate( 'click' );
+            component = mountComponent().component;
         } );
 
-        await wait( 500 );
+        const form = component.find( 'form' );
 
-        const focusedElement = document.activeElement;
+        await act( async () =>
+        {
+            form.simulate( 'submit' );
 
-        return;
+            await wait( 1000 );
+        } );
+
+        const focusedElement = document.activeElement as Element;
+
+        expect( focusedElement.id ).toEqual( 'content' );
     } );
 } );
