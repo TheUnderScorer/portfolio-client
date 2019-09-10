@@ -28,10 +28,15 @@ const Project = ( { project, active = false, index, onClose, onOpen }: ProjectPr
     const thumbRef = useRef() as MutableRefObject<HTMLImageElement>;
 
     const relativeItemRef = useRef() as MutableRefObject<HTMLDivElement>;
-    const { setModalRef, modalStyles, modalClassList, overlayStyles, setModalLoaded } = useOpenableModal( {
+    const { setModalRef, modalStyles, modalClassList, overlayStyles, setModalLoaded, onModalClose, didClose } = useOpenableModal( {
         relativeElement: relativeItemRef.current,
         open:            active
     } );
+
+    const handleClose = useCallback( () =>
+    {
+        onModalClose();
+    }, [ onModalClose ] );
 
     const handleImageLoad = useCallback( ( index: number ) =>
     {
@@ -44,6 +49,13 @@ const Project = ( { project, active = false, index, onClose, onOpen }: ProjectPr
     {
         setThumbLoaded( true );
     }, [] );
+
+    useEffect( () =>
+    {
+        if ( didClose ) {
+            onClose();
+        }
+    }, [ didClose ] );
 
     useEffect( () =>
     {
@@ -103,9 +115,9 @@ const Project = ( { project, active = false, index, onClose, onOpen }: ProjectPr
                 className={ modalClassList.join( ' ' ) }
                 overlayClassName="middle center"
                 isOpen={ active }
-                onRequestClose={ onClose }>
+                onRequestClose={ handleClose }>
                 <ProjectDetails onImageLoad={ handleImageLoad } project={ project }/>
-                <Button round={ true } ripple={ true } flat={ true } onClick={ onClose } className="close">
+                <Button round={ true } ripple={ true } flat={ true } onClick={ handleClose } className="close">
                     <FontAwesomeIcon icon="times"/>
                 </Button>
             </ProjectModal>

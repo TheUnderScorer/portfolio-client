@@ -58,14 +58,14 @@ const ProjectDetails = ( { project, onImageLoad }: ProjectDetailsProps ) =>
                 <Slider
                     prevArrow={
                         (
-                            <SliderArrow ripple={ true } visible={ !imageLoader }>
+                            <SliderArrow className="hide-on-open" ripple={ true } visible={ !imageLoader }>
                                 <FontAwesomeIcon icon="chevron-left"/>
                             </SliderArrow>
                         )
                     }
                     nextArrow={
                         (
-                            <SliderArrow ripple={ true } visible={ !imageLoader }>
+                            <SliderArrow className="hide-on-open" ripple={ true } visible={ !imageLoader }>
                                 <FontAwesomeIcon icon="chevron-right"/>
                             </SliderArrow>
                         )

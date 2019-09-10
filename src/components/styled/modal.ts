@@ -12,9 +12,17 @@ export const Modal = styled( ReactModal )`
         display: none;
     }
     
+    .slick-arrow {
+        z-index: 10;
+    }
+    
     .hide-on-open {
         opacity: 0;
-        transition: opacity 1s, width .3s;
+        transition: opacity .3s, width .3s;
+    }
+    
+    .slick-arrow {
+        opacity: 0;
     }
     
     .no-hide {
@@ -28,7 +36,7 @@ export const Modal = styled( ReactModal )`
     }
     
     &.opened {
-         .hide-on-open {
+         .hide-on-open, .slick-arrow {
             opacity: 1;
         }
     }

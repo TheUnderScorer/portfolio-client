@@ -11,6 +11,8 @@ export interface Result
     overlayStyles: CSSProperties;
     setModalLoaded: ( loaded: boolean ) => any;
     modalLoaded: boolean;
+    onModalClose: () => any;
+    didClose: boolean;
 }
 
 export interface Params
@@ -31,11 +33,12 @@ export default ( { relativeElement, defaultModalClasses = [], open = false }: Pa
     const [ modalStyles, setModalStyles ] = useState<CSSProperties>( {} );
     const [ overlayStyles, setOverlayStyles ] = useState<CSSProperties>( {} );
     const [ modalLoaded, setModalLoaded ] = useState( false );
-
+    const [ isClosing, setIsClosing ] = useState( false );
     const [ didOpen, setDidOpen ] = useState( false );
+    const [ didClose, setDidClose ] = useState( false );
     const [ modalClassList, setModalClasslist ] = useState( [ ...defaultModalClasses, 'hidden' ] );
 
-    const onModalOpen = useCallback( () =>
+    const positionToRelativeElement = useCallback( () =>
     {
         if ( !relativeElement ) {
             return;
@@ -52,6 +55,15 @@ export default ( { relativeElement, defaultModalClasses = [], open = false }: Pa
             height:   `${ height }px`
         };
         setModalStyles( newModalStyles );
+    }, [ relativeElement ] );
+
+    const onModalOpen = useCallback( () =>
+    {
+        if ( !relativeElement ) {
+            return;
+        }
+
+        positionToRelativeElement();
 
         const newOverlayStyles: CSSProperties = {
             ...overlayStyles,
@@ -67,11 +79,41 @@ export default ( { relativeElement, defaultModalClasses = [], open = false }: Pa
         setDidOpen( true );
     }, [ relativeElement ] );
 
+    const onModalClose = useCallback( () =>
+    {
+        if ( !relativeElement ) {
+            return;
+        }
+
+        const modalClasses = removeItem( modalClassList, 'opened' );
+        modalClasses.push( 'closing' );
+        setModalClasslist( modalClasses );
+
+        setIsClosing( true );
+    }, [ relativeElement ] );
+
+    useEffect( () =>
+    {
+        if ( !isClosing ) {
+            return;
+        }
+
+        positionToRelativeElement();
+
+        setTimeout( () =>
+        {
+            setIsClosing( false );
+            setDidClose( true );
+        }, 400 );
+    }, [ isClosing ] );
+
     useEffect( () =>
     {
         if ( !open ) {
             return;
         }
+
+        setDidClose( false );
 
         // Hide modal before aligning it into relative item
         modalClassList.push( 'hidden' );
@@ -99,6 +141,7 @@ export default ( { relativeElement, defaultModalClasses = [], open = false }: Pa
         };
     }, [ didOpen, modalLoaded ] );
 
+    // Removes modal styles after it was initially opened
     useEffect( () =>
     {
         if ( !didOpen || !modalLoaded ) {
@@ -115,6 +158,16 @@ export default ( { relativeElement, defaultModalClasses = [], open = false }: Pa
         }, 400 );
     }, [ didOpen, modalLoaded ] );
 
+    useEffect( () =>
+    {
+        if ( open ) {
+            return;
+        }
+
+        const modalClasses = removeItem( modalClassList, 'active' );
+        setModalClasslist( modalClasses );
+    }, [ open ] );
+
     return {
         modalRef,
         setModalRef,
@@ -123,6 +176,8 @@ export default ( { relativeElement, defaultModalClasses = [], open = false }: Pa
         modalClassList,
         overlayStyles,
         setModalLoaded,
-        modalLoaded
+        modalLoaded,
+        onModalClose,
+        didClose
     }
 }
