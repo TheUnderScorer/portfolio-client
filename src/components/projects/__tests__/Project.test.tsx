@@ -8,6 +8,7 @@ import '../../../fontAwesome';
 import { ProjectThumbnail, ReadMore, ThumbnailLoader } from '../styled';
 import { act } from 'react-dom/test-utils';
 import ReactProps from '../../../types/ReactProps';
+import { wait } from '@apollo/react-testing';
 
 const project: ProjectInterface = {
     name:         'Test project',
@@ -101,12 +102,14 @@ describe( 'Project component', () =>
         expect( onOpen ).toBeCalledTimes( 1 );
     } );
 
-    it( 'Triggers `onClose` callback when clicking X icon', () =>
+    it( 'Triggers `onClose` callback when clicking X icon', async () =>
     {
         const { component } = mountWithStoreAndApollo(
             <Project project={ project } active={ true } onOpen={ onOpen } onClose={ onClose } index={ 0 }/>,
             initialStore
         );
+
+        await wait( 100 );
 
         const close = component.find( '.close' );
 
@@ -114,6 +117,8 @@ describe( 'Project component', () =>
         {
             close.at( 0 ).simulate( 'click' );
         } );
+
+        await wait( 500 );
 
         expect( onClose ).toBeCalledTimes( 1 );
     } )

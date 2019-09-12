@@ -6,6 +6,7 @@ import '../../../fontAwesome';
 import { ReadMore } from '../styled';
 import { act } from 'react-dom/test-utils';
 import { SetActiveProject } from '../../../types/actions/HomeActions';
+import { wait } from '@apollo/react-testing';
 
 const initialStore: any = {
     home:  {
@@ -47,7 +48,7 @@ describe( 'Projects component', () =>
         expect( action.type ).toEqual( 'SetActiveProject' );
     } );
 
-    it( 'Dispatches `SetActiveProject` action with null on project close', () =>
+    it( 'Dispatches `SetActiveProject` action with null on project close', async () =>
     {
         const state = { ...initialStore };
         state.home.activeProject = 1;
@@ -63,6 +64,8 @@ describe( 'Projects component', () =>
         {
             closeBtn.simulate( 'click' );
         } );
+
+        await wait( 500 );
 
         const action = store.getActions()[ 0 ] as SetActiveProject;
 

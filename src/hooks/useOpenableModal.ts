@@ -82,6 +82,8 @@ export default ( { relativeElement, defaultModalClasses = [], open = false }: Pa
     const onModalClose = useCallback( () =>
     {
         if ( !relativeElement ) {
+            setIsClosing( true );
+
             return;
         }
 
