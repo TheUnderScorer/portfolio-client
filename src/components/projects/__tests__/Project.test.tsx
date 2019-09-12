@@ -118,7 +118,7 @@ describe( 'Project component', () =>
             close.at( 0 ).simulate( 'click' );
         } );
 
-        await wait( 500 );
+        await wait( 700 );
 
         expect( onClose ).toBeCalledTimes( 1 );
     } )

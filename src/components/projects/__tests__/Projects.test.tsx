@@ -65,7 +65,7 @@ describe( 'Projects component', () =>
             closeBtn.simulate( 'click' );
         } );
 
-        await wait( 500 );
+        await wait( 700 );
 
         const action = store.getActions()[ 0 ] as SetActiveProject;
 
