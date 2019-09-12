@@ -9,7 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Button } from '../styled/buttons';
 import texts from '../../pages/data/texts';
 
-const ProjectDetails = ( { project, onImageLoad }: ProjectDetailsProps ) =>
+const ProjectDetails = ( { project, onImageLoad, isClosing }: ProjectDetailsProps ) =>
 {
     const { details, images = [], name, url, repositoryUrl } = project;
 
@@ -49,7 +49,7 @@ const ProjectDetails = ( { project, onImageLoad }: ProjectDetailsProps ) =>
     }, [ onImageLoad ] );
 
     return (
-        <DetailsContainer>
+        <DetailsContainer isClosing={ isClosing }>
             <SliderContainer className="slider-container no-hide">
                 <Loader width="100%" height="100%" svgProps={ {
                     width:  '50%',

@@ -13,6 +13,7 @@ export interface Result
     modalLoaded: boolean;
     onModalClose: () => any;
     didClose: boolean;
+    isClosing: boolean;
 }
 
 export interface Params
@@ -104,9 +105,12 @@ export default ( { relativeElement, defaultModalClasses = [], open = false }: Pa
 
         setTimeout( () =>
         {
+            const newModalClassList = removeItem( modalClassList, 'closing' );
+
+            setModalClasslist( newModalClassList );
             setIsClosing( false );
             setDidClose( true );
-        }, 400 );
+        }, 550 );
     }, [ isClosing ] );
 
     useEffect( () =>
@@ -180,6 +184,7 @@ export default ( { relativeElement, defaultModalClasses = [], open = false }: Pa
         setModalLoaded,
         modalLoaded,
         onModalClose,
-        didClose
+        didClose,
+        isClosing
     }
 }

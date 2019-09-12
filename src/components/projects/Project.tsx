@@ -28,7 +28,7 @@ const Project = ( { project, active = false, index, onClose, onOpen }: ProjectPr
     const thumbRef = useRef() as MutableRefObject<HTMLImageElement>;
 
     const relativeItemRef = useRef() as MutableRefObject<HTMLDivElement>;
-    const { setModalRef, modalStyles, modalClassList, overlayStyles, setModalLoaded, onModalClose, didClose } = useOpenableModal( {
+    const { setModalRef, modalStyles, modalClassList, overlayStyles, setModalLoaded, onModalClose, didClose, isClosing } = useOpenableModal( {
         relativeElement: relativeItemRef.current,
         open:            active
     } );
@@ -116,7 +116,7 @@ const Project = ( { project, active = false, index, onClose, onOpen }: ProjectPr
                 overlayClassName="middle center"
                 isOpen={ active }
                 onRequestClose={ handleClose }>
-                <ProjectDetails onImageLoad={ handleImageLoad } project={ project }/>
+                <ProjectDetails isClosing={ isClosing || didClose } onImageLoad={ handleImageLoad } project={ project }/>
                 <Button round={ true } ripple={ true } flat={ true } onClick={ handleClose } className="close">
                     <FontAwesomeIcon icon="times"/>
                 </Button>

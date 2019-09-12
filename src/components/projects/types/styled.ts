@@ -1,5 +1,5 @@
 export interface ProjectDetailsContainerProps {
-
+    isClosing?: boolean;
 }
 
 export interface ProjectImageFigProps {

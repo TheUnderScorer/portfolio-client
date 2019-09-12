@@ -172,6 +172,21 @@ export const DetailsContainer = styled.div<ProjectDetailsContainerProps>`
             max-height: 300px;
         }
     }
+    
+    ${ props => props.isClosing && `
+        .slick-track {
+            width: 100% !important;
+            transform: none !important;
+        }
+        
+        .slick-slide:not(.slick-current) {
+            display: none !important;
+        }
+        
+        .slick-slide.slick-current {
+            width: 100% !important;
+        }
+    ` }
 `;
 
 export const SliderContainer = styled.div`
