@@ -112,6 +112,7 @@ export const SectionTitle = styled( H4 )<SectionTitleProps>`
 export const A = styled.a<LinkProps>`
     ${ textStyles };
     cursor: pointer;
+    text-decoration: none;
     
     ${ props => props.highlight && `
         color: ${ getPrimary( props.theme.mode ) };
@@ -121,6 +122,10 @@ export const A = styled.a<LinkProps>`
     ${ props => props.underlined && `
         border-bottom: 1px solid ${ getPrimary( props.theme.mode ) };
     ` }
+    
+    svg {
+        margin-right: 0.5em;
+    }
 `;
 
 export const Highlight = styled.span`

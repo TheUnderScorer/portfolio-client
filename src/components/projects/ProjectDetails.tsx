@@ -4,9 +4,8 @@ import { Actions, DetailsContainer, ProjectImage, SliderArrow, SliderContainer, 
 import Slider from 'react-slick';
 import ProjectDetailsProps from './types/ProjectDetailsProps';
 import Loader from '../loader/Loader';
-import { Paragraph, SectionTitle, Text } from '../styled/typography';
+import { A, Paragraph, SectionTitle, Text } from '../styled/typography';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Button } from '../styled/buttons';
 import texts from '../../pages/data/texts';
 
 const ProjectDetails = ( { project, onImageLoad, isClosing }: ProjectDetailsProps ) =>
@@ -90,22 +89,20 @@ const ProjectDetails = ( { project, onImageLoad, isClosing }: ProjectDetailsProp
                 </div>
                 <Actions>
                     { url &&
-                      // @ts-ignore
-                      <Button flat as="a" href={ url } withIcon ripple>
+                      <A href={ url }>
                           <FontAwesomeIcon icon="external-link-alt"/>
                           <Text>
                               { texts.projects.viewProject }
                           </Text>
-                      </Button>
+                      </A>
                     }
                     { repositoryUrl &&
-                      // @ts-ignore
-                      <Button flat as="a" href={ repositoryUrl } withIcon ripple>
+                      <A href={ repositoryUrl }>
                           <FontAwesomeIcon icon={ [ 'fab', 'github' ] }/>
                           <Text>
                               { texts.projects.viewRepo }
                           </Text>
-                      </Button>
+                      </A>
                     }
                 </Actions>
             </TextContainer>
