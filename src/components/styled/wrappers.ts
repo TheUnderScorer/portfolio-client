@@ -35,6 +35,8 @@ export const HomeSection = styled.section<HomeSectionProps>`
             background-color: ${ getPrimary( props.theme.mode ) }
             padding-top: 4rem;
             padding-bottom: 10rem;
+            position: absolute;
+            width: 100%;
             
             h4{
                 color: ${ colors.white };
@@ -43,8 +45,7 @@ export const HomeSection = styled.section<HomeSectionProps>`
         
         .section-inner {
             background: transparent;
-            position: relative;
-            bottom: 8rem;
+            padding-top: 12em;
         }
     ` }
 `;
