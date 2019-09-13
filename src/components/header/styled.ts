@@ -206,7 +206,11 @@ export const MenuActivator = styled( IconButton )`
     }
 `;
 
-export const GoBackButton = styled( IconButton )<GoBackButtonProps>`
+export const GoBackButton = styled( IconButton ).attrs( {
+    flat: true,
+    mode: 'secondary',
+
+} )<GoBackButtonProps>`
     transition: all .3s;
     margin-right: 10px;
     height: 30px;
@@ -219,6 +223,7 @@ export const GoBackButton = styled( IconButton )<GoBackButtonProps>`
     }
     
     &:hover{
+        background-color: ${ props => getPrimary( props.theme.mode ) }
         &, * {
             color: ${ props => props.theme.mode === 'white' ? colors.white : 'inherit' }
         }
@@ -246,6 +251,7 @@ export const GoBackButton = styled( IconButton )<GoBackButtonProps>`
 `;
 
 export const ToggleLink = styled( A )<ToggleLinkProps>`
+    width: 15px;
     color: ${ props => props.transparent ?
     colors.white :
     props.theme.mode === 'black' ? colors.white : colors.dark

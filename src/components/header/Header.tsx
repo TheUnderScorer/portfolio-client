@@ -203,7 +203,6 @@ const Header = () =>
 
     useEffect( () =>
     {
-
         const callback = () =>
         {
             const targetScroll = headerRef.current.offsetHeight * 2;
@@ -239,7 +238,7 @@ const Header = () =>
     return (
         <HeaderWrapper ref={ headerRef } isFixed={ isFixed } isOpen={ isOpen } transparent={ transparent }>
             <LogoWrapper onClick={ handleLogoClick }>
-                <GoBackButton isActive={ backgroundVisible && !isOpen } flat={ true } mode="secondary">
+                <GoBackButton isActive={ backgroundVisible && !isOpen }>
                     <FontAwesomeIcon icon="arrow-left"/>
                 </GoBackButton>
                 <img src={ Logo } alt=""/>
