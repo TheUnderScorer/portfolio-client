@@ -4,7 +4,7 @@ import { HomeSection } from '../styled/wrappers';
 import { SectionTitle } from '../styled/typography';
 import ProjectsProps from './types/ProjectsProps';
 import Project from './Project';
-import { LoadMore, ProjectsContainer } from './styled';
+import { ProjectsContainer } from './styled';
 import texts from '../../pages/data/texts';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import HomeStore from '../../types/stores/HomeStore';
@@ -12,6 +12,7 @@ import { SetActiveProject } from '../../types/actions/HomeActions';
 import { getState, getStateFromEvent, pushState } from '../../utils/history';
 import usePopState from '../../hooks/usePopState';
 import { about } from '../../pages/data/links';
+import { Button } from '../styled/buttons';
 
 const Projects = ( { projects }: ProjectsProps ) =>
 {
@@ -94,9 +95,9 @@ const Projects = ( { projects }: ProjectsProps ) =>
                         project={ project }/>
                 ) }
             </ProjectsContainer>
-            <LoadMore round flat>
+            <Button className="overflow-item" round flat>
                 View more
-            </LoadMore>
+            </Button>
         </HomeSection>
     )
 };

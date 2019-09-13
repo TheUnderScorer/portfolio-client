@@ -34,7 +34,7 @@ export const HomeSection = styled.section<HomeSectionProps>`
         .title-container {
             background-color: ${ getPrimary( props.theme.mode ) }
             padding-top: 4rem;
-            padding-bottom: 10rem;
+            padding-bottom: 12rem;
             position: absolute;
             width: 100%;
             
@@ -48,6 +48,12 @@ export const HomeSection = styled.section<HomeSectionProps>`
             padding-top: 12em;
         }
     ` }
+    
+    .overflow-item {
+        position: relative;
+        top: 20px;
+        z-index: 12;
+    }
 `;
 
 export const Flex = styled.div<FlexProps>`

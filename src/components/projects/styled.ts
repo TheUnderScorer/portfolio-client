@@ -42,12 +42,6 @@ export const ProjectsContainer = styled.div`
     }
 `;
 
-export const LoadMore = styled( Button )`
-    position: relative;
-    top: 20px;
-    z-index: 12;
-`;
-
 export const ProjectContainer = styled.div<ProjectContainerProps>`
     width: 100%;
     border-radius: ${ borderRadius };
