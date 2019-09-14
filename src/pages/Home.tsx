@@ -67,7 +67,8 @@ const Home = () =>
             text:    {
                 secondary: getBaseTextColor( theme.mode )
             },
-            type:    theme.mode === 'black' ? 'dark' : 'light'
+            type:    theme.mode === 'black' ? 'dark' : 'light',
+            divider: colors.lightBorder
         },
     } );
 
