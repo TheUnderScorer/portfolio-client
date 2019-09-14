@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useCallback, useEffect, useState } from 'react';
+import { lazy, Suspense, useCallback, useEffect, useState } from 'react';
 import { HomeSection } from '../styled/wrappers';
 import { SectionTitle } from '../styled/typography';
 import ProjectsProps from './types/ProjectsProps';
@@ -15,7 +15,9 @@ import { about } from '../../pages/data/links';
 import { Button } from '../styled/buttons';
 import { ApolloProvider } from '@apollo/react-hooks';
 import { client } from '../../graphql/clients/github';
-import GithubRepos from '../github-repos/GithubRepos';
+import Loader from '../loader/Loader';
+
+const GithubRepos = lazy( () => import('../github-repos/GithubRepos') );
 
 const Projects = ( { projects }: ProjectsProps ) =>
 {
@@ -104,7 +106,9 @@ const Projects = ( { projects }: ProjectsProps ) =>
             { isExpanded && (
                 <ApolloProvider client={ client }>
                     <GithubContainer>
-                        <GithubRepos queryVariables={ { first: 5 } }/>
+                        <Suspense fallback={ <Loader svgProps={ { width: '50px', height: '50px' } }/> }>
+                            <GithubRepos queryVariables={ { first: 5 } }/>
+                        </Suspense>
                     </GithubContainer>
                 </ApolloProvider>
             ) }
