@@ -5,4 +5,4 @@ export interface SetToken extends Action<'SetToken'>
     payload: string;
 }
 
-export type UserActions = SetToken | any;
+export type UserActions = SetToken;

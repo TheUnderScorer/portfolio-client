@@ -6,7 +6,6 @@ import Action from '../types/actions/Action';
  * */
 const reducer = <State, Actions extends Action<any>>( handlers: ReducerHandlers<Actions, State>, initialState: State ) => ( state: State = initialState, action: Action<any> ): State =>
 {
-
     if ( !action ) {
         return state;
     }
@@ -16,7 +15,6 @@ const reducer = <State, Actions extends Action<any>>( handlers: ReducerHandlers<
     }
 
     return handlers[ action.type ]( state, action.payload );
-
 };
 
 export default reducer;

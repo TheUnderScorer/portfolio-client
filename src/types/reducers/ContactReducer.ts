@@ -21,6 +21,4 @@ export enum ContactTypes
     EditProfile  = 'EditProfile',
 }
 
-export type ContactReducerHandler = {
-    [key in ContactActions['type']]: ReducerHandler<ContactReducer>;
-}
+export type ContactReducerHandler = Record<ContactActions['type'], ReducerHandler<ContactReducer>>

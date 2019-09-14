@@ -4,7 +4,6 @@ import userReducer from '../userReducer';
 
 describe( 'userReducer', () =>
 {
-
     let state: UserReducer;
 
     beforeEach( () =>
@@ -20,5 +19,4 @@ describe( 'userReducer', () =>
 
         expect( newState ).toEqual( state );
     } );
-
 } );

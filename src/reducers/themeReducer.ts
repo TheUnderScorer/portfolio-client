@@ -8,14 +8,15 @@ const initialState: ThemeReducer = {
 };
 
 const handlers: ThemeReducerHandler = {
-    SetThemeMode: ( state, mode: ThemeMode ) => {
-        localStorage.setItem( 'themeMode', mode );
+    SetThemeMode: ( state, mode: ThemeMode ) =>
+                  {
+                      localStorage.setItem( 'themeMode', mode );
 
-        return {
-            ...state,
-            mode
-        }
-    }
+                      return {
+                          ...state,
+                          mode
+                      }
+                  }
 };
 
 export default reducer( handlers, initialState );

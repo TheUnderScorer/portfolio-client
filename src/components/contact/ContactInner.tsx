@@ -44,6 +44,7 @@ const titlesWithReturnIcon = [ ContactTypes.ContactForm, ContactTypes.EditProfil
 const shouldAddIcon = ( type: ContactTypes ) => titlesWithReturnIcon.includes( type );
 
 // TODO - Refactor Title, Notices and Errors into separate components
+// TODO - Cleanup
 const ContactInner = () =>
 {
     const dispatch = useDispatch();

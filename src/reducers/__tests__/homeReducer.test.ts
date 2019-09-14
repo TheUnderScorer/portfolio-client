@@ -4,7 +4,6 @@ import homeReducer, { initialState } from '../homeReducer';
 
 describe( 'themeReducer', () =>
 {
-
     let state: HomeReducer;
 
     beforeEach( () =>
@@ -42,5 +41,4 @@ describe( 'themeReducer', () =>
 
         expect( newState.activeProject ).toEqual( 1 );
     } );
-
 } );

@@ -6,6 +6,4 @@ export default interface UserReducer
     readonly token: string;
 }
 
-export type UserReducerHandlers = {
-    [key in UserActions['type']]: ReducerHandler<UserReducer>;
-}
+export type UserReducerHandlers = Record<UserActions['type'], ReducerHandler<UserReducer>>

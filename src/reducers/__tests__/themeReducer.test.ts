@@ -2,23 +2,26 @@ import ThemeReducer from '../../types/reducers/ThemeReducer';
 import themeReducer from '../themeReducer';
 import { SetThemeMode } from '../../types/actions/ThemeActions';
 
-describe( 'themeReducer', () => {
-
+describe( 'themeReducer', () =>
+{
     let state: ThemeReducer;
 
-    beforeEach( () => {
+    beforeEach( () =>
+    {
         state = {
             mode: 'white'
         }
     } );
 
-    it( 'Should return state if action is empty', () => {
-        const newState = themeReducer( state, null );
+    it( 'Should return state if action is empty', () =>
+    {
+        const newState = themeReducer( state, null as any );
 
         expect( newState ).toEqual( state );
     } );
 
-    it( 'SetThemeMode action', () => {
+    it( 'SetThemeMode action', () =>
+    {
         const action: SetThemeMode = {
             type:    'SetThemeMode',
             payload: 'black'
@@ -28,5 +31,4 @@ describe( 'themeReducer', () => {
 
         expect( newState.mode ).toEqual( 'black' );
     } )
-
 } );

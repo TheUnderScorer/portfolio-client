@@ -11,6 +11,4 @@ export default interface HomeReducer
     activeProject?: number | null;
 }
 
-export type HomeReducerHandler = {
-    [key in HomeActions['type']]: ReducerHandler<HomeReducer>;
-}
+export type HomeReducerHandler = Record<HomeActions['type'], ReducerHandler<HomeReducer>>
