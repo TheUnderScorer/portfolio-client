@@ -1,12 +1,12 @@
 import { MockedResponse, wait } from '@apollo/react-testing';
 import { GET_REPOSITORIES } from '../../../graphql/queries/repositories';
 import Repository from '../../../types/graphql/Repository';
-import moment from 'moment';
 import { mountWithStoreAndApollo } from '../../../tests/renderer';
 import GithubRepos from '../GithubRepos';
 import React from 'react';
 import Loader from '../../loader/Loader';
 import { act } from 'react-dom/test-utils';
+import '../../../fontAwesome';
 
 describe( 'GithubRepos', () =>
 {
@@ -15,7 +15,7 @@ describe( 'GithubRepos', () =>
             name:        'Test repo 1',
             description: 'Just a test repo',
             url:         'http://localhost/test-repo',
-            createdAt:   moment().toISOString()
+            createdAt:   '2019-09-14T17:30:04.552Z'
         }
     ];
 
@@ -50,13 +50,15 @@ describe( 'GithubRepos', () =>
             },
             {
                 mocks,
-                addTypename: true
+                addTypename: false
             }
         );
 
     it( 'Renders without crashing', () =>
     {
-        renderComponent();
+        const { component } = renderComponent();
+
+        expect( component.html() ).toMatchSnapshot();
     } );
 
     it( 'Shows loader when query is loading', async () =>
@@ -84,5 +86,6 @@ describe( 'GithubRepos', () =>
         const loader = component.update().find( Loader );
 
         expect( loader ).toEqual( {} );
+        expect( component.html() ).toMatchSnapshot();
     } )
 } );

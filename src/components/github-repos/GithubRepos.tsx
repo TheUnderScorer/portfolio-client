@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Fragment } from 'react';
 import { useQuery } from '@apollo/react-hooks';
 import { GET_REPOSITORIES } from '../../graphql/queries/repositories';
 import { GetRepositoriesResult } from '../../types/graphql/Queries';
@@ -11,6 +12,7 @@ import { isEmpty } from 'lodash';
 import GithubReposPops from './types/GithubReposPops';
 import { Title } from './styled';
 import GithubRepo from './GithubRepo';
+
 
 const GithubRepos = ( { queryVariables: { first = 5 } }: GithubReposPops ) =>
 {
@@ -44,11 +46,11 @@ const GithubRepos = ( { queryVariables: { first = 5 } }: GithubReposPops ) =>
               <Grid item xs={ 12 }>
                   <List>
                       { data.viewer.repositories.nodes.map( ( repo, index ) =>
-                          <>
+                          <Fragment key={ index }>
                               <GithubRepo { ...repo } />
                               { index < data.viewer.repositories.nodes.length - 1 &&
                                 <Divider component="li" variant="inset"/> }
-                          </>
+                          </Fragment>
                       ) }
                   </List>
               </Grid>
