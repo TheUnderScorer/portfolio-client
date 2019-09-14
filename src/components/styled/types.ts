@@ -15,6 +15,11 @@ export interface HomeSectionProps
     hasSeparator?: boolean;
 }
 
+export interface TextProps
+{
+    contrasted?: boolean;
+}
+
 export interface FlexProps
 {
     inline?: boolean;

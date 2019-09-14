@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
-import colors, { getPrimary } from './colors';
-import { HeadlineProps, IconProps, LinkProps, SectionSubtitleProps, SectionTitleProps } from './types';
+import colors, { getBaseTextColor, getPrimary } from './colors';
+import { HeadlineProps, IconProps, LinkProps, SectionSubtitleProps, SectionTitleProps, TextProps } from './types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const textStyles = css`
@@ -12,11 +12,15 @@ const headerStyles = css`
     margin: 0;
     font-weight: 500;
     display: inline-block;
-    color: ${ props => props.theme.mode === 'black' ? colors.white : colors.lightDark };
+    color: ${ props => getBaseTextColor( props.theme.mode ) };
 `;
 
-export const Text = styled.span`
+export const Text = styled.span<TextProps>`
     ${ textStyles }
+    
+    ${ props => props.contrasted && `
+        color: ${ props.theme.mode === 'black' ? colors.white : colors.black };
+    ` }
 `;
 
 export const Paragraph = styled.p`
@@ -71,8 +75,8 @@ export const H6 = styled( H1 ).attrs( {
 
 export const SectionTitle = styled( H4 )<SectionTitleProps>`
     color: ${ props => props.theme.mode === 'black' ? colors.white : colors.dark }
-    padding-bottom: 5px;
-    margin-bottom: ${ props => props.hasSubtitle ? '0' : '40px' };
+    padding-bottom: 0;
+    margin-bottom: ${ props => props.hasSubtitle || !props.underlined ? '0' : '40px' };
     margin-left: auto;
     margin-right: auto;
     font-weight: 500;
@@ -117,7 +121,11 @@ export const A = styled.a<LinkProps>`
     text-decoration: none;
     
     ${ props => props.highlight && `
-        color: ${ getPrimary( props.theme.mode ) };
+        
+        &, svg {
+            color: ${ getPrimary( props.theme.mode ) };
+        }
+        
         font-weight: 600;
     ` };
     
@@ -136,7 +144,7 @@ export const Highlight = styled.span`
 
 export const SectionSubtitle = styled( Text )<SectionSubtitleProps>`
     display: block;
-    margin-bottom: 40px;
+    margin-bottom: 20px;
     font-size: 1em;
     
     ${ props => props.underlined && `

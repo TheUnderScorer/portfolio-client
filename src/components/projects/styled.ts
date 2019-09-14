@@ -42,6 +42,11 @@ export const ProjectsContainer = styled.div`
     }
 `;
 
+export const GithubContainer = styled.div`
+    max-width: 1400px;
+    margin: 1em auto 0;
+`;
+
 export const ProjectContainer = styled.div<ProjectContainerProps>`
     width: 100%;
     border-radius: ${ borderRadius };

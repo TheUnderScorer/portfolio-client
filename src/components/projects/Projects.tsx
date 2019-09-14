@@ -4,7 +4,7 @@ import { HomeSection } from '../styled/wrappers';
 import { SectionTitle } from '../styled/typography';
 import ProjectsProps from './types/ProjectsProps';
 import Project from './Project';
-import { ProjectsContainer } from './styled';
+import { GithubContainer, ProjectsContainer } from './styled';
 import texts from '../../pages/data/texts';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import HomeStore from '../../types/stores/HomeStore';
@@ -13,6 +13,8 @@ import { getState, getStateFromEvent, pushState } from '../../utils/history';
 import usePopState from '../../hooks/usePopState';
 import { about } from '../../pages/data/links';
 import { Button } from '../styled/buttons';
+import { ApolloProvider } from '@apollo/react-hooks';
+import { client } from '../../graphql/clients/github';
 import GithubRepos from '../github-repos/GithubRepos';
 
 const Projects = ( { projects }: ProjectsProps ) =>
@@ -99,7 +101,13 @@ const Projects = ( { projects }: ProjectsProps ) =>
                         project={ project }/>
                 ) }
             </ProjectsContainer>
-            { isExpanded && <GithubRepos queryVariables={ { first: 5 } }/> }
+            { isExpanded && (
+                <ApolloProvider client={ client }>
+                    <GithubContainer>
+                        <GithubRepos queryVariables={ { first: 5 } }/>
+                    </GithubContainer>
+                </ApolloProvider>
+            ) }
             <Button onClick={ toggleExpand } className="overflow-item" round flat>
                 { isExpanded ? 'View less' : 'View more' }
             </Button>

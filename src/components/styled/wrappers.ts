@@ -30,6 +30,7 @@ export const HomeSection = styled.section<HomeSectionProps>`
     
     ${ props => props.colorBackground && `
         padding: 0;
+        padding-bottom: 4rem;
     
         .title-container {
             background-color: ${ getPrimary( props.theme.mode ) }
@@ -45,14 +46,17 @@ export const HomeSection = styled.section<HomeSectionProps>`
         
         .section-inner {
             background: transparent;
-            padding-top: 12em;
+            padding-top: 9em;
         }
     ` }
     
     .overflow-item {
-        position: relative;
-        top: 20px;
+        position: absolute;
         z-index: 12;
+        bottom: -20px;
+        margin: 0 auto;
+        left: 0;
+        right: 0;
     }
 `;
 

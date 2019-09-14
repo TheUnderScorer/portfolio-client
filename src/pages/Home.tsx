@@ -56,7 +56,6 @@ const Home = () =>
 {
     const theme = useSelector( ( store: HomeStore ) => store.theme );
 
-    // TODO Setup pallete for light and dark
     const materialTheme = createMuiTheme( {
         palette: {
             primary: {
@@ -67,7 +66,8 @@ const Home = () =>
             },
             text:    {
                 secondary: getBaseTextColor( theme.mode )
-            }
+            },
+            type:    theme.mode === 'black' ? 'dark' : 'light'
         },
     } );
 
