@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useCallback } from 'react';
-import { connect, useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import HomeStore from '../../types/stores/HomeStore';
 import { ContactWrapper, IconContainer } from './styled/contact';
 import { FaIconReversed } from '../styled/typography';
@@ -39,4 +39,4 @@ const Contact = () =>
     );
 };
 
-export default connect()( Contact );
+export default Contact;

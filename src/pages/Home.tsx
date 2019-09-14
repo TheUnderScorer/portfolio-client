@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { lazy, MutableRefObject, Suspense, useCallback, useEffect, useMemo, useRef } from 'react';
-import { connect, useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import HomeStore from '../types/stores/HomeStore';
 import styled, { ThemeProvider } from 'styled-components';
 import HeroImage from '../components/hero-image/HeroImage';
@@ -230,7 +230,6 @@ const Home = () =>
             </MaterialThemeProvider>
         </ThemeProvider>
     )
-
 };
 
-export default connect()( Home );
+export default Home;

@@ -7,7 +7,6 @@ import { RoundImage } from '../styled/images';
 import breakpoints from '../styled/breakpoints';
 import { getPrimary } from '../styled/colors';
 import texts from '../../pages/data/texts';
-import { connect } from 'react-redux';
 
 const AboutMeWrapper = styled( HomeSection )`
     display: flex;
@@ -38,7 +37,8 @@ const AboutMeWrapper = styled( HomeSection )`
     }
 `;
 
-const AboutMe = () => {
+const AboutMe = () =>
+{
     return (
         <AboutMeWrapper id={ texts.aboutMe.id } isCentered={ true } odd={ true }>
             <div className="title-container">
@@ -57,4 +57,4 @@ const AboutMe = () => {
     )
 };
 
-export default connect()( AboutMe );
+export default AboutMe;

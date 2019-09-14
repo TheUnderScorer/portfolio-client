@@ -5,7 +5,7 @@ import { H1, Text } from '../styled/typography';
 import Typist from 'react-typist';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Props from './types/HeroTextProps';
-import { connect, useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import HomeStore from '../../types/stores/HomeStore';
 import { SetHeroWrote } from '../../types/actions/HomeActions';
 import styled from 'styled-components';
@@ -100,4 +100,4 @@ const HeroText = ( { onCtaClick, ctaRef }: Props ) =>
     )
 };
 
-export default connect()( HeroText );
+export default HeroText;

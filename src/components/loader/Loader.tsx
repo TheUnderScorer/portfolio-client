@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useEffect, useState } from 'react';
-import { connect, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import BaseStore from '../../types/stores/BaseStore';
 import { getPrimary } from '../styled/colors';
 import LoaderProps from './types/LoaderProps';
@@ -41,4 +41,4 @@ const Loader = ( {
     )
 };
 
-export default connect()( Loader );
+export default Loader;

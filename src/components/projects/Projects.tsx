@@ -6,7 +6,7 @@ import ProjectsProps from './types/ProjectsProps';
 import Project from './Project';
 import { GithubContainer, ProjectsContainer } from './styled';
 import texts from '../../pages/data/texts';
-import { connect, useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import HomeStore from '../../types/stores/HomeStore';
 import { SetActiveProject } from '../../types/actions/HomeActions';
 import { getState, getStateFromEvent, pushState } from '../../utils/history';
@@ -115,4 +115,4 @@ const Projects = ( { projects }: ProjectsProps ) =>
     )
 };
 
-export default connect()( Projects );
+export default Projects;

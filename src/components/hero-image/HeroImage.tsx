@@ -2,7 +2,6 @@ import * as React from 'react';
 import Props from './types/HeroImageProps';
 import styled from 'styled-components';
 import breakpoints from '../styled/breakpoints';
-import { connect } from 'react-redux';
 import colors from '../styled/colors';
 
 const HeroContainer = styled.section`
@@ -41,7 +40,8 @@ const HeroChildren = styled.div`
     }
 `;
 
-const HeroImage = ( { srcs, activeSrc, children }: Props ) => {
+const HeroImage = ( { srcs, activeSrc, children }: Props ) =>
+{
 
     return (
         <HeroContainer className="hero">
@@ -55,4 +55,4 @@ const HeroImage = ( { srcs, activeSrc, children }: Props ) => {
     )
 };
 
-export default connect()( HeroImage );
+export default HeroImage;

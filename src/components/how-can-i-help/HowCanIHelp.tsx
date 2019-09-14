@@ -4,7 +4,7 @@ import { HomeSection } from '../styled/wrappers';
 import { SectionTitle } from '../styled/typography';
 import HorizontalList from '../horizontal-list/HorizontalList';
 import helpItems from '../../pages/data/helpItems';
-import { connect, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import HomeStore from '../../types/stores/HomeStore';
 import styled from 'styled-components';
 import breakpoints from '../styled/breakpoints';
@@ -15,19 +15,23 @@ const Section = styled( HomeSection )`
     }
 `;
 
-const HowCanIHelp = () => {
+const HowCanIHelp = () =>
+{
 
     const didInnerOpen = useSelector( ( store: HomeStore ) => store.home.didInnerOpen );
 
     const [ loaded, setLoaded ] = useState( false );
 
-    useEffect( () => {
+    useEffect( () =>
+    {
 
-        const timeout = setTimeout( () => {
+        const timeout = setTimeout( () =>
+        {
             setLoaded( didInnerOpen );
         }, 300 );
 
-        return () => {
+        return () =>
+        {
             clearTimeout( timeout );
         }
 
@@ -46,4 +50,4 @@ const HowCanIHelp = () => {
     )
 };
 
-export default connect()( HowCanIHelp );
+export default HowCanIHelp;
