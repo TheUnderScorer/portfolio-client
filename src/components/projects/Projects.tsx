@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { HomeSection } from '../styled/wrappers';
 import { SectionTitle } from '../styled/typography';
 import ProjectsProps from './types/ProjectsProps';
@@ -13,6 +13,7 @@ import { getState, getStateFromEvent, pushState } from '../../utils/history';
 import usePopState from '../../hooks/usePopState';
 import { about } from '../../pages/data/links';
 import { Button } from '../styled/buttons';
+import GithubRepos from '../github-repos/GithubRepos';
 
 const Projects = ( { projects }: ProjectsProps ) =>
 {
@@ -20,6 +21,9 @@ const Projects = ( { projects }: ProjectsProps ) =>
 
     const activeProject = useSelector( ( store: HomeStore ) => store.home.activeProject );
     const didInnerOpen = useSelector( ( store: HomeStore ) => store.home.didInnerOpen );
+
+    const [ isExpanded, setExpanded ] = useState( false );
+    const toggleExpand = useCallback( () => setExpanded( !isExpanded ), [ isExpanded ] );
 
     const handleProjectClose = useCallback( () =>
     {
@@ -95,8 +99,9 @@ const Projects = ( { projects }: ProjectsProps ) =>
                         project={ project }/>
                 ) }
             </ProjectsContainer>
-            <Button className="overflow-item" round flat>
-                View more
+            { isExpanded && <GithubRepos queryVariables={ { first: 5 } }/> }
+            <Button onClick={ toggleExpand } className="overflow-item" round flat>
+                { isExpanded ? 'View less' : 'View more' }
             </Button>
         </HomeSection>
     )

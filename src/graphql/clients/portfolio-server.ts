@@ -1,4 +1,4 @@
-import { TOKEN_KEY } from './auth';
+import { TOKEN_KEY } from '../auth';
 import { ApolloClient, HttpLink, InMemoryCache } from 'apollo-boost'
 import { setContext } from 'apollo-link-context'
 import { split } from 'apollo-link'

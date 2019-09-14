@@ -1,5 +1,7 @@
 import { ThemeMode } from '../../types/reducers/ThemeReducer';
 
+// TODO Refactor 
+
 const colors = {
     buttons:      {
         mainBg: '#364366',

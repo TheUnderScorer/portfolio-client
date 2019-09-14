@@ -73,6 +73,8 @@ export const SectionTitle = styled( H4 )<SectionTitleProps>`
     color: ${ props => props.theme.mode === 'black' ? colors.white : colors.dark }
     padding-bottom: 5px;
     margin-bottom: ${ props => props.hasSubtitle ? '0' : '40px' };
+    margin-left: auto;
+    margin-right: auto;
     font-weight: 500;
     
     ${ props => props.uplined && `

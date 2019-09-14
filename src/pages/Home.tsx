@@ -55,6 +55,8 @@ const HomeWrapper = styled.div<HomeWrapperProps>`
 const Home = () =>
 {
     const theme = useSelector( ( store: HomeStore ) => store.theme );
+
+    // TODO Setup pallete for light and dark
     const materialTheme = createMuiTheme( {
         palette: {
             primary: {

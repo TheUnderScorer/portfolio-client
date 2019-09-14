@@ -1,4 +1,4 @@
-import { client } from './apollo';
+import { client } from './clients/portfolio-server';
 import User from '../types/graphql/User';
 import { CREATE_USER } from './mutations/users';
 
