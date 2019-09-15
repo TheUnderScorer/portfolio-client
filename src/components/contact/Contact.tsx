@@ -27,7 +27,7 @@ const Contact = () =>
     return (
         <ContactWrapper>
             <Tooltip enterDelay={ 1000 } title={ !active ? '' : 'Click to close' }>
-                <IconContainer active={ active } onClick={ toggleActive } ripple={ true }>
+                <IconContainer active={ active } onClick={ toggleActive }>
                     { active ?
                         <FaIconReversed icon="times"/> :
                         <FaIconReversed icon="comment"/>

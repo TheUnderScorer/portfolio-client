@@ -2,13 +2,15 @@ import * as React from 'react';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import ConversationMessagesProps from './types/ConversationMessagesProps';
 import { HelperText, List, ListContainer } from './styled';
-import { A, H6, Text } from '../styled/typography';
+import { H6, Text } from '../styled/typography';
 import useCurrentUser from '../../hooks/useCurrentUser';
 import usePrevious from '../../hooks/usePrevious';
 import { smoothScroll } from '../../utils/scroll';
 import ConversationMessage from '../conversation-message/ConversationMessage';
 import Loader from '../loader/Loader';
 import { isEmpty } from 'lodash';
+import { Typography } from '@material-ui/core';
+import { Button } from '../styled/buttons';
 
 const ConversationMessages = ( { conversation, hasMore, onLoadMore, onCloseClick }: ConversationMessagesProps ) =>
 {
@@ -118,11 +120,12 @@ const ConversationMessages = ( { conversation, hasMore, onLoadMore, onCloseClick
                   <>
                       { !hasMore &&
                         <HelperText>
-                            <Text>
+                            <Typography>
                                 This is start of your current conversation with me.
-                                <br/>
-                                <A id="close_conversation" onClick={ onCloseClick } underlined={ true }>Click here to close this conversation.</A>
-                            </Text>
+                            </Typography>
+                            <Button color="primary" onClick={ onCloseClick }>
+                                Close conversation
+                            </Button>
                         </HelperText>
                       }
                       { messages.map( ( message, index ) =>

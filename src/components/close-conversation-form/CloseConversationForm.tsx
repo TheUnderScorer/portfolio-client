@@ -28,13 +28,18 @@ const validationSchema = {
 const useButtonStyles = makeStyles( ( theme: Theme ) =>
 {
     return createStyles( {
-        button:   {
+        button:           {
             marginRight: theme.spacing( 0.5 ),
             marginLeft:  theme.spacing( 0.5 ),
         },
-        relative: {
-            position: 'relative'
-        }
+        buttonsContainer: {
+            position:  'relative',
+            marginTop: theme.spacing( 1 )
+        },
+        root:             {
+            width:  '100%',
+            height: '100%'
+        },
     } )
 } );
 
@@ -45,48 +50,52 @@ const CloseConversationForm = ( { onCancel, values, closeConversationMutation, h
     const classes = useButtonStyles();
 
     return (
-        <form onSubmit={ handleSubmit } noValidate>
-            <Grid alignItems="center" direction="column" container>
-                <Typography align="center" variant="h6">
-                    Close conversation
-                </Typography>
-                <Typography paragraph align="center" variant="subtitle1" color="textSecondary">
-                    You are about to close this conversation.
-                </Typography>
-                <FormControlLabel
-                    label="Send transcript?"
-                    control={ (
-                        <FormikInput
-                            id="sendTranscript"
-                            name="sendTranscript"
-                            render={ ( { field } ) => (
-                                <Checkbox disabled={ mutationResult.loading } color="primary" { ...field } />
-                            ) }
-                        />
-                    ) }
-                />
-                { !!values.sendTranscript &&
-                  <FormikInput id="email" name="email" type="text" render={ ( { form, field } ) =>
-                      <TextField
-                          helperText={ !form.errors.email || !form.touched.email ? 'Email to which transcript will be sent.' : '' }
-                          disabled={ mutationResult.loading }
-                          label="Email"
-                          fullWidth
-                          margin="none"
-                          variant="outlined"
-                          error={ !!form.errors.email && !!form.touched.email }
-                          { ...field }
-                      />
-                  }/>
-                }
-                <Grid className={ classes.relative } container justify="center">
-                    <Loader active={ mutationResult.loading } asOverlay/>
-                    <Button className={ classes.button } variant="contained" color="primary" type="submit" disabled={ mutationResult.loading }>
+        <form className={ classes.root } onSubmit={ handleSubmit } noValidate>
+            <Grid className={ classes.root } container alignItems="center">
+                <Grid alignItems="center" direction="column" container>
+                    <Typography align="center" variant="h6">
                         Close conversation
-                    </Button>
-                    <Button className={ classes.button } variant="outlined" color="primary" type="button" disabled={ mutationResult.loading } onClick={ onCancel }>
-                        Cancel
-                    </Button>
+                    </Typography>
+                    <Typography paragraph align="center" variant="subtitle1" color="textSecondary">
+                        You are about to close this conversation.
+                    </Typography>
+                    <FormControlLabel
+                        label="Send transcript?"
+                        control={ (
+                            <FormikInput
+                                id="sendTranscript"
+                                name="sendTranscript"
+                                render={ ( { field } ) => (
+                                    <Checkbox disabled={ mutationResult.loading } color="primary" { ...field } />
+                                ) }
+                            />
+                        ) }
+                    />
+                    { !!values.sendTranscript &&
+                      <Grid item xs={ 9 }>
+                          <FormikInput id="email" name="email" type="text" render={ ( { form, field } ) =>
+                              <TextField
+                                  helperText={ !form.errors.email || !form.touched.email ? 'Email to which transcript will be sent.' : '' }
+                                  disabled={ mutationResult.loading }
+                                  label="Email"
+                                  fullWidth
+                                  margin="none"
+                                  variant="outlined"
+                                  error={ !!form.errors.email && !!form.touched.email }
+                                  { ...field }
+                              />
+                          }/>
+                      </Grid>
+                    }
+                    <Grid className={ classes.buttonsContainer } container justify="center">
+                        <Loader active={ mutationResult.loading } asOverlay/>
+                        <Button className={ classes.button } variant="contained" color="primary" type="submit" disabled={ mutationResult.loading }>
+                            Close conversation
+                        </Button>
+                        <Button className={ classes.button } variant="outlined" color="primary" type="button" disabled={ mutationResult.loading } onClick={ onCancel }>
+                            Cancel
+                        </Button>
+                    </Grid>
                 </Grid>
             </Grid>
         </form>

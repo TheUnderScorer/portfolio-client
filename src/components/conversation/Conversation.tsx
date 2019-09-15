@@ -19,8 +19,8 @@ import { SetContactType, SetIsClosing } from '../../types/actions/ContactActions
 import { ContactTypes } from '../../types/reducers/ContactReducer';
 import { useApolloClient } from '@apollo/react-hooks';
 import HomeStore from '../../types/stores/HomeStore';
-import { FlexFormSection } from '../styled/form';
 import { Button } from '../styled/buttons';
+import { Grid } from '@material-ui/core';
 
 const messagesPerPage = 30;
 
@@ -163,14 +163,14 @@ const Conversation = ( { conversationQuery, messageCreationMutation, changeStatu
                         <Text>
                             Thanks for chat!
                         </Text>
-                        <FlexFormSection isCentered={ true } margin="normal">
-                            <Button onClick={ startNewConversation } ripple flat>
+                        <Grid container alignItems="center">
+                            <Button variant="contained" color="primary" onClick={ startNewConversation }>
                                 Start new conversation
                             </Button>
-                            <Button onClick={ handleReturn } mode="secondary" flat ripple>
+                            <Button onClick={ handleReturn } color="primary">
                                 Return
                             </Button>
-                        </FlexFormSection>
+                        </Grid>
                     </IconMessage>
                   }
 
@@ -184,7 +184,11 @@ const Conversation = ( { conversationQuery, messageCreationMutation, changeStatu
                         }
 
                         { isClosing && currentUser.data &&
-                          <CloseConversationForm onCancel={ handleCancel } closeConversationMutation={ changeStatusMutation } conversationID={ result.conversation.id } currentUser={ currentUser.data.user }/>
+                          <CloseConversationForm
+                              onCancel={ handleCancel }
+                              closeConversationMutation={ changeStatusMutation }
+                              conversationID={ result.conversation.id }
+                              currentUser={ currentUser.data.user }/>
                         }
                     </>
                   }

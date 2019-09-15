@@ -20,7 +20,7 @@ export const List = styled( InfiniteScroll )`
 `;
 
 export const HelperText = styled.li`
-    padding: 1em 2em 2em;
+    padding: ${ props => props.theme.spacing( 1 ) } 0;
     border-bottom: 1px solid ${ colors.lightBorder };
     font-size: 0.9em;
     width: 100%;

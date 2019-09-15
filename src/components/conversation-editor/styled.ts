@@ -1,17 +1,16 @@
 import styled from 'styled-components';
-import { CentredFrom, FormSection } from '../styled/form';
 import colors from '../styled/colors';
 import { MessageSectionProps } from '../conversation/types/styled';
 import { CtaButton } from '../styled/buttons';
 
-export const EditorForm = styled( CentredFrom )`
-    background-color: ${ props => props.theme.mode === 'black' ? colors.dark : colors.grey };
-    padding: 1em 0;
-    max-height: 7em;
+export const EditorForm = styled.form`
+    background-color: ${ props => props.theme.palette.type === 'dark' ? colors.dark : colors.grey };
+    padding: ${ props => props.theme.spacing( 1 ) } 0;
+    max-height: 6rem;
     height: auto;
 `;
 
-export const MessageSection = styled( FormSection )<MessageSectionProps>`
+export const MessageSection = styled.div<MessageSectionProps>`
     .error {
         margin-left: 1.85em;
     }
@@ -41,7 +40,7 @@ export const MessageSection = styled( FormSection )<MessageSectionProps>`
     
     ${ props => props.filled && `
         svg {
-            color: ${ props.theme.mode === 'black' ? colors.white : colors.black };
+            color: ${ props.theme.palette.text.primary };
         }
     ` }
 `;

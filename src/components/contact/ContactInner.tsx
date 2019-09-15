@@ -2,9 +2,9 @@ import * as React from 'react';
 import { useCallback, useEffect, useState } from 'react';
 import Loader from '../loader/Loader';
 import IconMessage from '../icon-message/IconMessage';
-import { ContactSlider, FormTitle, FormTitleContainer, Inner } from './styled/contact';
-import { IconButton, Tooltip } from '@material-ui/core';
-import { FaIcon, Text, WhiteFaIcon } from '../styled/typography';
+import { ContactSlider, FormTitleContainer, Inner } from './styled/contact';
+import { createStyles, IconButton, makeStyles, Theme, Tooltip, Typography } from '@material-ui/core';
+import { FaIcon, WhiteFaIcon } from '../styled/typography';
 import getFormTitle from './getFormTitle';
 import { ContactTypes } from '../../types/reducers/ContactReducer';
 import { Notice } from './Notice';
@@ -40,6 +40,12 @@ const sections = {
     [ ContactTypes.EditProfile ]:  4,
 };
 
+const useStyles = makeStyles( ( theme: Theme ) => createStyles( {
+    whiteText: {
+        color: theme.palette.common.white
+    }
+} ) );
+
 const titlesWithReturnIcon = [ ContactTypes.ContactForm, ContactTypes.EditProfile, ContactTypes.Conversation ];
 const shouldAddIcon = ( type: ContactTypes ) => titlesWithReturnIcon.includes( type );
 
@@ -47,6 +53,8 @@ const shouldAddIcon = ( type: ContactTypes ) => titlesWithReturnIcon.includes( t
 // TODO - Cleanup
 const ContactInner = () =>
 {
+    const classes = useStyles();
+
     const dispatch = useDispatch();
 
     const active = useSelector( ( store: HomeStore ) => store.contact.active );
@@ -116,6 +124,20 @@ const ContactInner = () =>
         setSection( ContactTypes.Selection );
     }, [ type ] );
 
+    const onContactFormSubmit = useCallback( ( result: boolean, modifiedEmail: boolean ) =>
+    {
+        if ( result ) {
+            const newMessages = [ ...successMessages, 'Your message have been sent!' ];
+
+            if ( modifiedEmail ) {
+                newMessages.push( 'Your e-mail have been saved, you won\'t need to provide it again.' );
+            }
+
+            setSuccessMessages( newMessages );
+        }
+    }, [ successMessages ] );
+
+
     // Handles errors update
     useEffect( () =>
     {
@@ -150,19 +172,6 @@ const ContactInner = () =>
             clearTimeout( timeout );
         }
     }, [ type ] );
-
-    const onContactFormSubmit = useCallback( ( result: boolean, modifiedEmail: boolean ) =>
-    {
-        if ( result ) {
-            const newMessages = [ ...successMessages, 'Your message have been sent!' ];
-
-            if ( modifiedEmail ) {
-                newMessages.push( 'Your e-mail have been saved, you won\'t need to provide it again.' );
-            }
-
-            setSuccessMessages( newMessages );
-        }
-    }, [ successMessages ] );
 
     // Clears success messages after timeout
     useEffect( () =>
@@ -226,8 +235,8 @@ const ContactInner = () =>
 
         if ( !!conversation &&
              conversation.status === ConversationStatuses.closed &&
-             !createConversationResult.loading
-             && type === ContactTypes.Selection ) {
+             !createConversationResult.loading &&
+             type === ContactTypes.Selection ) {
             createConversation();
         }
 
@@ -243,9 +252,9 @@ const ContactInner = () =>
             { !isConnected &&
               <IconMessage icon={
                   <FaIcon icon={ faFrown }/> } title="Oh no!">
-                  <Text>
+                  <Typography variant="body1">
                       We are unable to connect to our server. Please check your internet connection.
-                  </Text>
+                  </Typography>
               </IconMessage>
             }
 
@@ -259,9 +268,9 @@ const ContactInner = () =>
                             </IconButton>
                         </Tooltip>
                       }
-                      <FormTitle className="form-title">
+                      <Typography className={ `${ classes.whiteText } form-title` } variant="h6">
                           { getFormTitle( type, user ) }
-                      </FormTitle>
+                      </Typography>
                       { user && type !== ContactTypes.UserForm &&
                         <ContactMenu conversation={ conversationQueryResult.data ? conversationQueryResult.data.conversation : null } onMenuClick={ onMenuClick }/>
                       }
@@ -277,7 +286,11 @@ const ContactInner = () =>
                         <UserForm user={ user } mutation={ userMutation }/>
                         <Selection<ContactTypes> onSelection={ setSection } options={ contactSelections }/>
                         <ContactForm afterSubmit={ onContactFormSubmit } user={ user } mutation={ contactMutation }/>
-                        <Conversation createConversationMutation={ createConversationMutation } changeStatusMutation={ changeStatusMutation } messageCreationMutation={ createMessageMutation } conversationQuery={ conversationsQuery }/>
+                        <Conversation
+                            createConversationMutation={ createConversationMutation }
+                            changeStatusMutation={ changeStatusMutation }
+                            messageCreationMutation={ createMessageMutation }
+                            conversationQuery={ conversationsQuery }/>
                         <div>
                             Edit profile!
                         </div>

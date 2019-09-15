@@ -3,11 +3,10 @@ import * as Yup from 'yup';
 import ContactFormProps from './types/ContactFormProps';
 import { FormikProps, withFormik } from 'formik';
 import ContactInput from '../../types/graphql/inputs/ContactInput';
-import { CentredFrom, FormSection } from '../styled/form';
 import FormikInput from '../formik/FormikInput';
 import { Button } from '../styled/buttons';
 import Loader from '../loader/Loader';
-import { TextField } from '@material-ui/core';
+import { createStyles, Grid, makeStyles, TextField, Theme } from '@material-ui/core';
 import { ExecutionResult } from '@apollo/react-common';
 
 const validationSchema = ( props: ContactFormProps ) =>
@@ -24,65 +23,72 @@ const validationSchema = ( props: ContactFormProps ) =>
     return Yup.object().shape( shape );
 };
 
+const useStyles = makeStyles( ( theme: Theme ) => createStyles( {
+    button: {
+        marginTop: theme.spacing( 1 )
+    },
+    root:   {
+        height: '100%'
+    }
+} ) );
+
 const ContactForm = ( props: ContactFormProps & FormikProps<ContactInput> ) =>
 {
     const [ , mutationResult ] = props.mutation;
-    const { user } = props;
+    const { user, handleSubmit } = props;
+
+    const classes = useStyles();
 
     return (
-        <CentredFrom>
-            <FormSection width="60%">
-                <FormikInput id="subject" name="subject" type="text" render={ ( { form, field } ) =>
-                    <TextField
-                        id="subject"
-                        disabled={ mutationResult.loading }
-                        label="Subject"
-                        fullWidth
-                        margin="normal"
-                        variant="outlined"
-                        error={ !!form.errors.subject && !!form.touched.subject }
-                        { ...field }
-                    />
+        <form className={ classes.root } noValidate onSubmit={ handleSubmit }>
+            <Grid className={ classes.root } container justify="center">
+                <Grid direction="column" alignItems="center" justify="center" container item xs={ 7 }>
+                    <FormikInput id="subject" name="subject" type="text" render={ ( { form, field } ) =>
+                        <TextField
+                            id="subject"
+                            disabled={ mutationResult.loading }
+                            label="Subject"
+                            fullWidth
+                            margin="normal"
+                            variant="outlined"
+                            error={ !!form.errors.subject && !!form.touched.subject }
+                            { ...field }
+                        />
 
-                }/>
-            </FormSection>
-            { ( !user || !user.email ) &&
-              <FormSection width="60%">
-                  <FormikInput id="email" name="email" type="text" render={ ( { form, field } ) =>
-                      <TextField
-                          disabled={ mutationResult.loading }
-                          label="Email"
-                          fullWidth
-                          margin="normal"
-                          variant="outlined"
-                          error={ !!form.errors.email && !!form.touched.email }
-                          { ...field }
-                      />
-                  }/>
-              </FormSection>
-            }
-            <FormSection width="60%">
-                <FormikInput id="message" name="message" render={ ( { form, field } ) =>
-                    <TextField
-                        label="Message"
-                        disabled={ mutationResult.loading }
-                        multiline
-                        fullWidth
-                        rows={ 3 }
-                        margin="normal"
-                        variant="outlined"
-                        error={ !!form.errors.message && !!form.touched.message }
-                        { ...field }
-                    />
-                }/>
-            </FormSection>
-            <FormSection margin="normal">
-                <Button disabledOpacity={ false } flat={ true } type="submit" disabled={ mutationResult.loading }>
-                    <Loader asOverlay={ true } active={ mutationResult.loading }/>
-                    Send message
-                </Button>
-            </FormSection>
-        </CentredFrom>
+                    }/>
+                    { ( !user || !user.email ) &&
+                      <FormikInput id="email" name="email" type="text" render={ ( { form, field } ) =>
+                          <TextField
+                              disabled={ mutationResult.loading }
+                              label="Email"
+                              fullWidth
+                              margin="normal"
+                              variant="outlined"
+                              error={ !!form.errors.email && !!form.touched.email }
+                              { ...field }
+                          />
+                      }/>
+                    }
+                    <FormikInput id="message" name="message" render={ ( { form, field } ) =>
+                        <TextField
+                            label="Message"
+                            disabled={ mutationResult.loading }
+                            multiline
+                            fullWidth
+                            rows={ 3 }
+                            margin="normal"
+                            variant="outlined"
+                            error={ !!form.errors.message && !!form.touched.message }
+                            { ...field }
+                        />
+                    }/>
+                    <Button className={ classes.button } variant="contained" type="submit" color="primary" disabled={ mutationResult.loading }>
+                        <Loader asOverlay={ true } active={ mutationResult.loading }/>
+                        Send message
+                    </Button>
+                </Grid>
+            </Grid>
+        </form>
     )
 };
 

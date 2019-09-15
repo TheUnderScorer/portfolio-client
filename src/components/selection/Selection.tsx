@@ -15,7 +15,7 @@ function Selection<T extends string>( { options, onSelection }: SelectionProps<T
     return (
         <SelectionContainer flexDirection="column">
             { options.map( ( { icon, subTitle, title, id } ) =>
-                <SelectionItem ripple={ true } key={ id } onClick={ handleSelection( id as T ) }>
+                <SelectionItem key={ id } onClick={ handleSelection( id as T ) }>
                     { icon }
                     <Flex inline={ true } flexDirection="column" as="span">
                         <Text className="text">
