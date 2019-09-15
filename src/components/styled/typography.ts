@@ -2,6 +2,7 @@ import styled, { css } from 'styled-components';
 import colors, { getBaseTextColor, getPrimary } from './colors';
 import { HeadlineProps, IconProps, LinkProps, SectionSubtitleProps, SectionTitleProps, TextProps } from './types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Typography } from '@material-ui/core';
 
 const textStyles = css`
     font-size: 1em;  
@@ -73,8 +74,9 @@ export const H6 = styled( H1 ).attrs( {
     font-size: 1.2em;
 `;
 
-export const SectionTitle = styled( H4 )<SectionTitleProps>`
-    color: ${ props => props.theme.mode === 'black' ? colors.white : colors.dark }
+export const SectionTitle = styled( Typography ).attrs( {
+    variant: 'h4'
+} )<SectionTitleProps>`
     padding-bottom: 0;
     margin-bottom: ${ props => props.hasSubtitle || !props.underlined ? '0' : '40px' };
     margin-left: auto;
@@ -142,7 +144,10 @@ export const Highlight = styled.span`
     color: ${ props => getPrimary( props.theme.mode ) };
 `;
 
-export const SectionSubtitle = styled( Text )<SectionSubtitleProps>`
+export const SectionSubtitle = styled( Typography ).attrs( {
+    variant: 'subtitle1',
+    color:   'textSecondary'
+} )<SectionSubtitleProps>`
     display: block;
     margin-bottom: 20px;
     font-size: 1em;

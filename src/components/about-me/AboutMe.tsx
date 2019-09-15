@@ -1,12 +1,11 @@
 import * as React from 'react';
 import { HomeSection } from '../styled/wrappers';
 import styled from 'styled-components';
-import { SectionSubtitle, SectionTitle, Text } from '../styled/typography';
+import { SectionSubtitle, SectionTitle } from '../styled/typography';
 import Me from '../../assets/me.jpg';
 import { RoundImage } from '../styled/images';
-import breakpoints from '../styled/breakpoints';
-import { getPrimary } from '../styled/colors';
 import texts from '../../pages/data/texts';
+import { Grid, Typography } from '@material-ui/core';
 
 const AboutMeWrapper = styled( HomeSection )`
     display: flex;
@@ -17,23 +16,9 @@ const AboutMeWrapper = styled( HomeSection )`
         width: 100%;
     }
     
-    .text {
-        width: 50%;
-        display: inline-flex;
-        align-items: center;
-        
-        @media(max-width: ${ breakpoints.tabletSmall }){
-            width: 100%;
-            margin-top: 20px;
-        }
-    }
-    
     img {
-        border: 3px solid ${ props => getPrimary( props.theme.mode ) };
+        border: 3px solid ${ props => props.theme.palette.primary.main };
         padding: 3px;
-            @media(min-width: ${ breakpoints.tabletBig }){
-                margin-right: 20px;
-            }
     }
 `;
 
@@ -49,10 +34,16 @@ const AboutMe = () =>
                     { texts.aboutMe.subTitle }
                 </SectionSubtitle>
             </div>
-            <RoundImage width="20em" maxWidth="250px" maxHeight="250px" height="auto" src={ Me } alt=""/>
-            <Text className="text">
-                { texts.aboutMe.text }
-            </Text>
+            <Grid container alignItems="center" justify="center">
+                <Grid item md={ 3 } xs={ 12 }>
+                    <RoundImage width="20em" maxWidth="250px" maxHeight="250px" height="auto" src={ Me } alt=""/>
+                </Grid>
+                <Grid item md={ 8 } xs={ 12 }>
+                    <Typography variant="body1" align="justify">
+                        { texts.aboutMe.text }
+                    </Typography>
+                </Grid>
+            </Grid>
         </AboutMeWrapper>
     )
 };

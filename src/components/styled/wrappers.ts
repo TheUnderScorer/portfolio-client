@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { FlexProps, HomeSectionProps } from './types';
 import colors, { getPrimary } from './colors';
+import { Box } from '@material-ui/core';
 
 export const Main = styled.main`
    
@@ -10,7 +11,9 @@ export const FullWidth = styled.div`
     width: 100%;
 `;
 
-export const HomeSection = styled.section<HomeSectionProps>`
+export const HomeSection = styled( Box ).attrs( {
+    as: 'section'
+} )<HomeSectionProps>`
     position: relative;
     padding: 4rem 2rem;
     width: 100%;

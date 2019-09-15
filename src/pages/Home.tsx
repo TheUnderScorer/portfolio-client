@@ -44,7 +44,7 @@ const HomeWrapper = styled.div<HomeWrapperProps>`
         .content{
             margin-top: ${ props.theme.spacing( 2 ) };
             
-            @media(max-width: ${ props.theme.breakpoints.only( 'md' ) }) {
+            ${ props.theme.breakpoints.down( 'md' ) } {
                 margin-top: 2rem;
             }
         }
