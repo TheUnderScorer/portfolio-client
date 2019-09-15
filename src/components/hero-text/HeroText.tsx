@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useCallback, useEffect, useState } from 'react';
 import { Cta, CtaWrapper, NameWrapper, TextWrapper } from './styled';
-import { H1, Text } from '../styled/typography';
+import { H1 } from '../styled/typography';
 import Typist from 'react-typist';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Props from './types/HeroTextProps';
@@ -89,11 +89,9 @@ const HeroText = ( { onCtaClick, ctaRef }: Props ) =>
                 </Headline>
             </Typist>
             <CtaWrapper>
-                <Cta withIcon={ true } ripple={ true } flat={ true } ref={ ctaRef } onClick={ onCtaClick } className={ `${ ctaVisible ? '' : 'hidden' } ${ ctaRotated ? 'rotated' : '' }` }>
+                <Cta isRound size="large" variant="contained" color="primary" ref={ ctaRef } onClick={ onCtaClick } className={ `${ ctaVisible ? '' : 'hidden' } ${ ctaRotated ? 'rotated' : '' }` }>
                     <FontAwesomeIcon icon="arrow-down"/>
-                    <Text>
-                        { texts.aboutMe.sectionTitle }
-                    </Text>
+                    { texts.aboutMe.sectionTitle }
                 </Cta>
             </CtaWrapper>
         </TextWrapper>

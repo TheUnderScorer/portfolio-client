@@ -7,10 +7,13 @@ export const Button = styled( MaterialButton )<ButtonProps>`
         width: ${ ( { buttonWidth = 'auto' } ) => buttonWidth };
         height: ${ ( { buttonHeight = 'auto' } ) => buttonHeight };
         
+        svg {
+            margin-right: ${ props => props.theme.spacing( 0.7 ) }
+        }
+        
         ${ props => props.flat && `
              box-shadow: none;
         ` }
-        
         
         ${ props => props.iconOnHover && `
             svg, i {
