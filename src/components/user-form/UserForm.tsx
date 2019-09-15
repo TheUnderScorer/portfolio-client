@@ -74,7 +74,7 @@ const UserForm = ( { mutation, setFieldValue }: UserFormProps & FormikProps<User
                     <Recaptcha
                         onChange={ handleCaptchaChange }
                         size="normal"
-                        theme={ themeMode === 'black' ? 'dark' : 'light' }
+                        theme={ themeMode === 'dark' ? 'dark' : 'light' }
                         sitekey={ process.env.REACT_APP_SITE_KEY as string }
                     />
                 }/>

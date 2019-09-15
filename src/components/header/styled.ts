@@ -1,9 +1,8 @@
 import styled, { keyframes } from 'styled-components';
 import { GoBackButtonProps, HeaderProps, NavigationLinkProps, ToggleLinkProps } from './types/styled';
-import colors, { getPrimary } from '../styled/colors';
+import colors from '../styled/colors';
 import breakpoints from '../styled/breakpoints';
-import { IconButton } from '../styled/buttons';
-import { A } from '../styled/typography';
+import { IconButton, Link } from '@material-ui/core';
 
 const slideAnimation = keyframes`
     from {
@@ -19,10 +18,17 @@ export const HeaderWrapper = styled.header<HeaderProps>`
     position: ${ props => props.isFixed ? 'fixed' : 'absolute' };
     width: 100%;
     z-index: 3;
-    background-color: ${ props => props.transparent ? 'transparent' : ( props.theme.mode === 'black' ? colors.dark : colors.lightBg ) };
+    background-color: ${ props =>
+{
+
+    console.log( props );
+
+    return props.transparent ? 'transparent' : props.theme.palette.background.paper
+
+} };
     display: flex;
     justify-content: space-between;
-    padding: 0 6em;
+    //padding: 0 6em;
     overflow-x: visible;
     animation: ${ slideAnimation } .3s ease-in-out forwards;
     transition: height .3s;
@@ -35,13 +41,15 @@ export const HeaderWrapper = styled.header<HeaderProps>`
         box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
     ` }
     
-    &, span, small, path {
-        color: ${ props => props.transparent ? colors.white : ( props.theme.mode === 'black' ? colors.white : colors.dark ) };
-    }
+    ${ props => props.transparent && `
+        &, span, small, path {
+            color: ${ props.theme.palette.common.white }
+        }
+    ` }
     
      .hamburger-inner {
         &, &::before, &::after {
-            background-color: ${ props => props.transparent ? colors.white : ( props.theme.mode === 'black' ? colors.white : colors.dark ) };
+            background-color: ${ props => props.transparent ? colors.white : ( props.theme.palette.type === 'dark' ? props.theme.palette.common.black : props.theme.palette.common.white ) };
         }
     }
     
@@ -56,7 +64,7 @@ export const HeaderWrapper = styled.header<HeaderProps>`
         ${ props => props.isOpen && `
         
             &, span, small, a, path {
-                color: ${ props.theme.mode === 'black' ? colors.white : colors.dark };
+                color: ${ props.theme.palette.text.primary };
             }
         
             .navigation {
@@ -81,7 +89,7 @@ export const Navigation = styled.nav`
         opacity: 0;
         visibility: hidden;
         width: 100%;
-        background: ${ props => props.theme.mode === 'black' ? colors.dark : colors.white };
+        /*background: $/{ props => props.theme.mode === 'black' ? colors.dark : colors.white };*/
         transition: all .3s;
         left: 0;
         z-index: 20;
@@ -97,9 +105,9 @@ export const Navigation = styled.nav`
             margin-bottom: 2em;
         }
         
-        span, svg, a {
-            color: ${ props => props.theme.mode === 'black' ? colors.white : colors.dark }
-        }
+        /*span, svg, a {
+            color: $/{ props => props.theme.mode === 'black' ? colors.white : colors.dark }
+        }*/
     }
 `;
 
@@ -142,7 +150,10 @@ export const NavigationListItem = styled.li`
     position: relative;
 `;
 
-export const NavigationLink = styled.a<NavigationLinkProps>`
+export const NavigationLink = styled( Link ).attrs( {
+    color:     'textPrimary',
+    underline: 'none'
+} )<NavigationLinkProps>`
     position: relative;
     font-size: 1.1em;
     cursor: pointer;
@@ -152,7 +163,7 @@ export const NavigationLink = styled.a<NavigationLinkProps>`
         width: 100%;
         height: 4px;
         position: absolute;
-        background: ${ props => getPrimary( props.theme.mode ) };
+        background: ${ props => props.theme.palette.primary.main };
         transition: all .3s;
         transform: scale( ${ props => props.active ? '1' : '0' } );
         bottom: -1em;
@@ -174,11 +185,11 @@ export const SwitchContainer = styled.div`
     justify-content: space-between;
     
     
-    .theme-mode-switch {
+   /* .theme-mode-switch {
         .mdc-switch:not(.mdc-switch--checked) .mdc-switch__track, .mdc-switch__thumb-underlay::before, .mdc-switch__thumb-underlay::after, .mdc-switch__thumb {
-            background-color: ${ props => getPrimary( props.theme.mode ) } !important;
+            background-color: $/{ props => getPrimary( props.theme.mode ) } !important;
         }
-    }
+    }*/
 `;
 
 export const MenuActivator = styled( IconButton )`
@@ -206,54 +217,45 @@ export const MenuActivator = styled( IconButton )`
     }
 `;
 
-export const GoBackButton = styled( IconButton ).attrs( {
-    flat: true,
-    mode: 'secondary',
-
-} )<GoBackButtonProps>`
-    transition: all .3s;
-    margin-right: 10px;
-    height: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    
-    &, *{
-        color: ${ props => props.theme.mode === 'black' ? colors.white : colors.dark }
-    }
-    
-    &:hover{
-        background-color: ${ props => getPrimary( props.theme.mode ) }
-        &, * {
-            color: ${ props => props.theme.mode === 'white' ? colors.white : 'inherit' }
-        }
-    }
-
-    ${ props => !props.isActive ?
-    `
-        width: 0;
-        opacity: 0;
-        visibility: hidden;
+export const GoBackButton = styled( IconButton ).attrs( {} )<GoBackButtonProps>`
+    &.MuiButtonBase-root {
+        transition: all .3s;
+        margin-right: 10px;
+        margin-left: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         
-        & {
-            background: none;
+        svg {
+            font-size: 1rem;
         }
-        
-        &::before{
-            display: none;
-        }
-    ` :
+    
+        ${ props => !props.isActive ?
     `
-        width: 30px;
-        opacity: 1;
-        visibility: visible;
-    ` }
+            width: 0;
+            opacity: 0;
+            visibility: hidden;
+            margin: 0;
+            
+            & {
+                background: none;
+            }
+            
+            &::before{
+                display: none;
+            }
+        ` :
+    `
+            width: 30px;
+            opacity: 1;
+            visibility: visible;
+        ` }
+    }
 `;
 
-export const ToggleLink = styled( A )<ToggleLinkProps>`
+export const ToggleLink = styled( Link ).attrs( {
+    color:     'textPrimary',
+    underline: 'none'
+} )<ToggleLinkProps>`
     width: 15px;
-    color: ${ props => props.transparent ?
-    colors.white :
-    props.theme.mode === 'black' ? colors.white : colors.dark
-};
 `;

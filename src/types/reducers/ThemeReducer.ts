@@ -9,4 +9,4 @@ export default interface ThemeReducer
 export type ThemeReducerHandler = Record<ThemeActions['type'], ReducerHandler<ThemeReducer>>
 
 // TODO Refactor for light and dark (or just use PaletteType from @material-ui)
-export type ThemeMode = 'black' | 'white';
+export type ThemeMode = 'dark' | 'light';

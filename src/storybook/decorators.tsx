@@ -24,20 +24,26 @@ const StoryWrapper = ( { children }: ReactProps ) =>
 {
     const theme = useSelector( ( store: HomeStore ) => store.theme );
 
-    // TODO Setup pallete for light and dark
     const materialTheme = createMuiTheme( {
         palette: {
-            primary: {
-                main:  getPrimary( theme.mode ),
-                dark:  colors.dark,
-                light: colors.white
+            primary:    {
+                main: getPrimary( theme.mode ),
             },
-            error:   {
+            error:      {
                 main: colors.red
             },
-            text:    {
+            text:       {
                 primary: getBaseTextColor( theme.mode )
             },
+            common:     {
+                white: colors.white,
+                black: colors.dark,
+            },
+            type:       theme.mode,
+            background: {
+                default: theme.mode === 'dark' ? colors.black : colors.white,
+                paper:   theme.mode === 'dark' ? colors.dark : colors.white,
+            }
         },
         spacing: ( ( factor: number ) => `${ factor }rem` ) as any,
     } );

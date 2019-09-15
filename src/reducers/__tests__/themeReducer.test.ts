@@ -9,7 +9,7 @@ describe( 'themeReducer', () =>
     beforeEach( () =>
     {
         state = {
-            mode: 'white'
+            mode: 'light'
         }
     } );
 
@@ -24,7 +24,7 @@ describe( 'themeReducer', () =>
     {
         const action: SetThemeMode = {
             type:    'SetThemeMode',
-            payload: 'black'
+            payload: 'dark'
         };
 
         const newState = themeReducer( state, action );

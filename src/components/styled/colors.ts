@@ -1,6 +1,6 @@
 import { ThemeMode } from '../../types/reducers/ThemeReducer';
 
-// TODO Refactor 
+// TODO Refactor
 
 const colors = {
     buttons:      {
@@ -28,22 +28,22 @@ const colors = {
 
 export const getPrimary = ( mode: ThemeMode ): string =>
 {
-    return mode === 'black' ? colors.lightBlue : colors.orange;
+    return mode === 'dark' ? colors.lightBlue : colors.orange;
 };
 
 export const getPrimaryVariation = ( mode: ThemeMode ): string =>
 {
-    return mode === 'black' ? colors.lightBlue : colors.pink;
+    return mode === 'dark' ? colors.lightBlue : colors.pink;
 };
 
 export const getPrimaryLight = ( mode: ThemeMode ): string =>
 {
-    return mode === 'black' ? 'rgba(78, 143, 209, 0.2)' : 'rgba(253, 82, 58, 0.2)'
+    return mode === 'dark' ? 'rgba(78, 143, 209, 0.2)' : 'rgba(253, 82, 58, 0.2)'
 };
 
 export const getBaseTextColor = ( mode: ThemeMode ): string =>
 {
-    return mode === 'black' ? colors.white : colors.dark;
+    return mode === 'dark' ? colors.white : colors.dark;
 };
 
 export default colors;

@@ -7,7 +7,7 @@ const ContactBox = () =>
     const theme = useTheme();
 
     return (
-        <Box padding={ theme.spacing( 1 ) } bgcolor="primary.dark" color="primary.light">
+        <Box padding={ theme.spacing( 1 ) } bgcolor="common.black" color="common.white">
             <Grid container alignItems="center" justify="space-evenly">
                 <Grid item xs={ 3 }>
                     <Typography variant="h3">

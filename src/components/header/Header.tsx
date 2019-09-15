@@ -29,13 +29,14 @@ import '@material/react-switch/dist/switch.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { SetThemeMode } from '../../types/actions/ThemeActions';
 import Logo from '../../assets/logo.jpg';
-import { SmallText, Text } from '../styled/typography';
+import { Text } from '../styled/typography';
 import texts from '../../pages/data/texts';
 import { ThemeMode } from '../../types/reducers/ThemeReducer';
 import { getPrimary } from '../styled/colors';
 import { smoothScroll } from '../../utils/scroll';
 import { pushState } from '../../utils/history';
 import 'hamburgers/dist/hamburgers.min.css';
+import { Typography } from '@material-ui/core';
 
 const html = document.querySelector( 'html' );
 
@@ -112,7 +113,7 @@ const Header = () =>
     {
         const action: SetThemeMode = {
             type:    'SetThemeMode',
-            payload: event.target.checked ? 'black' : 'white'
+            payload: event.target.checked ? 'dark' : 'light'
         };
         dispatch( action );
 
@@ -243,12 +244,12 @@ const Header = () =>
                 </GoBackButton>
                 <img src={ Logo } alt=""/>
                 <InnerCaption>
-                    <Text>
+                    <Typography color="textPrimary">
                         { texts.me.name }
-                    </Text>
-                    <SmallText>
+                    </Typography>
+                    <Typography color="textSecondary" variant="subtitle2">
                         { texts.me.position }
-                    </SmallText>
+                    </Typography>
                 </InnerCaption>
             </LogoWrapper>
             <Navigation className="navigation">
@@ -270,22 +271,22 @@ const Header = () =>
                     </NavigationListItem>
                     <NavigationListItem>
                         <SwitchContainer>
-                            <ToggleLink transparent={ !didInnerOpen } onClick={ setThemeMode( 'white' ) }>
+                            <ToggleLink transparent={ !didInnerOpen } onClick={ setThemeMode( 'light' ) }>
                                 <FontAwesomeIcon className="sun" icon="sun"/>
                             </ToggleLink>
                             <Switch
                                 className="theme-mode-switch"
                                 onChange={ handleToggle }
-                                checked={ mode === 'black' }
+                                checked={ mode === 'dark' }
                             />
-                            <ToggleLink transparent={ !didInnerOpen } onClick={ setThemeMode( 'black' ) }>
+                            <ToggleLink transparent={ !didInnerOpen } onClick={ setThemeMode( 'dark' ) }>
                                 <FontAwesomeIcon className="moon" icon="moon"/>
                             </ToggleLink>
                         </SwitchContainer>
                     </NavigationListItem>
                 </NavigationList>
             </Navigation>
-            <MenuActivator className={ `hamburger hamburger--collapse ${ isOpen ? 'is-active' : '' }` } onClick={ switchOpenState } flat={ true } mode="secondary">
+            <MenuActivator className={ `hamburger hamburger--collapse ${ isOpen ? 'is-active' : '' }` } onClick={ switchOpenState }>
                 <Text className="hamburger-box">
                     <Text className="hamburger-inner"/>
                 </Text>

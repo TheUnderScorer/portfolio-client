@@ -18,7 +18,6 @@ import projects from './data/projects';
 import { getState, getStateFromEvent, pushState } from '../utils/history';
 import { about } from './data/links';
 import usePopState from '../hooks/usePopState';
-import breakpoints from '../components/styled/breakpoints';
 import useAuth from '../hooks/useAuth';
 import { ThemeProvider as MaterialThemeProvider } from '@material-ui/styles';
 import { createMuiTheme } from '@material-ui/core';
@@ -43,9 +42,9 @@ const HomeWrapper = styled.div<HomeWrapperProps>`
         }
         
         .content{
-            margin-top: 4rem;
+            margin-top: ${ props.theme.spacing( 2 ) };
             
-            @media(max-width: ${ breakpoints.tabletSmall }) {
+            @media(max-width: ${ props.theme.breakpoints.only( 'md' ) }) {
                 margin-top: 2rem;
             }
         }
@@ -59,9 +58,7 @@ const Home = () =>
     const materialTheme = createMuiTheme( {
         palette: {
             primary: {
-                main:  getPrimary( theme.mode ),
-                dark:  colors.dark,
-                light: colors.white
+                main: getPrimary( theme.mode ),
             },
             error:   {
                 main: colors.red
@@ -69,6 +66,11 @@ const Home = () =>
             text:    {
                 primary: getBaseTextColor( theme.mode )
             },
+            common:  {
+                white: colors.white,
+                black: colors.dark,
+            },
+            type:    theme.mode
         },
         spacing: ( ( factor: number ) => `${ factor }rem` ) as any,
     } );
@@ -209,7 +211,7 @@ const Home = () =>
                 <HomeWrapper innerActive={ didOpen } className="home">
                     <GlobalStyle/>
                     <Header/>
-                    <HeroImage srcs={ [ Mountains, LandscapeNight ] } activeSrc={ theme.mode === 'black' ? 1 : 0 }>
+                    <HeroImage srcs={ [ Mountains, LandscapeNight ] } activeSrc={ theme.mode === 'dark' ? 1 : 0 }>
                         <HeroText ctaRef={ heroCtaRef } onCtaClick={ toggleSection }/>
                     </HeroImage>
                     <OpenableSection zIndex={ 2 } onOpen={ onOpen } className="inner-section" relativeTo={ innerRelative } isOpen={ innerActive }>

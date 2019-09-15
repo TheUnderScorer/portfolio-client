@@ -7,7 +7,7 @@ import contactReducer from '../reducers/contactReducer';
 
 const middleware = [ thunk ];
 
-const homeStore = createStore(
+export const createHomeStore = () => createStore(
     combineReducers( {
         user:    userReducer,
         theme:   themeReducer,
@@ -17,5 +17,7 @@ const homeStore = createStore(
     {},
     applyMiddleware( ...middleware ),
 );
+
+const homeStore = createHomeStore();
 
 export default homeStore;
