@@ -112,7 +112,7 @@ const Projects = ( { projects }: ProjectsProps ) =>
                     </GithubContainer>
                 </ApolloProvider>
             ) }
-            <Button onClick={ toggleExpand } className="overflow-item" round flat>
+            <Button onClick={ toggleExpand } className="overflow-item" isRound flat>
                 { isExpanded ? 'View less' : 'View more' }
             </Button>
         </HomeSection>

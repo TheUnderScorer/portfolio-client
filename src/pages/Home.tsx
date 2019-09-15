@@ -59,17 +59,18 @@ const Home = () =>
     const materialTheme = createMuiTheme( {
         palette: {
             primary: {
-                main: getPrimary( theme.mode ),
+                main:  getPrimary( theme.mode ),
+                dark:  colors.dark,
+                light: colors.white
             },
             error:   {
                 main: colors.red
             },
             text:    {
-                secondary: getBaseTextColor( theme.mode )
+                primary: getBaseTextColor( theme.mode )
             },
-            type:    theme.mode === 'black' ? 'dark' : 'light',
-            divider: colors.lightBorder
         },
+        spacing: ( ( factor: number ) => `${ factor }rem` ) as any,
     } );
 
     const [ updateLoginDate ] = useMutation<UserResult>( UPDATE_LOGIN_DATE );
@@ -203,7 +204,7 @@ const Home = () =>
     }, [ token ] );
 
     return (
-        <ThemeProvider theme={ { mode: theme.mode } }>
+        <ThemeProvider theme={ materialTheme }>
             <MaterialThemeProvider theme={ materialTheme }>
                 <HomeWrapper innerActive={ didOpen } className="home">
                     <GlobalStyle/>

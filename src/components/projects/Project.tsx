@@ -117,7 +117,7 @@ const Project = ( { project, active = false, index, onClose, onOpen }: ProjectPr
                 isOpen={ active }
                 onRequestClose={ handleClose }>
                 <ProjectDetails isClosing={ isClosing || didClose } onImageLoad={ handleImageLoad } project={ project }/>
-                <Button round={ true } ripple={ true } flat={ true } onClick={ handleClose } className="close">
+                <Button isRound={ true } ripple={ true } flat={ true } onClick={ handleClose } className="close">
                     <FontAwesomeIcon icon="times"/>
                 </Button>
             </ProjectModal>
