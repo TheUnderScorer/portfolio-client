@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { FlexProps, HomeSectionProps } from './types';
-import colors, { getPrimary } from './colors';
+import colors from './colors';
 import { Box } from '@material-ui/core';
 
 export const Main = styled.main`
@@ -19,8 +19,8 @@ export const HomeSection = styled( Box ).attrs( {
     width: 100%;
     text-align: ${ props => props.isCentered ? 'center' : 'left' }
     background-color : ${ props => props.odd ?
-    ( props.theme.mode === 'black' ? colors.dark : colors.lightBg ) :
-    ( props.theme.mode === 'black' ? colors.black : colors.white )
+    ( props.theme.palette.background.paper ) :
+    ( props.theme.palette.background.default )
 }
     
     .section-inner{
@@ -28,7 +28,7 @@ export const HomeSection = styled( Box ).attrs( {
     }
     
     ${ props => props.hasSeparator && `
-        border-bottom: 1px solid ${ colors.lightBorder }
+        border-bottom: 1px solid ${ props.theme.palette.divider }
     ` }
     
     ${ props => props.colorBackground && `
@@ -36,7 +36,7 @@ export const HomeSection = styled( Box ).attrs( {
         padding-bottom: 4rem;
     
         .title-container {
-            background-color: ${ getPrimary( props.theme.mode ) }
+            background-color: ${ props.theme.palette.primary.main }
             padding-top: 4rem;
             padding-bottom: 12rem;
             position: absolute;

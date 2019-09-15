@@ -37,13 +37,14 @@ const StoryWrapper = ( { children }: ReactProps ) =>
             },
             common:     {
                 white: colors.white,
-                black: colors.dark,
+                black: colors.black,
             },
             type:       theme.mode,
             background: {
                 default: theme.mode === 'dark' ? colors.black : colors.white,
-                paper:   theme.mode === 'dark' ? colors.dark : colors.white,
-            }
+                paper:   theme.mode === 'dark' ? colors.dark : colors.lightBg,
+            },
+            divider:    colors.lightBg
         },
         spacing: ( ( factor: number ) => `${ factor }rem` ) as any,
     } );
