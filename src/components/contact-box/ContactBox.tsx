@@ -1,13 +1,19 @@
 import * as React from 'react';
-import { Box, Grid, Typography, useTheme } from '@material-ui/core';
+import { createStyles, Grid, makeStyles, Paper, Theme, Typography } from '@material-ui/core';
 import { Button } from '../styled/buttons';
+
+const useStyles = makeStyles( ( theme: Theme ) => createStyles( {
+    paper: {
+        padding: theme.spacing( 1 )
+    }
+} ) );
 
 const ContactBox = () =>
 {
-    const theme = useTheme();
+    const classes = useStyles();
 
     return (
-        <Box padding={ theme.spacing( 1 ) } bgcolor="common.black" color="common.white">
+        <Paper className={ classes.paper }>
             <Grid container alignItems="center" justify="space-evenly">
                 <Grid item xs={ 3 }>
                     <Typography variant="h3">
@@ -25,7 +31,7 @@ const ContactBox = () =>
                     </Button>
                 </Grid>
             </Grid>
-        </Box>
+        </Paper>
     )
 };
 
