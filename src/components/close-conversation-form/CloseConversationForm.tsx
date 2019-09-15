@@ -4,10 +4,17 @@ import * as Yup from 'yup';
 import { FormikProps, withFormik } from 'formik';
 import ChangeConversationStatusInput from '../../types/graphql/inputs/ChangeConversationStatusInput';
 import { ConversationStatuses } from '../../types/graphql/Conversation';
-import { CentredFrom, FlexFormSection, FormSection } from '../styled/form';
-import { H6, Text } from '../styled/typography';
 import { Button } from '../styled/buttons';
-import { Checkbox, FormControlLabel, TextField } from '@material-ui/core';
+import {
+    Checkbox,
+    createStyles,
+    FormControlLabel,
+    Grid,
+    makeStyles,
+    TextField,
+    Theme,
+    Typography
+} from '@material-ui/core';
 import FormikInput from '../formik/FormikInput';
 import Loader from '../loader/Loader';
 import { ObjectKeys } from '../../types/common/ObjectKeys';
@@ -18,25 +25,34 @@ const validationSchema = {
     email:  Yup.string().email( 'Invalid e-mail address.' )
 };
 
-const CloseConversationForm = ( { onCancel, values, closeConversationMutation }: Props & FormikProps<ChangeConversationStatusInput> ) =>
+const useButtonStyles = makeStyles( ( theme: Theme ) =>
+{
+    return createStyles( {
+        button:   {
+            marginRight: theme.spacing( 0.5 ),
+            marginLeft:  theme.spacing( 0.5 ),
+        },
+        relative: {
+            position: 'relative'
+        }
+    } )
+} );
+
+const CloseConversationForm = ( { onCancel, values, closeConversationMutation, handleSubmit }: Props & FormikProps<ChangeConversationStatusInput> ) =>
 {
     const [ , mutationResult ] = closeConversationMutation;
 
+    const classes = useButtonStyles();
+
     return (
-        <CentredFrom>
-            <FormSection width="100%">
-                <div>
-                    <H6>
-                        Close conversation
-                    </H6>
-                </div>
-                <div>
-                    <Text>
-                        You are about to close this conversation.
-                    </Text>
-                </div>
-            </FormSection>
-            <FormSection margin="top">
+        <form onSubmit={ handleSubmit } noValidate>
+            <Grid alignItems="center" direction="column" container>
+                <Typography align="center" variant="h6">
+                    Close conversation
+                </Typography>
+                <Typography paragraph align="center" variant="subtitle1" color="textSecondary">
+                    You are about to close this conversation.
+                </Typography>
                 <FormControlLabel
                     label="Send transcript?"
                     control={ (
@@ -49,33 +65,31 @@ const CloseConversationForm = ( { onCancel, values, closeConversationMutation }:
                         />
                     ) }
                 />
-            </FormSection>
-            { !!values.sendTranscript &&
-              <FormSection width="60%">
+                { !!values.sendTranscript &&
                   <FormikInput id="email" name="email" type="text" render={ ( { form, field } ) =>
                       <TextField
                           helperText={ !form.errors.email || !form.touched.email ? 'Email to which transcript will be sent.' : '' }
                           disabled={ mutationResult.loading }
                           label="Email"
                           fullWidth
-                          margin="normal"
+                          margin="none"
                           variant="outlined"
                           error={ !!form.errors.email && !!form.touched.email }
                           { ...field }
                       />
                   }/>
-              </FormSection>
-            }
-            <FlexFormSection margin="normal" isCentered={ true }>
-                <Loader active={ mutationResult.loading } asOverlay/>
-                <Button type="submit" disabled={ mutationResult.loading } ripple flat>
-                    Close conversation
-                </Button>
-                <Button type="button" mode="secondary" ripple flat disabled={ mutationResult.loading } transparent onClick={ onCancel }>
-                    Cancel
-                </Button>
-            </FlexFormSection>
-        </CentredFrom>
+                }
+                <Grid className={ classes.relative } container justify="center">
+                    <Loader active={ mutationResult.loading } asOverlay/>
+                    <Button className={ classes.button } variant="contained" color="primary" type="submit" disabled={ mutationResult.loading }>
+                        Close conversation
+                    </Button>
+                    <Button className={ classes.button } variant="outlined" color="primary" type="button" disabled={ mutationResult.loading } onClick={ onCancel }>
+                        Cancel
+                    </Button>
+                </Grid>
+            </Grid>
+        </form>
     );
 };
 
