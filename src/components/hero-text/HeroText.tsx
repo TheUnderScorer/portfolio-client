@@ -9,7 +9,6 @@ import HomeStore from '../../types/stores/HomeStore';
 import { SetHeroWrote } from '../../types/actions/HomeActions';
 import styled from 'styled-components';
 import texts from '../../pages/data/texts';
-import breakpoints from '../styled/breakpoints';
 import { Typography } from '@material-ui/core';
 
 const roleTexts = [
@@ -19,16 +18,16 @@ const roleTexts = [
 ];
 
 const Headline = styled( Typography ).attrs( {
-    variation: 'h1'
+    variant: 'h1',
+    display: 'inline'
 } )`
-    color: ${ props => props.theme.palette.common.white };
-    
-    ${ props => props.theme.breakpoints.down( 'sm' ) }{
-        font-size: 2.5em;
-    }
-    
-    @media(max-width: ${ breakpoints.phoneBig }){
-        font-size: 2.5em;
+    &.MuiTypography-root{
+        font-size: 4rem;
+        color: ${ props => props.theme.palette.common.white };
+        
+        ${ props => props.theme.breakpoints.down( 'sm' ) }{
+            font-size: 2.5rem;
+        }
     }
 `;
 

@@ -57,20 +57,28 @@ const Home = () =>
 
     const materialTheme = createMuiTheme( {
         palette: {
-            primary: {
+            primary:    {
                 main: getPrimary( theme.mode ),
             },
-            error:   {
+            error:      {
                 main: colors.red
             },
-            text:    {
+            text:       {
                 primary: getBaseTextColor( theme.mode )
             },
-            common:  {
+            common:     {
                 white: colors.white,
-                black: colors.dark,
+                black: colors.black,
             },
-            type:    theme.mode
+            type:       theme.mode,
+            background: {
+                default: theme.mode === 'dark' ? colors.black : colors.white,
+                paper:   theme.mode === 'dark' ? colors.dark : colors.lightBg,
+            },
+            divider:    colors.lightBg,
+            action:     {
+                active: theme.mode === 'dark' ? colors.dark : colors.lightBg
+            }
         },
         spacing: ( ( factor: number ) => `${ factor }rem` ) as any,
     } );

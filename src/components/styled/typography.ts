@@ -1,40 +1,21 @@
 import styled, { css } from 'styled-components';
-import colors, { getBaseTextColor, getPrimary } from './colors';
+import colors from './colors';
 import { IconProps, LinkProps, SectionSubtitleProps, SectionTitleProps, TextProps } from './types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Typography } from '@material-ui/core';
 
 const textStyles = css`
     font-size: 1em;  
-    color: ${ props => props.theme.mode === 'black' ? colors.white : colors.lightDark };
+    color: ${ props => props.theme.palette.text.primary };
 `;
 
-const headerStyles = css`
-    margin: 0;
-    font-weight: 500;
-    display: inline-block;
-    color: ${ props => getBaseTextColor( props.theme.mode ) };
-`;
-
+// TODO Remove
 export const Text = styled.span<TextProps>`
     ${ textStyles }
     
     ${ props => props.contrasted && `
-        color: ${ props.theme.mode === 'black' ? colors.white : colors.black };
+        color: ${ props.theme.palette.type === 'dark' ? colors.white : colors.black };
     ` }
-`;
-
-export const Paragraph = styled.p`
-    ${ textStyles };
-`;
-
-export const Time = styled.time`
-    ${ textStyles }
-`;
-
-export const SmallText = styled.small`
-    font-size: 0.8em;  
-    color: ${ props => props.theme.mode === 'black' ? colors.white : colors.lightDark };
 `;
 
 export const SectionTitle = styled( Typography ).attrs( {
@@ -53,7 +34,7 @@ export const SectionTitle = styled( Typography ).attrs( {
             display: block;
             width: 70%;
             height: 3px;
-            background: ${ getPrimary( props.theme.mode ) };
+            background: ${ props.theme.palette.primary.main };
             position: relative;
             margin: 0 auto;
             bottom: 20px;
@@ -70,7 +51,7 @@ export const SectionTitle = styled( Typography ).attrs( {
             content: '';
             width: 70%;
             height: 3px;
-            background: ${ getPrimary( props.theme.mode ) };
+            background: ${ props.theme.palette.primary.main };
             position: absolute;
             left: 0;
             right: 0;
@@ -89,14 +70,14 @@ export const A = styled.a<LinkProps>`
     ${ props => props.highlight && `
         
         &, svg {
-            color: ${ getPrimary( props.theme.mode ) };
+            color: ${ props.theme.palette.primary.main };
         }
         
         font-weight: 600;
     ` };
     
     ${ props => props.underlined && `
-        border-bottom: 1px solid ${ getPrimary( props.theme.mode ) };
+        border-bottom: 1px solid ${ props.theme.palette.primary.main };
     ` }
     
     svg {
@@ -105,7 +86,7 @@ export const A = styled.a<LinkProps>`
 `;
 
 export const Highlight = styled.span`
-    color: ${ props => getPrimary( props.theme.mode ) };
+    color: ${ props => props.theme.palette.primary.main };
 `;
 
 export const SectionSubtitle = styled( Typography ).attrs( {
@@ -125,7 +106,7 @@ export const SectionSubtitle = styled( Typography ).attrs( {
             content: '';
             width: 70%;
             height: 3px;
-            background: ${ getPrimary( props.theme.mode ) };
+            background: ${ props.theme.palette.primary.main };
             position: absolute;
             left: 0;
             right: 0;
@@ -137,17 +118,13 @@ export const SectionSubtitle = styled( Typography ).attrs( {
 `;
 
 export const WhiteFaIcon = styled( FontAwesomeIcon )`
-    color: ${ colors.white };
+    color: ${ props => props.theme.palette.common.white };
 `;
 
-export const FaIconReversed = styled( FontAwesomeIcon )<IconProps>`
-    color: ${ props => props.theme.mode === 'black' ? colors.dark : colors.white };
+export const FaIcon = styled( FontAwesomeIcon )<IconProps>`
+    color: ${ props => props.theme.palette.text.primary } 
     margin: ${ ( { margin = 'none' } ) => margin === 'none' ? '0' : '0 0.5em' };
     font-size: ${ ( { size = '1em' } ) => size }
-`;
-
-export const FaIcon = styled( FaIconReversed )`
-    color: ${ props => props.theme.mode === 'black' ? colors.white : colors.dark };
 `;
 
 export const MenuIcon = styled( FaIcon )`

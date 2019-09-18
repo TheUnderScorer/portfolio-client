@@ -4,9 +4,10 @@ import { Actions, DetailsContainer, ProjectImage, SliderArrow, SliderContainer, 
 import Slider from 'react-slick';
 import ProjectDetailsProps from './types/ProjectDetailsProps';
 import Loader from '../loader/Loader';
-import { A, Paragraph, SectionTitle, Text } from '../styled/typography';
+import { A, SectionTitle, Text } from '../styled/typography';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import texts from '../../pages/data/texts';
+import { Typography } from '@material-ui/core';
 
 const ProjectDetails = ( { project, onImageLoad, isClosing }: ProjectDetailsProps ) =>
 {
@@ -57,14 +58,14 @@ const ProjectDetails = ( { project, onImageLoad, isClosing }: ProjectDetailsProp
                 <Slider
                     prevArrow={
                         (
-                            <SliderArrow className="hide-on-open" ripple={ true } visible={ !imageLoader }>
+                            <SliderArrow className="hide-on-open" visible={ !imageLoader }>
                                 <FontAwesomeIcon icon="chevron-left"/>
                             </SliderArrow>
                         )
                     }
                     nextArrow={
                         (
-                            <SliderArrow className="hide-on-open" ripple={ true } visible={ !imageLoader }>
+                            <SliderArrow className="hide-on-open" visible={ !imageLoader }>
                                 <FontAwesomeIcon icon="chevron-right"/>
                             </SliderArrow>
                         )
@@ -83,9 +84,9 @@ const ProjectDetails = ( { project, onImageLoad, isClosing }: ProjectDetailsProp
                     </SectionTitle>
                 </div>
                 <div className="details">
-                    <Paragraph>
+                    <Typography paragraph>
                         { details }
-                    </Paragraph>
+                    </Typography>
                 </div>
                 <Actions>
                     { url &&

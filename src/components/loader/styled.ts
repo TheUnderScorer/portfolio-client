@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import { LoaderContainerProps, SvgLoaderProps } from './types/styled';
-import colors from '../styled/colors';
 
 export const LoaderContainer = styled.div<LoaderContainerProps>`
     width: ${ props => props.width };
@@ -14,7 +13,7 @@ export const LoaderContainer = styled.div<LoaderContainerProps>`
     
     ${ props => props.asOverlay && `
         position: absolute;
-        background: ${ props.theme.mode === 'black' ? colors.dark : colors.white }
+        background: ${ props.theme.palette.background.paper }
         left: 0;
         top: 0;
         z-index: 10;

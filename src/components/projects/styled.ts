@@ -1,6 +1,7 @@
 import styled from 'styled-components';
-import colors, { getPrimary } from '../styled/colors';
-import { Button, IconButton } from '../styled/buttons';
+import colors from '../styled/colors';
+import { Button } from '../styled/buttons';
+import { IconButton } from '@material-ui/core';
 import {
     ProjectContainerProps,
     ProjectDetailsContainerProps,
@@ -66,7 +67,7 @@ export const ProjectImageFigure = styled.figure<ProjectImageFigProps>`
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: ${ props => props.theme.mode === 'black' ? colors.dark : colors.white };
+    background-color: ${ props => props.theme.palette.background.paper };
     
     ${ props => props.loaded && `
         &:hover{
@@ -141,31 +142,21 @@ export const ProjectModal = styled( Modal )`
 `;
 
 export const ReadMore = styled( Button ).attrs<ButtonProps>( {
-    round:       true,
+    isRound:     true,
     iconOnHover: true,
-    withIcon:    true,
-    mode:        'secondary',
-    flat:        true
+    variant:     'outlined',
 } )`
-    margin-top: 2em;
-    
-    &:hover {
-        background-color: ${ props => getPrimary( props.theme.mode ) };
-    }
-    
-    &, * {
-        color: ${ colors.white }
-    }
+    margin-top: ${ props => props.theme.spacing( 2 ) };
 `;
 
 export const DetailsContainer = styled.div<ProjectDetailsContainerProps>`
-    background-color: ${ props => props.theme.mode === 'black' ? colors.dark : colors.white };
+    background-color: ${ props => props.theme.palette.background.paper };
     height: 100%;
     width: 100%;
     display: flex;
     overflow: visible;
     
-    @media(max-width: ${ breakpoints.tabletSmall }) {
+    ${ props => props.theme.breakpoints.down( 'sm' ) } {
         flex-direction: column;
         
         > div {
@@ -208,14 +199,14 @@ export const SliderContainer = styled.div`
     
         li{
             button::before{
-                color: ${ props => props.theme.mode === 'black' ? colors.white : colors.dark };
+                color: ${ props => props.theme.palette.type === 'dark' ? colors.white : colors.dark };
                 font-size: 12px;
                 opacity: 1;
             }
             
             &.slick-active, &:hover{
                 button::before{
-                    color: ${ props => getPrimary( props.theme.mode ) };
+                    color: ${ props => props.theme.palette.primary.main };
                 }
             }
         }
@@ -312,11 +303,4 @@ export const SliderArrow = styled( IconButton )<SliderArrowsProps>`
     transition: all .3s;
     width: 40px;
     height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    
-    &, &:hover, &:focus{
-        background: ${ props => getPrimary( props.theme.mode ) };
-    }
 `;

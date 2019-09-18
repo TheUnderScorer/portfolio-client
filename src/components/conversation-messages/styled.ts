@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import colors from '../styled/colors';
 import InfiniteScroll from 'react-infinite-scroller';
 
 export const ListContainer = styled.div`
@@ -7,7 +6,7 @@ export const ListContainer = styled.div`
     width: 100%;
     overflow: auto;
     padding: 1em 0;
-    background-color: ${ props => props.theme.mode === 'black' ? colors.black : colors.white }
+    background-color: ${ props => props.theme.palette.background.default }
 `;
 
 export const List = styled( InfiniteScroll )`
@@ -21,9 +20,9 @@ export const List = styled( InfiniteScroll )`
 
 export const HelperText = styled.li`
     padding: ${ props => props.theme.spacing( 1 ) } 0;
-    border-bottom: 1px solid ${ colors.lightBorder };
+    border-bottom: 1px solid ${ props => props.theme.palette.divider };
     font-size: 0.9em;
     width: 100%;
     line-height: 1.5em;
-    margin-bottom: 2em;
+    margin-bottom: ${ props => props.theme.spacing( 2 ) };
 `;

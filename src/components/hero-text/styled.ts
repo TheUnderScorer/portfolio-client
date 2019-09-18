@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import colors, { getPrimaryVariation } from '../styled/colors';
+import colors from '../styled/colors';
 import { FullWidth } from '../styled/wrappers';
 import { Button } from '../styled/buttons';
 import breakpoints from '../styled/breakpoints';
@@ -21,7 +21,7 @@ export const NameWrapper = styled.div`
 `;
 
 export const NameHighlight = styled.span`
-    color: ${ props => getPrimaryVariation( props.theme.mode ) }
+    color: ${ props => props.theme.palette.primary.main }
 `;
 
 export const CtaWrapper = styled( FullWidth )`

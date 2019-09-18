@@ -9,7 +9,6 @@ import {
     ReadMore,
     ThumbnailLoader
 } from './styled';
-import { Text } from '../styled/typography';
 import LazyLoad from 'react-lazyload';
 import ProjectProps from './types/ProjectProps';
 import ProjectDetails from './ProjectDetails';
@@ -18,6 +17,7 @@ import { Button } from '../styled/buttons';
 import { pushState } from '../../utils/history';
 import { project as projectUrl } from '../../pages/data/links';
 import useOpenableModal from '../../hooks/useOpenableModal';
+import { Typography } from '@material-ui/core';
 
 const Project = ( { project, active = false, index, onClose, onOpen }: ProjectProps ) =>
 {
@@ -92,14 +92,12 @@ const Project = ( { project, active = false, index, onClose, onOpen }: ProjectPr
                 </LazyLoad>
                 <ProjectImageCaption>
                     <div>
-                        <Text>
+                        <Typography>
                             { shortDetails }
-                        </Text>
+                        </Typography>
                     </div>
                     <ReadMore onClick={ onOpen }>
-                        <Text>
-                            Check Out
-                        </Text>
+                        Check out
                         <FontAwesomeIcon icon="arrow-right"/>
                     </ReadMore>
                 </ProjectImageCaption>
@@ -117,7 +115,7 @@ const Project = ( { project, active = false, index, onClose, onOpen }: ProjectPr
                 isOpen={ active }
                 onRequestClose={ handleClose }>
                 <ProjectDetails isClosing={ isClosing || didClose } onImageLoad={ handleImageLoad } project={ project }/>
-                <Button isRound={ true } ripple={ true } flat={ true } onClick={ handleClose } className="close">
+                <Button isRound onClick={ handleClose } className="close">
                     <FontAwesomeIcon icon="times"/>
                 </Button>
             </ProjectModal>
