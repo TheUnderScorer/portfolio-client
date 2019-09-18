@@ -1,21 +1,22 @@
 import styled from 'styled-components';
-import { Flex } from '../styled/wrappers';
+import { Grid } from '@material-ui/core';
 
-export const IconMessageWrapper = styled( Flex ).attrs( {
-    alignItems:     'center',
-    justifyContent: 'center',
-    flexDirection:  'column'
+export const IconMessageWrapper = styled( Grid ).attrs( {
+    alignItems: 'center',
+    justify:    'center',
+    direction:  'column',
+    container:  true,
 } )`
     padding: 1rem;
     flex: 1;
     width: 100%;
     
     h5 {
-        margin-bottom: 0.5em;
+        margin-bottom: ${ props => props.theme.spacing( 0.5 ) };
     }
     
     svg {
         font-size: 5rem;
-        margin-bottom: 0.1em;
+        margin-bottom: ${ props => props.theme.spacing( 0.1 ) };
     }
 `;

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { FlexProps, HomeSectionProps } from './types';
 import colors from './colors';
-import { Box } from '@material-ui/core';
+import { Box, Grid } from '@material-ui/core';
 
 export const Main = styled.main`
    
@@ -72,4 +72,16 @@ export const Flex = styled.div<FlexProps>`
         align-items: ${ alignItems };
         flex: ${ flex ? flex : 'inherit' };
     ` }
+`;
+
+export const ButtonsRow = styled( Grid ).attrs( {
+    container: true,
+    justify:   'center',
+} )`
+    position: relative;
+    margin-top: ${ props => props.theme.spacing( 1 ) }
+    
+    button {
+        margin: 0 ${ props => props.theme.spacing( 0.5 ) }
+    }
 `;

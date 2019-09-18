@@ -3,11 +3,10 @@ import { useCallback, useEffect, useState } from 'react';
 import { FormikProps, withFormik } from 'formik';
 import * as Yup from 'yup';
 import UserFormProps from './types/UserFormProps';
-import { CentredFrom, FormSection } from '../styled/form';
 import FormikInput from '../formik/FormikInput';
 import { Button } from '../styled/buttons';
 import Loader from '../loader/Loader';
-import { TextField } from '@material-ui/core';
+import { createStyles, Grid, makeStyles, TextField, Theme } from '@material-ui/core';
 import Recaptcha from 'react-google-recaptcha';
 import { useSelector } from 'react-redux';
 import HomeStore from '../../types/stores/HomeStore';
@@ -20,8 +19,19 @@ const validationSchema = Yup.object().shape( {
     captcha: Yup.string().required( 'Complete captcha validation.' )
 } );
 
-const UserForm = ( { mutation, setFieldValue }: UserFormProps & FormikProps<UserInput> ) =>
+const useStyles = makeStyles( ( theme: Theme ) => createStyles( {
+    root:    {
+        height: '100%'
+    },
+    section: {
+        marginTop: theme.spacing( 1 )
+    }
+} ) );
+
+const UserForm = ( { mutation, setFieldValue, handleSubmit }: UserFormProps & FormikProps<UserInput> ) =>
 {
+    const classes = useStyles();
+
     const [ , updateUserResult ] = mutation;
     const [ captchaLoaded, setCaptchaLoaded ] = useState( false );
 
@@ -40,52 +50,50 @@ const UserForm = ( { mutation, setFieldValue }: UserFormProps & FormikProps<User
     }, [ setFieldValue ] );
 
     return (
-        <CentredFrom>
-            <Loader svgProps={ { width: '50%', height: '50%' } } asOverlay active={ !captchaLoaded }/>
-            <FormSection width="60%">
-                <FormikInput id="name" name="name" type="text" render={ ( { form, field } ) =>
-                    <TextField
-                        margin="normal"
-                        label="Name *"
-                        disabled={ updateUserResult.loading }
-                        fullWidth
-                        variant="outlined"
-                        error={ !!form.errors.name && !!form.touched.name }
-                        { ...field }
+        <form noValidate className={ classes.root } onSubmit={ handleSubmit }>
+            <Grid className={ classes.root } container justify="center">
+                <Grid direction="column" alignItems="center" justify="center" container item xs={ 7 }>
+                    <Loader svgProps={ { width: '50%', height: '50%' } } asOverlay active={ !captchaLoaded }/>
+                    <FormikInput id="name" name="name" type="text" render={ ( { form, field } ) =>
+                        <TextField
+                            margin="normal"
+                            label="Name *"
+                            disabled={ updateUserResult.loading }
+                            fullWidth
+                            variant="outlined"
+                            error={ !!form.errors.name && !!form.touched.name }
+                            { ...field }
+                        />
+                    }
                     />
-                }
-                />
-            </FormSection>
-            <FormSection width="60%">
-                <FormikInput id="email" name="email" type="text" render={ ( { field, form } ) =>
-                    <TextField
-                        margin="normal"
-                        label="Email"
-                        disabled={ updateUserResult.loading }
-                        fullWidth
-                        variant="outlined"
-                        error={ !!form.errors.email && !!form.touched.email }
-                        { ...field }
-                    />
-                }/>
-            </FormSection>
-            <FormSection margin="normal" width="60%">
-                <FormikInput id="captcha" name="captcha" render={ () =>
-                    <Recaptcha
-                        onChange={ handleCaptchaChange }
-                        size="normal"
-                        theme={ themeMode === 'dark' ? 'dark' : 'light' }
-                        sitekey={ process.env.REACT_APP_SITE_KEY as string }
-                    />
-                }/>
-            </FormSection>
-            <FormSection margin="normal">
-                <Button flat={ true } type="submit">
-                    <Loader asOverlay active={ updateUserResult.loading }/>
-                    Save
-                </Button>
-            </FormSection>
-        </CentredFrom>
+                    <FormikInput id="email" name="email" type="text" render={ ( { field, form } ) =>
+                        <TextField
+                            margin="normal"
+                            label="Email"
+                            disabled={ updateUserResult.loading }
+                            fullWidth
+                            variant="outlined"
+                            error={ !!form.errors.email && !!form.touched.email }
+                            { ...field }
+                        />
+                    }/>
+                    <div className={ classes.section }>
+                        <FormikInput id="captcha" name="captcha" render={ () =>
+                            <Recaptcha
+                                onChange={ handleCaptchaChange }
+                                size="normal"
+                                theme={ themeMode === 'dark' ? 'dark' : 'light' }
+                                sitekey={ process.env.REACT_APP_SITE_KEY as string }
+                            />
+                        }/>
+                    </div>
+                    <Button className={ classes.section } disabled={ updateUserResult.loading } variant="contained" color="primary" type="submit">
+                        <Loader asOverlay active={ updateUserResult.loading }/>
+                        Save
+                    </Button>
+                </Grid>
+            </Grid>
+        </form>
     )
 };
 

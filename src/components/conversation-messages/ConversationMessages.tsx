@@ -2,7 +2,6 @@ import * as React from 'react';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import ConversationMessagesProps from './types/ConversationMessagesProps';
 import { HelperText, List, ListContainer } from './styled';
-import { H6, Text } from '../styled/typography';
 import useCurrentUser from '../../hooks/useCurrentUser';
 import usePrevious from '../../hooks/usePrevious';
 import { smoothScroll } from '../../utils/scroll';
@@ -107,12 +106,12 @@ const ConversationMessages = ( { conversation, hasMore, onLoadMore, onCloseClick
             >
                 { !messages.length &&
                   <HelperText>
-                      <H6 display="block">
+                      <Typography variant="h6" gutterBottom={ false }>
                           Hello there!
-                      </H6>
-                      <Text>
-                          Write your message below in order to start conversation with me!
-                      </Text>
+                      </Typography>
+                      <Typography color="textSecondary" variant="subtitle1">
+                          Write your message below.
+                      </Typography>
 
                   </HelperText>
                 }
@@ -120,7 +119,7 @@ const ConversationMessages = ( { conversation, hasMore, onLoadMore, onCloseClick
                   <>
                       { !hasMore &&
                         <HelperText>
-                            <Typography>
+                            <Typography variant="body1" color="textPrimary">
                                 This is start of your current conversation with me.
                             </Typography>
                             <Button color="primary" onClick={ onCloseClick }>

@@ -5,19 +5,11 @@ import { FormikProps, withFormik } from 'formik';
 import ChangeConversationStatusInput from '../../types/graphql/inputs/ChangeConversationStatusInput';
 import { ConversationStatuses } from '../../types/graphql/Conversation';
 import { Button } from '../styled/buttons';
-import {
-    Checkbox,
-    createStyles,
-    FormControlLabel,
-    Grid,
-    makeStyles,
-    TextField,
-    Theme,
-    Typography
-} from '@material-ui/core';
+import { Checkbox, createStyles, FormControlLabel, Grid, makeStyles, TextField, Typography } from '@material-ui/core';
 import FormikInput from '../formik/FormikInput';
 import Loader from '../loader/Loader';
 import { ObjectKeys } from '../../types/common/ObjectKeys';
+import { ButtonsRow } from '../styled/wrappers';
 
 const validationSchema = {
     id:     Yup.number().required( 'ConversationID is missing.' ),
@@ -25,18 +17,10 @@ const validationSchema = {
     email:  Yup.string().email( 'Invalid e-mail address.' )
 };
 
-const useButtonStyles = makeStyles( ( theme: Theme ) =>
+const useStyles = makeStyles( () =>
 {
     return createStyles( {
-        button:           {
-            marginRight: theme.spacing( 0.5 ),
-            marginLeft:  theme.spacing( 0.5 ),
-        },
-        buttonsContainer: {
-            position:  'relative',
-            marginTop: theme.spacing( 1 )
-        },
-        root:             {
+        root: {
             width:  '100%',
             height: '100%'
         },
@@ -47,7 +31,7 @@ const CloseConversationForm = ( { onCancel, values, closeConversationMutation, h
 {
     const [ , mutationResult ] = closeConversationMutation;
 
-    const classes = useButtonStyles();
+    const classes = useStyles();
 
     return (
         <form className={ classes.root } onSubmit={ handleSubmit } noValidate>
@@ -87,15 +71,15 @@ const CloseConversationForm = ( { onCancel, values, closeConversationMutation, h
                           }/>
                       </Grid>
                     }
-                    <Grid className={ classes.buttonsContainer } container justify="center">
+                    <ButtonsRow>
                         <Loader active={ mutationResult.loading } asOverlay/>
-                        <Button className={ classes.button } variant="contained" color="primary" type="submit" disabled={ mutationResult.loading }>
+                        <Button variant="contained" color="primary" type="submit" disabled={ mutationResult.loading }>
                             Close conversation
                         </Button>
-                        <Button className={ classes.button } variant="outlined" color="primary" type="button" disabled={ mutationResult.loading } onClick={ onCancel }>
+                        <Button variant="outlined" color="primary" type="button" disabled={ mutationResult.loading } onClick={ onCancel }>
                             Cancel
                         </Button>
-                    </Grid>
+                    </ButtonsRow>
                 </Grid>
             </Grid>
         </form>
@@ -123,6 +107,7 @@ const wrapper = withFormik<Props, ChangeConversationStatusInput>( {
     handleSubmit:     async ( input, formikBag ) =>
                       {
                           const [ mutationFn ] = formikBag.props.closeConversationMutation;
+                          console.log( { input } );
 
                           await mutationFn( {
                               variables: {

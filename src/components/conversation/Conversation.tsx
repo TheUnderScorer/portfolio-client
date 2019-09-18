@@ -12,7 +12,7 @@ import ConversationMessages from '../conversation-messages/ConversationMessages'
 import CloseConversationForm from '../close-conversation-form/CloseConversationForm';
 import { ConversationStatuses } from '../../types/graphql/Conversation';
 import IconMessage from '../icon-message/IconMessage';
-import { FaIcon, Text } from '../styled/typography';
+import { FaIcon } from '../styled/typography';
 import { faCheckCircle } from '@fortawesome/free-regular-svg-icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { SetContactType, SetIsClosing } from '../../types/actions/ContactActions';
@@ -20,7 +20,8 @@ import { ContactTypes } from '../../types/reducers/ContactReducer';
 import { useApolloClient } from '@apollo/react-hooks';
 import HomeStore from '../../types/stores/HomeStore';
 import { Button } from '../styled/buttons';
-import { Grid } from '@material-ui/core';
+import { Typography } from '@material-ui/core';
+import { ButtonsRow } from '../styled/wrappers';
 
 const messagesPerPage = 30;
 
@@ -160,17 +161,17 @@ const Conversation = ( { conversationQuery, messageCreationMutation, changeStatu
 
                   { result.conversation.status === ConversationStatuses.closed && isClosing &&
                     <IconMessage title="Conversation closed." icon={ <FaIcon icon={ faCheckCircle }/> }>
-                        <Text>
-                            Thanks for chat!
-                        </Text>
-                        <Grid container alignItems="center">
+                        <Typography align="center" variant="subtitle1" color="textPrimary">
+                            You have closed this conversation.
+                        </Typography>
+                        <ButtonsRow>
                             <Button variant="contained" color="primary" onClick={ startNewConversation }>
                                 Start new conversation
                             </Button>
-                            <Button onClick={ handleReturn } color="primary">
+                            <Button onClick={ handleReturn } variant="outlined" color="secondary">
                                 Return
                             </Button>
-                        </Grid>
+                        </ButtonsRow>
                     </IconMessage>
                   }
 

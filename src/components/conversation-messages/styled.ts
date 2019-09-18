@@ -26,9 +26,4 @@ export const HelperText = styled.li`
     width: 100%;
     line-height: 1.5em;
     margin-bottom: 2em;
-
-    h6 {
-        display: block;
-        margin-bottom: 1em;
-    }
 `;
