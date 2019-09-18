@@ -1,16 +1,24 @@
 import * as React from 'react';
 import IconMessageProps from './types/IconMessageProps';
-import { H5 } from '../styled/typography';
 import { IconMessageWrapper } from './styled';
+import { createStyles, makeStyles, Theme, Typography } from '@material-ui/core';
+
+const useStyles = makeStyles( ( theme: Theme ) => createStyles( {
+    title: {
+        marginBottom: theme.spacing( 0.5 )
+    },
+} ) );
 
 const IconMessage = ( { icon, title, children }: IconMessageProps ) =>
 {
+    const classes = useStyles();
+
     return (
         <IconMessageWrapper>
             { icon }
-            <H5>
+            <Typography className={ classes.title } variant="h5">
                 { title }
-            </H5>
+            </Typography>
             { children }
         </IconMessageWrapper>
     )

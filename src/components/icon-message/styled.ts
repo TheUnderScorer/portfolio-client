@@ -11,10 +11,6 @@ export const IconMessageWrapper = styled( Grid ).attrs( {
     flex: 1;
     width: 100%;
     
-    h5 {
-        margin-bottom: ${ props => props.theme.spacing( 0.5 ) };
-    }
-    
     svg {
         font-size: 5rem;
         margin-bottom: ${ props => props.theme.spacing( 0.1 ) };
