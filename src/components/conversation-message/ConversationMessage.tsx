@@ -2,8 +2,7 @@ import * as React from 'react';
 import ConversationMessageProps from './types/ConversationMessageProps';
 import moment from 'moment';
 import { DateHeadline, MessageDate, MessageItem, MessageText } from './styled';
-import { Text } from '../styled/typography';
-import { Tooltip } from '@material-ui/core';
+import { Tooltip, Typography } from '@material-ui/core';
 import { DateFormats } from '../../types/common/DateFormats';
 
 const comparisonFormat = 'YYYY-MM-DD HH:mm';
@@ -22,7 +21,7 @@ const ConversationMessage = ( { message, showDate = true, prevMessage, isSelf = 
     return <>
         { displayDateHeadline &&
           <DateHeadline>
-              <Text>
+              <Typography variant="subtitle2" color="textSecondary">
                   { date.calendar( undefined, {
                       sameDay:  '[Today]',
                       nextDay:  '[Tomorrow]',
@@ -31,7 +30,7 @@ const ConversationMessage = ( { message, showDate = true, prevMessage, isSelf = 
                       lastWeek: '[Last] dddd',
                       sameElse: 'DD/MM/YYYY'
                   } ) }
-              </Text>
+              </Typography>
           </DateHeadline>
         }
         <MessageItem marginTop={ marginTop } isSelf={ isSelf }>

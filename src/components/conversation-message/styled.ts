@@ -1,10 +1,10 @@
 import styled from 'styled-components';
 import { MessageItemProps } from './types/styled';
-import { Paragraph, Time } from '../styled/typography';
-import colors, { getPrimary } from '../styled/colors';
+import colors from '../styled/colors';
+import { Typography } from '@material-ui/core';
 
 export const MessageItem = styled.li<MessageItemProps>`
-    margin-right: 0.5em;
+    margin-right: ${ props => props.theme.spacing( 0.5 ) };
     padding: 0;
 
     ${ props => props.isSelf && `
@@ -16,18 +16,20 @@ export const MessageItem = styled.li<MessageItemProps>`
     ` }
 `;
 
-export const DateHeadline = styled( Time )`
+export const DateHeadline = styled( Typography ).attrs( {
+    as: 'time'
+} )`
     display: block;
     width: 100%;
     text-align: center;
-    margin-top: 2em;
+    margin-top: ${ props => props.theme.spacing( 2 ) };
     position: relative;
     
     span {
         z-index: 2;
-        background: ${ props => props.theme.mode === 'black' ? colors.black : colors.white };
+        background: ${ props => props.theme.palette.background.default };
         position: relative;
-        padding: 0 1em;
+        padding: 0 ${ props => props.theme.spacing( 1 ) };
     }
     
     &::after{
@@ -42,10 +44,12 @@ export const DateHeadline = styled( Time )`
     }
 `;
 
-export const MessageText = styled( Paragraph )<MessageItemProps>`
-    margin: 0.2em;
-    padding: 1rem;
-    background: ${ props => props.theme.mode === 'black' ? colors.dark : colors.grey };
+export const MessageText = styled( Typography ).attrs( {
+    as: 'p'
+} )<MessageItemProps>`
+    margin: ${ props => props.theme.spacing( 0.2 ) };
+    padding: ${ props => props.theme.spacing( 1 ) };
+    background: ${ props => props.theme.palette.background.paper };
     position: relative;
     display: inline-block;
     
@@ -55,7 +59,7 @@ export const MessageText = styled( Paragraph )<MessageItemProps>`
             height: 0;
             border-style: solid;
             border-width: 10px 0 10px 20px;
-            border-color: transparent transparent transparent ${ props.theme.mode === 'black' ? colors.dark : colors.grey };
+            border-color: transparent transparent transparent ${ props.theme.palette.background.paper };
             display: block;
             content: '';
             right: -10px;
@@ -65,12 +69,14 @@ export const MessageText = styled( Paragraph )<MessageItemProps>`
     ` }
     
     ${ props => !props.isSelf && `
-         background: ${ getPrimary( props.theme.mode ) }
+         background: ${ props.theme.palette.primary.main }
          color: ${ colors.white }
     ` }
 `;
 
-export const MessageDate = styled( Time )`
+export const MessageDate = styled( Typography ).attrs( {
+    as: 'time'
+} )`
     font-size: 0.8em;
     display: block;
 `;
