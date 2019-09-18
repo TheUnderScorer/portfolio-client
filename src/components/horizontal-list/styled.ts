@@ -1,14 +1,15 @@
 import styled from 'styled-components';
-import colors, { getPrimary } from '../styled/colors';
+import { getPrimary } from '../styled/colors';
 import { SideSectionDetailsProps, SideSectionProps } from './types';
-import { H3 } from '../styled/typography';
-import { Button } from '../styled/buttons';
+import { Typography } from '@material-ui/core';
 import breakpoints from '../styled/breakpoints';
 import LineProps from './types/LineProps';
+import { Button } from '../styled/buttons';
 
 const breakpoint = parseInt( breakpoints.tabletSmall, 10 ) - 1 + 'px';
 
-const mainColor = ( props: any ) => {
+const mainColor = ( props: any ) =>
+{
     return getPrimary( props.theme.mode );
 };
 
@@ -22,7 +23,7 @@ export const HelpingListWrapper = styled.div`
 `;
 
 export const Line = styled.div<LineProps>`
-    background-image: linear-gradient(0deg, ${ props => mainColor( props ) }, 65%, transparent 0%);
+    background-image: linear-gradient(0deg, ${ props => props.theme.palette.primary.main }, 65%, transparent 0%);
     background-position: top;
     background-size: 4px 20px;
     background-repeat: repeat-y;
@@ -40,12 +41,12 @@ export const Line = styled.div<LineProps>`
            display: block;
            content: '';
            position: absolute;
-           background: ${ props => props.theme.mode === 'black' ? colors.black : colors.white };
+           background: ${ props => props.theme.palette.background.default };
            z-index: 3;
            border-radius: 50%;
            top: 2px;
            right: -7px;
-           border: 4px solid ${ props => mainColor( props ) };
+           border: 4px solid ${ props => props.theme.palette.primary.main };
     }
 `;
 
@@ -91,7 +92,7 @@ export const SideSection = styled.div<SideSectionProps>`
     > div {
         width: 80%;
         position: relative;
-        background: ${ props => props.theme.mode === 'black' ? colors.black : colors.white };
+        background: ${ props => props.theme.palette.background.default };
         z-index: 2;
         
         @media(max-width: ${ breakpoint }){
@@ -121,7 +122,6 @@ export const SideSection = styled.div<SideSectionProps>`
         &::before{
             width: 15px;
             height: 15px;
-            display: ${ props => props.theme.mode === 'black' ? colors.dark : colors.white };;
             content: '';
             position: absolute;
             background: ${ props => mainColor( props ) };
@@ -129,7 +129,7 @@ export const SideSection = styled.div<SideSectionProps>`
             right: -14px;
             border-radius: 50%;
             top: 41px;
-            border: 4px solid ${ props => props.theme.mode === 'black' ? colors.black : colors.white };
+            border: 4px solid ${ props => props.theme.palette.background.default };
         }
     }
     
@@ -139,12 +139,13 @@ export const SideSection = styled.div<SideSectionProps>`
         }
     ` }
     
-    ${ props => {
+    ${ props =>
+{
     if ( props.open ) {
         return `
                     .icon-container {
-                        background-color: ${ mainColor( props ) }
-                        color: ${ colors.white }
+                        background-color: ${ props.theme.palette.primary.main }
+                        color: ${ props.theme.palette.common.white }
                     }
                     
                     button svg {
@@ -156,6 +157,7 @@ export const SideSection = styled.div<SideSectionProps>`
     return `
             .section-details {
                 height: 0;
+                margin-bottom: 0;
             }
             
             button {
@@ -171,27 +173,30 @@ export const SideSectionIconContainer = styled.a`
     width: 2.5em;
     display: inline-flex;
     border-radius: 50%;
-    background-color: ${ props => props.theme.mode === 'black' ? colors.dark : colors.lightBg };
+    background-color: ${ props => props.theme.palette.background.paper };
     align-items: center;
     justify-content: center;
-    color: ${ props => props.theme.mode === 'black' ? colors.white : colors.dark };
     font-size: 3em;
     cursor: pointer;
 `;
 
-export const SideSectionTitle = styled( H3 )`
-    font-size: 1.80em;
-    display: block;
-    margin-bottom: 20px;
-    margin-top: 20px;
-    color: ${ props => props.theme.mode === 'black' ? colors.white : colors.black }
+export const SideSectionTitle = styled( Typography ).attrs( {
+    variant: 'h4'
+} )`
+    &.MuiTypography-root{
+        margin: ${ props => props.theme.spacing( 1 ) } 0;
+    }
 `;
 
-export const ReadMoreButton = styled( Button )`
-    margin-top: 20px;
-    
-    svg {
-        transition: all 0.75s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+export const ReadMoreButton = styled( Button ).attrs( {
+    variant: 'contained',
+    color:   'primary'
+} )`
+    &.MuiButton-root{
+
+        svg {
+            transition: all 0.75s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
     }
 `;
 
@@ -199,4 +204,5 @@ export const SideSectionDetails = styled.div<SideSectionDetailsProps>`
     height: ${ props => props.height };
     overflow: hidden;
     transition: all 0.75s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    margin-bottom: ${ props => props.theme.spacing( 1 ) };
 `;

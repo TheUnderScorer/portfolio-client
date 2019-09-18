@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { ReadMoreButton, SideSection, SideSectionDetails, SideSectionIconContainer, SideSectionTitle } from './styled';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Text } from '../styled/typography';
 import Props from './types/HorizontalListItemProps';
 
 const HorizontalListItem = ( { isActive, title, icon, children, onButtonClick, detailsHeight, marginTop, loaded = true }: Props ) => {
@@ -17,11 +16,9 @@ const HorizontalListItem = ( { isActive, title, icon, children, onButtonClick, d
                 <SideSectionDetails height={ detailsHeight } className="section-details">
                     { children }
                 </SideSectionDetails>
-                <ReadMoreButton flat={ true } withIcon={ true } onClick={ onButtonClick }>
+                <ReadMoreButton onClick={ onButtonClick }>
                     <FontAwesomeIcon icon="plus"/>
-                    <Text>
-                        { isActive ? 'Close' : 'Read More' }
-                    </Text>
+                    { isActive ? 'Close' : 'Read More' }
                 </ReadMoreButton>
             </div>
         </SideSection>

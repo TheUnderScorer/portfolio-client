@@ -27,7 +27,7 @@ const ContactSection = () =>
             <SectionSubtitle>
                 { texts.contact.subTitle }
             </SectionSubtitle>
-            <Button onClick={ openContact } transparent={ true } flat={ true } isRound={ true }>
+            <Button onClick={ openContact } isRound>
                 Start conversation
             </Button>
         </HomeSection>

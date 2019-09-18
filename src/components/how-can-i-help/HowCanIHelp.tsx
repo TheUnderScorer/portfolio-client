@@ -7,24 +7,21 @@ import helpItems from '../../pages/data/helpItems';
 import { useSelector } from 'react-redux';
 import HomeStore from '../../types/stores/HomeStore';
 import styled from 'styled-components';
-import breakpoints from '../styled/breakpoints';
 
 const Section = styled( HomeSection )`
-    @media(min-width: ${ breakpoints.tabletSmall }){
+    ${ props => props.theme.breakpoints.down( 'sm' ) }{
         padding-bottom: 0;
     }
 `;
 
 const HowCanIHelp = () =>
 {
-
     const didInnerOpen = useSelector( ( store: HomeStore ) => store.home.didInnerOpen );
 
     const [ loaded, setLoaded ] = useState( false );
 
     useEffect( () =>
     {
-
         const timeout = setTimeout( () =>
         {
             setLoaded( didInnerOpen );

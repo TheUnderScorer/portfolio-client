@@ -77,11 +77,12 @@ export const H6 = styled( H1 ).attrs( {
 export const SectionTitle = styled( Typography ).attrs( {
     variant: 'h4'
 } )<SectionTitleProps>`
-    padding-bottom: 0;
-    margin-bottom: ${ props => props.hasSubtitle || !props.underlined ? '0' : '40px' };
-    margin-left: auto;
-    margin-right: auto;
-    font-weight: 500;
+    &.MuiTypography-root {
+        margin-bottom: ${ props => props.hasSubtitle ? '0' : '40px' };
+        margin-left: auto;
+        margin-right: auto;
+        font-weight: 500;
+    }
     
     ${ props => props.uplined && `
         &::before{
