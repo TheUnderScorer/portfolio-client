@@ -1,11 +1,17 @@
 import * as React from 'react';
 import { useCallback, useRef } from 'react';
 import Repository from '../../types/graphql/Repository';
-import { IconButton, ListItem, ListItemIcon, ListItemSecondaryAction, ListItemText } from '@material-ui/core';
-import { FaIcon, SmallText, Text } from '../styled/typography';
+import {
+    IconButton,
+    ListItem,
+    ListItemIcon,
+    ListItemSecondaryAction,
+    ListItemText,
+    Typography
+} from '@material-ui/core';
+import { FaIcon } from '../styled/typography';
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import moment from 'moment';
-import { DateFormats } from '../../types/common/DateFormats';
 
 const GithubRepo = ( { name, description, createdAt, url }: Repository ) =>
 {
@@ -25,14 +31,14 @@ const GithubRepo = ( { name, description, createdAt, url }: Repository ) =>
             <ListItemIcon>
                 <FaIcon icon={ faGithub }/>
             </ListItemIcon>
-            <ListItemText primary={ <Text contrasted>{ name }</Text> } secondary={ (
+            <ListItemText primary={ <Typography variant="body1">{ name }</Typography> } secondary={ (
                 <>
-                    <Text>
+                    <Typography display="inline" variant="body2" color="textSecondary">
                         { description }
-                    </Text>
-                    <SmallText>
-                        { ` - ${ moment( createdAt ).format( DateFormats.DateTime ) }` }
-                    </SmallText>
+                    </Typography>
+                    <Typography display="inline" variant="caption" color="textSecondary">
+                        { ` - ${ moment( createdAt ).calendar() }` }
+                    </Typography>
                 </>
             ) }/>
             <ListItemSecondaryAction>
