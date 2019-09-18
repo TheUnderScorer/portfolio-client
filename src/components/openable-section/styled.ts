@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import colors from '../styled/colors';
 import OpenableStyledProps from './types/OpenableStyledProps';
 
 export const Openable = styled.div<OpenableStyledProps>`
@@ -42,6 +41,6 @@ export const Openable = styled.div<OpenableStyledProps>`
     ` };
     
     ${ props => props.hasBg && `
-         background: ${ props.theme.mode === 'black' ? colors.black : colors.lightBg } !important;
+         background: ${ props.theme.palette.background.paper } !important;
     ` }
 `;
