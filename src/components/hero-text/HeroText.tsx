@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { useCallback, useEffect, useState } from 'react';
 import { Cta, CtaWrapper, NameWrapper, TextWrapper } from './styled';
-import { H1 } from '../styled/typography';
 import Typist from 'react-typist';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Props from './types/HeroTextProps';
@@ -9,9 +8,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import HomeStore from '../../types/stores/HomeStore';
 import { SetHeroWrote } from '../../types/actions/HomeActions';
 import styled from 'styled-components';
-import colors from '../styled/colors';
 import texts from '../../pages/data/texts';
 import breakpoints from '../styled/breakpoints';
+import { Typography } from '@material-ui/core';
 
 const roleTexts = [
     'Front-end ',
@@ -19,8 +18,14 @@ const roleTexts = [
     'Full-stack developer.'
 ];
 
-const Headline = styled( H1 )`
-    color: ${ colors.white };
+const Headline = styled( Typography ).attrs( {
+    variation: 'h1'
+} )`
+    color: ${ props => props.theme.palette.common.white };
+    
+    ${ props => props.theme.breakpoints.down( 'sm' ) }{
+        font-size: 2.5em;
+    }
     
     @media(max-width: ${ breakpoints.phoneBig }){
         font-size: 2.5em;

@@ -1,9 +1,8 @@
 import * as React from 'react';
 import SelectionProps from './types/SelectionProps';
 import { SelectionContainer, SelectionItem } from './styled';
-import { SmallText, Text } from '../styled/typography';
-import { Flex } from '../styled/wrappers';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { ListItemAvatar, ListItemText } from '@material-ui/core';
 
 function Selection<T extends string>( { options, onSelection }: SelectionProps<T> )
 {
@@ -16,17 +15,10 @@ function Selection<T extends string>( { options, onSelection }: SelectionProps<T
         <SelectionContainer>
             { options.map( ( { icon, subTitle, title, id } ) =>
                 <SelectionItem key={ id } onClick={ handleSelection( id as T ) }>
-                    { icon }
-                    <Flex inline={ true } flexDirection="column" as="span">
-                        <Text className="text">
-                            { title }
-                        </Text>
-                        { subTitle &&
-                          <SmallText className="small-text">
-                              { subTitle }
-                          </SmallText>
-                        }
-                    </Flex>
+                    <ListItemAvatar>
+                        { icon }
+                    </ListItemAvatar>
+                    <ListItemText primary={ title } secondary={ subTitle }/>
                     <FontAwesomeIcon className="arrow" icon="angle-right"/>
                 </SelectionItem>
             ) }

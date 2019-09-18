@@ -1,14 +1,15 @@
 import styled from 'styled-components';
-import { Button } from '../styled/buttons';
-import { Grid } from '@material-ui/core';
+import { List, ListItem } from '@material-ui/core';
 
-export const SelectionContainer = styled( Grid ).attrs( {
-    direction: 'column'
+export const SelectionContainer = styled( List ).attrs( {
+    component: 'div'
 } )`
     padding: 1em;
 `;
 
-export const SelectionItem = styled( Button )`
+export const SelectionItem = styled( ListItem ).attrs( {
+    button: true
+} )`
     &.MuiButtonBase-root {
         display: flex;
         align-items: center;
@@ -29,7 +30,7 @@ export const SelectionItem = styled( Button )`
             opacity: 0;
           }  
           
-           span, svg, small, svg * {
+           span, svg, small, svg *, p {
             color: ${ props => props.theme.palette.primary.contrastText };
             }
         }

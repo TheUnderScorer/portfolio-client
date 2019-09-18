@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
 import colors, { getBaseTextColor, getPrimary } from './colors';
-import { HeadlineProps, IconProps, LinkProps, SectionSubtitleProps, SectionTitleProps, TextProps } from './types';
+import { IconProps, LinkProps, SectionSubtitleProps, SectionTitleProps, TextProps } from './types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Typography } from '@material-ui/core';
 
@@ -35,43 +35,6 @@ export const Time = styled.time`
 export const SmallText = styled.small`
     font-size: 0.8em;  
     color: ${ props => props.theme.mode === 'black' ? colors.white : colors.lightDark };
-`;
-
-
-export const H1 = styled.h1<HeadlineProps>`
-    font-size: 3.5em;
-    display: ${ ( { display = 'block' } ) => display };
-    ${ headerStyles }
-`;
-
-export const H2 = styled( H1 ).attrs( {
-    as: 'h2'
-} )`
-    font-size: 3em;
-`;
-
-export const H3 = styled( H1 ).attrs( {
-    as: 'h3'
-} )`
-    font-size: 2.5em;
-`;
-
-export const H4 = styled( H1 ).attrs( {
-    as: 'h4'
-} )`
-    font-size: 2em;
-`;
-
-export const H5 = styled( H1 ).attrs( {
-    as: 'h5'
-} )`
-    font-size: 1.5em;
-`;
-
-export const H6 = styled( H1 ).attrs( {
-    as: 'h6'
-} )`
-    font-size: 1.2em;
 `;
 
 export const SectionTitle = styled( Typography ).attrs( {
