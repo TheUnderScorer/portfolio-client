@@ -5,15 +5,15 @@ import HorizontalListItem from './HorizontalListItem';
 import HorizontalListProps from './types/HorizontalListProps';
 import HorizontalListItemData from './types/HorizontalListItemData';
 
-const HorizontalList = ( { items, loaded = true, lineHeight }: HorizontalListProps ) => {
-
+const HorizontalList = ( { items, loaded = true, lineHeight }: HorizontalListProps ) =>
+{
     const [ activeSection, setActiveSection ] = useState( '' );
 
-    const [ leftItems, setLeftItems ] = useState( [] as HorizontalListItemData[] );
-    const [ rightItems, setRightItems ] = useState( [] as HorizontalListItemData[] );
+    const [ leftItems, setLeftItems ] = useState<HorizontalListItemData[]>( [] );
+    const [ rightItems, setRightItems ] = useState<HorizontalListItemData[]>( [] );
 
-    useEffect( () => {
-
+    useEffect( () =>
+    {
         setLeftItems(
             items.filter( item => item.position === 'left' )
         );
@@ -21,11 +21,10 @@ const HorizontalList = ( { items, loaded = true, lineHeight }: HorizontalListPro
         setRightItems(
             items.filter( item => item.position === 'right' )
         )
-
     }, [ items ] );
 
-    const toggleSection = useCallback( ( section: string ) => () => {
-
+    const toggleSection = useCallback( ( section: string ) => () =>
+    {
         section === activeSection ?
             setActiveSection( '' ) :
             setActiveSection( section );
