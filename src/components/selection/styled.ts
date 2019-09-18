@@ -1,9 +1,10 @@
 import styled from 'styled-components';
 import { Button } from '../styled/buttons';
-import colors, { getPrimaryLight, getPrimaryVariation } from '../styled/colors';
-import { Flex } from '../styled/wrappers';
+import { Grid } from '@material-ui/core';
 
-export const SelectionContainer = styled( Flex )`
+export const SelectionContainer = styled( Grid ).attrs( {
+    direction: 'column'
+} )`
     padding: 1em;
 `;
 
@@ -22,14 +23,14 @@ export const SelectionItem = styled( Button )`
         text-transform: none;
         
         &:hover {
-          background-color: ${ props => getPrimaryLight( props.theme.mode ) };
+          background-color: ${ props => props.theme.palette.primary.light };
           
           &::before {
             opacity: 0;
           }  
           
            span, svg, small, svg * {
-            color: ${ props => getPrimaryVariation( props.theme.mode ) };
+            color: ${ props => props.theme.palette.primary.contrastText };
             }
         }
         
@@ -47,7 +48,7 @@ export const SelectionItem = styled( Button )`
         }
         
         .text, svg, .small-text, svg * {
-            color: ${ props => props.theme.mode === 'black' ? colors.white : colors.dark };
+            color: ${ props => props.theme.palette.text.primary };
         }
         
         .arrow {

@@ -13,7 +13,7 @@ function Selection<T extends string>( { options, onSelection }: SelectionProps<T
     };
 
     return (
-        <SelectionContainer flexDirection="column">
+        <SelectionContainer>
             { options.map( ( { icon, subTitle, title, id } ) =>
                 <SelectionItem key={ id } onClick={ handleSelection( id as T ) }>
                     { icon }
