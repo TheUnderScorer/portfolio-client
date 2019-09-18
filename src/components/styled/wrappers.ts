@@ -28,7 +28,7 @@ export const HomeSection = styled( Box ).attrs( {
     }
     
     ${ props => props.hasSeparator && `
-        border-bottom: 1px solid ${ props.theme.palette.divider }
+        border-bottom: 2px solid ${ props.theme.palette.divider }
     ` }
     
     ${ props => props.colorBackground && `

@@ -16,11 +16,20 @@ import { Button } from '../styled/buttons';
 import { ApolloProvider } from '@apollo/react-hooks';
 import { client } from '../../graphql/clients/github';
 import Loader from '../loader/Loader';
+import { createStyles, makeStyles } from '@material-ui/core';
 
 const GithubRepos = lazy( () => import('../github-repos/GithubRepos') );
 
+const useStyles = makeStyles( () => createStyles( {
+    button: {
+        boxShadow: 'none'
+    }
+} ) );
+
 const Projects = ( { projects }: ProjectsProps ) =>
 {
+    const classes = useStyles();
+
     const dispatch = useDispatch();
 
     const activeProject = useSelector( ( store: HomeStore ) => store.home.activeProject );
@@ -112,7 +121,7 @@ const Projects = ( { projects }: ProjectsProps ) =>
                     </GithubContainer>
                 </ApolloProvider>
             ) }
-            <Button onClick={ toggleExpand } className="overflow-item" isRound flat>
+            <Button variant="contained" color="primary" onClick={ toggleExpand } className={ `overflow-item ${ classes.button }` } isRound>
                 { isExpanded ? 'View less' : 'View more' }
             </Button>
         </HomeSection>
