@@ -1,61 +1,58 @@
 import * as React from 'react';
-import { MutableRefObject, useCallback, useEffect, useRef, useState } from 'react';
-import {
-    ProjectContainer,
-    ProjectImageCaption,
-    ProjectImageFigure,
-    ProjectModal,
-    ProjectThumbnail,
-    ReadMore,
-    ThumbnailLoader
-} from './styled';
-import LazyLoad from 'react-lazyload';
+import { useCallback, useEffect, useState } from 'react';
 import ProjectProps from './types/ProjectProps';
-import ProjectDetails from './ProjectDetails';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Button } from '../styled/buttons';
 import { pushState } from '../../utils/history';
 import { project as projectUrl } from '../../pages/data/links';
-import useOpenableModal from '../../hooks/useOpenableModal';
-import { Typography } from '@material-ui/core';
+import {
+    Avatar,
+    Card,
+    CardActions,
+    CardContent,
+    CardHeader,
+    CardMedia,
+    Collapse,
+    createStyles,
+    Divider,
+    IconButton,
+    makeStyles,
+    Theme,
+    Typography
+} from '@material-ui/core';
+import { faChevronDown, faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
+import { FaIcon } from '../styled/typography';
+import { faGithub } from '@fortawesome/free-brands-svg-icons';
 
-const Project = ( { project, active = false, index, onClose, onOpen }: ProjectProps ) =>
+const useStyles = makeStyles( ( theme: Theme ) => createStyles( {
+    card:       {
+        backgroundColor: theme.palette.background.default
+    },
+    media:      {
+        height: '200px'
+    },
+    expand:     {
+        marginLeft: 'auto',
+        fontSize:   '0.9em',
+        transition: 'transform .3s'
+    },
+    expandOpen: {
+        transform: 'rotate(180deg)'
+    },
+    icon:       {
+        fontSize: '1em',
+    },
+    details:    {
+        padding: theme.spacing( 1 )
+    }
+} ) );
+
+const Project = ( { project, active = false, index }: ProjectProps ) =>
 {
-    const { thumbnailUrl, shortDetails, images, name } = project;
+    const classes = useStyles();
 
-    const [ thumbLoaded, setThumbLoaded ] = useState( false );
+    const { name } = project;
 
-    const thumbRef = useRef() as MutableRefObject<HTMLImageElement>;
-
-    const relativeItemRef = useRef() as MutableRefObject<HTMLDivElement>;
-    const { setModalRef, modalStyles, modalClassList, overlayStyles, setModalLoaded, onModalClose, didClose, isClosing } = useOpenableModal( {
-        relativeElement: relativeItemRef.current,
-        open:            active
-    } );
-
-    const handleClose = useCallback( () =>
-    {
-        onModalClose();
-    }, [ onModalClose ] );
-
-    const handleImageLoad = useCallback( ( index: number ) =>
-    {
-        if ( index === 0 ) {
-            setModalLoaded( true );
-        }
-    }, [ setModalLoaded ] );
-
-    const handleLoad = useCallback( () =>
-    {
-        setThumbLoaded( true );
-    }, [] );
-
-    useEffect( () =>
-    {
-        if ( didClose ) {
-            onClose();
-        }
-    }, [ didClose ] );
+    const [ expanded, setExpanded ] = useState( false );
+    const toggleExpanded = useCallback( () => setExpanded( !expanded ), [ expanded ] );
 
     useEffect( () =>
     {
@@ -78,48 +75,40 @@ const Project = ( { project, active = false, index, onClose, onOpen }: ProjectPr
     }, [ active, index, name ] );
 
     return (
-        <ProjectContainer loading={ !thumbLoaded } className="project">
-            <ProjectImageFigure ref={ relativeItemRef } loaded={ thumbLoaded }>
-                <ThumbnailLoader active={ !thumbLoaded } asOverlay={ true } svgProps={ {
-                    width:  '50%',
-                    height: '50%'
-                } }/>
-                <LazyLoad
-                    once={ true }
-                    throttle={ 500 }
-                    height="100%">
-                    <ProjectThumbnail onLoad={ handleLoad } ref={ thumbRef } src={ thumbnailUrl ? thumbnailUrl : ( images ? images[ 0 ] : '' ) } alt=""/>
-                </LazyLoad>
-                <ProjectImageCaption>
-                    <div>
-                        <Typography>
-                            { shortDetails }
-                        </Typography>
-                    </div>
-                    <ReadMore onClick={ onOpen }>
-                        Check out
-                        <FontAwesomeIcon icon="arrow-right"/>
-                    </ReadMore>
-                </ProjectImageCaption>
-            </ProjectImageFigure>
-            <ProjectModal
-                style={ {
-                    content: modalStyles,
-                    overlay: overlayStyles
-                } }
-                contentRef={ setModalRef }
-                shouldFocusAfterRender={ false }
-                htmlOpenClassName="has-overlay"
-                className={ modalClassList.join( ' ' ) }
-                overlayClassName="middle center"
-                isOpen={ active }
-                onRequestClose={ handleClose }>
-                <ProjectDetails isClosing={ isClosing || didClose } onImageLoad={ handleImageLoad } project={ project }/>
-                <Button isRound onClick={ handleClose } className="close">
-                    <FontAwesomeIcon icon="times"/>
-                </Button>
-            </ProjectModal>
-        </ProjectContainer>
+        <Card className={ classes.card }>
+            <CardHeader title={ (
+                <Typography variant="body1" align="left">
+                    { project.name }
+                </Typography>
+            ) } avatar={ (
+                <Avatar>
+                    { project.logoUrl }
+                </Avatar>
+            ) }/>
+            <CardMedia component="img" className={ classes.media } image={ project.thumbnailUrl }/>
+            <CardContent>
+                <Typography variant="body2" align="left">
+                    { project.shortDetails }
+                </Typography>
+            </CardContent>
+            <Divider/>
+            <CardActions disableSpacing>
+                <IconButton className={ classes.icon }>
+                    <FaIcon icon={ faExternalLinkAlt }/>
+                </IconButton>
+                <IconButton className={ classes.icon }>
+                    <FaIcon icon={ faGithub }/>
+                </IconButton>
+                <IconButton className={ `${ classes.expand } ${ expanded ? classes.expandOpen : '' }` } onClick={ toggleExpanded }>
+                    <FaIcon icon={ faChevronDown }/>
+                </IconButton>
+            </CardActions>
+            <Collapse in={ expanded } timeout="auto" unmountOnExit>
+                <Typography className={ classes.details } paragraph>
+                    { project.details }
+                </Typography>
+            </Collapse>
+        </Card>
     )
 };
 

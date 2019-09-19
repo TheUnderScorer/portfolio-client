@@ -4,7 +4,7 @@ import { HomeSection } from '../styled/wrappers';
 import { SectionTitle } from '../styled/typography';
 import ProjectsProps from './types/ProjectsProps';
 import Project from './Project';
-import { GithubContainer, ProjectsContainer } from './styled';
+import { GithubContainer } from './styled';
 import texts from '../../pages/data/texts';
 import { useDispatch, useSelector } from 'react-redux';
 import HomeStore from '../../types/stores/HomeStore';
@@ -16,13 +16,19 @@ import { Button } from '../styled/buttons';
 import { ApolloProvider } from '@apollo/react-hooks';
 import { client } from '../../graphql/clients/github';
 import Loader from '../loader/Loader';
-import { createStyles, makeStyles } from '@material-ui/core';
+import { createStyles, Grid, makeStyles, Theme } from '@material-ui/core';
 
 const GithubRepos = lazy( () => import('../github-repos/GithubRepos') );
 
-const useStyles = makeStyles( () => createStyles( {
-    button: {
+const useStyles = makeStyles( ( theme: Theme ) => createStyles( {
+    button:   {
         boxShadow: 'none'
+    },
+    grid:     {
+        position: 'relative'
+    },
+    gridItem: {
+        padding: theme.spacing( 0.5 )
     }
 } ) );
 
@@ -101,17 +107,19 @@ const Projects = ( { projects }: ProjectsProps ) =>
                     { texts.projects.sectionTitle }
                 </SectionTitle>
             </div>
-            <ProjectsContainer className="section-inner">
+            <Grid container justify="center" className={ `section-inner ${ classes.grid }` }>
                 { projects.map( ( project, index ) =>
-                    <Project
-                        onClose={ handleProjectClose }
-                        onOpen={ handleProjectOpen( index ) }
-                        index={ index }
-                        active={ index === activeProject }
-                        key={ index }
-                        project={ project }/>
+                    <Grid className={ classes.gridItem } key={ index } item xs={ 12 } sm={ 6 } md={ 6 } lg={ 4 }>
+                        <Project
+                            onClose={ handleProjectClose }
+                            onOpen={ handleProjectOpen( index ) }
+                            index={ index }
+                            active={ index === activeProject }
+                            key={ index }
+                            project={ project }/>
+                    </Grid>
                 ) }
-            </ProjectsContainer>
+            </Grid>
             { isExpanded && (
                 <ApolloProvider client={ client }>
                     <GithubContainer>
