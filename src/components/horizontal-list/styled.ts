@@ -1,10 +1,10 @@
 import styled from 'styled-components';
 import { getPrimary } from '../styled/colors';
-import { SideSectionDetailsProps, SideSectionProps } from './types';
-import { Typography } from '@material-ui/core';
+import { SideSectionProps } from './types';
+import { Collapse, Typography } from '@material-ui/core';
 import breakpoints from '../styled/breakpoints';
 import LineProps from './types/LineProps';
-import { Button } from '../styled/buttons';
+import { Button, IconButton } from '../styled/buttons';
 
 const breakpoint = parseInt( breakpoints.tabletSmall, 10 ) - 1 + 'px';
 
@@ -143,12 +143,12 @@ export const SideSection = styled.div<SideSectionProps>`
 {
     if ( props.open ) {
         return `
-                    .icon-container {
+                    .icon-container.MuiButtonBase-root {
                         background-color: ${ props.theme.palette.primary.main }
                         color: ${ props.theme.palette.common.white }
                     }
                     
-                    button svg {
+                    button > svg {
                         transform: rotate(45deg);
                     }
                 `;
@@ -168,20 +168,24 @@ export const SideSection = styled.div<SideSectionProps>`
 } }
 `;
 
-export const SideSectionIconContainer = styled.a`
-    height: 2.5em;
-    width: 2.5em;
-    display: inline-flex;
-    border-radius: 50%;
-    background-color: ${ props => props.theme.palette.background.paper };
-    align-items: center;
-    justify-content: center;
-    font-size: 3em;
-    cursor: pointer;
+export const SideSectionIconContainer = styled( IconButton )`
+    &.MuiButtonBase-root{
+        height: 2.5em;
+        width: 2.5em;
+        border-radius: 50%;
+        background-color: ${ props => props.theme.palette.background.paper };
+        font-size: 3em;
+        cursor: pointer;
+        
+        svg {
+            margin: 0;
+        }
+    }
 `;
 
 export const SideSectionTitle = styled( Typography ).attrs( {
-    variant: 'h4'
+    variant: 'h4',
+    color:   'textPrimary'
 } )`
     &.MuiTypography-root{
         margin: ${ props => props.theme.spacing( 1 ) } 0;
@@ -193,16 +197,12 @@ export const ReadMoreButton = styled( Button ).attrs( {
     color:   'primary'
 } )`
     &.MuiButton-root{
-
         svg {
             transition: all 0.75s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
     }
 `;
 
-export const SideSectionDetails = styled.div<SideSectionDetailsProps>`
-    height: ${ props => props.height };
-    overflow: hidden;
-    transition: all 0.75s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+export const SideSectionDetails = styled( Collapse )`
     margin-bottom: ${ props => props.theme.spacing( 1 ) };
 `;

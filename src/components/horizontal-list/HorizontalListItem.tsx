@@ -3,7 +3,8 @@ import { ReadMoreButton, SideSection, SideSectionDetails, SideSectionIconContain
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Props from './types/HorizontalListItemProps';
 
-const HorizontalListItem = ( { isActive, title, icon, children, onButtonClick, detailsHeight, marginTop, loaded = true }: Props ) => {
+const HorizontalListItem = ( { isActive, title, icon, children, onButtonClick, marginTop, loaded = true }: Props ) =>
+{
     return (
         <SideSection className="side-section" loaded={ loaded } open={ isActive } marginTop={ marginTop }>
             <div>
@@ -13,7 +14,7 @@ const HorizontalListItem = ( { isActive, title, icon, children, onButtonClick, d
                 <SideSectionTitle>
                     { title }
                 </SideSectionTitle>
-                <SideSectionDetails height={ detailsHeight } className="section-details">
+                <SideSectionDetails unmountOnExit timeout="auto" in={ isActive } className="section-details">
                     { children }
                 </SideSectionDetails>
                 <ReadMoreButton onClick={ onButtonClick }>

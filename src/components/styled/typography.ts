@@ -19,7 +19,8 @@ export const Text = styled.span<TextProps>`
 `;
 
 export const SectionTitle = styled( Typography ).attrs( {
-    variant: 'h4'
+    variant: 'h4',
+    color:   'textPrimary'
 } )<SectionTitleProps>`
     &.MuiTypography-root {
         margin-bottom: ${ props => props.hasSubtitle ? '0' : '40px' };

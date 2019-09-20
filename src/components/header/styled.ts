@@ -210,7 +210,9 @@ export const MenuActivator = styled( IconButton )`
     }
 `;
 
-export const GoBackButton = styled( IconButton ).attrs( {} )<GoBackButtonProps>`
+export const GoBackButton = styled( IconButton ).attrs( {
+    variant: 'contained'
+} )<GoBackButtonProps>`
     &.MuiButtonBase-root {
         transition: all .3s;
         margin-right: 10px;

@@ -43,7 +43,7 @@ const AboutMe = () =>
                     <RoundImage width="20em" maxWidth="250px" maxHeight="250px" height="auto" src={ Me } alt=""/>
                 </Grid>
                 <Grid className="text-container" item md={ 8 } xs={ 12 }>
-                    <Typography variant="body1" align="justify">
+                    <Typography variant="body1" color="textPrimary" align="justify">
                         { texts.aboutMe.text }
                     </Typography>
                 </Grid>
