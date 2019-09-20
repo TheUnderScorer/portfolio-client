@@ -28,7 +28,7 @@ const useStyles = makeStyles( ( theme: Theme ) => createStyles( {
         position: 'relative'
     },
     gridItem: {
-        padding: theme.spacing( 0.5 )
+        padding: theme.spacing( 0.5 ),
     }
 } ) );
 
@@ -101,15 +101,15 @@ const Projects = ( { projects }: ProjectsProps ) =>
     }, [ didInnerOpen ] );
 
     return (
-        <HomeSection hasSeparator={ true } id={ texts.projects.id } colorBackground={ true } isCentered={ true }>
+        <HomeSection hasSeparator={ true } id={ texts.projects.id } isCentered={ true }>
             <div className="title-container">
                 <SectionTitle className="section-title">
                     { texts.projects.sectionTitle }
                 </SectionTitle>
             </div>
-            <Grid container justify="center" className={ `section-inner ${ classes.grid }` }>
+            <Grid container className={ `section-inner ${ classes.grid }` }>
                 { projects.map( ( project, index ) =>
-                    <Grid className={ classes.gridItem } key={ index } item xs={ 12 } sm={ 6 } md={ 6 } lg={ 4 }>
+                    <Grid className={ classes.gridItem } key={ index } item xs={ 12 } sm={ 6 } md={ 6 } lg={ 3 }>
                         <Project
                             onClose={ handleProjectClose }
                             onOpen={ handleProjectOpen( index ) }

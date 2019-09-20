@@ -107,7 +107,7 @@ const ConversationMessages = ( { conversation, hasMore, onLoadMore, onCloseClick
                 { !messages.length &&
                   <HelperText>
                       <Typography variant="h6" gutterBottom={ false }>
-                          Hello there!
+                          Hi!
                       </Typography>
                       <Typography color="textSecondary" variant="subtitle1">
                           Write your message below.
@@ -120,7 +120,7 @@ const ConversationMessages = ( { conversation, hasMore, onLoadMore, onCloseClick
                       { !hasMore &&
                         <HelperText>
                             <Typography variant="body1" color="textPrimary">
-                                This is start of your current conversation with me.
+                                This is the start of your current conversation with me.
                             </Typography>
                             <Button color="primary" onClick={ onCloseClick }>
                                 Close conversation

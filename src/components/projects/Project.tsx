@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import ProjectProps from './types/ProjectProps';
 import { pushState } from '../../utils/history';
 import { project as projectUrl } from '../../pages/data/links';
@@ -21,10 +21,15 @@ import {
 import { faChevronDown, faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
 import { FaIcon } from '../styled/typography';
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
+import { animated, config, useSpring } from 'react-spring';
 
 const useStyles = makeStyles( ( theme: Theme ) => createStyles( {
     card:       {
-        backgroundColor: theme.palette.background.default
+        backgroundColor: theme.palette.background.paper,
+        transition:      'all .3s',
+    },
+    root:       {
+        zIndex: 90,
     },
     media:      {
         height: '200px'
@@ -45,14 +50,22 @@ const useStyles = makeStyles( ( theme: Theme ) => createStyles( {
     }
 } ) );
 
-const Project = ( { project, active = false, index }: ProjectProps ) =>
+const Project = ( { project, active = false, index, onOpen, onClose }: ProjectProps ) =>
 {
     const classes = useStyles();
 
     const { name } = project;
 
-    const [ expanded, setExpanded ] = useState( false );
-    const toggleExpanded = useCallback( () => setExpanded( !expanded ), [ expanded ] );
+    const props = useSpring( {
+        zIndex: 4,
+        config: config.stiff,
+        from:   {
+            size: '50%'
+        },
+        to:     {
+            size: active ? '150%' : '50%'
+        }
+    } );
 
     useEffect( () =>
     {
@@ -75,40 +88,42 @@ const Project = ( { project, active = false, index }: ProjectProps ) =>
     }, [ active, index, name ] );
 
     return (
-        <Card className={ classes.card }>
-            <CardHeader title={ (
-                <Typography variant="body1" align="left">
-                    { project.name }
-                </Typography>
-            ) } avatar={ (
-                <Avatar>
-                    { project.logoUrl }
-                </Avatar>
-            ) }/>
-            <CardMedia component="img" className={ classes.media } image={ project.thumbnailUrl }/>
-            <CardContent>
-                <Typography variant="body2" align="left">
-                    { project.shortDetails }
-                </Typography>
-            </CardContent>
-            <Divider/>
-            <CardActions disableSpacing>
-                <IconButton className={ classes.icon }>
-                    <FaIcon icon={ faExternalLinkAlt }/>
-                </IconButton>
-                <IconButton className={ classes.icon }>
-                    <FaIcon icon={ faGithub }/>
-                </IconButton>
-                <IconButton className={ `${ classes.expand } ${ expanded ? classes.expandOpen : '' }` } onClick={ toggleExpanded }>
-                    <FaIcon icon={ faChevronDown }/>
-                </IconButton>
-            </CardActions>
-            <Collapse in={ expanded } timeout="auto" unmountOnExit>
-                <Typography className={ classes.details } paragraph>
-                    { project.details }
-                </Typography>
-            </Collapse>
-        </Card>
+        <animated.div style={ props } className={ classes.root }>
+            <Card className={ classes.card }>
+                <CardHeader title={ (
+                    <Typography variant="body1" align="left">
+                        { project.name }
+                    </Typography>
+                ) } avatar={ (
+                    <Avatar>
+                        { project.logoUrl }
+                    </Avatar>
+                ) }/>
+                <CardMedia component="img" className={ classes.media } image={ project.thumbnailUrl }/>
+                <CardContent>
+                    <Typography variant="body2" align="left">
+                        { project.shortDetails }
+                    </Typography>
+                </CardContent>
+                <Divider/>
+                <CardActions disableSpacing>
+                    <IconButton className={ classes.icon }>
+                        <FaIcon icon={ faExternalLinkAlt }/>
+                    </IconButton>
+                    <IconButton className={ classes.icon }>
+                        <FaIcon icon={ faGithub }/>
+                    </IconButton>
+                    <IconButton className={ `${ classes.expand } ${ active ? classes.expandOpen : '' }` } onClick={ active ? onClose : onOpen }>
+                        <FaIcon icon={ faChevronDown }/>
+                    </IconButton>
+                </CardActions>
+                <Collapse in={ active } timeout="auto" unmountOnExit>
+                    <Typography align="left" className={ classes.details } paragraph>
+                        { project.details }
+                    </Typography>
+                </Collapse>
+            </Card>
+        </animated.div>
     )
 };
 

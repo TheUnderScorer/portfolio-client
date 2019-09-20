@@ -42,10 +42,10 @@ const HomeWrapper = styled.div<HomeWrapperProps>`
         }
         
         .content{
-            margin-top: ${ props.theme.spacing( 2 ) };
+            margin-top: ${ props.theme.spacing( 3 ) };
             
             ${ props.theme.breakpoints.down( 'md' ) } {
-                margin-top: 2rem;
+                margin-top: ${ props.theme.spacing( 2 ) };
             }
         }
     ` }

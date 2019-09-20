@@ -2,7 +2,6 @@ import styled from 'styled-components';
 import colors from '../styled/colors';
 import { FullWidth } from '../styled/wrappers';
 import { Button } from '../styled/buttons';
-import breakpoints from '../styled/breakpoints';
 import { ButtonProps } from '../styled/types';
 
 export const TextWrapper = styled.div`
@@ -25,10 +24,10 @@ export const NameHighlight = styled.span`
 `;
 
 export const CtaWrapper = styled( FullWidth )`
-    margin-top: 6rem;
+    margin-top: ${ props => props.theme.spacing( 6 ) };
     
-    @media(max-width: ${ breakpoints.phoneBig }){
-        margin-top: 2rem;
+    ${ props => props.theme.breakpoints.down( 'sm' ) }{
+        margin-top: ${ props => props.theme.spacing( 2 ) };
     }
 `;
 

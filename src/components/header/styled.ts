@@ -18,17 +18,10 @@ export const HeaderWrapper = styled.header<HeaderProps>`
     position: ${ props => props.isFixed ? 'fixed' : 'absolute' };
     width: 100%;
     z-index: 3;
-    background-color: ${ props =>
-{
-
-    console.log( props );
-
-    return props.transparent ? 'transparent' : props.theme.palette.background.paper
-
-} };
+    background-color: ${ props => props.transparent ? 'transparent' : props.theme.palette.background.paper };
     display: flex;
     justify-content: space-between;
-    //padding: 0 6em;
+    padding: 0 ${ props => props.theme.spacing( 6 ) };
     overflow-x: visible;
     animation: ${ slideAnimation } .3s ease-in-out forwards;
     transition: height .3s;
@@ -42,7 +35,7 @@ export const HeaderWrapper = styled.header<HeaderProps>`
     ` }
     
     ${ props => props.transparent && `
-        &, span, small, path {
+        &, span, small, path, .MuiTypography-root {
             color: ${ props.theme.palette.common.white }
         }
     ` }
@@ -225,6 +218,7 @@ export const GoBackButton = styled( IconButton ).attrs( {} )<GoBackButtonProps>`
         display: flex;
         align-items: center;
         justify-content: center;
+        color: ${ props => props.theme.palette.text.primary }
         
         svg {
             font-size: 1rem;

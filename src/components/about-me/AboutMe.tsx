@@ -20,6 +20,10 @@ const AboutMeWrapper = styled( HomeSection )`
         border: 3px solid ${ props => props.theme.palette.primary.main };
         padding: 3px;
     }
+    
+    .text-container {
+        margin-left: ${ props => props.theme.spacing( 1 ) }
+    }
 `;
 
 const AboutMe = () =>
@@ -35,10 +39,10 @@ const AboutMe = () =>
                 </SectionSubtitle>
             </div>
             <Grid container alignItems="center" justify="center">
-                <Grid item md={ 3 } xs={ 12 }>
+                <Grid item md={ 2 } xs={ 12 }>
                     <RoundImage width="20em" maxWidth="250px" maxHeight="250px" height="auto" src={ Me } alt=""/>
                 </Grid>
-                <Grid item md={ 8 } xs={ 12 }>
+                <Grid className="text-container" item md={ 8 } xs={ 12 }>
                     <Typography variant="body1" align="justify">
                         { texts.aboutMe.text }
                     </Typography>
