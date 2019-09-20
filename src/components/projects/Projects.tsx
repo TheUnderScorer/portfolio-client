@@ -21,6 +21,9 @@ import { createStyles, Grid, makeStyles, Theme } from '@material-ui/core';
 const GithubRepos = lazy( () => import('../github-repos/GithubRepos') );
 
 const useStyles = makeStyles( ( theme: Theme ) => createStyles( {
+    root:     {
+        paddingTop: '1.2em'
+    },
     button:   {
         boxShadow: 'none'
     },
@@ -101,9 +104,9 @@ const Projects = ( { projects }: ProjectsProps ) =>
     }, [ didInnerOpen ] );
 
     return (
-        <HomeSection hasSeparator={ true } id={ texts.projects.id } isCentered={ true }>
+        <HomeSection className={ classes.root } hasSeparator id={ texts.projects.id } isCentered>
             <div className="title-container">
-                <SectionTitle className="section-title">
+                <SectionTitle uplined className="section-title">
                     { texts.projects.sectionTitle }
                 </SectionTitle>
             </div>

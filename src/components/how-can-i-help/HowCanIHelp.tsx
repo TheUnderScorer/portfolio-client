@@ -9,9 +9,7 @@ import HomeStore from '../../types/stores/HomeStore';
 import styled from 'styled-components';
 
 const Section = styled( HomeSection )`
-    ${ props => props.theme.breakpoints.down( 'sm' ) }{
-        padding-bottom: 0;
-    }
+     padding-bottom: 0;
 `;
 
 const HowCanIHelp = () =>
