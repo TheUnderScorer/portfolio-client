@@ -31,7 +31,7 @@ const GithubRepo = ( { name, description, createdAt, url }: Repository ) =>
             <ListItemIcon>
                 <FaIcon icon={ faGithub }/>
             </ListItemIcon>
-            <ListItemText primary={ <Typography variant="body1">{ name }</Typography> } secondary={ (
+            <ListItemText disableTypography primary={ <Typography variant="body1">{ name }</Typography> } secondary={ (
                 <>
                     <Typography display="inline" variant="body2" color="textSecondary">
                         { description }
