@@ -85,7 +85,7 @@ describe( 'GithubRepos', () =>
 
         const loader = component.update().find( Loader );
 
-        expect( loader ).toEqual( {} );
+        expect( loader ).toHaveLength( 0 );
         expect( component.html() ).toMatchSnapshot();
     } )
 } );
