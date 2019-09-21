@@ -122,7 +122,7 @@ const ConversationMessages = ( { conversation, hasMore, onLoadMore, onCloseClick
                             <Typography variant="body1" color="textPrimary">
                                 This is the start of your current conversation with me.
                             </Typography>
-                            <Button color="primary" onClick={ onCloseClick }>
+                            <Button id="close_conversation" color="primary" onClick={ onCloseClick }>
                                 Close conversation
                             </Button>
                         </HelperText>

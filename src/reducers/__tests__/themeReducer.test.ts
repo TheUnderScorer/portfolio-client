@@ -29,6 +29,6 @@ describe( 'themeReducer', () =>
 
         const newState = themeReducer( state, action );
 
-        expect( newState.mode ).toEqual( 'black' );
+        expect( newState.mode ).toEqual( 'dark' );
     } )
 } );

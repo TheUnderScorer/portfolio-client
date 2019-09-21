@@ -1,10 +1,13 @@
 import * as React from 'react';
-import { mount, ReactWrapper } from 'enzyme';
+import { ReactWrapper } from 'enzyme';
 import OpenableSection from '../OpenableSection';
 import { act } from 'react-dom/test-utils';
+import { mountWithStoreAndApollo } from '../../../tests/renderer';
 
 describe( 'OpenableSection component', () =>
 {
+    jest.setTimeout( 10000 );
+
     let relativeItem: HTMLElement;
 
     beforeEach( () =>
@@ -14,10 +17,10 @@ describe( 'OpenableSection component', () =>
 
     it( 'Renders without crashing', () =>
     {
-        mount(
+        mountWithStoreAndApollo(
             <OpenableSection relativeTo={ relativeItem }>
                 Test section
-            </OpenableSection>
+            </OpenableSection>,
         )
     } );
 
@@ -37,18 +40,11 @@ describe( 'OpenableSection component', () =>
 
         await act( async () =>
         {
-            component = mount(
-                <OpenableSection isOpen={ false } onOpen={ onOpen } relativeTo={ relativeItem }>
+            component = await mountWithStoreAndApollo(
+                <OpenableSection isOpen={ true } onOpen={ onOpen } relativeTo={ relativeItem }>
                     Test content
                 </OpenableSection>
-            );
-        } );
-
-        await act( async () =>
-        {
-            component.setProps( {
-                isOpen: true
-            } )
+            ).component;
         } );
     } );
 

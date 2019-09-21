@@ -1,12 +1,13 @@
 import * as React from 'react';
+import { ReactElement } from 'react';
 import Message from '../../../types/graphql/Message';
 import * as faker from 'faker';
 import moment from 'moment';
 import { DateFormats } from '../../../types/common/DateFormats';
-import { mount } from 'enzyme';
 import ConversationMessage from '../ConversationMessage';
 import { DateHeadline, MessageDate } from '../styled';
-import { Text } from '../../styled/typography';
+import { mountWithStoreAndApollo } from '../../../tests/renderer';
+import { Typography } from '@material-ui/core';
 
 describe( 'ConversationMessage component', () =>
 {
@@ -23,9 +24,14 @@ describe( 'ConversationMessage component', () =>
         }
     };
 
+    const mountComponent = ( component: ReactElement ) => mountWithStoreAndApollo(
+        component,
+        {}
+    );
+
     it( 'Renders without crashing', () =>
     {
-        mount( <ConversationMessage message={ message }/> );
+        mountComponent( <ConversationMessage message={ message }/> );
     } );
 
     it( 'Should display date headline if message is from next day', () =>
@@ -35,9 +41,9 @@ describe( 'ConversationMessage component', () =>
             createdAt: moment().subtract( 1, 'day' ).format( DateFormats.DateTime )
         };
 
-        const component = mount( <ConversationMessage message={ message } prevMessage={ prevMessage }/> );
+        const { component } = mountComponent( <ConversationMessage message={ message } prevMessage={ prevMessage }/> );
         const headline = component.find( DateHeadline ).first();
-        const headlineText = headline.find( Text ).first();
+        const headlineText = headline.find( Typography ).first();
 
         expect( headlineText.text() ).toEqual( 'Today' );
     } );
@@ -46,7 +52,7 @@ describe( 'ConversationMessage component', () =>
     {
         const prevMessage = { ...message };
 
-        const component = mount( <ConversationMessage message={ message } prevMessage={ prevMessage }/> );
+        const { component } = mountComponent( <ConversationMessage message={ message } prevMessage={ prevMessage }/> );
         const headline = component.find( DateHeadline );
 
         expect( headline ).toHaveLength( 0 );
@@ -59,7 +65,7 @@ describe( 'ConversationMessage component', () =>
             createdAt: moment().add( 1, 'minute' ).format( DateFormats.DateTime )
         };
 
-        const component = mount( <ConversationMessage message={ message } nextMessage={ nextMessage }/> );
+        const { component } = mountComponent( <ConversationMessage message={ message } nextMessage={ nextMessage }/> );
         const date = component.find( MessageDate ).first();
 
         expect( date.text() ).toEqual( moment( message.createdAt ).format( 'H:mm' ) );
@@ -69,7 +75,7 @@ describe( 'ConversationMessage component', () =>
     {
         const nextMessage = { ...message };
 
-        const component = mount( <ConversationMessage message={ message } nextMessage={ nextMessage }/> );
+        const { component } = mountComponent( <ConversationMessage message={ message } nextMessage={ nextMessage }/> );
         const date = component.find( MessageDate ).first();
 
         expect( date ).toHaveLength( 0 );

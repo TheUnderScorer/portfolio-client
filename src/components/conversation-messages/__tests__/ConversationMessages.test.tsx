@@ -85,8 +85,8 @@ describe( 'ConversationMessages component', () =>
 
         const helperText = component.find( HelperText );
         expect( helperText ).toHaveLength( 1 );
-        expect( helperText.html() ).toContain( 'Hello there!' );
-        expect( helperText.html() ).toContain( 'Write your message below in order to start conversation with me!' );
+        expect( helperText.html() ).toContain( 'Hi!' );
+        expect( helperText.html() ).toContain( 'Write your message below.' );
 
         done();
     } );

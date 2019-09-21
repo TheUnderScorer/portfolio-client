@@ -112,7 +112,7 @@ const Projects = ( { projects }: ProjectsProps ) =>
             </div>
             <Grid container className={ `section-inner ${ classes.grid }` }>
                 { projects.map( ( project, index ) =>
-                    <Grid className={ classes.gridItem } key={ index } item xs={ 12 } sm={ 6 } md={ 6 } lg={ 3 }>
+                    <Grid className={ classes.gridItem } key={ index } item xs={ 12 } sm={ 6 } md={ 3 } lg={ 3 }>
                         <Project
                             onClose={ handleProjectClose }
                             onOpen={ handleProjectOpen( index ) }

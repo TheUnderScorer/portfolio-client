@@ -3,7 +3,6 @@ import { mountWithStoreAndApollo } from '../../../tests/renderer';
 import Projects from '../Projects';
 import projects from '../../../pages/data/projects';
 import '../../../fontAwesome';
-import { ReadMore } from '../styled';
 import { act } from 'react-dom/test-utils';
 import { SetActiveProject } from '../../../types/actions/HomeActions';
 import { wait } from '@apollo/react-testing';
@@ -35,7 +34,7 @@ describe( 'Projects component', () =>
             initialStore
         );
 
-        const readMoreBtn = component.find( ReadMore ).at( 1 );
+        const readMoreBtn = component.find( '.expand' ).at( 1 );
 
         act( () =>
         {
@@ -44,21 +43,21 @@ describe( 'Projects component', () =>
 
         const action = store.getActions()[ 0 ] as SetActiveProject;
 
-        expect( action.payload ).toEqual( 1 );
+        expect( action.payload ).toEqual( 0 );
         expect( action.type ).toEqual( 'SetActiveProject' );
     } );
 
     it( 'Dispatches `SetActiveProject` action with null on project close', async () =>
     {
         const state = { ...initialStore };
-        state.home.activeProject = 1;
+        state.home.activeProject = 0;
 
         const { component, store } = mountWithStoreAndApollo(
             <Projects projects={ projects }/>,
             state
         );
 
-        const closeBtn = component.find( '.close' ).at( 0 );
+        const closeBtn = component.find( '.expand' ).at( 0 );
 
         act( () =>
         {

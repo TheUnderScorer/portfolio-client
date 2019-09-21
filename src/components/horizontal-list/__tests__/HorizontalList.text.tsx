@@ -1,13 +1,14 @@
 import * as React from 'react';
 import HorizontalListItemData from '../types/HorizontalListItemData';
 import * as faker from 'faker';
-import { mount } from 'enzyme';
 import HorizontalList from '../HorizontalList';
 import HorizontalListItem from '../HorizontalListItem';
 import { LeftSide, RightSide, SideSectionIconContainer } from '../styled';
 import '../../../fontAwesome';
+import { mountWithStoreAndApollo } from '../../../tests/renderer';
 
-describe( 'HorizontalList component', () => {
+describe( 'HorizontalList component', () =>
+{
 
     const items: HorizontalListItemData[] = [
         {
@@ -28,12 +29,19 @@ describe( 'HorizontalList component', () => {
         }
     ];
 
-    it( 'Renders without crashing', () => {
-        mount( <HorizontalList items={ items } lineHeight="500px"/> )
+    const mountComponent = () => mountWithStoreAndApollo(
+        <HorizontalList items={ items } lineHeight="500px"/>,
+        {}
+    );
+
+    it( 'Renders without crashing', () =>
+    {
+        mountComponent();
     } );
 
-    it( 'Should render items basing on their positions', () => {
-        const component = mount( <HorizontalList items={ items } lineHeight="500px"/> );
+    it( 'Should render items basing on their positions', () =>
+    {
+        const { component } = mountComponent();
 
         const leftSide = component.find( LeftSide );
         const rightSide = component.find( RightSide );
@@ -42,8 +50,9 @@ describe( 'HorizontalList component', () => {
         expect( rightSide.find( HorizontalListItem ).at( 0 ).props().title ).toEqual( items[ 1 ].title );
     } );
 
-    it( 'Clicking item toggles it as active in state', () => {
-        const component = mount( <HorizontalList items={ items } lineHeight="500px"/> );
+    it( 'Clicking item toggles it as active in state', () =>
+    {
+        const { component } = mountComponent();
         const secondItem = component.find( HorizontalListItem ).at( 1 );
 
         secondItem.find( SideSectionIconContainer ).simulate( 'click' );

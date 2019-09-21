@@ -113,7 +113,7 @@ const Project = ( { project, active = false, index, onOpen, onClose }: ProjectPr
                     <IconButton className={ classes.icon }>
                         <FaIcon icon={ faGithub }/>
                     </IconButton>
-                    <IconButton className={ `${ classes.expand } ${ active ? classes.expandOpen : '' }` } onClick={ active ? onClose : onOpen }>
+                    <IconButton className={ `${ classes.expand } ${ active ? classes.expandOpen : '' } expand` } onClick={ active ? onClose : onOpen }>
                         <FaIcon icon={ faChevronDown }/>
                     </IconButton>
                 </CardActions>

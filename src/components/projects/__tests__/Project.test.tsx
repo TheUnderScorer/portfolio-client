@@ -5,7 +5,6 @@ import { mountWithStoreAndApollo } from '../../../tests/renderer';
 import Project from '../Project';
 import * as React from 'react';
 import '../../../fontAwesome';
-import { ProjectThumbnail, ReadMore, ThumbnailLoader } from '../styled';
 import { act } from 'react-dom/test-utils';
 import ReactProps from '../../../types/ReactProps';
 import { wait } from '@apollo/react-testing';
@@ -51,40 +50,6 @@ describe( 'Project component', () =>
         )
     } );
 
-    it( 'Shows loading animation when image is not loaded', () =>
-    {
-        const { component } = mountWithStoreAndApollo(
-            <Project project={ project } onOpen={ onOpen } onClose={ onClose } index={ 0 }/>,
-            initialStore
-        );
-
-        const loader = component.find( ThumbnailLoader );
-
-        expect( loader ).toHaveLength( 1 );
-    } );
-
-    it( 'Hides loading animation on thumbnail load', () =>
-    {
-        const { component } = mountWithStoreAndApollo(
-            <Project project={ project } onOpen={ onOpen } onClose={ onClose } index={ 0 }/>,
-            initialStore
-        );
-
-        const thumbnail = component.find( ProjectThumbnail );
-
-        act( () =>
-        {
-            thumbnail.simulate( 'load' );
-        } );
-
-        component.update();
-
-        const loader = component.find( ThumbnailLoader );
-        const loaderProps = loader.props();
-
-        expect( loaderProps.active ).toBeFalsy();
-    } );
-
     it( 'Triggers `onOpen` callback after clicking read more button', () =>
     {
         const { component } = mountWithStoreAndApollo(
@@ -92,7 +57,7 @@ describe( 'Project component', () =>
             initialStore
         );
 
-        const readMore = component.find( ReadMore );
+        const readMore = component.find( '.expand' ).at( 0 );
 
         act( () =>
         {
@@ -111,7 +76,7 @@ describe( 'Project component', () =>
 
         await wait( 100 );
 
-        const close = component.find( '.close' );
+        const close = component.find( '.expand' );
 
         act( () =>
         {

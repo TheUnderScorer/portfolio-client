@@ -33,7 +33,7 @@ describe( 'Header component', () => {
 
         const actions = store.getActions();
 
-        expect( actions[ 0 ].payload ).toEqual( 'black' );
+        expect( actions[ 0 ].payload ).toEqual( 'dark' );
     } );
 
     it( 'Clicking menu item should change active section', () => {
